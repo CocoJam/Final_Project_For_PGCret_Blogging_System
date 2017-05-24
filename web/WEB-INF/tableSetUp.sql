@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS usersProfile(
 
 
 CREATE TABLE IF NOT EXISTS Articles(
-  ArticlesID int not NULL,
+  ArticlesID int not NULL AUTO_INCREMENT,
   ArticlesName VARCHAR(64) not NULL ,
   UserIDName VARCHAR(64) not NULL ,
   Content TEXT NULL,
@@ -30,9 +30,12 @@ CREATE TABLE IF NOT EXISTS Articles(
 );
 
 CREATE TABLE IF NOT EXISTS Comments(
+  CommentID int not NULL AUTO_INCREMENT,
   ArticlesID int not NULL,
   CommenterName VARCHAR(64) not NULL ,
   Comments VARCHAR(64) not NULL ,
+  PRIMARY KEY (CommentID),
   FOREIGN KEY (ArticlesID) REFERENCES Articles (ArticlesID),
   FOREIGN KEY (CommenterName) REFERENCES UsersNames  (Username)
 );
+-- comments added comment id
