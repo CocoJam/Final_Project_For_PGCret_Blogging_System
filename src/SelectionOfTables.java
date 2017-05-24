@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Created by ljam763 on 24/05/2017.
@@ -10,6 +7,7 @@ public class SelectionOfTables {
 
     private Connection conn;
     private String username;
+    private int userID;
     private String password;
     private String name;
     private String email;
@@ -19,6 +17,7 @@ public class SelectionOfTables {
     private int ArticleID;
     private String ArticleName;
     private String ArticleContent;
+    private Date SpecificDateCreated;
     private int  CommentID;
     private String CommentName;
     private String Comment;
@@ -49,7 +48,7 @@ public class SelectionOfTables {
     public void selectionUsersProfile (String username) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT Username, Name ,Email, Address, Education, Ethnicity FROM UsersProfile WHERE Username = ?;"
+                    "SELECT Username, Name ,Email, Address, Education, Ethnicity, UserId FROM UsersProfile WHERE Username = ?;"
             );
             {
                 statement.setString(1, username);
@@ -61,6 +60,7 @@ public class SelectionOfTables {
                     this.address = resultSet.getString(4);
                     this.education = resultSet.getString(5);
                     this.ethnicity = resultSet.getString(6);
+                    this.userID = resultSet.getInt(7);
                 }
             }
         } catch (SQLException e) {
@@ -74,7 +74,7 @@ public class SelectionOfTables {
     public void selectionArticles (String articleName) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT ArticlesID, ArticlesName , UserIDName, Content FROM Articles WHERE ArticlesID = ?;"
+                    "SELECT ArticlesID, ArticlesName , UserIDName, Content, SpecificDateCreated FROM Articles WHERE ArticlesID = ?;"
             );
             {
                 statement.setString(1, articleName);
@@ -84,6 +84,7 @@ public class SelectionOfTables {
                     this.ArticleName = resultSet.getString(2);
                     this.username = resultSet.getString(3);
                     this.ArticleContent = resultSet.getString(4);
+                    this.SpecificDateCreated = resultSet.getDate(5);
                 }
             }
         } catch (SQLException e) {

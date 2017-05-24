@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -10,15 +11,15 @@ public class UpdataTables {
     private Connection conn;
 
 
-    public void updataComments(int ArticlesID, String CommenterName, String Comments) {
+    public void updataComments(int CommentId, int ArticlesID, String CommenterName, String Comments) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO usersProfile VALUES( ?, ? ,?);"
+                    "INSERT INTO usersProfile VALUES( ?, ? ,?,?);"
             );
-            {
-                statement.setInt(1, ArticlesID);
-                statement.setString(2, CommenterName);
-                statement.setString(3, Comments);
+            {   statement.setInt(1,CommentId);
+                statement.setInt(2, ArticlesID);
+                statement.setString(3, CommenterName);
+                statement.setString(4, Comments);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -26,16 +27,17 @@ public class UpdataTables {
         }
     }
 
-    public void updataArticles(int ArticlesID, String ArticleName, String UserIDName, String content) {
+    public void updataArticles(int ArticlesID, String ArticleName, String UserIDName, String content, Date SpecificDateCreated) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO usersProfile VALUES( ?, ? ,?,?);"
+                    "INSERT INTO usersProfile VALUES( ?, ? ,?,?,?);"
             );
             {
                 statement.setInt(1, ArticlesID);
                 statement.setString(2, ArticleName);
                 statement.setString(3, UserIDName);
                 statement.setString(4, content);
+                statement.setDate( 5,SpecificDateCreated);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
