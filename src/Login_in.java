@@ -52,7 +52,7 @@ public class Login_in extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         String registration = req.getParameter("Registration");
-        session.setAttribute("Registration", true);
+        session.setAttribute("Registration", false);
         if (registration != null){
             if (registration.equals("Registration")){
                 req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req,resp);

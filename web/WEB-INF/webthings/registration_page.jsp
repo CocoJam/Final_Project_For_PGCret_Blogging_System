@@ -19,6 +19,7 @@
     }
 %>
 
+
 <form action="/Registration" method="post">
     <label for="username">Username:</label>
     <input type="text" id="username"  name="username">
