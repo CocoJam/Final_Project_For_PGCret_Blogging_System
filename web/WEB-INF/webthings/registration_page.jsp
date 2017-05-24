@@ -11,6 +11,14 @@
     <title>Title</title>
 </head>
 <body>
+
+<%
+    if ( session.getAttribute("log") != null || session.getAttribute("Registration") != null){
+        if ((boolean)session.getAttribute("Registration")){
+            request.getRequestDispatcher("/WEB-INF/webthings/content_page.jsp").forward(request,response);}
+    }
+%>
+
 <form action="/Registration" method="post">
     <label for="username">Username:</label>
     <input type="text" id="username"  name="username">

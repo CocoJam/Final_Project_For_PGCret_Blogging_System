@@ -89,8 +89,8 @@ public class UpdataTables {
        UpdataTables updataTables = new UpdataTables();
        //Date is year - month - date
        Date date = new Date(2016-05-30);
-//        updataTables.updataUsersNames("ljam763", "blah");
-        updataTables.updataUsersProfile("ljam763","James", "ljam763@gmail.com", "blah", null,"chinese", date);
+        updataTables.updataUsersNames("ljam763", "blah");
+//        updataTables.updataUsersProfile("ljam763","James", "ljam763@gmail.com", "blah", null,"chinese", date);
 
     }
 }

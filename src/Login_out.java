@@ -12,9 +12,9 @@ public class Login_out extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        System.out.println(session.getId());
         session.setAttribute("password", null);
-        session.setAttribute("log",null);
+        session.setAttribute("log",false);
+        session.setAttribute("Registration" ,false);
         req.getRequestDispatcher("/login_page.jsp").forward(req,resp);
     }
 }

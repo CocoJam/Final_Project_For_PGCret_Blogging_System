@@ -99,7 +99,7 @@ public class SelectionOfTables {
         this.pass = new Passwords_Checker();
     }
 
-    public void selectionUsersNames(String username, String password) {
+    public boolean selectionUsersNames(String username, String password) {
         try {
             //user pass.hashing() with the password needed to be hash to match and salt number with iteration numbers
             PreparedStatement statement = conn.prepareStatement(
@@ -114,11 +114,13 @@ public class SelectionOfTables {
                     System.out.println(username);
                     this.password = resultSet.getString(2);
                     System.out.println(password);
+                    return true;
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
 

@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS UsersNames;
 CREATE TABLE IF NOT EXISTS UsersNames(
   Username VARCHAR(64) not NULL ,
   Password VARCHAR(100) not NULL,
-  Name VARCHAR(64) not NULL ,
+  Name VARCHAR(64) ,
   Email VARCHAR(100),
   Address VARCHAR(200),
   Education VARCHAR(200),

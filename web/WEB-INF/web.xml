@@ -3,4 +3,33 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
+
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>Login_in</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet>
+
+
+        <servlet-name>Registration</servlet-name>
+        <servlet-class>Registration</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Registration</servlet-name>
+        <url-pattern>/Registration</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>login_out</servlet-name>
+        <servlet-class>Login_out</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>login_out</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
 </web-app>
