@@ -15,7 +15,7 @@ public class SelectionOfTables {
     private String email;
     private String address;
     private String education;
-    private String race;
+    private String ethnicity;
     private int ArticleID;
     private String ArticleName;
     private String ArticleContent;
@@ -49,7 +49,7 @@ public class SelectionOfTables {
     public void selectionUsersProfile (String username) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT Username, Name ,Email, Address, Education, Race FROM UsersProfile WHERE Username = ?;"
+                    "SELECT Username, Name ,Email, Address, Education, Ethnicity FROM UsersProfile WHERE Username = ?;"
             );
             {
                 statement.setString(1, username);
@@ -60,7 +60,7 @@ public class SelectionOfTables {
                     this.email = resultSet.getString(3);
                     this.address = resultSet.getString(4);
                     this.education = resultSet.getString(5);
-                    this.race = resultSet.getString(6);
+                    this.ethnicity = resultSet.getString(6);
                 }
             }
         } catch (SQLException e) {

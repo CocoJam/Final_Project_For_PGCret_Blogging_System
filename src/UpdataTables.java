@@ -43,7 +43,7 @@ public class UpdataTables {
         }
     }
 
-    public void updataUsersProfile(String username, String email, String address, String education, String race) {
+    public void updataUsersProfile(String username, String email, String address, String education, String ethnicity) {
         try {
             PreparedStatement statement = conn.prepareStatement(
                     "INSERT INTO usersProfile VALUES( ?, ? ,?,?,?);"
@@ -53,7 +53,7 @@ public class UpdataTables {
                 statement.setString(2, email);
                 statement.setString(3, address);
                 statement.setString(4, education);
-                statement.setString(5, race);
+                statement.setString(5, ethnicity);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {

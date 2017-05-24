@@ -10,11 +10,19 @@ public class Config {
 
         private static Properties properties;
 
-        public static Properties getProperties() {
+        public static Properties getProperties(String type) {
+            if (type.equals("admin")){
+
             if (properties == null) {
                 properties = new Properties(System.getProperties());
                 properties.setProperty("user", "ljam763");
                 properties.setProperty("password", "b501347b");
+                properties.setProperty("useSSL", "true");
+            }}
+            else if (type.equals("get")){
+                properties = new Properties(System.getProperties());
+                properties.setProperty("user", "uoaslashnuser");
+                properties.setProperty("password", "uoaslashn");
                 properties.setProperty("useSSL", "true");
             }
             return properties;
