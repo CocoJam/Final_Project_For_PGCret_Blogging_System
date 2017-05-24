@@ -147,14 +147,18 @@
       <Position>7</Position>
       <DataType>varchar(200)|0</DataType>
     </column>
-    <index id="38" parent="9" name="Username">
+    <column id="38" parent="9" name="DateOfBirth">
+      <Position>8</Position>
+      <DataType>date|0</DataType>
+    </column>
+    <index id="39" parent="9" name="Username">
       <ColNames>Username</ColNames>
     </index>
-    <key id="39" parent="9" name="PRIMARY">
+    <key id="40" parent="9" name="PRIMARY">
       <ColNames>UserID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="40" parent="9" name="usersProfile_ibfk_1">
+    <foreign-key id="41" parent="9" name="usersProfile_ibfk_1">
       <ColNames>Username</ColNames>
       <RefSchemaName>uoaslashn</RefSchemaName>
       <RefTableName>UsersNames</RefTableName>

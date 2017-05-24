@@ -35,7 +35,7 @@ public class Login_in extends HttpServlet {
             e.printStackTrace();
         }
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://mysql1.sporadic.co.nz:3306/ljam763", Config.getProperties());
+            conn = DriverManager.getConnection("jdbc:mysql://mysql1.sporadic.co.nz:3306/ljam763", Config.getProperties(ConnectionToTheDataBase.ConnectionTypes.Admin));
         } catch (SQLException e) {
             e.printStackTrace();
         }

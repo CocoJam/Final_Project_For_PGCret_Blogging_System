@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS usersProfile(
   Address VARCHAR(200),
   Education VARCHAR(200),
   Race VARCHAR(200),
+  DateOfBirth DATE ,
   PRIMARY KEY (UserID),
   FOREIGN KEY (Username) REFERENCES UsersNames (UserName)
 );
@@ -45,3 +46,6 @@ CREATE TABLE IF NOT EXISTS Comments(
   FOREIGN KEY (CommenterName) REFERENCES UsersNames  (Username)
 );
 -- added the comments TIMESTAMP;
+
+SELECT Username, Password FROM UsersNames WHERE Username = 'ljam763' AND Password = 'blah';
+INSERT INTO usersProfile (ArticlesName, UserIDName, Content,SpecificDateCreated) VALUES( ? ,?,?,?)
