@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Final_Project_For_BackslashN:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/Final_Project_For_BackslashN_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="Final_Project_For_BackslashN/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="Final_Project_For_BackslashN" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

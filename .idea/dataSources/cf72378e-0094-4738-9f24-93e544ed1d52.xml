@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="uoaslashn@mysql1.sporadic.co.nz">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
+    <root id="1"/>
+    <schema id="2" parent="1" name="uoaslashn">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="ljam763"/>
+    <schema id="5" parent="1" name="sample_db"/>
+    <table id="6" parent="2" name="Articles"/>
+    <table id="7" parent="2" name="Comments"/>
+    <table id="8" parent="2" name="UsersNames"/>
+    <table id="9" parent="2" name="usersProfile"/>
+    <column id="10" parent="6" name="ArticlesID">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="11" parent="6" name="ArticlesName">
+      <Position>2</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="12" parent="6" name="UserIDName">
+      <Position>3</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="13" parent="6" name="Content">
+      <Position>4</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <index id="14" parent="6" name="UserIDName">
+      <ColNames>UserIDName</ColNames>
+    </index>
+    <key id="15" parent="6" name="PRIMARY">
+      <ColNames>ArticlesID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="16" parent="6" name="Articles_ibfk_1">
+      <ColNames>UserIDName</ColNames>
+      <RefSchemaName>uoaslashn</RefSchemaName>
+      <RefTableName>UsersNames</RefTableName>
+      <RefColNames>Username</RefColNames>
+    </foreign-key>
+    <column id="17" parent="7" name="ArticlesID">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="18" parent="7" name="CommenterName">
+      <Position>2</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="19" parent="7" name="Comments">
+      <Position>3</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="20" parent="7" name="ArticlesID">
+      <ColNames>ArticlesID</ColNames>
+    </index>
+    <index id="21" parent="7" name="CommenterName">
+      <ColNames>CommenterName</ColNames>
+    </index>
+    <foreign-key id="22" parent="7" name="Comments_ibfk_1">
+      <ColNames>ArticlesID</ColNames>
+      <RefSchemaName>uoaslashn</RefSchemaName>
+      <RefTableName>Articles</RefTableName>
+      <RefColNames>ArticlesID</RefColNames>
+    </foreign-key>
+    <foreign-key id="23" parent="7" name="Comments_ibfk_2">
+      <ColNames>CommenterName</ColNames>
+      <RefSchemaName>uoaslashn</RefSchemaName>
+      <RefTableName>UsersNames</RefTableName>
+      <RefColNames>Username</RefColNames>
+    </foreign-key>
+    <column id="24" parent="8" name="Username">
+      <Position>1</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="25" parent="8" name="Password">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="26" parent="8" name="PRIMARY">
+      <ColNames>Username</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="27" parent="9" name="Username">
+      <Position>1</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="28" parent="9" name="Name">
+      <Position>2</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="29" parent="9" name="Email">
+      <Position>3</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="30" parent="9" name="Address">
+      <Position>4</Position>
+      <DataType>varchar(200)|0</DataType>
+    </column>
+    <column id="31" parent="9" name="Education">
+      <Position>5</Position>
+      <DataType>varchar(200)|0</DataType>
+    </column>
+    <column id="32" parent="9" name="Race">
+      <Position>6</Position>
+      <DataType>varchar(200)|0</DataType>
+    </column>
+    <index id="33" parent="9" name="Username">
+      <ColNames>Username</ColNames>
+    </index>
+    <foreign-key id="34" parent="9" name="usersProfile_ibfk_1">
+      <ColNames>Username</ColNames>
+      <RefSchemaName>uoaslashn</RefSchemaName>
+      <RefTableName>UsersNames</RefTableName>
+      <RefColNames>Username</RefColNames>
+    </foreign-key>
+  </database-model>
+</dataSource>
