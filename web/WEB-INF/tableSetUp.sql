@@ -28,17 +28,20 @@ CREATE TABLE IF NOT EXISTS Articles(
   ArticlesName VARCHAR(64) not NULL ,
   UserIDName VARCHAR(64) not NULL ,
   Content TEXT NULL,
-  SpecificDateCreated DATE not NULL ,
+  SpecificDateCreated TIMESTAMP not NULL ,
   PRIMARY KEY (ArticlesID),
   FOREIGN KEY (UserIDName) REFERENCES UsersNames (Username)
 );
 
+-- Date change to TIMESTAMP;
 CREATE TABLE IF NOT EXISTS Comments(
   CommentID int not NULL AUTO_INCREMENT,
   ArticlesID int not NULL,
   CommenterName VARCHAR(64) not NULL ,
   Comments VARCHAR(64) not NULL ,
+  CommentTime TIMESTAMP NOT NULL ,
   PRIMARY KEY (CommentID),
   FOREIGN KEY (ArticlesID) REFERENCES Articles (ArticlesID),
   FOREIGN KEY (CommenterName) REFERENCES UsersNames  (Username)
 );
+-- added the comments TIMESTAMP;

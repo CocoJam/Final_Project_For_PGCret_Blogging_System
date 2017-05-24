@@ -17,10 +17,11 @@ public class SelectionOfTables {
     private int ArticleID;
     private String ArticleName;
     private String ArticleContent;
-    private Date SpecificDateCreated;
+    private Timestamp SpecificDateCreated;
     private int  CommentID;
     private String CommentName;
     private String Comment;
+    private Timestamp CommentTime;
 
 
     public void selectionUsersNames(String username, String password) {
@@ -84,7 +85,7 @@ public class SelectionOfTables {
                     this.ArticleName = resultSet.getString(2);
                     this.username = resultSet.getString(3);
                     this.ArticleContent = resultSet.getString(4);
-                    this.SpecificDateCreated = resultSet.getDate(5);
+                    this.SpecificDateCreated = resultSet.getTimestamp(5);
                 }
             }
         } catch (SQLException e) {
@@ -96,7 +97,7 @@ public class SelectionOfTables {
     public void selectionArticles (int articlesID) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT ArticlesID, ArticlesName , UserIDName, Content FROM Articles WHERE ArticlesID = ?;"
+                    "SELECT ArticlesID, ArticlesName , UserIDName, Content, SpecificDateCreated FROM Articles WHERE ArticlesID = ?;"
             );
             {
                 statement.setInt(1, articlesID);
@@ -106,6 +107,7 @@ public class SelectionOfTables {
                     this.ArticleName = resultSet.getString(2);
                     this.username = resultSet.getString(3);
                     this.ArticleContent = resultSet.getString(4);
+                    this.SpecificDateCreated = resultSet.getTimestamp(5);
                 }
             }
         } catch (SQLException e) {
@@ -116,7 +118,7 @@ public class SelectionOfTables {
         public void selectionComments (int articlesID) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT CommentID, ArticlesID , CommenterName, Comments FROM UsersNAmes WHERE ArticlesID = ?;"
+                    "SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM UsersNAmes WHERE ArticlesID = ?;"
             );
             {
                 statement.setInt(1, articlesID);
@@ -126,6 +128,7 @@ public class SelectionOfTables {
                     this.ArticleID = resultSet.getInt(2);
                     this.CommentName = resultSet.getString(3);
                     this.Comment = resultSet.getString(4);
+                    this.CommentTime = resultSet.getTimestamp(5);
                 }
             }
         } catch (SQLException e) {

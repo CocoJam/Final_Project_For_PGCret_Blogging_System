@@ -35,8 +35,9 @@
     </column>
     <column id="14" parent="6" name="SpecificDateCreated">
       <Position>5</Position>
-      <DataType>date|0</DataType>
+      <DataType>timestamp|0</DataType>
       <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
     <index id="15" parent="6" name="UserIDName">
       <ColNames>UserIDName</ColNames>
@@ -72,82 +73,88 @@
       <DataType>varchar(64)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="22" parent="7" name="ArticlesID">
+    <column id="22" parent="7" name="CommentTime">
+      <Position>5</Position>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <index id="23" parent="7" name="ArticlesID">
       <ColNames>ArticlesID</ColNames>
     </index>
-    <index id="23" parent="7" name="CommenterName">
+    <index id="24" parent="7" name="CommenterName">
       <ColNames>CommenterName</ColNames>
     </index>
-    <key id="24" parent="7" name="PRIMARY">
+    <key id="25" parent="7" name="PRIMARY">
       <ColNames>CommentID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="25" parent="7" name="Comments_ibfk_1">
+    <foreign-key id="26" parent="7" name="Comments_ibfk_1">
       <ColNames>ArticlesID</ColNames>
       <RefSchemaName>uoaslashn</RefSchemaName>
       <RefTableName>Articles</RefTableName>
       <RefColNames>ArticlesID</RefColNames>
     </foreign-key>
-    <foreign-key id="26" parent="7" name="Comments_ibfk_2">
+    <foreign-key id="27" parent="7" name="Comments_ibfk_2">
       <ColNames>CommenterName</ColNames>
       <RefSchemaName>uoaslashn</RefSchemaName>
       <RefTableName>UsersNames</RefTableName>
       <RefColNames>Username</RefColNames>
     </foreign-key>
-    <column id="27" parent="8" name="Username">
+    <column id="28" parent="8" name="Username">
       <Position>1</Position>
       <DataType>varchar(64)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="28" parent="8" name="Password">
+    <column id="29" parent="8" name="Password">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="29" parent="8" name="PRIMARY">
+    <key id="30" parent="8" name="PRIMARY">
       <ColNames>Username</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="30" parent="9" name="UserID">
+    <column id="31" parent="9" name="UserID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="31" parent="9" name="Username">
+    <column id="32" parent="9" name="Username">
       <Position>2</Position>
       <DataType>varchar(64)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="32" parent="9" name="Name">
+    <column id="33" parent="9" name="Name">
       <Position>3</Position>
       <DataType>varchar(64)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="33" parent="9" name="Email">
+    <column id="34" parent="9" name="Email">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="34" parent="9" name="Address">
+    <column id="35" parent="9" name="Address">
       <Position>5</Position>
       <DataType>varchar(200)|0</DataType>
     </column>
-    <column id="35" parent="9" name="Education">
+    <column id="36" parent="9" name="Education">
       <Position>6</Position>
       <DataType>varchar(200)|0</DataType>
     </column>
-    <column id="36" parent="9" name="Race">
+    <column id="37" parent="9" name="Race">
       <Position>7</Position>
       <DataType>varchar(200)|0</DataType>
     </column>
-    <index id="37" parent="9" name="Username">
+    <index id="38" parent="9" name="Username">
       <ColNames>Username</ColNames>
     </index>
-    <key id="38" parent="9" name="PRIMARY">
+    <key id="39" parent="9" name="PRIMARY">
       <ColNames>UserID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="39" parent="9" name="usersProfile_ibfk_1">
+    <foreign-key id="40" parent="9" name="usersProfile_ibfk_1">
       <ColNames>Username</ColNames>
       <RefSchemaName>uoaslashn</RefSchemaName>
       <RefTableName>UsersNames</RefTableName>
