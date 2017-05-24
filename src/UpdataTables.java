@@ -48,18 +48,19 @@ public class UpdataTables {
         }
     }
 
-    public void updataUsersProfile(String username, String email, String address, String education, String ethnicity,Date DateOfBirth) {
+    public void updataUsersProfile(String username, String name, String email, String address, String education, String ethnicity,Date DateOfBirth) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO usersProfile (Username, Name, Email, Address, Education, Race) VALUES( ?, ? ,?,?,?,?);"
+                    "INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth) VALUES( ?, ? ,?,?,?,?,?);"
             );
             {
                 statement.setString(1, username);
-                statement.setString(2, email);
-                statement.setString(3, address);
-                statement.setString(4, education);
-                statement.setString(5, ethnicity);
-                statement.setDate(6,DateOfBirth);
+                statement.setString(2, name);
+                statement.setString(3, email);
+                statement.setString(4, address);
+                statement.setString(5, education);
+                statement.setString(6, ethnicity);
+                statement.setDate(7,DateOfBirth);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -70,7 +71,7 @@ public class UpdataTables {
     public void updataUsersNames(String username, String password) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO UsersNames VALUES( ?, ? );"
+                    "INSERT INTO UsersNames (Username, Password) VALUES( ?, ? );"
             );
             {
                 statement.setString(1, username);
@@ -89,7 +90,7 @@ public class UpdataTables {
        //Date is year - month - date
        Date date = new Date(2016-05-30);
 //        updataTables.updataUsersNames("ljam763", "blah");
-        updataTables.updataUsersProfile("ljam763", "ljam763@gmail.com", "blah", null,"chinese", date);
+        updataTables.updataUsersProfile("ljam763","James", "ljam763@gmail.com", "blah", null,"chinese", date);
 
     }
 }

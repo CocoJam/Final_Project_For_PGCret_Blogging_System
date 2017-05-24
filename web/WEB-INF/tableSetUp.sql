@@ -6,21 +6,27 @@ DROP TABLE IF EXISTS UsersNames;
 CREATE TABLE IF NOT EXISTS UsersNames(
   Username VARCHAR(64) not NULL ,
   Password VARCHAR(100) not NULL,
-  PRIMARY KEY (username)
-);
-
-CREATE TABLE IF NOT EXISTS usersProfile(
-  UserID int NOT NULL AUTO_INCREMENT,
-  Username VARCHAR(64) not NULL ,
   Name VARCHAR(64) not NULL ,
   Email VARCHAR(100),
   Address VARCHAR(200),
   Education VARCHAR(200),
-  Race VARCHAR(200),
+  Ethnicity VARCHAR(200),
   DateOfBirth DATE ,
-  PRIMARY KEY (UserID),
-  FOREIGN KEY (Username) REFERENCES UsersNames (UserName)
+  PRIMARY KEY ( Username)
 );
+
+-- CREATE TABLE IF NOT EXISTS usersProfile(
+--   UserID int NOT NULL AUTO_INCREMENT,
+--   Username VARCHAR(64) not NULL ,
+--   Name VARCHAR(64) not NULL ,
+--   Email VARCHAR(100),
+--   Address VARCHAR(200),
+--   Education VARCHAR(200),
+--   Ethnicity VARCHAR(200),
+--   DateOfBirth DATE ,
+--   PRIMARY KEY (UserID),
+--   FOREIGN KEY (Username) REFERENCES UsersNames (UserName)
+-- );
 -- Needed to add UserID for selections . Needed to be done not yet
 
 
@@ -46,6 +52,3 @@ CREATE TABLE IF NOT EXISTS Comments(
   FOREIGN KEY (CommenterName) REFERENCES UsersNames  (Username)
 );
 -- added the comments TIMESTAMP;
-
-SELECT Username, Password FROM UsersNames WHERE Username = 'ljam763' AND Password = 'blah';
-INSERT INTO usersProfile (ArticlesName, UserIDName, Content,SpecificDateCreated) VALUES( ? ,?,?,?)

@@ -127,7 +127,7 @@ public class SelectionOfTables {
     public void selectionUsersProfile (String username) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT Username, Name ,Email, Address, Education, Ethnicity, UserId FROM UsersProfile WHERE Username = ?;"
+                    "SELECT Username, Name ,Email, Address, Education, Ethnicity, UserId FROM UserNames WHERE Username = ?;"
             );
             {
                 statement.setString(1, username);
