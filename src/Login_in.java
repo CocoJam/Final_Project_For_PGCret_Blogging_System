@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.*;
 
 /**
  * Created by ljam763 on 23/05/2017.
@@ -26,14 +25,14 @@ public class Login_in extends HttpServlet {
         }
         username = req.getParameter("username");
         password = req.getParameter("password");
-        SelectionOfTables selectionOfTables = new SelectionOfTables();
+        LoginPassing loginPassing = new LoginPassing();
 
 //        uncomment to check the hashing function
 //        Passwords_Checker passwords_checker = new Passwords_Checker();
 //        String hashedPassowrd = passwords_checker.hashing(password, 5 , 500);
-//        selectionOfTables.selectionUsersNames(username,hashedPassowrd);
+//        loginPassing.selectionUsersNames(username,hashedPassowrd);
 
-        if (selectionOfTables.selectionUsersNames(username, password)) {
+        if (loginPassing.selectionUsersNames(username, password)) {
             session.setAttribute("username", username);
             session.setAttribute("password", password);
             session.setAttribute("log", true);

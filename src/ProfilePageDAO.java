@@ -3,10 +3,9 @@ import java.sql.*;
 /**
  * Created by ljam763 on 25/05/2017.
  */
-public class ProfilePageDAO {
-    protected Connection conn;
-    protected Passwords_Checker pass;
-    private String username;
+public class ProfilePageDAO extends LoginPassing{
+
+    private String usernames;
     private String name;
     private String email;
     private String address;
@@ -31,7 +30,7 @@ public class ProfilePageDAO {
                 while (resultSet.next()) {
                     ProfilePAge profilePAge = new ProfilePAge();
 
-                    username = resultSet.getString(1);
+                    usernames = resultSet.getString(1);
                     name = resultSet.getString(2);
                     email = resultSet.getString(3);
                     address = resultSet.getString(4);
@@ -39,7 +38,7 @@ public class ProfilePageDAO {
                     ethnicity = resultSet.getString(6);
                     date = resultSet.getDate(7);
 
-                    profilePAge.setUsername(username);
+                    profilePAge.setUsername(usernames);
                     profilePAge.setName(name);
                     profilePAge.setEmail(email);
                     profilePAge.setAddress(address);

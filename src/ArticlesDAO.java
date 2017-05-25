@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by ljam763 on 25/05/2017.
  */
-public class ArticlesDAO extends ProfilePageDAO {
+public class ArticlesDAO extends LoginPassing {
 
     public ArticlesDAO() {
         super();
@@ -32,8 +32,6 @@ public class ArticlesDAO extends ProfilePageDAO {
         }
         return null;
     }
-
-
 
     public Articles selectionArticles(int articlesID) {
         try {

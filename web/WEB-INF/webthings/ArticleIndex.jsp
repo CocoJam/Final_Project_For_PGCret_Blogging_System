@@ -24,12 +24,11 @@
             Date Created
         </th>
     </tr>
-<c:forEach items="${ArticleIndex}" var="art">
+<c:forEach items="${ArticleIndex}" var="index">
     <tr>
-        <%--<p>${index}</p>--%>
-        <td>${index.ArticlesID}</td>
-        <td><a href="" >${index.ArticlesName}</a></td>
-        <td>${index.SpecificDateCreated}</td>
+        <td>${index.ArticleID}</td>
+        <td><a href="" >${index.ArticleName}</a></td>
+        <td>${index.DateCreated}</td>
     </tr>
 </c:forEach>
 </table>
@@ -39,6 +38,6 @@
 
 
 <%--//Java Bean cant access needed to be checked--%>
-<%--private int ArticlesID;--%>
-<%--private String ArticlesName;--%>
-<%--private Date SpecificDateCreated;--%>
+<%--private int ArticleID;--%>
+<%--private String ArticleName;--%>
+<%--private Date DateCreated;--%>
