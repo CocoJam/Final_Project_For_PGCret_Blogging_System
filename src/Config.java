@@ -18,7 +18,7 @@ public class Config {
 
                     properties = new Properties(System.getProperties());
                     properties.setProperty("user", "ljam763");
-                    properties.setProperty("password", "b501347b");
+                    properties.setProperty("password", "b9638527410");
                     properties.setProperty("useSSL", "true");
                     break;
                 case Get:

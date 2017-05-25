@@ -11,6 +11,15 @@
     <title>Title</title>
 </head>
 <body>
-
+<p></p>
 </body>
 </html>
+
+
+articleContents
+
+<%--private int articleid = 0;--%>
+<%--private String articlename = null;--%>
+<%--private String username = null;--%>
+<%--private String content = null;--%>
+<%--private Date datecreated =null;--%>

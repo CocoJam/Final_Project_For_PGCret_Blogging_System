@@ -51,4 +51,13 @@
         <url-pattern>/ArticlesIndex</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Articles</servlet-name>
+        <servlet-class>ArticleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Articles</servlet-name>
+        <url-pattern>/Articles</url-pattern>
+    </servlet-mapping>
+
 </web-app>

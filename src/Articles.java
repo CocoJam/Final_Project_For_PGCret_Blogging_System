@@ -4,20 +4,21 @@ import java.util.Date;
  * Created by ljam763 on 25/05/2017.
  */
 public class Articles {
-    public int getArticleID() {
-        return ArticleID;
+
+    public int getArticleid() {
+        return articleid;
     }
 
-    public void setArticleID(int articleID) {
-        ArticleID = articleID;
+    public void setArticleid(int articleid) {
+        this.articleid = articleid;
     }
 
-    public String getArticleName() {
-        return ArticleName;
+    public String getArticlename() {
+        return articlename;
     }
 
-    public void setArticleName(String articleName) {
-        ArticleName = articleName;
+    public void setArticlename(String articlename) {
+        this.articlename = articlename;
     }
 
     public String getUsername() {
@@ -29,25 +30,31 @@ public class Articles {
     }
 
     public String getContent() {
-        return Content;
+        return content;
     }
 
     public void setContent(String content) {
-        Content = content;
+        this.content = content;
     }
 
-    public Date getDateCreated() {
-        return DateCreated;
+    public Date getDatecreated() {
+        return datecreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
-        DateCreated = dateCreated;
+    public void setDatecreated(Date datecreated) {
+        this.datecreated = datecreated;
     }
 
-    private int ArticleID;
-    private String ArticleName;
-    private String username;
-    private String Content;
-    private Date DateCreated;
+    private int articleid = 0;
+    private String articlename = null;
+    private String username = null;
+    private String content = null;
+    private Date datecreated =null;
+
+    public Articles() {
+    }
+
+
+
 
 }

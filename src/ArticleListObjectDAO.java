@@ -9,12 +9,18 @@ import java.util.List;
  * Created by ljam763 on 25/05/2017.
  */
 public class ArticleListObjectDAO extends ArticlesDAO {
+
+    private int ArticleID = 0;
+    private String ArticleName = null;
+    private Date DateCreated =null;
+
+
     public ArticleListObjectDAO() {
         super();
     }
 
     public List<Articles> selectionArticlesList(String UserIDName) {
-        List<Articles> index = new ArrayList<>();
+        List<Articles> ListIndex = new ArrayList<>();
         try {
             PreparedStatement statement = conn.prepareStatement(
                     "SELECT ArticlesID, ArticlesName,SpecificDateCreated FROM Articles WHERE UserIDName = ?;"
@@ -24,20 +30,20 @@ public class ArticleListObjectDAO extends ArticlesDAO {
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     Articles articleListObject = new Articles();
-                    int ArticleID = resultSet.getInt(1);
-                    String ArticleName = resultSet.getString(2);
-                    Date DateCreated = resultSet.getDate(3);
-                    articleListObject.setArticleID(ArticleID);
-                    articleListObject.setArticleName(ArticleName);
-                    articleListObject.setDateCreated(DateCreated);
-                    index.add(articleListObject);
+                    ArticleID = resultSet.getInt(1);
+                    ArticleName = resultSet.getString(2);
+                    DateCreated = resultSet.getDate(3);
+                    articleListObject.setArticleid(ArticleID);
+                    articleListObject.setArticlename(ArticleName);
+                    articleListObject.setDatecreated(DateCreated);
+                    ListIndex.add(articleListObject);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(index.size());
-        return index;
+        System.out.println(ListIndex.size());
+        return ListIndex;
     }
 
 }

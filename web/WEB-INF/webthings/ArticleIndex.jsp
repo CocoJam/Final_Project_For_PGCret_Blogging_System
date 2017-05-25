@@ -26,9 +26,9 @@
     </tr>
 <c:forEach items="${ArticleIndex}" var="index">
     <tr>
-        <td>${index.ArticleID}</td>
-        <td><a href="" >${index.ArticleName}</a></td>
-        <td>${index.DateCreated}</td>
+        <td>${index.articleid}</td>
+        <td><a href="/Articles?articleI=${index.articleid}" >${index.articlename}</a></td>
+        <td>${index.datecreated}</td>
     </tr>
 </c:forEach>
 </table>

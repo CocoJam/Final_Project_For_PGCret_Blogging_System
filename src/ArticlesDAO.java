@@ -11,6 +11,14 @@ import java.util.List;
  */
 public class ArticlesDAO extends LoginPassing {
 
+    private int ArticleID = 0;
+    private String ArticleName = null;
+    private String username = null;
+    private String Content = null;
+    private Date DateCreated =null;
+
+
+
     public ArticlesDAO() {
         super();
     }
@@ -53,16 +61,17 @@ public class ArticlesDAO extends LoginPassing {
 
     private Articles makeArticle(ResultSet resultSet) throws SQLException {
         Articles articles = new Articles();
-        int ArticleID = resultSet.getInt(1);
-        String ArticleName = resultSet.getString(2);
-        String username = resultSet.getString(3);
-        String Content = resultSet.getString(4);
+        ArticleID = resultSet.getInt(1);
+        ArticleName = resultSet.getString(2);
+        username = resultSet.getString(3);
+        Content = resultSet.getString(4);
         Date DateCreated = resultSet.getTimestamp(5);
-        articles.setArticleName(ArticleName);
-        articles.setArticleID(ArticleID);
+        articles.setArticlename(ArticleName);
+        articles.setArticleid(ArticleID);
         articles.setContent(Content);
-        articles.setDateCreated(DateCreated);
+        articles.setDatecreated(DateCreated);
         articles.setUsername(username);
+        System.out.println("made");
         return articles;
     }
 
