@@ -32,4 +32,23 @@
         <servlet-name>login_out</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ProfilePage</servlet-name>
+        <servlet-class>ProfilePageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProfilePage</servlet-name>
+        <url-pattern>/ProfilePage</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ArticlesIndex</servlet-name>
+        <servlet-class>ArticlesIndexServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ArticlesIndex</servlet-name>
+        <url-pattern>/ArticlesIndex</url-pattern>
+    </servlet-mapping>
+
 </web-app>

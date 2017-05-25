@@ -7,7 +7,6 @@ public class UpdataTables {
     private Connection conn;
     private Passwords_Checker pass;
 
-
     public UpdataTables() {
         ConnectionToTheDataBase.ConnectionToBase(ConnectionToTheDataBase.ConnectionTypes.Get);
         this.conn = ConnectionToTheDataBase.conn;
@@ -17,13 +16,12 @@ public class UpdataTables {
     public void updataComments(int CommentId, int ArticlesID, String CommenterName, String Comments, Timestamp CommentTime) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO usersProfile (ArticlesID, CommenterName, Comments, CommentTime) VALUES( ?, ? ,?,?,?);"
+                    "INSERT INTO Comments (ArticlesID, CommenterName, Comments) VALUES( ?, ? ,?);"
             );
-            {   statement.setInt(1,CommentId);
-                statement.setInt(2, ArticlesID);
-                statement.setString(3, CommenterName);
-                statement.setString(4, Comments);
-                statement.setTimestamp(5, CommentTime);
+            {
+                statement.setInt(1, ArticlesID);
+                statement.setString(2, CommenterName);
+                statement.setString(3, Comments);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -34,13 +32,12 @@ public class UpdataTables {
     public void updataArticles(int ArticlesID, String ArticleName, String UserIDName, String content, Timestamp SpecificDateCreated) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO usersProfile (ArticlesName, UserIDName, Content,SpecificDateCreated) VALUES( ? ,?,?,?);"
+                    "INSERT INTO Articles (ArticlesName, UserIDName, Content) VALUES( ? ,?,?);"
             );
             {
                 statement.setString(1, ArticleName);
                 statement.setString(2, UserIDName);
                 statement.setString(3, content);
-                statement.setTimestamp( 4,SpecificDateCreated);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {

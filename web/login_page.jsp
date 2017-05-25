@@ -6,13 +6,11 @@
 </head>
 <body>
 
-<%
+<%    String username = (String) session.getAttribute("username");
     if ( session.getAttribute("log") != null){
         if ((boolean)session.getAttribute("log")){
     request.getRequestDispatcher("/WEB-INF/webthings/content_page.jsp").forward(request,response);}
 }
-    String username = (String) session.getAttribute("username");
-    System.out.println(username + " username");
     if ( username != null){
     out.println("<p>"+ username + " has been Logged Out</p>");
         session.setAttribute("username",null);

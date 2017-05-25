@@ -10,33 +10,11 @@ public class SelectionOfTables {
         return username;
     }
 
-    public int getUserID() {
-        return userID;
-    }
 
     public String getPassword() {
         return password;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getEducation() {
-        return education;
-    }
-
-    public String getEthnicity() {
-        return ethnicity;
-    }
 
     public int getArticleID() {
         return ArticleID;
@@ -75,13 +53,7 @@ public class SelectionOfTables {
     }
 
     private String username;
-    private int userID;
     private String password;
-    private String name;
-    private String email;
-    private String address;
-    private String education;
-    private String ethnicity;
     private int ArticleID;
     private String ArticleName;
     private String ArticleContent;
@@ -125,37 +97,10 @@ public class SelectionOfTables {
 
 
 
-
-    public void selectionUsersProfile (String username) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "SELECT Username, Name ,Email, Address, Education, Ethnicity, UserId FROM UserNames WHERE Username = ?;"
-            );
-            {
-                statement.setString(1, username);
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    this.username = resultSet.getString(1);
-                    this.name = resultSet.getString(2);
-                    this.email = resultSet.getString(3);
-                    this.address = resultSet.getString(4);
-                    this.education = resultSet.getString(5);
-                    this.ethnicity = resultSet.getString(6);
-                    this.userID = resultSet.getInt(7);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
     public void selectionArticles (String articleName) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT ArticlesID, ArticlesName , UserIDName, Content, SpecificDateCreated FROM Articles WHERE ArticlesID = ?;"
+                    "SELECT ArticlesID, ArticlesName , UserIDName, Content, SpecificDateCreated FROM Articles WHERE ArticlesName = ?;"
             );
             {
                 statement.setString(1, articleName);

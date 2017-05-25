@@ -52,3 +52,6 @@ CREATE TABLE IF NOT EXISTS Comments(
   FOREIGN KEY (CommenterName) REFERENCES UsersNames  (Username)
 );
 -- added the comments TIMESTAMP;
+INSERT INTO Articles (ArticlesName, UserIDName, Content) VALUES('blah', 'ljam' ,'content content content'),
+('blahasdasfsdfsdf', 'ljam' ,'sdfgdsfhhhgdfhfhgfjfgjghjfgj' )
+INSERT INTO Comments (ArticlesID, CommenterName, Comments) VALUES('4', 'ljam763',' shit that is bad articles')
