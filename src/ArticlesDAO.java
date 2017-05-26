@@ -96,13 +96,16 @@ public class ArticlesDAO extends LoginPassing {
         username = resultSet.getString(3);
         Content = resultSet.getString(4);
         Date DateCreated = resultSet.getTimestamp(5);
+        ArticlesSetStatments(articles, DateCreated);
+        return articles;
+    }
+
+    private void ArticlesSetStatments(Articles articles, Date dateCreated) {
         articles.setArticlename(ArticleName);
         articles.setArticleid(ArticleID);
         articles.setContent(Content);
-        articles.setDatecreated(DateCreated);
+        articles.setDatecreated(dateCreated);
         articles.setUsername(username);
-
-        return articles;
     }
 
 }

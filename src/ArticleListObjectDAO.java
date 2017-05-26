@@ -30,12 +30,8 @@ public class ArticleListObjectDAO extends ArticlesDAO {
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     Articles articleListObject = new Articles();
-                    ArticleID = resultSet.getInt(1);
-                    ArticleName = resultSet.getString(2);
-                    DateCreated = resultSet.getDate(3);
-                    articleListObject.setArticleid(ArticleID);
-                    articleListObject.setArticlename(ArticleName);
-                    articleListObject.setDatecreated(DateCreated);
+                    sqlSetStatments(resultSet);
+                    articleListObjectSetStatments(articleListObject);
                     ListIndex.add(articleListObject);
                 }
             }
@@ -44,6 +40,18 @@ public class ArticleListObjectDAO extends ArticlesDAO {
         }
         System.out.println("Article size" + ListIndex.size());
         return ListIndex;
+    }
+
+    private void sqlSetStatments(ResultSet resultSet) throws SQLException {
+        ArticleID = resultSet.getInt(1);
+        ArticleName = resultSet.getString(2);
+        DateCreated = resultSet.getDate(3);
+    }
+
+    private void articleListObjectSetStatments(Articles articleListObject) {
+        articleListObject.setArticleid(ArticleID);
+        articleListObject.setArticlename(ArticleName);
+        articleListObject.setDatecreated(DateCreated);
     }
 
 }

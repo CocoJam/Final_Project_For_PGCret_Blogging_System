@@ -25,9 +25,28 @@
     <input type="text" id="username"  name="username">
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" >
-    <label for="Lucky Number">Lucky Number:</label>
-    <input type="text" id="Lucky Number" name="Lucky number">
+    <label for="Name">Name:</label>
+    <input type="text" id="Name" name="Name">
+    <label for="email">email:</label>
+    <input type="email" id="email" name="email">
+    <label for="address">address:</label>
+    <input type="text" id="address" name="address">
+    <label for="education">education:</label>
+    <input type="text" id="education" name="education">
+    <label for="ethnicity">ethnicity:</label>
+    <input type="text" id="ethnicity" name="ethnicity">
+    <label for="date">date:</label>
+    <input type="date" id="date" name="date">
     <input type="submit" name="log" value="Registration">
 </form>
 </body>
 </html>
+
+
+<%--private String username;--%>
+<%--private String name;--%>
+<%--private String email;--%>
+<%--private String address;--%>
+<%--private String education;--%>
+<%--private String ethnicity;--%>
+<%--private Date date;--%>

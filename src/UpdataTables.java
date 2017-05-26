@@ -1,5 +1,6 @@
 import java.sql.*;
 
+
 /**
  * Created by ljam763 on 24/05/2017.
  */
@@ -30,10 +31,10 @@ public class UpdataTables {
     }
 
 
-    public void updataUsersProfile(String username, String name, String email, String address, String education, String ethnicity,Date DateOfBirth) {
+    public void updataUsersProfile(String username, String password, String name, String email, String address, String education, String ethnicity,Date DateOfBirth) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth) VALUES( ?, ? ,?,?,?,?,?);"
+                    "INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth, Password) VALUES( ?, ? ,?,?,?,?,?,?);"
             );
             {
                 statement.setString(1, username);
@@ -43,6 +44,7 @@ public class UpdataTables {
                 statement.setString(5, education);
                 statement.setString(6, ethnicity);
                 statement.setDate(7,DateOfBirth);
+                statement.setString(8,password);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {

@@ -73,13 +73,16 @@ public class CommentsDAO extends LoginPassing {
             String CommentName = resultSet.getString(3);
             String  Comment = resultSet.getString(4);
             Date CommentTime = resultSet.getTimestamp(5);
-
-            comments.setArticleID(ArticleID);
-            comments.setComment(Comment);
-            comments.setCommentName(CommentName);
-            comments.setCommentID(CommentID);
-            comments.setCommentTime(CommentTime);
+            commentsSetStatments(comments, CommentID, ArticleID, CommentName, Comment, CommentTime);
             listOfComments.add(comments);
         }
+    }
+
+    private void commentsSetStatments(Comments comments, int commentID, int articleID, String commentName, String comment, Date commentTime) {
+        comments.setArticleID(articleID);
+        comments.setComment(comment);
+        comments.setCommentName(commentName);
+        comments.setCommentID(commentID);
+        comments.setCommentTime(commentTime);
     }
 }
