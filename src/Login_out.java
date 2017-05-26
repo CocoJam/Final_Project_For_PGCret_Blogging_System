@@ -10,11 +10,12 @@ import java.io.IOException;
  */
 public class Login_out extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        session.setAttribute("password", null);
-        session.setAttribute("log",false);
-        session.setAttribute("Registration" ,false);
+        session.invalidate();
+//        session.setAttribute("password", null);
+//        session.setAttribute("log",false);
+//        session.setAttribute("Registration" ,false);
         req.getRequestDispatcher("/login_page.jsp").forward(req,resp);
     }
 }

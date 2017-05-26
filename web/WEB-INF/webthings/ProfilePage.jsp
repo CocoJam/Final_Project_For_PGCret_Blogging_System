@@ -20,15 +20,8 @@
 <p>${profileInfo.ethnicity}</p>
 <p>${profileInfo.date}</p>
 <a href="/ArticlesIndex">To articles index</a>
+<form action="/logout" method="get">
+    <input type="submit" value="Logout">
+</form>
 </body>
 </html>
-
-
-<%--private String username;--%>
-<%--private String name;--%>
-<%--private String email;--%>
-<%--private String address;--%>
-<%--private String education;--%>
-<%--private String ethnicity;--%>
-<%--private int userID;--%>
-<%--private Date date;--%>
