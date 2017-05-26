@@ -13,7 +13,7 @@ public class CommentsServlet extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         String username = (String) session.getAttribute("username");
-//        req.setAttribute("ArticleIndex", new ArticleListObjectDAO().selectionArticlesList(username));
+//        session.setAttribute("ArticleIndex", new ArticleListObjectDAO().selectionArticlesList(username));
         req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req,resp);
         return;
     }

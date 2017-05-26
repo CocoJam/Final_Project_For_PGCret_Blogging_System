@@ -18,7 +18,7 @@ public class ProfilePageServlet extends HttpServlet{
         HttpSession session = req.getSession();
         username = (String) session.getAttribute("username");
         ProfilePAge profilePAge = profilePageDAO.generateUsersProfile(username);
-        req.setAttribute("profileInfo", profilePAge);
+        session.setAttribute("profileInfo", profilePAge);
         req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req,resp);
         return;
     }

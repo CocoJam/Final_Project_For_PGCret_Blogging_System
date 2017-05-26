@@ -6,12 +6,12 @@
 </head>
 <body>
 
-<%    String username = (String) session.getAttribute("username");
-    if ( username != null){
-    out.println("<p>"+ username + " has been Logged Out</p>");
-        session.setAttribute("username",null);
-}
-%>
+<%--<%    String username = (String) session.getAttribute("username");--%>
+    <%--if ( username != null){--%>
+    <%--out.println("<p>"+ username + " has been Logged Out</p>");--%>
+        <%--session.setAttribute("username",null);--%>
+<%--}--%>
+<%--%>--%>
 
 <form action="/login" method="post">
     <label for="username">Username:</label>

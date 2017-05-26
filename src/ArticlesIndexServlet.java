@@ -10,13 +10,15 @@ import java.util.List;
  * Created by ljam763 on 25/05/2017.
  */
 public class ArticlesIndexServlet extends HttpServlet {
+    private List<Articles> indexList;
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         String username = (String) session.getAttribute("username");
+        if (indexList == null){
         List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
-        req.setAttribute("ArticleIndex",indexList);
-        System.out.println("Index");
+        session.setAttribute("ArticleIndex",indexList);
+        System.out.println("Index");}
         req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req,resp);
         return;
     }

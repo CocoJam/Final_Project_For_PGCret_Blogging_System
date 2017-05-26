@@ -14,9 +14,10 @@ public class ArticleServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
         int ArticleID = Integer.parseInt(req.getParameter("articleID"));
         Articles article = articlesDAO.selectionArticles(ArticleID);
-        req.setAttribute("articleContents", article);
+        session.setAttribute("articleContents", article);
         req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
         return;
     }
@@ -26,9 +27,7 @@ public class ArticleServlet extends HttpServlet {
         String addingArticles = req.getParameter("add");
         HttpSession session = req.getSession();
         String username = (String) session.getAttribute("username");
-        System.out.println("Where does this go");
         if (addingArticles != null) {
-            System.out.println("Here");
             if (addingArticles.equals("addNewArticle")) {
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
                 return;
