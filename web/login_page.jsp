@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Login Page -> Registration , Profile Page</title>
+    <title>Login Page -> ProfilePage.Registration , Profile Page</title>
 </head>
 <body>
 
@@ -22,7 +22,7 @@
 </form>
 
 <form action="/login" method="get">
-    <input type="submit" value="Registration" name="Registration">
+    <input type="submit" value="ProfilePage.Registration" name="Registration">
 </form>
 </body>
 </html>

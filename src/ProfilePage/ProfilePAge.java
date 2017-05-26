@@ -1,6 +1,7 @@
+package ProfilePage;
+
 import java.lang.reflect.Field;
 import java.util.Date;
-import java.util.Enumeration;
 
 /**
  * Created by ljam763 on 25/05/2017.

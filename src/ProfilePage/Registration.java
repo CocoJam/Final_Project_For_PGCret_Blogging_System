@@ -1,3 +1,5 @@
+package ProfilePage;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -5,10 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.SecureRandom;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.Random;
 
@@ -31,17 +29,20 @@ public class Registration extends HttpServlet {
     private static final int KEY_LENGTH = 512;
     private static final Random RANDOM = new SecureRandom();
 
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        UpdataTables updataTables = new UpdataTables();
         profileSetUp(req);
 //        updataTables.updataUsersNames(username,password);
         //        uncomment to check the hashing function
-//        Passwords_Checker passwords_checker = new Passwords_Checker();
+//        Login.Passwords_Checker passwords_checker = new Login.Passwords_Checker();
 //        String hashedPassowrd = passwords_checker.hashing(password, 5 , 500);
-        updataTables.updataUsersProfile(username,password,name,email,address,education,ethnicity, (java.sql.Date) date);
+        profilePageDAO.createUsersProfile(username,password,name,email,address,education,ethnicity, (java.sql.Date) date);
         ProfilePAge profilePAge = profilePageDAO.getUsersProfile(username);
         session.setAttribute("profileInfo", profilePAge);
         session.setAttribute("username",username);

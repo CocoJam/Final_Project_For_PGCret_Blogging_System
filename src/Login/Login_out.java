@@ -1,3 +1,5 @@
+package Login;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +17,7 @@ public class Login_out extends HttpServlet {
         session.invalidate();
 //        session.setAttribute("password", null);
 //        session.setAttribute("log",false);
-//        session.setAttribute("Registration" ,false);
+//        session.setAttribute("ProfilePage.Registration" ,false);
         req.getRequestDispatcher("/login_page.jsp").forward(req,resp);
     }
 }

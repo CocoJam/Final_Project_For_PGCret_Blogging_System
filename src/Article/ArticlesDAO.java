@@ -1,7 +1,10 @@
-import javax.servlet.http.HttpServlet;
+package Article;
+
+import Login.LoginPassing;
+
 import java.sql.*;
 import java.util.Date;
-import java.util.List;
+
 
 /**
  * Created by ljam763 on 25/05/2017.

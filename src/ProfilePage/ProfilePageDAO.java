@@ -1,9 +1,11 @@
+package ProfilePage;
+import Connection.*;
+import Login.*;
 import java.sql.*;
-
 /**
  * Created by ljam763 on 25/05/2017.
  */
-public class ProfilePageDAO extends LoginPassing{
+public class ProfilePageDAO extends LoginPassing {
 
     private String usernames;
     private String name;
@@ -39,13 +41,13 @@ public class ProfilePageDAO extends LoginPassing{
     }
 
 
-    public void createUsersProfile(String username, String name, String email, String address, String education, String ethnicity,Date DateOfBirth) {
+    public void createUsersProfile(String username, String password, String name, String email, String address, String education, String ethnicity,Date DateOfBirth) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth) VALUES( ?, ? ,?,?,?,?,?);"
+                    "INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth, Password) VALUES( ?, ? ,?,?,?,?,?,?);"
             );
             {
-                sqlSetStatments(username, name, email, address, education, ethnicity, DateOfBirth, statement);
+                sqlSetStatment(username, password, name, email, address, education, ethnicity, DateOfBirth, statement);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -53,7 +55,26 @@ public class ProfilePageDAO extends LoginPassing{
         }
     }
 
-    private void sqlSetStatments(String username, String name, String email, String address, String education, String ethnicity, Date DateOfBirth, PreparedStatement statement) throws SQLException {
+    public void updataUsersNames(String username, String password) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(
+                    "UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =? , , Password= ? WHERE Username = ?, Password= ?;"
+            );
+            {
+//                sqlSetStatment();
+
+                statement.setString(1, username);
+                statement.setString(2, password);
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    private void sqlSetStatment(String username, String password, String name, String email, String address, String education, String ethnicity, Date DateOfBirth, PreparedStatement statement) throws SQLException {
         statement.setString(1, username);
         statement.setString(2, name);
         statement.setString(3, email);
@@ -61,7 +82,9 @@ public class ProfilePageDAO extends LoginPassing{
         statement.setString(5, education);
         statement.setString(6, ethnicity);
         statement.setDate(7,DateOfBirth);
+        statement.setString(8,password);
     }
+
 
     private ProfilePAge makeProfilePAge(ResultSet resultSet) throws SQLException {
         ProfilePAge profilePAge = new ProfilePAge();

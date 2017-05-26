@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Registration -> Profile Page</title>
+    <title>ProfilePage.Registration -> Profile Page</title>
 </head>
 <body>
 

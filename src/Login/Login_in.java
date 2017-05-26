@@ -1,3 +1,5 @@
+package Login;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +30,7 @@ public class Login_in extends HttpServlet {
         LoginPassing loginPassing = new LoginPassing();
 
 //        uncomment to check the hashing function
-//        Passwords_Checker passwords_checker = new Passwords_Checker();
+//        Login.Passwords_Checker passwords_checker = new Login.Passwords_Checker();
 //        String hashedPassowrd = passwords_checker.hashing(password, 5 , 500);
 //        loginPassing.selectionUsersNames(username,hashedPassowrd);
 
@@ -50,10 +52,10 @@ public class Login_in extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        String registration = req.getParameter("Registration");
+        String registration = req.getParameter("ProfilePage.Registration");
         session.setAttribute("Registration", false);
         if (registration != null){
-            if (registration.equals("Registration")){
+            if (registration.equals("ProfilePage.Registration")){
                 req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req,resp);
             }
         }

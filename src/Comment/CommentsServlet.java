@@ -1,3 +1,5 @@
+package Comment;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +15,7 @@ public class CommentsServlet extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         String username = (String) session.getAttribute("username");
-//        session.setAttribute("ArticleIndex", new ArticleListObjectDAO().selectionArticlesList(username));
+//        session.setAttribute("ArticleIndex", new Article.ArticleListObjectDAO().selectionArticlesList(username));
         req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req,resp);
         return;
     }

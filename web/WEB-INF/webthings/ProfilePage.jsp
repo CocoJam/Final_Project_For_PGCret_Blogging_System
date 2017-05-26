@@ -23,5 +23,8 @@
 <form action="/logout" method="get">
     <input type="submit" value="Logout">
 </form>
+<form action="/Registration" method="get">
+    <input type="submit" name="log" value="ChangeUserInformation">
+</form>
 </body>
 </html>

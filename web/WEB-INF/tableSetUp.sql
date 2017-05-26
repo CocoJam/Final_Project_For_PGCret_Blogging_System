@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS Comments;
+DROP TABLE IF EXISTS Comment.Comments;
 DROP TABLE IF EXISTS usersProfile;
-DROP TABLE IF EXISTS Articles;
+DROP TABLE IF EXISTS Article.Articles;
 DROP TABLE IF EXISTS UsersNames;
 
 CREATE TABLE IF NOT EXISTS UsersNames(
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS UsersNames(
 -- Needed to add UserID for selections . Needed to be done not yet
 
 
-CREATE TABLE IF NOT EXISTS Articles(
+CREATE TABLE IF NOT EXISTS Article.Articles(
   ArticlesID int not NULL AUTO_INCREMENT,
   ArticlesName VARCHAR(64) not NULL ,
   UserIDName VARCHAR(64) not NULL ,
@@ -40,18 +40,15 @@ CREATE TABLE IF NOT EXISTS Articles(
   FOREIGN KEY (UserIDName) REFERENCES UsersNames (Username)
 );
 
--- Date change to TIMESTAMP;
-CREATE TABLE IF NOT EXISTS Comments(
+
+CREATE TABLE IF NOT EXISTS Comment.Comments(
   CommentID int not NULL AUTO_INCREMENT,
   ArticlesID int not NULL,
   CommenterName VARCHAR(64) not NULL ,
-  Comments VARCHAR(64) not NULL ,
+  Comment.Comments VARCHAR(64) not NULL ,
   CommentTime TIMESTAMP NOT NULL ,
   PRIMARY KEY (CommentID),
-  FOREIGN KEY (ArticlesID) REFERENCES Articles (ArticlesID),
+  FOREIGN KEY (ArticlesID) REFERENCES Article.Articles (ArticlesID),
   FOREIGN KEY (CommenterName) REFERENCES UsersNames  (Username)
 );
--- added the comments TIMESTAMP;
-INSERT INTO Articles (ArticlesName, UserIDName, Content) VALUES('blah', 'ljam' ,'content content content'),
-('blahasdasfsdfsdf', 'ljam' ,'sdfgdsfhhhgdfhfhgfjfgjghjfgj' )
-INSERT INTO Comments (ArticlesID, CommenterName, Comments) VALUES('4', 'ljam763',' shit that is bad articles')
+
