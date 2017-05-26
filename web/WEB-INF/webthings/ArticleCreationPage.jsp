@@ -13,11 +13,17 @@
 <body>
 <form action="/Articles" method="post">
     <label for="ArticleName">Article Name</label>
-    <input name="ArticleName" type="text" id="ArticleName">
+    <input name="ArticleName" type="text" id="ArticleName" value="${articleContents.articlename}">
     <textarea rows="4" cols="50" name="ArticleContent">
-        Please enter Text here.
+    ${articleContents.content}
     </textarea>
-    <input type="submit" name="add" value="addingToDataBase">
+    <% if (request.getAttribute("articleContents") != null){
+        System.out.println("EDIT");
+        out.println("<input type=\"submit\" name=\"add\" value=\"Editted\">");
+    }else{
+        out.println("<input type=\"submit\" name=\"add\" value=\"addingToDataBase\">");
+    }
+    %>
 </form>
 </body>
 </html>

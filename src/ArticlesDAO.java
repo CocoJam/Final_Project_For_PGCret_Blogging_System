@@ -56,7 +56,7 @@ public class ArticlesDAO extends LoginPassing {
         return null;
     }
 
-    public void updataArticles(String ArticleName, String UserIDName, String content) {
+    public void madeArticles(String ArticleName, String UserIDName, String content) {
         try {
             PreparedStatement statement = conn.prepareStatement(
                     "INSERT INTO Articles (ArticlesName, UserIDName, Content) VALUES( ? ,?,?);"
@@ -71,6 +71,7 @@ public class ArticlesDAO extends LoginPassing {
             e.printStackTrace();
         }
     }
+    //update method
 
     private Articles makeArticle(ResultSet resultSet) throws SQLException {
         Articles articles = new Articles();
@@ -84,6 +85,7 @@ public class ArticlesDAO extends LoginPassing {
         articles.setContent(Content);
         articles.setDatecreated(DateCreated);
         articles.setUsername(username);
+
         return articles;
     }
 
