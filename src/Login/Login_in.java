@@ -44,7 +44,7 @@ public class Login_in extends HttpServlet {
         } else {
             session.setAttribute("log", false);
             System.out.println("loged-in rejected");
-            req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
+            req.getRequestDispatcher("/index.jsp").forward(req, resp);
             return;
         }
     }

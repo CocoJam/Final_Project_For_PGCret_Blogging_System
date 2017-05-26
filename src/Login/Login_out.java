@@ -18,6 +18,6 @@ public class Login_out extends HttpServlet {
 //        session.setAttribute("password", null);
 //        session.setAttribute("log",false);
 //        session.setAttribute("ProfilePage.Registration" ,false);
-        req.getRequestDispatcher("/login_page.jsp").forward(req,resp);
+        req.getRequestDispatcher("/index.jsp").forward(req,resp);
     }
 }
