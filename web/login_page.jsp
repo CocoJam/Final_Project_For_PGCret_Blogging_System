@@ -22,7 +22,7 @@
 </form>
 
 <form action="/login" method="get">
-    <input type="submit" value="ProfilePage.Registration" name="Registration">
+    <input type="submit" value="Registration" name="Registration">
 </form>
 </body>
 </html>
