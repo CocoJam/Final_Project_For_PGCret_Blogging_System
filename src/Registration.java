@@ -37,6 +37,7 @@ public class Registration extends HttpServlet {
 //        String hashedPassowrd = passwords_checker.hashing(password, 5 , 500);
 
         updataTables.updataUsersNames(username,password);
+
         session.setAttribute("username",username);
         session.setAttribute("password", password);
         req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req,resp);

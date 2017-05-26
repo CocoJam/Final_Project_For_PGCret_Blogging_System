@@ -29,21 +29,6 @@ public class UpdataTables {
         }
     }
 
-    public void updataArticles( String ArticleName, String UserIDName, String content, Timestamp SpecificDateCreated) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO Articles (ArticlesName, UserIDName, Content) VALUES( ? ,?,?);"
-            );
-            {
-                statement.setString(1, ArticleName);
-                statement.setString(2, UserIDName);
-                statement.setString(3, content);
-                statement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void updataUsersProfile(String username, String name, String email, String address, String education, String ethnicity,Date DateOfBirth) {
         try {

@@ -14,9 +14,7 @@
 <form action="/Articles" method="post">
     <label for="ArticleName">Article Name</label>
     <input name="ArticleName" type="text" id="ArticleName" value="${articleContents.articlename}">
-    <textarea rows="4" cols="50" name="ArticleContent">
-    ${articleContents.content}
-    </textarea>
+    <textarea rows="4" cols="50" name="ArticleContent">${articleContents.content}</textarea>
     <% if (request.getAttribute("articleContents") != null){
         System.out.println("EDIT");
         out.println("<input type=\"submit\" name=\"add\" value=\"Editted\">");

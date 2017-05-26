@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>${articleContents.articlename}</h1>
-<p>${articleContents.content}</p>
+<textarea>${articleContents.content}</textarea>
 <p>${articleContents.username}</p>
 <p>${articleContents.datecreated}</p>
 

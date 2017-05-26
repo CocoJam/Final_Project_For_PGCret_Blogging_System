@@ -71,7 +71,23 @@ public class ArticlesDAO extends LoginPassing {
             e.printStackTrace();
         }
     }
-    //update method
+
+    public void updataArticles( String ArticleName,String content, int ArticleID) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(
+                    "UPDATE Articles SET ArticlesName = ?, Content= ? WHERE ArticlesID = ?;"
+            );
+            {
+                statement.setString(1, ArticleName);
+                statement.setString(2, content);
+                statement.setInt(3, ArticleID);
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private Articles makeArticle(ResultSet resultSet) throws SQLException {
         Articles articles = new Articles();

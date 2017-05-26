@@ -12,6 +12,8 @@ import java.util.List;
 public class ArticleServlet extends HttpServlet {
     private ArticlesDAO articlesDAO = new ArticlesDAO();
     private int ArticleID;
+    private String ArticleName;
+    private String ArticleContent;
     private Articles article;
     private HttpSession session;
     @Override
@@ -45,9 +47,13 @@ public class ArticleServlet extends HttpServlet {
                 return;
             }
             else if (addingArticles.equals("Editted")){
-                String ArticleName = req.getParameter("ArticleName");
-                String ArticleContent = req.getParameter("ArticleContent");
-
+                ArticleName = req.getParameter("ArticleName");
+                ArticleContent = req.getParameter("ArticleContent");
+                articlesDAO.updataArticles(ArticleName,ArticleContent, ArticleID);
+                article = articlesDAO.selectionArticles(ArticleID);
+                req.setAttribute("articleContents", article);
+                req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
+                return;
             }
             if (addingArticles.equals("addingToDataBase")) {
                 String ArticleName = req.getParameter("ArticleName");
