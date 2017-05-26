@@ -19,7 +19,7 @@ public class Login_in extends HttpServlet {
         if (session.getAttribute("log") != null) {
             if ((boolean) session.getAttribute("log")) {
                 System.out.println("Login");
-                req.getRequestDispatcher("/WEB-INF/webthings/content_page.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                 return;
             }
         }

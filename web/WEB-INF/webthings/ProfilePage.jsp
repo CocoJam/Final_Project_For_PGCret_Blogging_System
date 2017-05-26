@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Profile Page -> ArticleIndex</title>
 </head>
 <body>
 <h1>${profileInfo.username}</h1>

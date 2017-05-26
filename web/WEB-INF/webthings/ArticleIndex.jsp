@@ -9,7 +9,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>ArticleIndex -> Article</title>
 </head>
 <body>
 <table>
@@ -27,12 +27,16 @@
 <c:forEach items="${ArticleIndex}" var="index">
     <tr>
         <td>${index.articleid}</td>
-        <td><a href="/Articles?articleI=${index.articleid}" >${index.articlename}</a></td>
+        <td><a href="/Articles?articleID=${index.articleid}" >${index.articlename}</a></td>
         <td>${index.datecreated}</td>
     </tr>
 </c:forEach>
 </table>
 
+
+<form action="/Articles" method="post">
+    <input type="submit" name="add" value="addNewArticle" id="addNewArticle">
+</form>
 </body>
 </html>
 

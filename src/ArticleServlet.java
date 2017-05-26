@@ -10,14 +10,36 @@ import java.util.List;
  * Created by ljam763 on 25/05/2017.
  */
 public class ArticleServlet extends HttpServlet {
+    private ArticlesDAO articlesDAO = new ArticlesDAO();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int ArticleID = Integer.parseInt(req.getParameter("articleID"));
-        ArticlesDAO articlesDAO = new ArticlesDAO();
-        Articles article= articlesDAO.selectionArticles(ArticleID);
+        Articles article = articlesDAO.selectionArticles(ArticleID);
         req.setAttribute("articleContents", article);
-        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req,resp);
+        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
         return;
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String addingArticles = req.getParameter("add");
+        HttpSession session = req.getSession();
+        String username = (String) session.getAttribute("username");
+        System.out.println("Where does this go");
+        if (addingArticles != null) {
+            System.out.println("Here");
+            if (addingArticles.equals("addNewArticle")) {
+                req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
+                return;
+            }
+            if (addingArticles.equals("addingToDataBase")) {
+                String ArticleName = req.getParameter("ArticleName");
+                String ArticleContent = req.getParameter("ArticleContent");
+                articlesDAO.updataArticles(ArticleName, username, ArticleContent);
+                req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
+                return;
+            }
+        }
     }
 }

@@ -29,7 +29,7 @@ public class UpdataTables {
         }
     }
 
-    public void updataArticles(int ArticlesID, String ArticleName, String UserIDName, String content, Timestamp SpecificDateCreated) {
+    public void updataArticles( String ArticleName, String UserIDName, String content, Timestamp SpecificDateCreated) {
         try {
             PreparedStatement statement = conn.prepareStatement(
                     "INSERT INTO Articles (ArticlesName, UserIDName, Content) VALUES( ? ,?,?);"

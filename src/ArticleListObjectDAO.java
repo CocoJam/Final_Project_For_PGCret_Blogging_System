@@ -42,7 +42,7 @@ public class ArticleListObjectDAO extends ArticlesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(ListIndex.size());
+        System.out.println("Article size" + ListIndex.size());
         return ListIndex;
     }
 

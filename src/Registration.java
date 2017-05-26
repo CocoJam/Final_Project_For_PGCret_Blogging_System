@@ -39,7 +39,7 @@ public class Registration extends HttpServlet {
         updataTables.updataUsersNames(username,password);
         session.setAttribute("username",username);
         session.setAttribute("password", password);
-        req.getRequestDispatcher("/WEB-INF/webthings/content_page.jsp").forward(req,resp);
+        req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req,resp);
         return;
     }
 

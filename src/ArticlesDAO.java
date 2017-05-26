@@ -1,8 +1,5 @@
 import javax.servlet.http.HttpServlet;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Date;
 import java.util.List;
 
@@ -59,6 +56,22 @@ public class ArticlesDAO extends LoginPassing {
         return null;
     }
 
+    public void updataArticles(String ArticleName, String UserIDName, String content) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(
+                    "INSERT INTO Articles (ArticlesName, UserIDName, Content) VALUES( ? ,?,?);"
+            );
+            {
+                statement.setString(1, ArticleName);
+                statement.setString(2, UserIDName);
+                statement.setString(3, content);
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private Articles makeArticle(ResultSet resultSet) throws SQLException {
         Articles articles = new Articles();
         ArticleID = resultSet.getInt(1);
@@ -71,7 +84,6 @@ public class ArticlesDAO extends LoginPassing {
         articles.setContent(Content);
         articles.setDatecreated(DateCreated);
         articles.setUsername(username);
-        System.out.println("made");
         return articles;
     }
 

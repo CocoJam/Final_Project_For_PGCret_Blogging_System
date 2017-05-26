@@ -2,15 +2,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Login Page</title>
+    <title>Login Page -> Registration , Profile Page</title>
 </head>
 <body>
 
 <%    String username = (String) session.getAttribute("username");
-    if ( session.getAttribute("log") != null){
-        if ((boolean)session.getAttribute("log")){
-    request.getRequestDispatcher("/WEB-INF/webthings/content_page.jsp").forward(request,response);}
-}
     if ( username != null){
     out.println("<p>"+ username + " has been Logged Out</p>");
         session.setAttribute("username",null);

@@ -8,15 +8,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Article -> ArticleCreationPage</title>
 </head>
 <body>
-<p></p>
+<h1>${articleContents.articlename}</h1>
+<p>${articleContents.content}</p>
+<p>${articleContents.username}</p>
+<p>${articleContents.datecreated}</p>
 </body>
 </html>
 
 
-articleContents
+<%--articleContents--%>
 
 <%--private int articleid = 0;--%>
 <%--private String articlename = null;--%>

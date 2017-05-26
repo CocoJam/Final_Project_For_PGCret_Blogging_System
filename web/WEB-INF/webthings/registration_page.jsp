@@ -8,14 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Registration -> Profile Page</title>
 </head>
 <body>
 
 <%
     if ( session.getAttribute("log") != null || session.getAttribute("Registration") != null){
         if ((boolean)session.getAttribute("Registration")){
-            request.getRequestDispatcher("/WEB-INF/webthings/content_page.jsp").forward(request,response);}
+            request.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(request,response);}
     }
 %>
 

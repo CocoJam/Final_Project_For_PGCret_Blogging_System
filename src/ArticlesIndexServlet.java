@@ -16,12 +16,14 @@ public class ArticlesIndexServlet extends HttpServlet {
         String username = (String) session.getAttribute("username");
         List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
         req.setAttribute("ArticleIndex",indexList);
+        System.out.println("Index");
         req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req,resp);
         return;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("index doGetting");
         doPost(req, resp);
     }
 }
