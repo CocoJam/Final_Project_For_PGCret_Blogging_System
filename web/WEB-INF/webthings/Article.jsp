@@ -15,6 +15,10 @@
 <p>${articleContents.content}</p>
 <p>${articleContents.username}</p>
 <p>${articleContents.datecreated}</p>
+
+<form action="/Articles" method="get">
+    <input type="submit" name="edit" value="Edit Article">
+</form>
 </body>
 </html>
 

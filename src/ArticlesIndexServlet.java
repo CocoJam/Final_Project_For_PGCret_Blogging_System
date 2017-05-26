@@ -12,20 +12,15 @@ import java.util.List;
 public class ArticlesIndexServlet extends HttpServlet {
     private List<Articles> indexList;
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("index doGetting");
         HttpSession session = req.getSession();
         String username = (String) session.getAttribute("username");
         if (indexList == null){
-        List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
-        session.setAttribute("ArticleIndex",indexList);
-        System.out.println("Index");}
+            List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
+            session.setAttribute("ArticleIndex",indexList);
+            System.out.println("Index");}
         req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req,resp);
         return;
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("index doGetting");
-        doPost(req, resp);
     }
 }
