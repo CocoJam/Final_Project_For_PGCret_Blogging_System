@@ -19,7 +19,11 @@
 <p>${profileInfo.education}</p>
 <p>${profileInfo.ethnicity}</p>
 <p>${profileInfo.date}</p>
-<p><img src="${ProfilePic}"></p>
+
+
+<%--<p><img src="${ProfilePic}"></p>--%>
+
+
 <a href="/ArticlesIndex?articleList=self">To articles index</a>
 <a href="/ArticlesIndex?articleList=all">To all articles index</a>
 <form action="/logout" method="get">
