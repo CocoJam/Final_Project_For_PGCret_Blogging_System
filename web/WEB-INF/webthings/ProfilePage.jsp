@@ -19,6 +19,7 @@
 <p>${profileInfo.education}</p>
 <p>${profileInfo.ethnicity}</p>
 <p>${profileInfo.date}</p>
+<p><img src="${ProfilePic}"></p>
 <a href="/ArticlesIndex?articleList=self">To articles index</a>
 <a href="/ArticlesIndex?articleList=all">To all articles index</a>
 <form action="/logout" method="get">
@@ -33,6 +34,13 @@
     <label for="password">Password:</label>
     <input type="password" id="password" name="password">
     <input type="submit" name="log" value="DeletingProfile">
+</form>
+
+<form action="/Upload_pictures" method="post"
+      enctype="multipart/form-data">
+    <input type="file" name="file" size="50"/>
+    <input type="submit" value="Upload File"/>
+    <br>
 </form>
 </body>
 </html>
