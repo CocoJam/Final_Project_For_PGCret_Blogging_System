@@ -52,6 +52,7 @@ public class Registration extends HttpServlet {
                 profilePAge = profilePageDAO.updataUsersNames((String) session.getAttribute("username"), (String) session.getAttribute("password"), profilePAge,password);
                 System.out.println("info updated");
                 session.setAttribute("profileInfo", profilePAge);
+                session.setAttribute("password",password);
                 req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                 return;
             } else {

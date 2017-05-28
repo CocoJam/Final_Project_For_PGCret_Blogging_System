@@ -7,8 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <title>ProfilePage.Registration -> Profile Page</title>
 </head>
 <body>
@@ -21,7 +23,7 @@
 %>
 
 
-<form action="/Registration" method="post">
+<form action="/Registration" id="form" method="post">
     <label for="username">Username:</label>
     <input type="text" id="username"  name="username" value="${profileInfo.username}">
     <label for="password">Password:</label>
@@ -29,8 +31,7 @@
     <label for="Name">Name:</label>
     <input type="text" id="Name" name="name" value="${profileInfo.name}">
     <label for="email">email:</label>
-    <p>${profileInfo.email}</p>
-    <input type="email" id="email" name="email">
+    <input type="email" id="email" name="email" value="${profileInfo.email}">
     <label for="address">address:</label>
     <input type="text" id="address" name="address" value="${profileInfo.address}">
     <label for="education">education:</label>
@@ -49,17 +50,18 @@
     </c:choose>
 </form>
 
-<script>
-    document.getElementById("email").value = ${profileInfo.email};
-    $("form").submit(function (event) {
-        if (!$("#username").val() =="" || !$("#password").val()=="" ) {
-            document.getElementById("email").value = ${profileInfo.email};
+<script type="text/javascript">
+$("#form").submit(function(event) {
+        if($("#username").val().startsWith(" ") || $("#password").val().startsWith(" ")|| $("#username").val() == "" || $("#password").val()== "" )
+        {
+            alert("validation failed false");
+            event.preventDefault();
             return;
         }
-        event.preventDefault();
-    })
+        alert("validations passed");
+        return;
+    });
 </script>
-
 </body>
 </html>
 <%--Update user information section done--%>
