@@ -13,7 +13,7 @@ import java.util.List;
  * Created by ljam763 on 25/05/2017.
  */
 
-//0. Comments DAO to access the Database.
+//0. Comments DAO to access the Database. This is called by the CommentsServlet class which will in turn establish the request and response with the client.
 
 public class CommentsDAO extends LoginPassing {
 
@@ -21,6 +21,8 @@ public class CommentsDAO extends LoginPassing {
         super();
     }
 
+
+    //1.a the below method allows selecting comments through inputting the CommentID and articleId parameters.
     public List<Comments> selectionComments(int CommentID, int articleID) {
         List<Comments> listOfComments = new ArrayList<>();
         try {
@@ -28,9 +30,9 @@ public class CommentsDAO extends LoginPassing {
                     "SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM UsersNAmes WHERE ArticlesID = ? AND CommentID = ?;"
             );
             {
-                statement.setInt(2, CommentID);
                 statement.setInt(1, articleID);
-                makeComment(listOfComments, statement);
+                statement.setInt(2, CommentID);
+                makeComment(listOfComments, statement); // goes to makeComment() method to get the resultSet (which in turn sets the Comments Javabean through commentsSetStatements section.
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -38,7 +40,7 @@ public class CommentsDAO extends LoginPassing {
         return listOfComments;
     }
 
-
+    //1.b the below method allows selecting comments through inputing the articlesID only (For accessing multiple comments at once).
     public List<Comments> selectionComments(int articlesID) {
         List<Comments> listOfComments = new ArrayList<>();
         try {
@@ -55,6 +57,8 @@ public class CommentsDAO extends LoginPassing {
         return listOfComments;
     }
 
+
+    //1.c this method allows selecting comments through commenterName only.
     public List<Comments> selectionComments(String CommenterName) {
         List<Comments> listOfComments = new ArrayList<>();
         try {
@@ -71,6 +75,7 @@ public class CommentsDAO extends LoginPassing {
         return listOfComments;
     }
 
+    //2. This method allows making comments and Storing to the Database.
     private void makeComment(List<Comments> listOfComments, PreparedStatement statement) throws SQLException {
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
@@ -78,7 +83,7 @@ public class CommentsDAO extends LoginPassing {
             int CommentID = resultSet.getInt(1);
             int ArticleID = resultSet.getInt(2);
             String CommentName = resultSet.getString(3);
-            String  Comment = resultSet.getString(4);
+            String Comment = resultSet.getString(4);
             Date CommentTime = resultSet.getTimestamp(5);
             commentsSetStatments(comments, CommentID, ArticleID, CommentName, Comment, CommentTime);
             listOfComments.add(comments);
@@ -86,6 +91,7 @@ public class CommentsDAO extends LoginPassing {
         }
     }
 
+    //3. This method is to allow both selecting and making methods to easily set the comment details (in conjunction with the AddingCommentsToDataBase method which sets the Javabean).
     private void commentsSetStatments(Comments comments, int commentID, int articleID, String commentName, String comment, Date commentTime) {
         comments.setActicleId(articleID);
         comments.setContent(comment);
@@ -95,6 +101,7 @@ public class CommentsDAO extends LoginPassing {
     }
 
 
+    //4. Sets the Comments Javabean for access by the client.
     public void AddingCommentsToDataBase(int ArticlesID, String CommenterName, String Comments) {
         try {
             PreparedStatement statement = conn.prepareStatement(
