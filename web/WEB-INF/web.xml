@@ -61,12 +61,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>DeletingProfile</servlet-name>
-        <servlet-class>Deleting.DeletingProfile</servlet-class>
+        <servlet-name>Deleting</servlet-name>
+        <servlet-class>Deleting.DeletingServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>DeletingProfile</servlet-name>
-        <url-pattern>/DeletingProfile</url-pattern>
+        <servlet-name>Deleting</servlet-name>
+        <url-pattern>/Deleting</url-pattern>
     </servlet-mapping>
 
 </web-app>

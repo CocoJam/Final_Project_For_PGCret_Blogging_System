@@ -19,14 +19,15 @@
 <p>${profileInfo.education}</p>
 <p>${profileInfo.ethnicity}</p>
 <p>${profileInfo.date}</p>
-<a href="/ArticlesIndex">To articles index</a>
+<a href="/ArticlesIndex?articleList=self">To articles index</a>
+<a href="/ArticlesIndex?articleList=all">To all articles index</a>
 <form action="/logout" method="get">
     <input type="submit" value="Logout">
 </form>
 <form action="/Registration" method="get">
     <input type="submit" name="log" value="ChangeUserInformation">
 </form>
-<form action="/DeletingProfile" method="post">
+<form action="/Deleting" method="post">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username">
     <label for="password">Password:</label>

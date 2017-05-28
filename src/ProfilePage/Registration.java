@@ -40,7 +40,7 @@ public class Registration extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         profileSetUp(req);
-//        updataTables.updataUsersNames(username,password);
+//        updataTables.updataUsersProfile(username,password);
         //        uncomment to check the hashing function
 //        Login.Passwords_Checker passwords_checker = new Login.Passwords_Checker();
 //        String hashedPassowrd = passwords_checker.hashing(password, 5 , 500);
@@ -49,7 +49,7 @@ public class Registration extends HttpServlet {
             System.out.println("Regs");
             if (req.getParameter("log").equals("ChangeUserInformation")) {
                 System.out.println("Trying for info update");
-                profilePAge = profilePageDAO.updataUsersNames((String) session.getAttribute("username"), (String) session.getAttribute("password"), profilePAge,password);
+                profilePAge = profilePageDAO.updataUsersProfile((String) session.getAttribute("username"), (String) session.getAttribute("password"), profilePAge,password);
                 System.out.println("info updated");
                 session.setAttribute("profileInfo", profilePAge);
                 session.setAttribute("password",password);

@@ -14,11 +14,35 @@ public class ArticleListObjectDAO extends ArticlesDAO {
 
     private int ArticleID = 0;
     private String ArticleName = null;
-    private Date DateCreated =null;
+    private Date DateCreated = null;
+    private String UsernameID = null;
 
 
     public ArticleListObjectDAO() {
         super();
+    }
+
+    public List<Articles> selectionAllArticlesList() {
+        List<Articles> ListIndex = new ArrayList<>();
+        try {
+            PreparedStatement statement = conn.prepareStatement(
+                    "SELECT ArticlesID, ArticlesName,SpecificDateCreated, UserIDName FROM Articles;"
+            );
+            {
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    Articles articleListObject = new Articles();
+                    sqlSetStatments(resultSet);
+                    UsernameID = resultSet.getString(4);
+                    articleListObjectSetStatments(articleListObject);
+                    ListIndex.add(articleListObject);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Article size" + ListIndex.size());
+        return ListIndex;
     }
 
     public List<Articles> selectionArticlesList(String UserIDName) {
@@ -54,6 +78,9 @@ public class ArticleListObjectDAO extends ArticlesDAO {
         articleListObject.setArticleid(ArticleID);
         articleListObject.setArticlename(ArticleName);
         articleListObject.setDatecreated(DateCreated);
+        if (UsernameID != null) {
+            articleListObject.setUsername(UsernameID);
+        }
     }
 
 }

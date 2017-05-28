@@ -23,14 +23,26 @@
         <th>
             Date Created
         </th>
+
+        <c:if test="${articleList.equals('all')}">
+            <th>
+                Article Arthur
+            </th>
+        </c:if>
+
     </tr>
-<c:forEach items="${ArticleIndex}" var="index">
-    <tr>
-        <td>${index.articleid}</td>
-        <td><a href="/Articles?articleID=${index.articleid}" >${index.articlename}</a></td>
-        <td>${index.datecreated}</td>
-    </tr>
-</c:forEach>
+    <c:forEach items="${ArticleIndex}" var="index">
+        <tr>
+            <td>${index.articleid}</td>
+            <td><a href="/Articles?articleID=${index.articleid}">${index.articlename}</a></td>
+            <td>${index.datecreated}</td>
+            <c:if test="${articleList.equals('all')}">
+                <td>
+                        ${index.username}
+                </td>
+            </c:if>
+        </tr>
+    </c:forEach>
 </table>
 
 
@@ -39,9 +51,3 @@
 </form>
 </body>
 </html>
-
-
-<%--//Java Bean cant access needed to be checked--%>
-<%--private int ArticleID;--%>
-<%--private String ArticleName;--%>
-<%--private Date DateCreated;--%>

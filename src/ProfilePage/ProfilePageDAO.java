@@ -61,7 +61,7 @@ public class ProfilePageDAO extends LoginPassing {
         return getUsersProfile(profilePAge.getUsername());
     }
 
-    public ProfilePAge updataUsersNames(String username, String password ,ProfilePAge profilePAge, String newPassword) {
+    public ProfilePAge updataUsersProfile(String username, String password , ProfilePAge profilePAge, String newPassword) {
         ProfilePageGetters(profilePAge);
         try {
             PreparedStatement statement = conn.prepareStatement(

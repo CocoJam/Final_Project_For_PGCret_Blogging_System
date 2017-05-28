@@ -53,6 +53,16 @@ public class Articles {
     private String content = null;
     private Date datecreated =null;
 
+    public boolean isOwner() {
+        return owner;
+    }
+
+    public void setOwner(boolean owner) {
+        this.owner = owner;
+    }
+
+    private boolean owner= false;
+
     public Articles() {
     }
 

@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by ljam763 on 28/05/2017.
  */
-public class DeletingProfile extends HttpServlet {
+public class DeletingServlet extends HttpServlet {
     private String username;
     private String password;
     private String sessionUsername;
@@ -27,7 +27,7 @@ public class DeletingProfile extends HttpServlet {
         HttpSession session = req.getSession();
         setupForUsernameAndPasswordCheck(req, session);
         if (req.getParameter("log") != null) {
-            if (req.getParameter("log").equals("DeletingProfile")) {
+            if (req.getParameter("log").equals("DeletingServlet")) {
                 tryingTodeleteWholeProfile(req, resp, session);
                 return;
             } else if (req.getParameter("log").equals("DeleteArticle")) {

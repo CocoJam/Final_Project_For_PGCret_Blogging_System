@@ -51,4 +51,3 @@ CREATE TABLE IF NOT EXISTS Comment.Comments(
   FOREIGN KEY (CommenterName) REFERENCES UsersNames  (Username)
 );
 
-UPDATE UsersNames SET Username= 'j'   WHERE Username = 'ljam' AND Password = 123465 ;

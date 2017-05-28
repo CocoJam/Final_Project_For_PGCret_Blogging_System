@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Article -> ArticleCreationPage</title>
@@ -16,13 +17,16 @@
 <p>${articleContents.username}</p>
 <p>${articleContents.datecreated}</p>
 
-<form action="/Articles" method="post">
-    <input type="submit" name="add" value="EditArticle">
-</form>
+<c:if test="${articleContents.owner}">
+    <p>${articleContents.owner}</p>
+    <form action="/Articles" method="post">
+        <input type="submit" name="add" value="EditArticle">
+    </form>
+    <form action="/Deleting" method="post">
+        <input type="submit" name="log" value="DeleteArticle">
+    </form>
+</c:if>
 
-<form action="/DeletingProfile" method="post">
-    <input type="submit" name="log" value="DeleteArticle">
-</form>
 </body>
 </html>
 
