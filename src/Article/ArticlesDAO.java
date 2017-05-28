@@ -75,7 +75,7 @@ public class ArticlesDAO extends LoginPassing {
         }
     }
 
-    public void updataArticles( String ArticleName,String content, int ArticleID) {
+    public Articles updataArticles( String ArticleName,String content, int ArticleID) {
         try {
             PreparedStatement statement = conn.prepareStatement(
                     "UPDATE Articles SET ArticlesName = ?, Content= ? WHERE ArticlesID = ?;"
@@ -89,6 +89,7 @@ public class ArticlesDAO extends LoginPassing {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return selectionArticles(ArticleID);
     }
 
 

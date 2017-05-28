@@ -18,14 +18,15 @@ public class ArticleServlet extends HttpServlet {
     private String ArticleContent;
     private Articles article;
     private HttpSession session;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String editing = req.getParameter("edit");
         session = req.getSession();
-            ArticleID = Integer.parseInt(req.getParameter("articleID"));
-            article = articlesDAO.selectionArticles(ArticleID);
-            session.setAttribute("articleID", ArticleID);
-            req.setAttribute("articleContents", article);
+        ArticleID = Integer.parseInt(req.getParameter("articleID"));
+        article = articlesDAO.selectionArticles(ArticleID);
+        session.setAttribute("articleID", ArticleID);
+        req.setAttribute("articleContents", article);
         req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
         return;
     }
@@ -37,22 +38,19 @@ public class ArticleServlet extends HttpServlet {
         String username = (String) session.getAttribute("username");
         if (addingArticles != null) {
             if (addingArticles.equals("addNewArticle")) {
-                session.setAttribute("articleContents",null);
+                session.setAttribute("articleContents", null);
                 req.setAttribute("add", null);
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
                 return;
-            }
-            else if (addingArticles.equals("EditArticle")){
+            } else if (addingArticles.equals("EditArticle")) {
                 session.setAttribute("articleID", ArticleID);
                 req.setAttribute("articleContents", article);
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
                 return;
-            }
-            else if (addingArticles.equals("Editted")){
+            } else if (addingArticles.equals("Editted")) {
                 ArticleName = req.getParameter("ArticleName");
                 ArticleContent = req.getParameter("ArticleContent");
-                articlesDAO.updataArticles(ArticleName,ArticleContent, ArticleID);
-                article = articlesDAO.selectionArticles(ArticleID);
+                article = articlesDAO.updataArticles(ArticleName, ArticleContent, ArticleID);
                 req.setAttribute("articleContents", article);
                 req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
                 return;
@@ -62,7 +60,7 @@ public class ArticleServlet extends HttpServlet {
                 String ArticleContent = req.getParameter("ArticleContent");
                 articlesDAO.madeArticles(ArticleName, username, ArticleContent);
                 List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
-                session.setAttribute("ArticleIndex",indexList);
+                session.setAttribute("ArticleIndex", indexList);
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
                 return;
             }

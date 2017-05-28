@@ -14,10 +14,15 @@ public class Login_out extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        session.invalidate();
-//        session.setAttribute("password", null);
-//        session.setAttribute("log",false);
-//        session.setAttribute("ProfilePage.Registration" ,false);
+        //session.invalidate() fucks with the logout and then registration system.
+//        session.invalidate();
+        session.setAttribute("password", null);
+        session.setAttribute("log",false);
+        session.setAttribute("profileInfo",null);
+        session.setAttribute("articleID", null);
+        session.setAttribute("Registration" ,false);
+        session.setAttribute("ArticleIndex",null);
+        session.setAttribute("articleContents",null);
         req.getRequestDispatcher("/login_page.jsp").forward(req,resp);
     }
 }

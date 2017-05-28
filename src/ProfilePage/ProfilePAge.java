@@ -14,14 +14,21 @@ public class ProfilePAge {
     private String address;
     private String education;
     private String ethnicity;
-    private Date date;
+    private java.sql.Date date;
+    private boolean update;
 
-    public Date getDate() {
-        return date;
+    public void setDate(java.sql.Date date) {
+        this.date = date;
+    }
+    public boolean isUpdate() {
+        return update;
+    }
+    public void setUpdate(boolean update) {
+        this.update = update;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public java.sql.Date getDate() {
+        return date;
     }
 
     public String getUsername() {
@@ -72,16 +79,7 @@ public class ProfilePAge {
         this.ethnicity = ethnicity;
     }
 
-
     public ProfilePAge() {
     }
 
-    public static void main(String[] args) {
-        ProfilePAge profilePAge = new ProfilePAge ();
-        Field[] fields =  profilePAge.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            System.out.println(field);
-        }
-
-    }
 }

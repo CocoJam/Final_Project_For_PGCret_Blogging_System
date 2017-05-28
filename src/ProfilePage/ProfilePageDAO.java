@@ -21,7 +21,7 @@ public class ProfilePageDAO extends LoginPassing {
         this.pass = new Passwords_Checker();
     }
 
-    public ProfilePAge getUsersProfile(String username) {
+    public ProfilePAge getUsersProfile(String username)  {
         try {
             PreparedStatement statement = conn.prepareStatement(
                     "SELECT Username, Name ,Email, Address, Education, Ethnicity, DateOfBirth FROM UsersNames WHERE Username = ?;"
@@ -35,53 +35,58 @@ public class ProfilePageDAO extends LoginPassing {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("No ProfilePage under this username");
         }
         return null;
     }
 
 
-    public void createUsersProfile(String username, String password, String name, String email, String address, String education, String ethnicity,Date DateOfBirth) {
+    public ProfilePAge createUsersProfile(ProfilePAge profilePAge, String password) throws SQLException{
+        ProfilePageGetters(profilePAge);
         try {
             PreparedStatement statement = conn.prepareStatement(
                     "INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth, Password) VALUES( ?, ? ,?,?,?,?,?,?);"
             );
-            {
-                sqlSetStatment(username, password, name, email, address, education, ethnicity, DateOfBirth, statement);
+            {   statement.setString(1, usernames);
+                sqlSetStatment( password, statement);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error there is such username already");
+            System.out.println("SQL error");
+            throw new SQLException();
         }
+        return getUsersProfile(profilePAge.getUsername());
     }
 
-    public void updataUsersNames(String username, String password) {
+    public ProfilePAge updataUsersNames(String username, String password ,ProfilePAge profilePAge) {
+        ProfilePageGetters(profilePAge);
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =? , , Password= ? WHERE Username = ?, Password= ?;"
+                    "UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?  WHERE  Password= ? AND Username = ?;"
             );
-            {
-//                sqlSetStatment();
-
-                statement.setString(1, username);
-                statement.setString(2, password);
+            {   statement.setString(1, username);
+                sqlSetStatment(password,statement);
+                statement.setString(8,password);
+                statement.setString(9, usernames);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Can not update user infor based on the username and password");
         }
+        return getUsersProfile(username);
     }
 
 
 
-    private void sqlSetStatment(String username, String password, String name, String email, String address, String education, String ethnicity, Date DateOfBirth, PreparedStatement statement) throws SQLException {
-        statement.setString(1, username);
+    private void sqlSetStatment(String password, PreparedStatement statement) throws SQLException {
+
         statement.setString(2, name);
         statement.setString(3, email);
         statement.setString(4, address);
         statement.setString(5, education);
         statement.setString(6, ethnicity);
-        statement.setDate(7,DateOfBirth);
+        statement.setDate(7,date);
         statement.setString(8,password);
     }
 
@@ -107,5 +112,15 @@ public class ProfilePageDAO extends LoginPassing {
         education = resultSet.getString(5);
         ethnicity = resultSet.getString(6);
         date = resultSet.getDate(7);
+    }
+
+    private void ProfilePageGetters (ProfilePAge profilePAge){
+        usernames = profilePAge.getUsername();
+        name= profilePAge.getName();
+        email = profilePAge.getEmail();
+        address =profilePAge.getAddress();
+        education = profilePAge.getEducation();
+        ethnicity = profilePAge.getEthnicity();
+        date = profilePAge.getDate();
     }
 }

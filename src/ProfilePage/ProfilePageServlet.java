@@ -14,13 +14,6 @@ import java.util.Date;
 public class ProfilePageServlet extends HttpServlet{
     ProfilePageDAO profilePageDAO = new ProfilePageDAO();
     private String username;
-    private String name;
-    private String email;
-    private String address;
-    private String education;
-    private String ethnicity;
-    private Date date;
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,6 +27,6 @@ public class ProfilePageServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        doPost(req,resp);
     }
 }
