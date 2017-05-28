@@ -59,16 +59,17 @@ public class ProfilePageDAO extends LoginPassing {
         return getUsersProfile(profilePAge.getUsername());
     }
 
-    public ProfilePAge updataUsersNames(String username, String password ,ProfilePAge profilePAge) {
+    public ProfilePAge updataUsersNames(String username, String password ,ProfilePAge profilePAge, String newPassword) {
         ProfilePageGetters(profilePAge);
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?  WHERE  Password= ? AND Username = ?;"
+                    "UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?, Password=?  WHERE  Password= ? AND Username = ?;"
             );
             {   statement.setString(1, username);
                 sqlSetStatment(password,statement);
-                statement.setString(8,password);
-                statement.setString(9, usernames);
+                statement.setString(8,newPassword);
+                statement.setString(9,password);
+                statement.setString(10, usernames);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {

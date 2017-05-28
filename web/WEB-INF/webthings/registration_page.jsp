@@ -25,10 +25,11 @@
     <label for="username">Username:</label>
     <input type="text" id="username"  name="username" value="${profileInfo.username}">
     <label for="password">Password:</label>
-    <input type="password" id="password" name="password" >
+    <input type="password" id="password" name="password" value="${password}">
     <label for="Name">Name:</label>
     <input type="text" id="Name" name="name" value="${profileInfo.name}">
     <label for="email">email:</label>
+    <p>${profileInfo.email}</p>
     <input type="email" id="email" name="email">
     <label for="address">address:</label>
     <input type="text" id="address" name="address" value="${profileInfo.address}">
@@ -49,8 +50,10 @@
 </form>
 
 <script>
+    document.getElementById("email").value = ${profileInfo.email};
     $("form").submit(function (event) {
-        if (!$("#username").val().startsWith(" ") || !$("#password").val().startsWith(" ") ) {
+        if (!$("#username").val() =="" || !$("#password").val()=="" ) {
+            document.getElementById("email").value = ${profileInfo.email};
             return;
         }
         event.preventDefault();

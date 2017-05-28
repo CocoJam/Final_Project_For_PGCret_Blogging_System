@@ -49,7 +49,7 @@ public class Registration extends HttpServlet {
             System.out.println("Regs");
             if (req.getParameter("log").equals("ChangeUserInformation")) {
                 System.out.println("Trying for info update");
-                profilePAge = profilePageDAO.updataUsersNames((String) session.getAttribute("username"), (String) session.getAttribute("password"), profilePAge);
+                profilePAge = profilePageDAO.updataUsersNames((String) session.getAttribute("username"), (String) session.getAttribute("password"), profilePAge,password);
                 System.out.println("info updated");
                 session.setAttribute("profileInfo", profilePAge);
                 req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
