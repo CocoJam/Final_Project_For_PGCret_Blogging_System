@@ -39,7 +39,7 @@
     <label for="date">date:</label>
     <input type="date" id="date" name="date" value="${profileInfo.date}">
     <c:choose>
-    <c:when  test="${log == 'Update'}">
+    <c:when  test="${log.equals('Update')}">
             <input type="submit" name="log" value="ChangeUserInformation">
     </c:when>
         <c:otherwise>
@@ -47,6 +47,16 @@
         </c:otherwise>
     </c:choose>
 </form>
+
+<script>
+    $("form").submit(function (event) {
+        if (!$("#username").val().startsWith(" ") || !$("#password").val().startsWith(" ") ) {
+            return;
+        }
+        event.preventDefault();
+    })
+</script>
+
 </body>
 </html>
 <%--Update user information section done--%>
