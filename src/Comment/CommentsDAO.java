@@ -12,6 +12,9 @@ import java.util.List;
 /**
  * Created by ljam763 on 25/05/2017.
  */
+
+//0. Comments DAO to access the Database.
+
 public class CommentsDAO extends LoginPassing {
 
     public CommentsDAO() {
