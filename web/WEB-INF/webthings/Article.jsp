@@ -27,6 +27,28 @@
     </form>
 </c:if>
 
+
+<form action="/Comments" method="post">
+    <label for="comments">Comments: </label>
+    <br>
+    <textarea rows="4" cols="50" id="comments" name="commentcontent"></textarea>
+    <input type="submit" name="comments" value="Add a Comment">
+</form>
+
+<c:forEach items="${commentlist}" var="content">
+    <p>${content.username}</p>
+    <p>${content.content}</p>
+    <p>${content.commentedTime}</p>
+    <c:if test="${content.owner}">
+        <%--needed to display the delete button when load, so needed to go through the commentsServlet first--%>
+    <form action="/Deleting" method="post">
+        <input type="hidden" name="commentId" value="${content.commentId}">
+        <input type="submit" name="log" value="DeleteComment">
+    </form>
+    </c:if>
+</c:forEach>
+
+
 </body>
 </html>
 
@@ -38,3 +60,9 @@
 <%--private String username = null;--%>
 <%--private String content = null;--%>
 <%--private Date datecreated =null;--%>
+
+<%--private int commentId;--%>
+<%--private String username;--%>
+<%--private String content;--%>
+<%--private Date commentedTime;--%>
+<%--private int acticleId;--%>
