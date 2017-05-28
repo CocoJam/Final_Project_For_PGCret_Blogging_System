@@ -48,7 +48,7 @@ public class Login_in extends HttpServlet {
         return;
     }
 // just refactor this out for convenience
-    private boolean loginLogic(HttpServletRequest req, HttpServletResponse resp, HttpSession session, LoginPassing loginPassing) throws ServletException, IOException {
+    public boolean loginLogic(HttpServletRequest req, HttpServletResponse resp, HttpSession session, LoginPassing loginPassing) throws ServletException, IOException {
         if (loginPassing.selectionUsersNames(username, password)) {
             session.setAttribute("username", username);
             session.setAttribute("password", password);

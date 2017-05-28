@@ -26,7 +26,7 @@ public class ArticleServlet extends HttpServlet {
         ArticleID = Integer.parseInt(req.getParameter("articleID"));
         article = articlesDAO.selectionArticles(ArticleID);
         session.setAttribute("articleID", ArticleID);
-        req.setAttribute("articleContents", article);
+        session.setAttribute("articleContents", article);
         req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
         return;
     }

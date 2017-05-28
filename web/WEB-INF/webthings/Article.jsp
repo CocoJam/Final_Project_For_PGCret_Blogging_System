@@ -19,6 +19,10 @@
 <form action="/Articles" method="post">
     <input type="submit" name="add" value="EditArticle">
 </form>
+
+<form action="/DeletingProfile" method="post">
+    <input type="submit" name="log" value="DeleteArticle">
+</form>
 </body>
 </html>
 

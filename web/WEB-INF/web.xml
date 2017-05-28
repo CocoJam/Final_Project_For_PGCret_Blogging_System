@@ -60,4 +60,13 @@
         <url-pattern>/Articles</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>DeletingProfile</servlet-name>
+        <servlet-class>Deleting.DeletingProfile</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeletingProfile</servlet-name>
+        <url-pattern>/DeletingProfile</url-pattern>
+    </servlet-mapping>
+
 </web-app>

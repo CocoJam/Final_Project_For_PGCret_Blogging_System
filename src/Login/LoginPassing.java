@@ -38,8 +38,10 @@ public class LoginPassing {
                     "SELECT Username, Password FROM UsersNames WHERE Username = ? AND Password = ?;"
             );
             {
+                System.out.println(statement);
                 statement.setString(1, username);
                 statement.setString(2, password);
+                System.out.println(statement);
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     this.username = resultSet.getString(1);

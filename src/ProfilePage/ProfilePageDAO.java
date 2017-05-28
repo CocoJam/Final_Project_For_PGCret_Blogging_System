@@ -27,7 +27,9 @@ public class ProfilePageDAO extends LoginPassing {
                     "SELECT Username, Name ,Email, Address, Education, Ethnicity, DateOfBirth FROM UsersNames WHERE Username = ?;"
             );
             {
+                System.out.println(statement);
                 statement.setString(1, username);
+                System.out.println(statement);
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     ProfilePAge profilePAge = makeProfilePAge(resultSet);
@@ -124,4 +126,6 @@ public class ProfilePageDAO extends LoginPassing {
         ethnicity = profilePAge.getEthnicity();
         date = profilePAge.getDate();
     }
+
+
 }
