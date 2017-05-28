@@ -40,7 +40,7 @@ public class CommentsDAO extends LoginPassing {
         List<Comments> listOfComments = new ArrayList<>();
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM UsersNAmes WHERE ArticlesID = ?;"
+                    "SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM Comments WHERE ArticlesID = ?;"
             );
             {
                 statement.setInt(1, articlesID);
@@ -56,7 +56,7 @@ public class CommentsDAO extends LoginPassing {
         List<Comments> listOfComments = new ArrayList<>();
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM UsersNAmes WHERE CommenterName = ?;"
+                    "SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM Comments WHERE CommenterName = ?;"
             );
             {
                 statement.setString(1, CommenterName);
@@ -79,14 +79,32 @@ public class CommentsDAO extends LoginPassing {
             Date CommentTime = resultSet.getTimestamp(5);
             commentsSetStatments(comments, CommentID, ArticleID, CommentName, Comment, CommentTime);
             listOfComments.add(comments);
+            System.out.println(listOfComments.size());
         }
     }
 
     private void commentsSetStatments(Comments comments, int commentID, int articleID, String commentName, String comment, Date commentTime) {
-        comments.setArticleID(articleID);
-        comments.setComment(comment);
-        comments.setCommentName(commentName);
-        comments.setCommentID(commentID);
-        comments.setCommentTime(commentTime);
+        comments.setActicleId(articleID);
+        comments.setContent(comment);
+        comments.setUsername(commentName);
+        comments.setCommentId(commentID);
+        comments.setCommentedTime(commentTime);
+    }
+
+
+    public void AddingCommentsToDataBase(int ArticlesID, String CommenterName, String Comments) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(
+                    "INSERT INTO Comments (ArticlesID, CommenterName, Comments) VALUES( ?, ? ,?);"
+            );
+            {
+                statement.setInt(1, ArticlesID);
+                statement.setString(2, CommenterName);
+                statement.setString(3, Comments);
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -29,9 +29,11 @@
 <form action="/logout" method="get">
     <input type="submit" value="Logout">
 </form>
+
 <form action="/Registration" method="get">
     <input type="submit" name="log" value="ChangeUserInformation">
 </form>
+
 <form action="/Deleting" method="post">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username">

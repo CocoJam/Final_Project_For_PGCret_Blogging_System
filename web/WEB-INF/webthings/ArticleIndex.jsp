@@ -34,7 +34,7 @@
     <c:forEach items="${ArticleIndex}" var="index">
         <tr>
             <td>${index.articleid}</td>
-            <td><a href="/Articles?articleID=${index.articleid}">${index.articlename}</a></td>
+            <td><a href="/Articles?acticleId=${index.articleid}">${index.articlename}</a></td>
             <td>${index.datecreated}</td>
             <c:if test="${articleList.equals('all')}">
                 <td>

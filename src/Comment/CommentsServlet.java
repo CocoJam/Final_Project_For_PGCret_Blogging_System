@@ -6,17 +6,43 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by ljam763 on 25/05/2017.
  */
 public class CommentsServlet extends HttpServlet{
+    private String username;
+    private String comment;
+    private int articleID;
+    private List<Comments> listOfComments;
+    private CommentsDAO commentsDAO = new CommentsDAO();
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        String username = (String) session.getAttribute("username");
-//        session.setAttribute("ArticleIndex", new Article.ArticleListObjectDAO().selectionArticlesList(username));
-        req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req,resp);
+        commentSetUp(req, session);
+        commentsDAO.AddingCommentsToDataBase(articleID,username,comment);
+        listOfComments = commentsDAO.selectionComments(articleID);
+        checkingForOwner();
+        session.setAttribute("commentlist",listOfComments);
+        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
         return;
+    }
+
+    private void checkingForOwner() {
+        for (Comments userComments : listOfComments) {
+            if (userComments.getUsername().equals(username)){
+                userComments.setOwner(true);
+            }
+            else{
+                userComments.setOwner(false);
+            }
+        }
+    }
+
+    private void commentSetUp(HttpServletRequest req, HttpSession session) {
+        username = (String) session.getAttribute("username");
+        comment = req.getParameter("commentcontent");
+        articleID = (int) session.getAttribute("articleID");
     }
 }

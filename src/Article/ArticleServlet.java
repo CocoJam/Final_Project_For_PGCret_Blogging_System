@@ -1,5 +1,8 @@
 package Article;
 
+import Comment.Comments;
+import Comment.CommentsDAO;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,15 +22,29 @@ public class ArticleServlet extends HttpServlet {
     private Articles article;
     private HttpSession session;
     private List<Articles> indexList;
+    private List<Comments> listOfComments;
+    private CommentsDAO commentsDAO = new CommentsDAO();
+
+    public List<Comments> gettingTheListOfComments(int articleID){
+        return listOfComments = commentsDAO.selectionComments(articleID);
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String editing = req.getParameter("edit");
         session = req.getSession();
-        ArticleID = Integer.parseInt(req.getParameter("articleID"));
+        try{ArticleID = Integer.parseInt(req.getParameter("acticleId"));}
+        catch (NumberFormatException e){
+            System.out.println(e);
+        }
         article = articlesDAO.selectionArticles(ArticleID);
+        if (article.getUsername().equals(session.getAttribute("username"))){
+            article.setOwner(true);
+        }
         session.setAttribute("articleID", ArticleID);
         session.setAttribute("articleContents", article);
+        listOfComments = gettingTheListOfComments(ArticleID);
+        session.setAttribute("commentlist",listOfComments);
         req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
         return;
     }

@@ -1,6 +1,7 @@
 package Deleting;
 
 import Article.Articles;
+import Article.ArticlesIndexServlet;
 import Login.LoginPassing;
 
 import javax.servlet.ServletException;
@@ -19,6 +20,8 @@ public class DeletingServlet extends HttpServlet {
     private String sessionUsername;
     private String sessionpassword;
     private Articles article;
+    private int articleId;
+    private int commentId;
     private DeleteDAO deleteDAO = new DeleteDAO();
     private LoginPassing loginPassing = new LoginPassing();
 
@@ -26,12 +29,26 @@ public class DeletingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         setupForUsernameAndPasswordCheck(req, session);
+        System.out.println(username);
+        System.out.println(password);
+        System.out.println(sessionUsername);
+        System.out.println(sessionpassword);
         if (req.getParameter("log") != null) {
-            if (req.getParameter("log").equals("DeletingServlet")) {
+            if (req.getParameter("log").equals("DeletingProfile")) {
                 tryingTodeleteWholeProfile(req, resp, session);
                 return;
             } else if (req.getParameter("log").equals("DeleteArticle")) {
                 tryingTodeleteWholeArticle(req, resp);
+                return;
+            } else if (req.getParameter("log").equals("DeleteComment")) {
+                System.out.println("converting id of article to int");
+                System.out.println(req.getParameter("commentId"));
+                try {
+                    commentId = Integer.parseInt(req.getParameter("commentId"));
+                } catch (NumberFormatException e) {
+                    System.out.println(e);
+                }
+                tryingTodeleteAComment(req, resp, session);
                 return;
             }
         }
@@ -39,21 +56,19 @@ public class DeletingServlet extends HttpServlet {
 
     private void tryingTodeleteWholeArticle(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        setupForUsernameAndPasswordCheck(req,session);
+        setupForUsernameAndPasswordCheck(req, session);
         article = (Articles) session.getAttribute("articleContents");
-        System.out.println(article.getUsername());
-        System.out.println(article.getArticleid()+ "This is the id");
-        System.out.println(username);
         if (article.getUsername().equals(sessionUsername)) {
             System.out.println("dropping this article");
             deleteDAO.dropSpeificArticle(article.getArticleid());
         }
+        //needed to renew the index. Bugggggg
         req.getRequestDispatcher("/ArticlesIndex").forward(req, resp);
         return;
     }
 
     private void tryingTodeleteWholeProfile(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException, IOException {
-        if (username.equals(sessionUsername) && password.equals(sessionpassword) && loginPassing.selectionUsersNames(username, password)) {
+        if (usernameAndPasswordCheckForDelete()) {
             deleteDAO.dropAllByUsername(username);
             req.getRequestDispatcher("/logout").forward(req, resp);
             return;
@@ -61,6 +76,17 @@ public class DeletingServlet extends HttpServlet {
             req.getRequestDispatcher("/ProfilePage").forward(req, resp);
             return;
         }
+    }
+
+    private void tryingTodeleteAComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException, IOException {
+        //needed to renew the Article comments. Bugggggg
+        deleteDAO.dropSpeificComment(commentId);
+        req.getRequestDispatcher("/ArticlesIndex").forward(req, resp);
+            return;
+    }
+
+    private boolean usernameAndPasswordCheckForDelete() {
+        return username.equals(sessionUsername) && password.equals(sessionpassword) && loginPassing.selectionUsersNames(username, password);
     }
 
     private void setupForUsernameAndPasswordCheck(HttpServletRequest req, HttpSession session) {

@@ -79,4 +79,14 @@
         <url-pattern>/Upload</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Comments</servlet-name>
+        <servlet-class>Comment.CommentsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Comments</servlet-name>
+        <url-pattern>/Comments</url-pattern>
+    </servlet-mapping>
+
 </web-app>

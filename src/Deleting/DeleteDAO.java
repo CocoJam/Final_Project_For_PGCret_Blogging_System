@@ -1,5 +1,6 @@
 package Deleting;
 
+import Article.Articles;
 import Login.LoginPassing;
 
 import java.sql.PreparedStatement;
@@ -18,8 +19,9 @@ public class DeleteDAO extends LoginPassing {
     public void dropSpeificComment (int CommentID){
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "DELETE FROM Articles WHERE CommentID=?;"
+                    "DELETE FROM Comments WHERE CommentID=?;"
             );
+            System.out.println(CommentID);
             statement.setInt(1, CommentID);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -29,8 +31,21 @@ public class DeleteDAO extends LoginPassing {
 
     public void dropSpeificArticle (int ArticlesID){
         try {
+            dropArticleAllComments(ArticlesID);
             PreparedStatement statement = conn.prepareStatement(
                     "DELETE FROM Articles WHERE ArticlesID=?;"
+            );
+            statement.setInt(1, ArticlesID);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void dropArticleAllComments ( int ArticlesID){
+        try {
+            PreparedStatement statement = conn.prepareStatement(
+                    "DELETE FROM Comments WHERE ArticlesID=?;"
             );
             statement.setInt(1, ArticlesID);
             statement.executeUpdate();
@@ -78,8 +93,8 @@ public class DeleteDAO extends LoginPassing {
     }
 
     public void dropAllByUsername(String username) {
-        dropArticles(username);
         dropComments(username);
+        dropArticles(username);
         dropUserInformation(username);
     }
 }

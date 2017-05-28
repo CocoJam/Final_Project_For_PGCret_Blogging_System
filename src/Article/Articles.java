@@ -52,6 +52,7 @@ public class Articles {
     private String username = null;
     private String content = null;
     private Date datecreated =null;
+    private boolean owner= false;
 
     public boolean isOwner() {
         return owner;
@@ -61,7 +62,7 @@ public class Articles {
         this.owner = owner;
     }
 
-    private boolean owner= false;
+
 
     public Articles() {
     }
