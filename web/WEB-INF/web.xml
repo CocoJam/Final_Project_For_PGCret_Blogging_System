@@ -70,13 +70,13 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>Upload_pictures</servlet-name>
-        <servlet-class>Multi_media.Upload_Photos</servlet-class>
+        <servlet-name>Upload</servlet-name>
+        <servlet-class>Multi_media.Upload_files</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>Upload_pictures</servlet-name>
-        <url-pattern>/Upload_pictures</url-pattern>
+        <servlet-name>Upload</servlet-name>
+        <url-pattern>/Upload</url-pattern>
     </servlet-mapping>
 
 </web-app>

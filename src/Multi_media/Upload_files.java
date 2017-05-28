@@ -32,15 +32,15 @@ import java.util.Scanner;
 /**
  * Created by James lam on 14/05/2017.
  */
-public class Upload_Photos extends HttpServlet {
-    public Upload_Photos() {
+public class Upload_files extends HttpServlet {
+    public Upload_files() {
         super();
     }
 
     private boolean isMultipart;
     private String filePath;
-    private int maxFileSize = 50 * 1024;
-    private int maxMemSize = 50 * 1024;
+    private int maxFileSize = 5000 * 1024;
+    private int maxMemSize = 5000 * 1024;
     private File file;
     private String fileName;
     private String caption;
@@ -108,14 +108,16 @@ public class Upload_Photos extends HttpServlet {
                                 fileName.substring(fileName.lastIndexOf("\\") + 1));
                     }
                     fi.write(file);
+                    //This dispatcher is for image only, since all files can be written as such into the same file, but the output is not image if it isn't
                     session.setAttribute("ProfilePic",("Upload-photos/"+ dir_name + "/" +fileName));
                     req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                     return;
                 } else {
+                    System.out.println("somthing else is throwing here");
                 }
             }
         } catch (FileUploadException ex) {
-
+            System.out.println(ex);
         } catch (Exception ex) {
             System.out.println(ex);
         }
