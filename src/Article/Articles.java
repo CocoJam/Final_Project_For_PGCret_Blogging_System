@@ -1,11 +1,22 @@
 package Article;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by ljam763 on 25/05/2017.
  */
-public class Articles {
+
+//0. Article Javabean
+
+public class Articles implements Serializable {
+
+    private int articleid = 0;
+    private String articlename = null;
+    private String username = null;
+    private String content = null;
+    private Date datecreated =null;
+    private boolean owner= false;
 
     public int getArticleid() {
         return articleid;
@@ -46,13 +57,6 @@ public class Articles {
     public void setDatecreated(Date datecreated) {
         this.datecreated = datecreated;
     }
-
-    private int articleid = 0;
-    private String articlename = null;
-    private String username = null;
-    private String content = null;
-    private Date datecreated =null;
-    private boolean owner= false;
 
     public boolean isOwner() {
         return owner;

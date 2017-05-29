@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by ljam763 on 25/05/2017.
+ * Created by ljam763 on 25/05/2017. //comments by JW
  */
 
 //0. this class is the Servlet which receives the request from the client, communicates with the CommentsDAO with the selection, adding, or deleting request of the client and returning the appropriate responses back to the Client.

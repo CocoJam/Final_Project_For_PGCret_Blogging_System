@@ -101,8 +101,9 @@ public class CommentsDAO extends LoginPassing {
     }
 
 
-    //4. This is the method which adds comments to the actual Database.
+    //4. This is the method which adds comments to the Database.
     public void AddingCommentsToDataBase(int ArticlesID, String CommenterName, String Comments) {
+
         try {
             PreparedStatement statement = conn.prepareStatement(
                     "INSERT INTO Comments (ArticlesID, CommenterName, Comments) VALUES( ?, ? ,?);"

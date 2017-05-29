@@ -9,7 +9,12 @@ import java.util.Date;
 /**
  * Created by ljam763 on 25/05/2017.
  */
+
+//0. ArticlesDAO which is instantiated by the ArticlesServlet and has various methods for the ArticlesServlet to add, select or edit certain Article Database entries.
+
 public class ArticlesDAO extends LoginPassing {
+
+    //0.a. Global variables which are used by the various methods.
 
     private int ArticleID = 0;
     private String ArticleName = null;
@@ -17,11 +22,12 @@ public class ArticlesDAO extends LoginPassing {
     private String Content = null;
     private Date DateCreated =null;
 
-
-
+    //0.b. The constructor uses the super ie LoginPassing's constructor, this way the login details are kept hidden within the LoginPassing class.
     public ArticlesDAO() {
         super();
     }
+
+    //1. This method allows the ArticleServlet to access a particular article using the articleName.
 
     public Articles selectionArticles(String articleName) {
         try {
@@ -42,6 +48,7 @@ public class ArticlesDAO extends LoginPassing {
     }
 
 
+    //2. This method allows the ArticleServlet to access a particular article using the articleID.
     public Articles selectionArticles(int articlesID) {
         try {
             PreparedStatement statement = conn.prepareStatement(
@@ -60,6 +67,7 @@ public class ArticlesDAO extends LoginPassing {
         return null;
     }
 
+    //3. This is to make an article, using ArticleName, UserIDNAme and content values to be provided by the ArticlesServlet (which in turn receives the values from the client)
     public void madeArticles(String ArticleName, String UserIDName, String content) {
         try {
             PreparedStatement statement = conn.prepareStatement(
@@ -76,6 +84,7 @@ public class ArticlesDAO extends LoginPassing {
         }
     }
 
+    //4. This is to update an article, using ArticleName, content and ArticleID to be provided by the ArticlesServlet (which in turn receives the values from the client browser).
     public Articles updataArticles( String ArticleName,String content, int ArticleID) {
         try {
             PreparedStatement statement = conn.prepareStatement(
@@ -94,6 +103,7 @@ public class ArticlesDAO extends LoginPassing {
     }
 
 
+    //5. Not to be confused with madeArticle - this method is used by the selectionArticle methods to display Articles by declaring and instantiating an Article Object and setting the values of the JavaBean.
     private Articles makeArticle(ResultSet resultSet) throws SQLException {
         Articles articles = new Articles();
         ArticleID = resultSet.getInt(1);
