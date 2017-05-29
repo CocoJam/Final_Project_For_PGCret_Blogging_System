@@ -18,15 +18,35 @@ public class CommentsDAO extends LoginPassing {
         super();
     }
 
+    public void lodgeComment (int articleId, String commenterName, String commentContent) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(
+                    "INSERT INTO Comments (ArticlesID, CommenterName, Comments) VALUES (?,?,?);");
+            {
+                System.out.println(articleId);
+                System.out.println(commenterName);
+                System.out.println(commentContent);
+
+                statement.setInt(1, articleId);
+                statement.setString(2, commenterName);
+                statement.setString(3, commentContent);
+                statement.executeUpdate();
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public List<Comments> selectionComments(int CommentID, int articleID) {
         List<Comments> listOfComments = new ArrayList<>();
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM UsersNAmes WHERE ArticlesID = ? AND CommentID = ?;"
+                    "SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM uoaslashn.Comments WHERE CommentID = ? AND ArticlesID = ?;"
             );
             {
-                statement.setInt(2, CommentID);
-                statement.setInt(1, articleID);
+                statement.setInt(1, CommentID);
+                statement.setInt(2, articleID);
                 makeComment(listOfComments, statement);
             }
         } catch (SQLException e) {
@@ -40,7 +60,7 @@ public class CommentsDAO extends LoginPassing {
         List<Comments> listOfComments = new ArrayList<>();
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM UsersNAmes WHERE ArticlesID = ?;"
+                    "SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM UsersNames WHERE ArticlesID = ?;"
             );
             {
                 statement.setInt(1, articlesID);
@@ -56,7 +76,7 @@ public class CommentsDAO extends LoginPassing {
         List<Comments> listOfComments = new ArrayList<>();
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM UsersNAmes WHERE CommenterName = ?;"
+                    "SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM UsersNames WHERE CommenterName = ?;"
             );
             {
                 statement.setString(1, CommenterName);
@@ -67,7 +87,7 @@ public class CommentsDAO extends LoginPassing {
         }
         return listOfComments;
     }
-
+//
     private void makeComment(List<Comments> listOfComments, PreparedStatement statement) throws SQLException {
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {

@@ -1,11 +1,12 @@
 package Comment;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by ljam763 on 25/05/2017.
  */
-public class Comments {
+public class Comments implements Serializable {
     public int getCommentID() {
         return CommentID;
     }

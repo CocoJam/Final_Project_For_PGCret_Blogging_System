@@ -27,6 +27,8 @@
     </form>
 </c:if>
 
+<%@include file="Comments.jsp"%>
+
 </body>
 </html>
 
