@@ -75,7 +75,7 @@ public class CommentsDAO extends LoginPassing {
         return listOfComments;
     }
 
-    //2. This method allows making comments and Storing to the Database.
+    //2. This method uses the result set received (and uses the commentsSetStatement method to set the Comments JavaBean)
     private void makeComment(List<Comments> listOfComments, PreparedStatement statement) throws SQLException {
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
@@ -91,7 +91,7 @@ public class CommentsDAO extends LoginPassing {
         }
     }
 
-    //3. This method is to allow both selecting and making methods to easily set the comment details (in conjunction with the AddingCommentsToDataBase method which sets the Javabean).
+    //3. This method is called by (2) makeComment  to set the Javabean.
     private void commentsSetStatments(Comments comments, int commentID, int articleID, String commentName, String comment, Date commentTime) {
         comments.setActicleId(articleID);
         comments.setContent(comment);
@@ -101,7 +101,7 @@ public class CommentsDAO extends LoginPassing {
     }
 
 
-    //4. Sets the Comments Javabean for access by the client.
+    //4. This is the method which adds comments to the actual Database.
     public void AddingCommentsToDataBase(int ArticlesID, String CommenterName, String Comments) {
         try {
             PreparedStatement statement = conn.prepareStatement(

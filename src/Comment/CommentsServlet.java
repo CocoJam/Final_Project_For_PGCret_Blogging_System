@@ -26,7 +26,7 @@ public class CommentsServlet extends HttpServlet{
 
     //0.b. note that there is no GET method as there is no need to create a specifically separate JSP page for comments.
 
-    //1. This method 
+    //1. This method receives the POST request from the client,
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
