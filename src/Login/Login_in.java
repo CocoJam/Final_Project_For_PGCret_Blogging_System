@@ -27,16 +27,15 @@ public class Login_in extends HttpServlet {
             if ((boolean) session.getAttribute("log")) {
                 //checking for when a user is logined in and other user tries to login within the same session.
                 //This will logout the first person's account then login the second person. Hence when the second person logout everyone should be logined out.
-                if (!username.equals(session.getAttribute("username")) && !username.equals(session.getAttribute("password"))){
-                    if(loginLogic(req,resp,session,loginPassing)){
+                if (!username.equals(session.getAttribute("username")) && !username.equals(session.getAttribute("password"))) {
+                    if (loginLogic(req, resp, session, loginPassing)) {
                         req.getRequestDispatcher("/ProfilePage").forward(req, resp);
                         return;
                     }
-                }
-                else{
-                System.out.println("Login");
-                req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
-                return;
+                } else {
+                    System.out.println("Login");
+                    req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+                    return;
                 }
             }
         }
@@ -47,7 +46,8 @@ public class Login_in extends HttpServlet {
         loginLogic(req, resp, session, loginPassing);
         return;
     }
-// just refactor this out for convenience
+
+    // just refactor this out for convenience
     public boolean loginLogic(HttpServletRequest req, HttpServletResponse resp, HttpSession session, LoginPassing loginPassing) throws ServletException, IOException {
         if (loginPassing.selectionUsersNames(username, password)) {
             session.setAttribute("username", username);
@@ -63,7 +63,8 @@ public class Login_in extends HttpServlet {
             return false;
         }
     }
-//Registration bug found when a user logged out and then click registration error appears.//fixed
+
+    //Registration bug found when a user logged out and then click registration error appears.//fixed
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -71,14 +72,19 @@ public class Login_in extends HttpServlet {
         session.setAttribute("Registration", false);
         if (registration != null) {
             //checking if user is login already bound back to profilepage when registration is clicked.
-            if ((boolean) session.getAttribute("log")) {
-                req.getRequestDispatcher("/ProfilePage").forward(req, resp);
-                return;
-            } else {
-                if (registration.equals("Registration")) {
-                    req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+            if (session.getAttribute("log") != null) {
+                if ((boolean) session.getAttribute("log")) {
+                    req.getRequestDispatcher("/ProfilePage").forward(req, resp);
                     return;
+                } else {
+                    if (registration.equals("Registration")) {
+                        req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+                        return;
+                    }
                 }
+            }
+            else {
+                req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
             }
         }
     }

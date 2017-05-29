@@ -21,7 +21,7 @@
 <p>${profileInfo.ethnicity}</p>
 <p>${profileInfo.date}</p>
 <c:if test="${profileInfo.profilepic != null}">
-<img  src="Upload-photos/${profileInfo.username}/${profileInfo.profilepic}">
+<img  src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}">
 </c:if>
 
 <a href="/ArticlesIndex?articleList=self">To articles index</a>

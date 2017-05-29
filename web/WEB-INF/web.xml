@@ -13,9 +13,8 @@
         <servlet-name>Login</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
+
     <servlet>
-
-
         <servlet-name>Registration</servlet-name>
         <servlet-class>ProfilePage.Registration</servlet-class>
     </servlet>

@@ -1,5 +1,5 @@
 package Multi_media;
-
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServlet;
 import java.io.File;
 
@@ -8,20 +8,19 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.IOException;
+import java.nio.file.Files;
+
+import java.nio.file.Path;
+import java.nio.file.spi.FileTypeDetector;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+
 
 
 /**
@@ -55,6 +54,7 @@ public class Upload_files extends HttpServlet {
     public void doPost(HttpServletRequest req,
                        HttpServletResponse resp)
             throws ServletException, java.io.IOException {
+
         ServletContext servletContext = getServletContext();
         filePath = servletContext.getRealPath("/Upload-photos");
         File uploads = new File(filePath);
@@ -67,16 +67,16 @@ public class Upload_files extends HttpServlet {
         filePath = servletContext.getRealPath("/Upload-photos") + "/";
         HttpSession session = req.getSession(true);
         dir_name = (String) session.getAttribute("username");
-        System.out.println(dir_name);
         File dir = new File(filePath + dir_name);
         if (!dir.exists()) {
-            System.out.println("Making");
             boolean yes = dir.mkdir();
             System.out.println(dir.getPath());
             System.out.println(yes);
         }
-        filePath = dir.getPath() + "/";
 
+        //needed to make a music, photos and audio files for each user.
+
+        filePath = dir.getPath() + "/";
 
         DiskFileItemFactory factory = new DiskFileItemFactory();
         // maximum size that will be stored in memory
@@ -86,6 +86,7 @@ public class Upload_files extends HttpServlet {
 
         // Create a new file upload handler
         ServletFileUpload upload = new ServletFileUpload(factory);
+
         // maximum file size to be uploaded.
         upload.setSizeMax(maxFileSize);
 
@@ -100,16 +101,20 @@ public class Upload_files extends HttpServlet {
                     String contentType = fi.getContentType();
                     boolean isInMemory = fi.isInMemory();
                     long sizeInBytes = fi.getSize();
-                    if (fileName.lastIndexOf("\\") >= 0) {
-                        file = new File(filePath +
-                                fileName.substring(fileName.lastIndexOf("\\")));
-                    } else {
-                        file = new File(filePath +
-                                fileName.substring(fileName.lastIndexOf("\\") + 1));
+                    //needed to make a music, photos and audio files for each user.
+                    if (fileName.endsWith(".flv") || fileName.endsWith(".m4v") ||  fileName.endsWith(".mp4")|| fileName.endsWith(".mpg") ||fileName.endsWith(".mpeg")||fieldName.endsWith(".wmv")){
+                        FormingVideoFileAndVideo();
                     }
+                    else if (fileName.endsWith(".mp3")){
+                        FormingAudioFileAndAudio();
+                    }
+                    else if (fileName.endsWith(".jpg")||fileName.endsWith(".png")){
+                        FormingPhotoFileAndPhoto();
+                    }
+                    fileNameEditting();
                     fi.write(file);
                     //This dispatcher is for image only, since all files can be written as such into the same file, but the output is not image if it isn't
-                    session.setAttribute("ProfilePic",("Upload-photos/"+ dir_name + "/" +fileName));
+//                    session.setAttribute("ProfilePic",("Upload-photos/"+ dir_name + "/" +fileName));
                     req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                     return;
                 } else {
@@ -123,6 +128,46 @@ public class Upload_files extends HttpServlet {
         }
 
 
+    }
+
+    private void FormingPhotoFileAndPhoto() {
+        filePath += "photo";
+        File videoFile = new File(filePath);
+        if (!videoFile.exists()){
+            boolean made = videoFile.mkdir();
+            System.out.println("photoFile: "+ made);
+        }
+        filePath += "/";
+    }
+
+    private void FormingAudioFileAndAudio() {
+        filePath += "audio";
+        File videoFile = new File(filePath);
+        if (!videoFile.exists()){
+            boolean made = videoFile.mkdir();
+            System.out.println("audioFile: "+ made);
+        }
+        filePath += "/";
+    }
+
+    private void FormingVideoFileAndVideo() {
+        filePath += "video";
+        File videoFile = new File(filePath);
+        if (!videoFile.exists()){
+            boolean made = videoFile.mkdir();
+            System.out.println("videoFile: "+ made);
+        }
+        filePath += "/";
+    }
+
+    private void fileNameEditting() {
+        if (fileName.lastIndexOf("\\") >= 0) {
+            file = new File(filePath +
+                    fileName.substring(fileName.lastIndexOf("\\")));
+        } else {
+            file = new File (filePath +
+                    fileName.substring(fileName.lastIndexOf("\\") + 1));
+        }
     }
 
     public void doGet(HttpServletRequest request,
