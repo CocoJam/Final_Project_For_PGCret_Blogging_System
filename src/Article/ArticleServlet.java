@@ -45,7 +45,8 @@ public class ArticleServlet extends HttpServlet {
         session.setAttribute("articleContents", article);
         listOfComments = gettingTheListOfComments(ArticleID);
         session.setAttribute("commentlist",listOfComments);
-        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
+//        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Comments").forward(req, resp);
         return;
     }
 

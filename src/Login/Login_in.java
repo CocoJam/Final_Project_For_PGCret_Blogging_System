@@ -72,7 +72,10 @@ public class Login_in extends HttpServlet {
         session.setAttribute("Registration", false);
         if (registration != null) {
             //checking if user is login already bound back to profilepage when registration is clicked.
-            if (session.getAttribute("log") != null) {
+            if (session.getAttribute("log") == null) {
+                req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+                return;
+            }
                 if ((boolean) session.getAttribute("log")) {
                     req.getRequestDispatcher("/ProfilePage").forward(req, resp);
                     return;
@@ -82,10 +85,6 @@ public class Login_in extends HttpServlet {
                         return;
                     }
                 }
-            }
-            else {
-                req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
-            }
         }
     }
 }

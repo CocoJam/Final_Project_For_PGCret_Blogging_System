@@ -28,19 +28,18 @@
         }
     }
 %>
-<%--<%--%>
-    <%--if (session.getAttribute("log").equals("Update")) {--%>
-        <%--String userPath = request.getRealPath("/Upload-photos");--%>
-        <%--System.out.println(userPath + " Paths");--%>
-        <%--String username = (String) session.getAttribute("username");--%>
-        <%--File listofThings = new File(userPath + "/" + username);--%>
-        <%--System.out.println(listofThings.getPath());--%>
-        <%--File[] files = listofThings.listFiles();--%>
-        <%--for (File file : files) {--%>
-            <%--listofphotos.add(file.getName());--%>
-        <%--}--%>
-    <%--}--%>
-<%--%>--%>
+<% String userPath = request.getRealPath("/Upload-photos");
+    System.out.println(userPath + " Paths");
+    String username = (String) session.getAttribute("username");
+    File listofThings = new File(userPath + "/" + username+"/photo");
+    System.out.println(listofThings.getPath());
+    File[] files = listofThings.listFiles();
+    if (files != null) {
+        for (File file : files) {
+            listofphotos.add(file.getName());
+        }
+    }
+%>
 
 <form action="/Registration" id="form" method="post">
     <label for="username">Username:</label>
@@ -62,22 +61,11 @@
     <label for="date">date:</label>
     <input type="date" id="date" name="date" value="${profileInfo.date}">
     <br>
-    <% if (session.getAttribute("log")!= null) {
-        String userPath = request.getRealPath("/Upload-photos");
-        System.out.println(userPath + " Paths");
-        String username = (String) session.getAttribute("username");
-        File listofThings = new File(userPath + "/" + username+"/photo");
-        System.out.println(listofThings.getPath());
-        File[] files = listofThings.listFiles();
-        for (File file : files) {
-            listofphotos.add(file.getName());
-            System.out.println(file.getName());
-        }
+    <%
         for (String listofphoto : listofphotos) {
+            System.out.println(listofphoto);
             out.println(" <input type=\"radio\" name=\"profilePicture\" value=\"" + listofphoto + "\"> <img  src=\"Upload-photos/" + username + "/photo/" + listofphoto + "\"><br>");
         }
-    }
-
     %>
 
     <c:choose>

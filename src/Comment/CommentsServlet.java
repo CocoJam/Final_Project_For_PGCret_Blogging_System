@@ -45,4 +45,9 @@ public class CommentsServlet extends HttpServlet{
         comment = req.getParameter("commentcontent");
         articleID = (int) session.getAttribute("articleID");
     }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req,resp);
+    }
 }
