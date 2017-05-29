@@ -38,6 +38,11 @@
             <input type="hidden" name="commentId" value="${content.commentId}">
             <input type="submit" name="log" value="DeleteComment">
         </form>
+        <form action="/Comments" method="post">
+            <input type="hidden" name="commentId" value="${content.commentId}">
+            <input type="text" name="commentcontent" value="${content.content}">
+            <input type="submit" name="comments" value="EditComment">
+        </form>
     </c:if>
 </c:forEach>
 

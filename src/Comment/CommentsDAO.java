@@ -107,4 +107,19 @@ public class CommentsDAO extends LoginPassing {
             e.printStackTrace();
         }
     }
+
+    public void editComments(String Comment, int CommentId){
+        try {
+            PreparedStatement statement = conn.prepareStatement(
+                    "UPDATE  Comments SET Comments=? WHERE CommentID=?;"
+            );
+            {
+                statement.setString(1, Comment);
+                statement.setInt(2, CommentId);
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -102,20 +102,32 @@ public class Upload_files extends HttpServlet {
                     boolean isInMemory = fi.isInMemory();
                     long sizeInBytes = fi.getSize();
                     //needed to make a music, photos and audio files for each user.
+                    String filing = "";
+                    if (req.getParameter("Upload").equals("ProfileUpload")){
+                        filing="";
+                    }
+                    else if (req.getParameter("Upload").equals("ArticlesUpload")){
+                        filing= (String) session.getAttribute("articleID");
+                    }
                     if (fileName.endsWith(".flv") || fileName.endsWith(".m4v") ||  fileName.endsWith(".mp4")|| fileName.endsWith(".mpg") ||fileName.endsWith(".mpeg")||fieldName.endsWith(".wmv")){
-                        FormingVideoFileAndVideo();
+                        FormingVideoFileAndVideo(filing);
                     }
                     else if (fileName.endsWith(".mp3")){
-                        FormingAudioFileAndAudio();
+                        FormingAudioFileAndAudio(filing);
                     }
                     else if (fileName.endsWith(".jpg")||fileName.endsWith(".png")){
-                        FormingPhotoFileAndPhoto();
+                        FormingPhotoFileAndPhoto(filing);
                     }
+
                     fileNameEditting();
                     fi.write(file);
-                    //This dispatcher is for image only, since all files can be written as such into the same file, but the output is not image if it isn't
-//                    session.setAttribute("ProfilePic",("Upload-photos/"+ dir_name + "/" +fileName));
-                    req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+                    if (req.getParameter("Upload").equals("ProfileUpload")){
+                        req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+                    }
+                    else if (req.getParameter("Upload").equals("ArticlesUpload")){
+                        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
+                    }
+                    req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
                     return;
                 } else {
                     System.out.println("somthing else is throwing here");
@@ -130,8 +142,8 @@ public class Upload_files extends HttpServlet {
 
     }
 
-    private void FormingPhotoFileAndPhoto() {
-        filePath += "photo";
+    private void FormingPhotoFileAndPhoto(String filing) {
+        filePath += filing +"photo";
         File videoFile = new File(filePath);
         if (!videoFile.exists()){
             boolean made = videoFile.mkdir();
@@ -140,8 +152,8 @@ public class Upload_files extends HttpServlet {
         filePath += "/";
     }
 
-    private void FormingAudioFileAndAudio() {
-        filePath += "audio";
+    private void FormingAudioFileAndAudio(String filing) {
+        filePath += filing+"audio";
         File videoFile = new File(filePath);
         if (!videoFile.exists()){
             boolean made = videoFile.mkdir();
@@ -150,8 +162,8 @@ public class Upload_files extends HttpServlet {
         filePath += "/";
     }
 
-    private void FormingVideoFileAndVideo() {
-        filePath += "video";
+    private void FormingVideoFileAndVideo(String filing) {
+        filePath += filing+"video";
         File videoFile = new File(filePath);
         if (!videoFile.exists()){
             boolean made = videoFile.mkdir();
