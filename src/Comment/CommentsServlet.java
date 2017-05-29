@@ -39,6 +39,7 @@ public class CommentsServlet extends HttpServlet{
         return;
     }
 
+    //2. This method is called by (1) doPost method, to check for the specific owner of each of the Comments and sets whether the person accessing the Comment is the owner or not (This functionality is added to check if the person can edit).
     private void checkingForOwner() {
         for (Comments userComments : listOfComments) {
             if (userComments.getUsername().equals(username)){
@@ -50,6 +51,7 @@ public class CommentsServlet extends HttpServlet{
         }
     }
 
+    //3. This method sets up the Comment by getting the session attributes of the user logged in accessing this.
     private void commentSetUp(HttpServletRequest req, HttpSession session) {
         username = (String) session.getAttribute("username");
         comment = req.getParameter("commentcontent");
