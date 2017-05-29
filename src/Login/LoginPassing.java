@@ -58,6 +58,28 @@ public class LoginPassing {
     }
 
 
+    public boolean selectionUsersCheck(String username) {
+        try {
+            //user pass.hashing() with the password needed to be hash to match and salt number with iteration numbers
+            PreparedStatement statement = conn.prepareStatement(
+                    "SELECT Username FROM UsersNames WHERE Username = ?;"
+            );
+            {
+                System.out.println(statement);
+                statement.setString(1, username);
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    this.username = resultSet.getString(1);
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            return false;
+        }
+        return false;
+    }
+
+
     public static void main(String[] args) {
         //testing grounds here
         LoginPassing loginPassing = new LoginPassing();

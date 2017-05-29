@@ -16,16 +16,19 @@
 <body>
 
 <%
-    if ( session.getAttribute("log") != null && session.getAttribute("Registration") != null){
-        if ((boolean)session.getAttribute("Registration")){
-            request.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(request,response);}
+    if (session.getAttribute("log") != null && session.getAttribute("Registration") != null) {
+        if ((boolean) session.getAttribute("Registration")) {
+            request.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(request, response);
+        }
     }
 %>
 
 
 <form action="/Registration" id="form" method="post">
     <label for="username">Username:</label>
-    <input type="text" id="username"  name="username" value="${profileInfo.username}">
+    <input type="text" id="username" name="username" value="${profileInfo.username}">
+    <button id="responseToCheck">Check For UserNames</button>
+    <p id="reponseToUsername"></p>
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" value="${password}">
     <label for="Name">Name:</label>
@@ -41,19 +44,18 @@
     <label for="date">date:</label>
     <input type="date" id="date" name="date" value="${profileInfo.date}">
     <c:choose>
-    <c:when  test="${log.equals('Update')}">
+        <c:when test="${log.equals('Update')}">
             <input type="submit" name="log" value="ChangeUserInformation">
-    </c:when>
+        </c:when>
         <c:otherwise>
-            <input type="submit" name="log" value="Registration" >
+            <input type="submit" name="log" value="Registration">
         </c:otherwise>
     </c:choose>
 </form>
 
 <script type="text/javascript">
-$("#form").submit(function(event) {
-        if($("#username").val().startsWith(" ") || $("#password").val().startsWith(" ")|| $("#username").val() == "" || $("#password").val()== "" )
-        {
+    $("#form").submit(function (event) {
+        if ($("#username").val().startsWith(" ") || $("#password").val().startsWith(" ") || $("#username").val() == "" || $("#password").val() == "") {
             alert("validation failed false");
             event.preventDefault();
             return;
@@ -61,6 +63,21 @@ $("#form").submit(function(event) {
         alert("validations passed");
         return;
     });
+    console.log($("#username").val());
+    $("#responseToCheck").click(function () {
+        $.ajax({
+            url: '/Registration',
+            type: 'GET',
+            data: {"log": "RegistrationCheck", "usernameCheck": $("#username").val()},
+            success: function (msg) {
+                $(reponseToUsername).text(msg);
+                //msg is returning a boolean for check if false meaning no such username so ok
+                if (msg) {
+                    event.preventDefault();
+                }
+            }
+        });
+    })
 </script>
 </body>
 </html>

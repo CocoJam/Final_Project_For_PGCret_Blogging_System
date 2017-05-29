@@ -1,5 +1,8 @@
 package ProfilePage;
 
+import Login.LoginPassing;
+import Login.Login_in;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,9 +34,19 @@ public class Registration extends HttpServlet {
     //do Get to serve to Registration page jsp for update profile info
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("log", "Update");
-        req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
-        return;
+        System.out.println();
+        if (req.getParameter("log") != null) {
+            if (req.getParameter("log").equals("ChangeUserInformation")) {
+                req.setAttribute("log", "Update");
+                req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+                return;
+            }
+            else if (req.getParameter("log").equals("RegistrationCheck")){
+               String usernameCheck = req.getParameter("usernameCheck");
+                LoginPassing loginPassing = new LoginPassing();
+                resp.getWriter().print(loginPassing.selectionUsersCheck(usernameCheck));
+            }
+        }
     }
 
     @Override
