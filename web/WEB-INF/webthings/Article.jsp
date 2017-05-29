@@ -1,4 +1,7 @@
-<%--
+<%@ page import="java.io.File" %>
+<%@ page import="java.util.Set" %>
+<%@ page import="java.util.TreeSet" %>
+<%@ page import="java.io.IOException" %><%--
   Created by IntelliJ IDEA.
   User: ljam763
   Date: 25/05/2017
@@ -27,6 +30,20 @@
         <input type="submit" name="log" value="DeleteArticle">
     </form>
 </c:if>
+
+
+<%
+    String username = (String) session.getAttribute("username");
+    int articleId = (int) session.getAttribute("articleID");
+    String userPath = request.getRealPath("/Upload-photos/" + username + "/" + articleId + "/");
+    Set<String> listofphotos = listing(userPath + "photo");
+    Set<String> listofVideos = listing(userPath + "audio");
+    Set<String> listofAudio = listing(userPath + "video");
+%>
+
+<% displaySetMedia(out, username, articleId, listofphotos, Media.photo);%>
+<% displaySetMedia(out, username, articleId, listofVideos, Media.video);%>
+<% displaySetMedia(out, username, articleId, listofAudio, Media.audio);%>
 
 <c:forEach items="${commentlist}" var="content">
     <p>${content.username}</p>
@@ -58,17 +75,59 @@
 </body>
 </html>
 
+<%!
+    private void printingAudio(JspWriter out, String username, int articleId, Set<String> set) throws IOException {
+        for (String filename : set) {
+            out.println("<audio controls>\n" +
+                    "  <source src=\"Upload-photos/" + username + "/" + articleId + "/audio/" + filename + "\" type=\"audio/ogg\">\n" +
+                    "Your browser does not support the audio element.\n" +
+                    "</audio>\n");
+        }
+    }
 
-<%--articleContents--%>
+    private void printingVideo(JspWriter out, String username, int articleId, Set<String> set) throws IOException {
+        for (String filename : set) {
+            out.println("<video width=\"400\" controls>\n" +
+                    "  <source src=\"Upload-photos/" + username + "/" + articleId + "/video/" + filename + "\">\n" +
+                    "  Your browser does not support HTML5 video.\n" +
+                    "</video>");
+        }
+    }
 
-<%--private int articleid = 0;--%>
-<%--private String articlename = null;--%>
-<%--private String username = null;--%>
-<%--private String content = null;--%>
-<%--private Date datecreated =null;--%>
+    private void printingImages(JspWriter out, String username, int articleId, Set<String> set, Media type) throws IOException {
+        for (String filename : set) {
+            out.println("<img src=\"Upload-photos/" + username + "/" + articleId + "/" + type + "/" + filename + "\">");
+        }
+    }
 
-<%--private int commentId;--%>
-<%--private String username;--%>
-<%--private String content;--%>
-<%--private Date commentedTime;--%>
-<%--private int acticleId;--%>
+    private void displaySetMedia(JspWriter out, String username, int articleId, Set<String> set, Media type) throws IOException {
+        if (set != null || set.size() != 0) {
+            if (type == Media.photo) {
+                printingImages(out, username, articleId, set, type);
+            }
+            if (type == Media.video) {
+                printingVideo(out, username, articleId, set);
+            }
+            if (type == Media.audio) {
+                printingAudio(out, username, articleId, set);
+            }
+        }
+    }
+
+    private Set<String> listing(String userPath) {
+        Set<String> set = new TreeSet<>();
+        File listofThings = new File(userPath);
+        System.out.println(listofThings.getPath());
+        File[] files = listofThings.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                set.add(file.getName());
+            }
+        }
+        return set;
+    }
+
+    public enum Media {
+        video, photo, audio
+    }
+%>

@@ -1,4 +1,5 @@
 package Multi_media;
+
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServlet;
 import java.io.File;
@@ -20,7 +21,6 @@ import java.nio.file.Path;
 import java.nio.file.spi.FileTypeDetector;
 import java.util.Iterator;
 import java.util.List;
-
 
 
 /**
@@ -48,13 +48,16 @@ public class Upload_files extends HttpServlet {
 
 
     public void init() {
-        // Get the file location where it would be stored.
+        System.out.println();
     }
 
     public void doPost(HttpServletRequest req,
                        HttpServletResponse resp)
             throws ServletException, java.io.IOException {
-
+        HttpSession session = req.getSession();
+        caption = (String) session.getAttribute("Upload");
+        System.out.println(caption);
+        System.out.println("What");
         ServletContext servletContext = getServletContext();
         filePath = servletContext.getRealPath("/Upload-photos");
         File uploads = new File(filePath);
@@ -63,9 +66,7 @@ public class Upload_files extends HttpServlet {
             boolean made = uploads.mkdir();
             System.out.println(made);
         }
-
         filePath = servletContext.getRealPath("/Upload-photos") + "/";
-        HttpSession session = req.getSession(true);
         dir_name = (String) session.getAttribute("username");
         File dir = new File(filePath + dir_name);
         if (!dir.exists()) {
@@ -101,33 +102,31 @@ public class Upload_files extends HttpServlet {
                     String contentType = fi.getContentType();
                     boolean isInMemory = fi.isInMemory();
                     long sizeInBytes = fi.getSize();
-                    //needed to make a music, photos and audio files for each user.
-                    String filing = "";
-                    if (req.getParameter("Upload").equals("ProfileUpload")){
-                        filing="";
-                    }
-                    else if (req.getParameter("Upload").equals("ArticlesUpload")){
-                        filing= (String) session.getAttribute("articleID");
-                    }
-                    if (fileName.endsWith(".flv") || fileName.endsWith(".m4v") ||  fileName.endsWith(".mp4")|| fileName.endsWith(".mpg") ||fileName.endsWith(".mpeg")||fieldName.endsWith(".wmv")){
-                        FormingVideoFileAndVideo(filing);
-                    }
-                    else if (fileName.endsWith(".mp3")){
-                        FormingAudioFileAndAudio(filing);
-                    }
-                    else if (fileName.endsWith(".jpg")||fileName.endsWith(".png")){
-                        FormingPhotoFileAndPhoto(filing);
-                    }
 
+                    if (caption.equals("ArticlesUpload")) {
+                        String filing = ((int) session.getAttribute("articleID")) + "/";
+                        filePath += filing;
+                        File Article = new File(filePath);
+                        if (!Article.exists()) {
+                            boolean made = Article.mkdir();
+                            System.out.println("ArticleFile: " + made);
+                        }
+//                        filePath += "/";
+                    }
+                    if (fileName.endsWith(".flv") || fileName.endsWith(".m4v") || fileName.endsWith(".mp4") || fileName.endsWith(".mpg") || fileName.endsWith(".mpeg") || fieldName.endsWith(".wmv")) {
+                        FormingVideoFileAndVideo();
+                    } else if (fileName.endsWith(".mp3")) {
+                        FormingAudioFileAndAudio();
+                    } else if (fileName.endsWith(".jpg") || fileName.endsWith(".png")) {
+                        FormingPhotoFileAndPhoto();
+                    }
                     fileNameEditting();
                     fi.write(file);
-                    if (req.getParameter("Upload").equals("ProfileUpload")){
+                    if (caption.equals("ArticlesUpload")) {
+                        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
+                    } else {
                         req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                     }
-                    else if (req.getParameter("Upload").equals("ArticlesUpload")){
-                        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
-                    }
-                    req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
                     return;
                 } else {
                     System.out.println("somthing else is throwing here");
@@ -142,32 +141,32 @@ public class Upload_files extends HttpServlet {
 
     }
 
-    private void FormingPhotoFileAndPhoto(String filing) {
-        filePath += filing +"photo";
+    private void FormingPhotoFileAndPhoto() {
+        filePath += "photo";
         File videoFile = new File(filePath);
-        if (!videoFile.exists()){
+        if (!videoFile.exists()) {
             boolean made = videoFile.mkdir();
-            System.out.println("photoFile: "+ made);
+            System.out.println("photoFile: " + made);
         }
         filePath += "/";
     }
 
-    private void FormingAudioFileAndAudio(String filing) {
-        filePath += filing+"audio";
+    private void FormingAudioFileAndAudio() {
+        filePath += "audio";
         File videoFile = new File(filePath);
-        if (!videoFile.exists()){
+        if (!videoFile.exists()) {
             boolean made = videoFile.mkdir();
-            System.out.println("audioFile: "+ made);
+            System.out.println("audioFile: " + made);
         }
         filePath += "/";
     }
 
-    private void FormingVideoFileAndVideo(String filing) {
-        filePath += filing+"video";
+    private void FormingVideoFileAndVideo() {
+        filePath += "video";
         File videoFile = new File(filePath);
-        if (!videoFile.exists()){
+        if (!videoFile.exists()) {
             boolean made = videoFile.mkdir();
-            System.out.println("videoFile: "+ made);
+            System.out.println("videoFile: " + made);
         }
         filePath += "/";
     }
@@ -177,7 +176,7 @@ public class Upload_files extends HttpServlet {
             file = new File(filePath +
                     fileName.substring(fileName.lastIndexOf("\\")));
         } else {
-            file = new File (filePath +
+            file = new File(filePath +
                     fileName.substring(fileName.lastIndexOf("\\") + 1));
         }
     }

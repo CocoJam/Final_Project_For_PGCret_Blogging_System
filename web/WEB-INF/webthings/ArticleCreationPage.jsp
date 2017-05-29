@@ -15,12 +15,7 @@
     <label for="ArticleName">Article Name</label>
     <input name="ArticleName" type="text" id="ArticleName" value="${articleContents.articlename}">
     <textarea rows="4" cols="50" name="ArticleContent">${articleContents.content}</textarea>
-    <form action="/Upload" method="post"
-          enctype="multipart/form-data">
-        <input type="file" name="file" size="50"/>
-        <input type="submit" name="Upload" value="ArticlesUpload"/>
-        <br>
-    </form>
+
     <% if (request.getAttribute("articleContents") != null){
         System.out.println("EDIT");
         out.println("<input type=\"submit\" name=\"add\" value=\"Editted\">");
@@ -28,6 +23,12 @@
         out.println("<input type=\"submit\" name=\"add\" value=\"addingToDataBase\">");
     }
     %>
+</form>
+<form action="/Upload" method="post"
+                 enctype="multipart/form-data">
+    <input type="file" name="file" size="50"/>
+    <input type="submit" name="Upload" value="ArticlesUpload"/>
+    <br>
 </form>
 </body>
 </html>

@@ -33,10 +33,12 @@ public class ArticleServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String editing = req.getParameter("edit");
         session = req.getSession();
+
         try{ArticleID = Integer.parseInt(req.getParameter("acticleId"));}
         catch (NumberFormatException e){
             System.out.println(e);
         }
+        System.out.println(ArticleID + "articleid");
         article = articlesDAO.selectionArticles(ArticleID);
         if (article.getUsername().equals(session.getAttribute("username"))){
             article.setOwner(true);
@@ -63,6 +65,7 @@ public class ArticleServlet extends HttpServlet {
                 return;
             } else if (addingArticles.equals("EditArticle")) {
                 session.setAttribute("articleID", ArticleID);
+                session.setAttribute("Upload", "ArticlesUpload");
                 req.setAttribute("articleContents", article);
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
                 return;
@@ -71,6 +74,7 @@ public class ArticleServlet extends HttpServlet {
                 ArticleContent = req.getParameter("ArticleContent");
                 article = articlesDAO.updataArticles(ArticleName, ArticleContent, ArticleID);
                 req.setAttribute("articleContents", article);
+                session.setAttribute("Upload", null);
                 req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
                 return;
             } else if (addingArticles.equals("addingToDataBase")) {
