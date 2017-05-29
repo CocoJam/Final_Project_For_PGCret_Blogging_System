@@ -7,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Profile Page -> ArticleIndex</title>
@@ -19,10 +20,9 @@
 <p>${profileInfo.education}</p>
 <p>${profileInfo.ethnicity}</p>
 <p>${profileInfo.date}</p>
-
-
-<%--<p><img src="${ProfilePic}"></p>--%>
-
+<c:if test="${profileInfo.profilepic != null}">
+<img  src="Upload-photos/${profileInfo.username}/${profileInfo.profilepic}">
+</c:if>
 
 <a href="/ArticlesIndex?articleList=self">To articles index</a>
 <a href="/ArticlesIndex?articleList=all">To all articles index</a>

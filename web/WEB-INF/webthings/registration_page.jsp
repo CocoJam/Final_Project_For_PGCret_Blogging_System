@@ -1,4 +1,10 @@
-<%--
+<%@ page import="java.util.List" %>
+<%@ page import="java.awt.*" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.io.File" %>
+<%@ page import="javax.jms.Session" %>
+<%@ page import="java.util.Set" %>
+<%@ page import="java.util.TreeSet" %><%--
   Created by IntelliJ IDEA.
   User: ljam763
   Date: 23/05/2017
@@ -14,7 +20,7 @@
     <title>ProfilePage.Registration -> Profile Page</title>
 </head>
 <body>
-
+<%! Set<String> listofphotos = new TreeSet<>(); %>
 <%
     if (session.getAttribute("log") != null && session.getAttribute("Registration") != null) {
         if ((boolean) session.getAttribute("Registration")) {
@@ -22,7 +28,16 @@
         }
     }
 %>
-
+<%  String userPath = request.getRealPath("/Upload-photos");
+    System.out.println(userPath + " Paths");
+    String username = (String) session.getAttribute("username");
+    File listofThings = new File(userPath+"/"+ username );
+    System.out.println(listofThings.getPath());
+    File[] files = listofThings.listFiles();
+    for (File file : files) {
+        listofphotos.add(file.getName());
+    }
+%>
 
 <form action="/Registration" id="form" method="post">
     <label for="username">Username:</label>
@@ -43,6 +58,13 @@
     <input type="text" id="ethnicity" name="ethnicity" value="${profileInfo.ethnicity}">
     <label for="date">date:</label>
     <input type="date" id="date" name="date" value="${profileInfo.date}">
+    <br>
+    <%
+        for (String listofphoto : listofphotos) {
+            out.println(" <input type=\"radio\" name=\"profilePicture\" value=\""+listofphoto+"\"> <img  src=\"Upload-photos/"+ username +"/"+ listofphoto+"\"><br>");
+        }
+    %>
+
     <c:choose>
         <c:when test="${log.equals('Update')}">
             <input type="submit" name="log" value="ChangeUserInformation">

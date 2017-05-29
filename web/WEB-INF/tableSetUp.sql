@@ -51,3 +51,4 @@ CREATE TABLE IF NOT EXISTS Comment.Comments(
   FOREIGN KEY (CommenterName) REFERENCES UsersNames  (Username)
 );
 
+UPDATE UsersNames SET profilePicture = 'Chrysanthemum.jpg' WHERE Username = 'aaa';

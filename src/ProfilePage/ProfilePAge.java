@@ -17,6 +17,15 @@ public class ProfilePAge {
     private java.sql.Date date;
     private boolean update;
     private String photoname;
+    private String profilepic;
+
+    public String getProfilepic() {
+        return profilepic;
+    }
+
+    public void setProfilepic(String profilepic) {
+        this.profilepic = profilepic;
+    }
 
     public String getPhotoname() {
         return photoname;

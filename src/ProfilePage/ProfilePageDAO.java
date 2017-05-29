@@ -13,6 +13,7 @@ public class ProfilePageDAO extends LoginPassing {
     private String address;
     private String education;
     private String ethnicity;
+    private String profilepciture;
     private Date date;
 
     public ProfilePageDAO() {
@@ -24,7 +25,7 @@ public class ProfilePageDAO extends LoginPassing {
     public ProfilePAge getUsersProfile(String username)  {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT Username, Name ,Email, Address, Education, Ethnicity, DateOfBirth FROM UsersNames WHERE Username = ?;"
+                    "SELECT Username, Name ,Email, Address, Education, Ethnicity, DateOfBirth, profilePicture FROM UsersNames WHERE Username = ?;"
             );
             {
                 System.out.println(statement);
@@ -65,13 +66,14 @@ public class ProfilePageDAO extends LoginPassing {
         ProfilePageGetters(profilePAge);
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?, Password=?  WHERE  Password= ? AND Username = ?;"
+                    "UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?, Password=?, profilePicture=?  WHERE  Password= ? AND Username = ?;"
             );
             {   statement.setString(1, username);
                 sqlSetStatment(password,statement);
                 statement.setString(8,newPassword);
-                statement.setString(9,password);
-                statement.setString(10, usernames);
+                statement.setString(9,profilepciture);
+                statement.setString(10,password);
+                statement.setString(11, usernames);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -104,6 +106,8 @@ public class ProfilePageDAO extends LoginPassing {
         profilePAge.setEducation(education);
         profilePAge.setEthnicity(ethnicity);
         profilePAge.setDate(date);
+        profilePAge.setProfilepic(profilepciture);
+        System.out.println("setting "+ profilepciture);
         return profilePAge;
     }
 
@@ -115,6 +119,7 @@ public class ProfilePageDAO extends LoginPassing {
         education = resultSet.getString(5);
         ethnicity = resultSet.getString(6);
         date = resultSet.getDate(7);
+        profilepciture = resultSet.getString(8);
     }
 
     private void ProfilePageGetters (ProfilePAge profilePAge){
@@ -125,6 +130,8 @@ public class ProfilePageDAO extends LoginPassing {
         education = profilePAge.getEducation();
         ethnicity = profilePAge.getEthnicity();
         date = profilePAge.getDate();
+        profilepciture = profilePAge.getProfilepic();
+        System.out.println("getting :"+ profilepciture);
     }
 
 

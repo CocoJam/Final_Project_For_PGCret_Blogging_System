@@ -48,16 +48,6 @@
     </form>
     </c:if>
 </c:forEach>
-
-<script>
-//    document.ready(function () {
-//        $.ajax({    url: '/path/to/remote/script',
-//            type: 'GET',
-//            data: {}
-//            success: function(msg) {
-//            console.log("Received: " + JSON.stringify(msg));    } });
-//    })
-</script>
 </body>
 </html>
 

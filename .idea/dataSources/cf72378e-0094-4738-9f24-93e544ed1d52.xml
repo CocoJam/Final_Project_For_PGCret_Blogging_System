@@ -134,7 +134,11 @@
       <Position>8</Position>
       <DataType>date|0</DataType>
     </column>
-    <key id="35" parent="8" name="PRIMARY">
+    <column id="35" parent="8" name="profilePicture">
+      <Position>9</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <key id="36" parent="8" name="PRIMARY">
       <ColNames>Username</ColNames>
       <Primary>1</Primary>
     </key>

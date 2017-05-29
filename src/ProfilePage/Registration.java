@@ -97,8 +97,11 @@ public class Registration extends HttpServlet {
         profilePAge.setEmail(req.getParameter("email"));
         dateofbirth = req.getParameter("date");
         password = req.getParameter("password");
+        profilePAge.setProfilepic(req.getParameter("profilePicture"));
+        System.out.println("profile pic :" +req.getParameter("profilePicture"));
         sqlDateparsing();
         profilePAge.setDate(sqlFormateDate);
+
     }
 
     //Fixed the date parsing problem
