@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS UsersNames(
 -- Needed to add UserID for selections . Needed to be done not yet
 
 
-CREATE TABLE IF NOT EXISTS Article.Articles(
+CREATE TABLE IF NOT EXISTS Articles(
   ArticlesID int not NULL AUTO_INCREMENT,
   ArticlesName VARCHAR(64) not NULL ,
   UserIDName VARCHAR(64) not NULL ,
@@ -40,14 +40,14 @@ CREATE TABLE IF NOT EXISTS Article.Articles(
 );
 
 
-CREATE TABLE IF NOT EXISTS Comment.Comments(
+CREATE TABLE IF NOT EXISTS Comments(
   CommentID int not NULL AUTO_INCREMENT,
   ArticlesID int not NULL,
   CommenterName VARCHAR(64) not NULL ,
-  Comment.Comments VARCHAR(64) not NULL ,
+  Comments VARCHAR(64) not NULL ,
   CommentTime TIMESTAMP NOT NULL ,
   PRIMARY KEY (CommentID),
-  FOREIGN KEY (ArticlesID) REFERENCES Article.Articles (ArticlesID),
+  FOREIGN KEY (ArticlesID) REFERENCES Articles (ArticlesID),
   FOREIGN KEY (CommenterName) REFERENCES UsersNames  (Username)
 );
 

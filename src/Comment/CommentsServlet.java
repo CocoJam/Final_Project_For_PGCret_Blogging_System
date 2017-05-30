@@ -6,7 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+
+import static Connection.ConnectionToTheDataBase.closingConnection;
+
 
 /**
  * Created by ljam763 on 25/05/2017.
@@ -39,6 +43,7 @@ public class CommentsServlet extends HttpServlet {
         listOfComments = commentsDAO.selectionComments(articleID);
         checkingForOwner();
         session.setAttribute("commentlist", listOfComments);
+        closingConnection();
         req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
         return;
 

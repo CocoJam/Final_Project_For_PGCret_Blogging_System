@@ -15,6 +15,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import static Connection.ConnectionToTheDataBase.closingConnection;
+
 
 /**
  * Created by ljam763 on 23/05/2017.
@@ -35,19 +37,22 @@ public class Registration extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println();
-        if (req.getParameter("log") != null) {
+
             if (req.getParameter("log").equals("ChangeUserInformation")) {
                 req.setAttribute("log", "Update");
                 req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                 return;
             }
             else if (req.getParameter("log").equals("RegistrationCheck")){
+
                String usernameCheck = req.getParameter("usernameCheck");
+                System.out.println(usernameCheck);
                 LoginPassing loginPassing = new LoginPassing();
                 resp.getWriter().print(loginPassing.selectionUsersCheck(usernameCheck));
+                closingConnection();
                 return;
             }
-        }
+
     }
 
     @Override

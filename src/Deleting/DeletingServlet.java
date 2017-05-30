@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
+
+import static Connection.ConnectionToTheDataBase.closingConnection;
+import static Connection.ConnectionToTheDataBase.conn;
 
 /**
  * Created by ljam763 on 28/05/2017.
@@ -36,9 +40,19 @@ public class DeletingServlet extends HttpServlet {
         if (req.getParameter("log") != null) {
             if (req.getParameter("log").equals("DeletingProfile")) {
                 tryingTodeleteWholeProfile(req, resp, session);
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 return;
             } else if (req.getParameter("log").equals("DeleteArticle")) {
                 tryingTodeleteWholeArticle(req, resp);
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 return;
             } else if (req.getParameter("log").equals("DeleteComment")) {
                 System.out.println("converting id of article to int");
@@ -49,6 +63,7 @@ public class DeletingServlet extends HttpServlet {
                     System.out.println(e);
                 }
                 tryingTodeleteAComment(req, resp, session);
+                closingConnection();
                 return;
             }
         }
@@ -61,6 +76,7 @@ public class DeletingServlet extends HttpServlet {
         if (article.getUsername().equals(sessionUsername)) {
             System.out.println("dropping this article");
             deleteDAO.dropSpeificArticle(article.getArticleid());
+            closingConnection();
         }
         //needed to renew the index. Bugggggg
         req.getRequestDispatcher("/ArticlesIndex").forward(req, resp);
@@ -70,6 +86,7 @@ public class DeletingServlet extends HttpServlet {
     private void tryingTodeleteWholeProfile(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException, IOException {
         if (usernameAndPasswordCheckForDelete()) {
             deleteDAO.dropAllByUsername(username);
+            closingConnection();
             req.getRequestDispatcher("/logout").forward(req, resp);
             return;
         } else {
@@ -81,6 +98,7 @@ public class DeletingServlet extends HttpServlet {
     private void tryingTodeleteAComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException, IOException {
         //needed to renew the Article comments. Bugggggg
         deleteDAO.dropSpeificComment(commentId);
+        closingConnection();
         req.getRequestDispatcher("/ArticlesIndex").forward(req, resp);
             return;
     }

@@ -25,6 +25,11 @@ public class DeleteDAO extends LoginPassing {
             statement.setInt(1, CommentID);
             statement.executeUpdate();
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
@@ -38,6 +43,11 @@ public class DeleteDAO extends LoginPassing {
             statement.setInt(1, ArticlesID);
             statement.executeUpdate();
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
@@ -50,6 +60,11 @@ public class DeleteDAO extends LoginPassing {
             statement.setInt(1, ArticlesID);
             statement.executeUpdate();
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
@@ -62,6 +77,11 @@ public class DeleteDAO extends LoginPassing {
             statement.setString(1, username);
             statement.executeUpdate();
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
 
@@ -75,6 +95,11 @@ public class DeleteDAO extends LoginPassing {
             statement.setString(1, username);
             statement.executeUpdate();
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
@@ -88,6 +113,11 @@ public class DeleteDAO extends LoginPassing {
             System.out.println("deleting");
             statement.executeUpdate();
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
     }

@@ -30,6 +30,11 @@ public class CommentsDAO extends LoginPassing {
                 makeComment(listOfComments, statement);
             }
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
         return listOfComments;
@@ -47,6 +52,11 @@ public class CommentsDAO extends LoginPassing {
                 makeComment(listOfComments, statement);
             }
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
         return listOfComments;
@@ -63,6 +73,11 @@ public class CommentsDAO extends LoginPassing {
                 makeComment(listOfComments, statement);
             }
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
         return listOfComments;
@@ -104,6 +119,11 @@ public class CommentsDAO extends LoginPassing {
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
@@ -119,6 +139,11 @@ public class CommentsDAO extends LoginPassing {
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
     }

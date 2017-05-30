@@ -44,7 +44,6 @@
 <form action="/Registration" id="form" method="post">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" value="${profileInfo.username}">
-    <button id="responseToCheck">Check For UserNames</button>
     <p id="reponseToUsername"></p>
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" value="${password}">
@@ -77,7 +76,7 @@
         </c:otherwise>
     </c:choose>
 </form>
-
+<button id="responseToCheck">Check For UserNames</button>
 <script type="text/javascript">
     $("#form").submit(function (event) {
         if ($("#username").val().startsWith(" ") || $("#password").val().startsWith(" ") || $("#username").val() == "" || $("#password").val() == "") {
@@ -95,6 +94,7 @@
             type: 'GET',
             data: {"log": "RegistrationCheck", "usernameCheck": $("#username").val()},
             success: function (msg) {
+                console.log(msg)
                 $(reponseToUsername).text(msg);
                 //msg is returning a boolean for check if false meaning no such username so ok
                 if (msg) {

@@ -32,7 +32,13 @@ public class ArticleListObjectDAO extends ArticlesDAO {
                 ResultSet resultSet = statement.executeQuery();
                 addingArticlesIntoTheList(ListIndex, resultSet);
             }
+            conn.close();
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
         System.out.println("Article size" + ListIndex.size());
@@ -51,7 +57,13 @@ public class ArticleListObjectDAO extends ArticlesDAO {
                 ResultSet resultSet = statement.executeQuery();
                 addingArticlesIntoTheList(ListIndex, resultSet);
             }
+            conn.close();
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
         System.out.println("Article size" + ListIndex.size());

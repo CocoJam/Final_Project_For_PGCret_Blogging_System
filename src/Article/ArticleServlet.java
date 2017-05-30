@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+
+import static Connection.ConnectionToTheDataBase.closingConnection;
+import static Connection.ConnectionToTheDataBase.conn;
 
 /**
  * Created by ljam763 on 25/05/2017.
@@ -25,7 +29,7 @@ public class ArticleServlet extends HttpServlet {
     private List<Comments> listOfComments;
     private CommentsDAO commentsDAO = new CommentsDAO();
 
-    public List<Comments> gettingTheListOfComments(int articleID){
+    public List<Comments> gettingTheListOfComments(int articleID) {
         return listOfComments = commentsDAO.selectionComments(articleID);
     }
 
@@ -34,20 +38,24 @@ public class ArticleServlet extends HttpServlet {
         String editing = req.getParameter("edit");
         session = req.getSession();
 
-        try{ArticleID = Integer.parseInt(req.getParameter("acticleId"));}
-        catch (NumberFormatException e){
+        try {
+            ArticleID = Integer.parseInt(req.getParameter("acticleId"));
+        } catch (NumberFormatException e) {
             System.out.println(e);
         }
         System.out.println(ArticleID + "articleid");
         article = articlesDAO.selectionArticles(ArticleID);
-        if (article.getUsername().equals(session.getAttribute("username"))){
-            article.setOwner(true);
+        if (session.getAttribute("username") != null) {
+            if (article.getUsername().equals(session.getAttribute("username"))) {
+                article.setOwner(true);
+            }
         }
         session.setAttribute("articleID", ArticleID);
         session.setAttribute("articleContents", article);
         listOfComments = gettingTheListOfComments(ArticleID);
-        session.setAttribute("commentlist",listOfComments);
+        session.setAttribute("commentlist", listOfComments);
 //        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
+        closingConnection();
         req.getRequestDispatcher("/Comments").forward(req, resp);
         return;
     }
@@ -61,12 +69,14 @@ public class ArticleServlet extends HttpServlet {
             if (addingArticles.equals("addNewArticle")) {
                 session.setAttribute("articleContents", null);
                 req.setAttribute("add", null);
+                closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
                 return;
             } else if (addingArticles.equals("EditArticle")) {
                 session.setAttribute("articleID", ArticleID);
                 session.setAttribute("Upload", "ArticlesUpload");
                 req.setAttribute("articleContents", article);
+                closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
                 return;
             } else if (addingArticles.equals("Editted")) {
@@ -75,6 +85,7 @@ public class ArticleServlet extends HttpServlet {
                 article = articlesDAO.updataArticles(ArticleName, ArticleContent, ArticleID);
                 req.setAttribute("articleContents", article);
                 session.setAttribute("Upload", null);
+                closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
                 return;
             } else if (addingArticles.equals("addingToDataBase")) {
@@ -82,14 +93,15 @@ public class ArticleServlet extends HttpServlet {
                 String ArticleName = req.getParameter("ArticleName");
                 String ArticleContent = req.getParameter("ArticleContent");
                 articlesDAO.madeArticles(ArticleName, username, ArticleContent);
-                String Listformation =(String)session.getAttribute("articleList");
-                System.out.println((String)session.getAttribute("articleList"));
+                String Listformation = (String) session.getAttribute("articleList");
+                System.out.println((String) session.getAttribute("articleList"));
                 if (Listformation.equals("all")) {
                     indexList = new ArticleListObjectDAO().selectionAllArticlesList();
                 } else if (Listformation.equals("self")) {
                     indexList = new ArticleListObjectDAO().selectionArticlesList(username);
                 }
                 session.setAttribute("ArticleIndex", indexList);
+                closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
                 return;
             }

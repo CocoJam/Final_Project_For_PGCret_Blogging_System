@@ -17,12 +17,12 @@ public class ProfilePageDAO extends LoginPassing {
     private Date date;
 
     public ProfilePageDAO() {
-        ConnectionToTheDataBase.ConnectionToBase(ConnectionToTheDataBase.ConnectionTypes.Get);
         this.conn = ConnectionToTheDataBase.conn;
         this.pass = new Passwords_Checker();
     }
 
     public ProfilePAge getUsersProfile(String username)  {
+        ProfilePAge profilePAge = new ProfilePAge();
         try {
             PreparedStatement statement = conn.prepareStatement(
                     "SELECT Username, Name ,Email, Address, Education, Ethnicity, DateOfBirth, profilePicture FROM UsersNames WHERE Username = ?;"
@@ -33,11 +33,17 @@ public class ProfilePageDAO extends LoginPassing {
                 System.out.println(statement);
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
-                    ProfilePAge profilePAge = makeProfilePAge(resultSet);
-                    return profilePAge;
+                    profilePAge = makeProfilePAge(resultSet);
                 }
             }
+
+            return profilePAge;
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             System.out.println("No ProfilePage under this username");
         }
         return null;
@@ -57,6 +63,7 @@ public class ProfilePageDAO extends LoginPassing {
         } catch (SQLException e) {
             System.out.println("Error there is such username already");
             System.out.println("SQL error");
+            conn.close();
             throw new SQLException();
         }
         return getUsersProfile(profilePAge.getUsername());
@@ -77,6 +84,11 @@ public class ProfilePageDAO extends LoginPassing {
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             System.out.println("Can not update user infor based on the username and password");
         }
         return getUsersProfile(username);

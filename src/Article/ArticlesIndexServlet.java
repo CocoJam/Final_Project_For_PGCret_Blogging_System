@@ -6,7 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+
+import static Connection.ConnectionToTheDataBase.closingConnection;
+import static Connection.ConnectionToTheDataBase.conn;
 
 /**
  * Created by ljam763 on 25/05/2017.
@@ -20,6 +24,7 @@ public class ArticlesIndexServlet extends HttpServlet {
         HttpSession session = req.getSession();
         username = (String) session.getAttribute("username");
         swtichbetweenAllOrSelf(req, session, username);
+        closingConnection();
         req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
         return;
     }

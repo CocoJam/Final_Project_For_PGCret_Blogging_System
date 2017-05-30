@@ -135,7 +135,7 @@ public class Upload_files extends HttpServlet {
         } catch (FileUploadException ex) {
             System.out.println(ex);
         } catch (Exception ex) {
-            System.out.println(ex);
+            ex.getStackTrace();
         }
 
 

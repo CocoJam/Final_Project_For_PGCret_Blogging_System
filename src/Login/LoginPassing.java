@@ -22,7 +22,7 @@ public class LoginPassing {
 
     private String username;
     private String password;
-    protected Connection conn;
+    public Connection conn;
     protected Passwords_Checker pass;
 
     public LoginPassing() {
@@ -48,13 +48,13 @@ public class LoginPassing {
                     System.out.println(username);
                     this.password = resultSet.getString(2);
                     System.out.println(password);
-                    return true;
+
                 }
+                return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
 
@@ -65,25 +65,16 @@ public class LoginPassing {
                     "SELECT Username FROM UsersNames WHERE Username = ?;"
             );
             {
-                System.out.println(statement);
                 statement.setString(1, username);
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     this.username = resultSet.getString(1);
-                    return true;
                 }
+                return true;
             }
         } catch (SQLException e) {
-            return false;
+                return false;
         }
-        return false;
     }
 
-
-    public static void main(String[] args) {
-        //testing grounds here
-        LoginPassing loginPassing = new LoginPassing();
-        loginPassing.selectionUsersNames("ljam763", "blah");
-        System.out.println( loginPassing.getUsername());
-    }
 }

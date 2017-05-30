@@ -6,6 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
+
+import static Connection.ConnectionToTheDataBase.closingConnection;
+
 
 /**
  * Created by ljam763 on 23/05/2017.
@@ -18,7 +22,6 @@ public class Login_in extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         System.out.println("Processing login");
-
         username = req.getParameter("username");
         password = req.getParameter("password");
         LoginPassing loginPassing = new LoginPassing();
@@ -54,7 +57,9 @@ public class Login_in extends HttpServlet {
             session.setAttribute("password", password);
             session.setAttribute("log", true);
             System.out.println("loged-in");
+            System.out.println(session.getAttribute("username"));
             req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+            closingConnection();
             return true;
         } else {
             session.setAttribute("log", false);

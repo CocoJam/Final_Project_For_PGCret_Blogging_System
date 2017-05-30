@@ -71,7 +71,13 @@ public class ArticlesDAO extends LoginPassing {
                 statement.setString(3, content);
                 statement.executeUpdate();
             }
+            conn.close();
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
@@ -87,9 +93,16 @@ public class ArticlesDAO extends LoginPassing {
                 statement.setInt(3, ArticleID);
                 statement.executeUpdate();
             }
+            conn.close();
         } catch (SQLException e) {
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
+
         return selectionArticles(ArticleID);
     }
 
@@ -102,6 +115,7 @@ public class ArticlesDAO extends LoginPassing {
         Content = resultSet.getString(4);
         Date DateCreated = resultSet.getTimestamp(5);
         ArticlesSetStatments(articles, DateCreated);
+        conn.close();
         return articles;
     }
 
