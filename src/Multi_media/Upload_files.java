@@ -1,6 +1,6 @@
 package Multi_media;
 
-import javax.activation.MimetypesFileTypeMap;
+
 import javax.servlet.http.HttpServlet;
 import java.io.File;
 
@@ -14,13 +14,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.nio.file.Files;
 
-import java.nio.file.Path;
-import java.nio.file.spi.FileTypeDetector;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -45,6 +40,9 @@ public class Upload_files extends HttpServlet {
     private String caption;
     private String value;
     private String dir_name;
+    private Set<String> filepaths;
+    private String userPath;
+    private String username;
 
 
     public void init() {
@@ -181,10 +179,106 @@ public class Upload_files extends HttpServlet {
         }
     }
 
+    //Only tested on jsp due to database issue (TestingMultiMedia.jsp as testing grounds), but this should work ing theory.
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
             throws ServletException, java.io.IOException {
+        HttpSession session = request.getSession();
+//        ServletContext servletContext = getServletContext();
+//        userPath = servletContext.getRealPath("/Upload-photos");
+        username = (String) session.getAttribute("username");
+        filepaths = new TreeSet<>();
+        String media = request.getParameter("media");
+//        later on when the findingTheRightFile is working plz comment allOrSelf out to user findingTheRightFile to direct.
+        allOrSelf(media, request);
+        File file = new File(userPath);
+        //This is not done yet do to some small changes
+//        List<File> filesList = findingTheRightFile(file,username);
 
+        Set<String> list = findingDirectory(file);
+        Map<String, List<String>> mediaMapping = mapSetUp();
+        assigningMultipleMediaIntoMap(list, mediaMapping);
+        request.setAttribute("mediaOutPut", mediaMapping);
+        request.getRequestDispatcher("/WEB-INF/webthings/MultiMedia.jsp").forward(request, response);
+    }
+
+    private void assigningMultipleMediaIntoMap(Set<String> list, Map<String, List<String>> map) {
+        for (String s : list) {
+            if (s.endsWith(".flv") || s.endsWith(".m4v") || s.endsWith(".mp4") || s.endsWith(".mpg") || s.endsWith(".mpeg") || s.endsWith(".wmv")) {
+                map.get("video").add(s);
+            } else if (s.endsWith(".mp3")) {
+                map.get("audio").add(s);
+            } else if (s.endsWith(".jpg") || s.endsWith(".png")) {
+                map.get("photo").add(s);
+            }
+        }
+    }
+
+    private void allOrSelf(String media, HttpServletRequest request) {
+
+        if (media != null) {
+            ServletContext servletContext = getServletContext();
+            if (media.equals("all")) {
+                userPath = servletContext.getRealPath("/Upload-photos");
+            } else if (media.equals("self")) {
+                userPath = servletContext.getRealPath("/Upload-photos/" + username);
+            }
+        }
+    }
+
+    private Map<String, List<String>> mapSetUp() {
+        Map<String, List<String>> map = new TreeMap<>();
+        List<String> video = new ArrayList<>();
+        List<String> audio = new ArrayList<>();
+        List<String> photo = new ArrayList<>();
+        map.put("video", video);
+        map.put("audio", audio);
+        map.put("photo", photo);
+        return map;
+    }
+
+    //This is danger needed to check is there a article number as such before running this since it is recussion.
+    //This function uses recussion to find the leaf files from the file input onwards.
+    private Set<String> findingDirectory(File file) {
+        if (!file.isDirectory()) {
+            File[] parent = file.getParentFile().listFiles();
+            for (File file1 : parent) {
+                filepaths.add(filePath(file1));
+            }
+        } else {
+            File[] directory = file.listFiles();
+            for (File file1 : directory) {
+                findingDirectory(new File(file1.getPath()));
+            }
+        }
+        return filepaths;
+    }
+
+    private String filePath(File file1) {
+        return file1.getPath().substring(file1.getPath().indexOf("Upload-photos\\"));
+    }
+
+    //This is danger needed to check is there a article number as such before running this since it is recussion.
+    //This function returns a list of file that is depending the target given, which can be used to search speific username's or article id.
+    private List<File> findingTheRightFile(File file, String target) {
+        List<File> listOfFiles = new ArrayList<>();
+        if (file.getPath().endsWith(target)) {
+            File[] parent = file.listFiles();
+            for (File file1 : parent) {
+                listOfFiles.add(file1.getParentFile());
+            }
+            System.out.println("break");
+            return listOfFiles;
+        } else {
+            if (file.isDirectory()) {
+                File[] directory = file.listFiles();
+                System.out.println(directory.length);
+                for (File file1 : directory) {
+                    findingTheRightFile(new File(file1.getPath()), target);
+                }
+            }
+        }
+        return listOfFiles;
     }
 }
 

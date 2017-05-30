@@ -48,5 +48,8 @@
     <input type="submit"  name="Upload" value="ProfileUpload"/>
     <br>
 </form>
+
+<a href="/Upload?media=self">To self media</a>
+<a href="/Upload?media=all">To all media</a>
 </body>
 </html>
