@@ -1,5 +1,9 @@
 <%@ page import="java.io.File" %>
-<%@ page import="java.io.IOException" %><%--
+<%@ page import="java.io.IOException" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Set" %>
+<%@ page import="java.util.TreeSet" %><%--
   Created by IntelliJ IDEA.
   User: ljam763
   Date: 29/05/2017
@@ -15,33 +19,42 @@
 <%
     String username = (String) session.getAttribute("username");
 //    String userPath = request.getRealPath("/Upload-photos/"+username) ;
-    String userPath = request.getRealPath("/Upload-photos/hello") ;
+    String userPath = request.getRealPath("/Upload-photos");
     File file = new File(userPath);
 //    String fileNames = findingDirectory(file, out);
-    findingDirectory(file, out);
+   Set<String> list= findingDirectory(file, out);
+    for (String s : list) {
+        if (s.endsWith(".flv") || s.endsWith(".m4v") || s.endsWith(".mp4") || s.endsWith(".mpg") || s.endsWith(".mpeg") || s.endsWith(".wmv")) {
+            out.println("<video width=\"400\" controls> <source src="+ s +"></video>");
+        } else if (s.endsWith(".mp3")) {
+            out.println("<audio controls><source src=\""+ s +"\" type=\"audio/ogg\"> </audio>");
+        } else if (s.endsWith(".jpg") || s.endsWith(".png")) {
+            out.println("<img src=\""+ s +"\">");
+        }
+    }
 %>
 
 
 <%!
-    private String findingDirectory(File file, JspWriter out) {
-        if (!file.isDirectory()){
+    Set<String> filepaths = new TreeSet<>();
+    private Set<String> findingDirectory(File file, JspWriter out) {
+        if (!file.isDirectory()) {
             File[] parent = file.getParentFile().listFiles();
-            String everything ="";
+            String everything = "";
             for (File file1 : parent) {
-                everything+= " "+file1.getPath();
-                try {
-                    out.println("<p>"+file1.getName()+"</p>");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                everything += " " + file1.getPath();
+                    filepaths.add(filePath(file1));
             }
-            return everything;
+        } else {
+            File[] directory = file.listFiles();
+            for (File file1 : directory) {
+                findingDirectory(new File(file1.getPath()), out);
+            }
         }
-        File[] directory = file.listFiles();
-        for (File file1 : directory) {
-            return findingDirectory(new File(file1.getPath()),out);
-        }
-        return null;
+        return filepaths;
+    }
+    private String filePath(File file1) {
+      return   file1.getPath().substring(file1.getPath().indexOf("Upload-photos\\"));
     }
 %>
 </body>
