@@ -32,11 +32,13 @@ public class Login_in extends HttpServlet {
                 //This will logout the first person's account then login the second person. Hence when the second person logout everyone should be logined out.
                 if (!username.equals(session.getAttribute("username")) && !username.equals(session.getAttribute("password"))) {
                     if (loginLogic(req, resp, session, loginPassing)) {
+                        closingConnection();
                         req.getRequestDispatcher("/ProfilePage").forward(req, resp);
                         return;
                     }
                 } else {
                     System.out.println("Login");
+                    closingConnection();
                     req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                     return;
                 }
@@ -58,12 +60,13 @@ public class Login_in extends HttpServlet {
             session.setAttribute("log", true);
             System.out.println("loged-in");
             System.out.println(session.getAttribute("username"));
-            req.getRequestDispatcher("/ProfilePage").forward(req, resp);
             closingConnection();
+            req.getRequestDispatcher("/ProfilePage").forward(req, resp);
             return true;
         } else {
             session.setAttribute("log", false);
             System.out.println("loged-in rejected");
+            closingConnection();
             req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
             return false;
         }
@@ -81,15 +84,17 @@ public class Login_in extends HttpServlet {
                 req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                 return;
             }
-                if ((boolean) session.getAttribute("log")) {
-                    req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+            if ((boolean) session.getAttribute("log")) {
+                closingConnection();
+                req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+                return;
+            } else {
+                if (registration.equals("Registration")) {
+                    closingConnection();
+                    req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                     return;
-                } else {
-                    if (registration.equals("Registration")) {
-                        req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
-                        return;
-                    }
                 }
+            }
         }
     }
 }

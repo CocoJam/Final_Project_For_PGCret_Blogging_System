@@ -21,18 +21,18 @@
 //    String userPath = request.getRealPath("/Upload-photos/"+username) ;
     String userPath = request.getRealPath("/Upload-photos");
     File file = new File(userPath);
-//    String fileNames = findingDirectory(file, out);
+    String fileNames = findingDirectory(file, out);
     Set<String> list = findingDirectory(file, out);
     findingarticleId(file);
-//    for (String s : list) {
-//        if (s.endsWith(".flv") || s.endsWith(".m4v") || s.endsWith(".mp4") || s.endsWith(".mpg") || s.endsWith(".mpeg") || s.endsWith(".wmv")) {
-//            out.println("<video width=\"400\" controls> <source src="+ s +"></video>");
-//        } else if (s.endsWith(".mp3")) {
-//            out.println("<audio controls><source src=\""+ s +"\" type=\"audio/ogg\"> </audio>");
-//        } else if (s.endsWith(".jpg") || s.endsWith(".png")) {
-//            out.println("<img src=\""+ s +"\">");
-//        }
-//    }
+    for (String s : list) {
+        if (s.endsWith(".flv") || s.endsWith(".m4v") || s.endsWith(".mp4") || s.endsWith(".mpg") || s.endsWith(".mpeg") || s.endsWith(".wmv")) {
+            out.println("<video width=\"400\" controls> <source src="+ s +"></video>");
+        } else if (s.endsWith(".mp3")) {
+            out.println("<audio controls><source src=\""+ s +"\" type=\"audio/ogg\"> </audio>");
+        } else if (s.endsWith(".jpg") || s.endsWith(".png")) {
+            out.println("<img src=\""+ s +"\">");
+        }
+    }
 %>
 
 

@@ -55,6 +55,7 @@ public class ArticlesDAO extends LoginPassing {
                 }
             }
         } catch (SQLException e) {
+            System.out.println("Article is not there");
             e.printStackTrace();
         }
         return null;

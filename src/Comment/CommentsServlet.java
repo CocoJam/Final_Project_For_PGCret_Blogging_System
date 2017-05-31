@@ -21,10 +21,11 @@ public class CommentsServlet extends HttpServlet {
     private int commentId;
     private int articleID;
     private List<Comments> listOfComments;
-    private CommentsDAO commentsDAO = new CommentsDAO();
+    private CommentsDAO commentsDAO;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        commentsDAO = new CommentsDAO();
         HttpSession session = req.getSession();
         commentSetUp(req, session);
         String commentStat = req.getParameter("comments");
@@ -44,7 +45,8 @@ public class CommentsServlet extends HttpServlet {
         checkingForOwner();
         session.setAttribute("commentlist", listOfComments);
         closingConnection();
-        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Upload").forward(req,resp);
+//        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
         return;
 
     }

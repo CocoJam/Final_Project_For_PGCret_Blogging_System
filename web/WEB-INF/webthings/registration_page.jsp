@@ -59,7 +59,7 @@
     <input type="text" id="ethnicity" name="ethnicity" value="${profileInfo.ethnicity}">
     <label for="date">date:</label>
     <input type="date" id="date" name="date" value="${profileInfo.date}">
-    <br>
+
     <%
         for (String listofphoto : listofphotos) {
             System.out.println(listofphoto);
@@ -75,6 +75,13 @@
             <input type="submit" name="log" value="Registration">
         </c:otherwise>
     </c:choose>
+</form>
+
+<form action="/Upload" method="post"
+      enctype="multipart/form-data">
+    <input type="file" name="file" size="50"/>
+    <input type="submit"  name="Upload" value="ProfileUpload"/>
+    <br>
 </form>
 <button id="responseToCheck">Check For UserNames</button>
 <script type="text/javascript">

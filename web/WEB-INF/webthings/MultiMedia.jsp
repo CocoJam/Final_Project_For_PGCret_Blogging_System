@@ -13,15 +13,35 @@
 </head>
 <body>
 
+<%--if (s.endsWith(".flv") || s.endsWith(".m4v") || s.endsWith(".mp4") || s.endsWith(".mpg") || s.endsWith(".mpeg") || s.endsWith(".wmv")) {--%>
+<%--map.get("video").add(s);--%>
+<%--} else if (s.endsWith(".mp3")) {--%>
+<%--map.get("audio").add(s);--%>
+<%--} else if (s.endsWith(".jpg") || s.endsWith(".png")) {--%>
+<%--map.get("photo").add(s);--%>
+<%--}--%>
+
 
 <c:forEach var="mediagroups" items="${mediaOutPut}">
-    <c:forEach var="media" items="${mediagroups.value}">
-        <p>${media}</p>
-    </c:forEach>
+    <c:if test="${mediagroups.key.equals(\"photo\")}">
+        <c:forEach var="media" items="${mediagroups.value}">
+            <img src="${media}">
+        </c:forEach>
+    </c:if>
+    <c:if test="${mediagroups.key.equals(\"audio\")}">
+        <c:forEach var="media" items="${mediagroups.value}">
+            <audio controls><source src="${media}" type="audio/ogg"> </audio>
+        </c:forEach>
+    </c:if>
+    <c:if test="${mediagroups.key.equals(\"video\")}">
+        <c:forEach var="media" items="${mediagroups.value}">
+            <video width="400" controls> <source src="${media}"></video>
+        </c:forEach>
+    </c:if>
 </c:forEach>
 
 
-
+<audio controls><source src="" type="audio/ogg"> </audio>
 
 </body>
 </html>

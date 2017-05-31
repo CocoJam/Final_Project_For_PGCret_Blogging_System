@@ -19,7 +19,7 @@ import static Connection.ConnectionToTheDataBase.conn;
  * Created by ljam763 on 25/05/2017.
  */
 public class ArticleServlet extends HttpServlet {
-    private ArticlesDAO articlesDAO = new ArticlesDAO();
+    private ArticlesDAO articlesDAO;
     private int ArticleID;
     private String ArticleName;
     private String ArticleContent;
@@ -27,9 +27,10 @@ public class ArticleServlet extends HttpServlet {
     private HttpSession session;
     private List<Articles> indexList;
     private List<Comments> listOfComments;
-    private CommentsDAO commentsDAO = new CommentsDAO();
+    private CommentsDAO commentsDAO;
 
     public List<Comments> gettingTheListOfComments(int articleID) {
+        commentsDAO = new CommentsDAO();
         return listOfComments = commentsDAO.selectionComments(articleID);
     }
 
@@ -37,7 +38,7 @@ public class ArticleServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String editing = req.getParameter("edit");
         session = req.getSession();
-
+        articlesDAO = new ArticlesDAO();
         try {
             ArticleID = Integer.parseInt(req.getParameter("acticleId"));
         } catch (NumberFormatException e) {
@@ -45,6 +46,7 @@ public class ArticleServlet extends HttpServlet {
         }
         System.out.println(ArticleID + "articleid");
         article = articlesDAO.selectionArticles(ArticleID);
+        System.out.println(article.getUsername()+ "This is user");
         if (session.getAttribute("username") != null) {
             if (article.getUsername().equals(session.getAttribute("username"))) {
                 article.setOwner(true);
@@ -54,7 +56,6 @@ public class ArticleServlet extends HttpServlet {
         session.setAttribute("articleContents", article);
         listOfComments = gettingTheListOfComments(ArticleID);
         session.setAttribute("commentlist", listOfComments);
-//        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
         closingConnection();
         req.getRequestDispatcher("/Comments").forward(req, resp);
         return;
@@ -62,6 +63,7 @@ public class ArticleServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        articlesDAO = new ArticlesDAO();
         String addingArticles = req.getParameter("add");
         HttpSession session = req.getSession();
         String username = (String) session.getAttribute("username");

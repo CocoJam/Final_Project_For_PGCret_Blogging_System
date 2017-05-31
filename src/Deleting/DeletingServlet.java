@@ -26,11 +26,13 @@ public class DeletingServlet extends HttpServlet {
     private Articles article;
     private int articleId;
     private int commentId;
-    private DeleteDAO deleteDAO = new DeleteDAO();
-    private LoginPassing loginPassing = new LoginPassing();
+    private DeleteDAO deleteDAO;
+    private LoginPassing loginPassing;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        loginPassing =  new LoginPassing();
+        deleteDAO = new DeleteDAO();
         HttpSession session = req.getSession();
         setupForUsernameAndPasswordCheck(req, session);
         System.out.println(username);

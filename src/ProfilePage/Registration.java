@@ -27,7 +27,7 @@ public class Registration extends HttpServlet {
     private String dateofbirth;
     private java.sql.Date sqlFormateDate;
     private ProfilePAge profilePAge;
-    private ProfilePageDAO profilePageDAO = new ProfilePageDAO();
+    private ProfilePageDAO profilePageDAO;
     private int salt;
     private int iterations;
     private static final int KEY_LENGTH = 512;
@@ -36,15 +36,14 @@ public class Registration extends HttpServlet {
     //do Get to serve to Registration page jsp for update profile info
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println();
-
-            if (req.getParameter("log").equals("ChangeUserInformation")) {
+        HttpSession session = req.getSession();
+        if (req.getParameter("log").equals("ChangeUserInformation")) {
+                session.setAttribute("Upload", "ProfilePageUpload");
                 req.setAttribute("log", "Update");
                 req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                 return;
             }
             else if (req.getParameter("log").equals("RegistrationCheck")){
-
                String usernameCheck = req.getParameter("usernameCheck");
                 System.out.println(usernameCheck);
                 LoginPassing loginPassing = new LoginPassing();
@@ -58,12 +57,13 @@ public class Registration extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        session.setAttribute("Upload", "ProfilePageUpload");
         profileSetUp(req);
 //        updataTables.updataUsersProfile(username,password);
         //        uncomment to check the hashing function
 //        Login.Passwords_Checker passwords_checker = new Login.Passwords_Checker();
 //        String hashedPassowrd = passwords_checker.hashing(password, 5 , 500);
-
+        profilePageDAO = new ProfilePageDAO();
         if (req.getParameter("log") != null) {
             System.out.println("Regs");
             if (req.getParameter("log").equals("ChangeUserInformation")) {
@@ -72,6 +72,7 @@ public class Registration extends HttpServlet {
                 System.out.println("info updated");
                 session.setAttribute("profileInfo", profilePAge);
                 session.setAttribute("password",password);
+                closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                 return;
             } else {
@@ -79,6 +80,7 @@ public class Registration extends HttpServlet {
                     System.out.println("Create");
                     profilePageDAO.createUsersProfile(profilePAge, password);
                 } catch (SQLException e1) {
+                    closingConnection();
                     req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                     return;
                 }
@@ -89,6 +91,7 @@ public class Registration extends HttpServlet {
         System.out.println(profilePAge.getUsername());
         session.setAttribute("username", profilePAge.getUsername());
         session.setAttribute("password", password);
+        closingConnection();
         req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
         return;
     }

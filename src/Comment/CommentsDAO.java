@@ -52,11 +52,7 @@ public class CommentsDAO extends LoginPassing {
                 makeComment(listOfComments, statement);
             }
         } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
+            System.out.println("Comments not here");
             e.printStackTrace();
         }
         return listOfComments;

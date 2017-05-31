@@ -70,13 +70,11 @@ public class Upload_files extends HttpServlet {
         if (!dir.exists()) {
             boolean yes = dir.mkdir();
             System.out.println(dir.getPath());
-            System.out.println(yes);
+            System.out.println("username File is made: " + yes);
         }
 
         //needed to make a music, photos and audio files for each user.
-
         filePath = dir.getPath() + "/";
-
         DiskFileItemFactory factory = new DiskFileItemFactory();
         // maximum size that will be stored in memory
         factory.setSizeThreshold(maxMemSize);
@@ -95,6 +93,7 @@ public class Upload_files extends HttpServlet {
             while (i.hasNext()) {
                 FileItem fi = (FileItem) i.next();
                 if (!fi.isFormField()) {
+
                     String fieldName = fi.getFieldName();
                     fileName = fi.getName();
                     String contentType = fi.getContentType();
@@ -111,7 +110,9 @@ public class Upload_files extends HttpServlet {
                         }
 //                        filePath += "/";
                     }
-                    if (fileName.endsWith(".flv") || fileName.endsWith(".m4v") || fileName.endsWith(".mp4") || fileName.endsWith(".mpg") || fileName.endsWith(".mpeg") || fieldName.endsWith(".wmv")) {
+                    System.out.println("is from field");
+                    System.out.println(filePath);
+                    if (fileName.endsWith(".flv") || fileName.endsWith(".m4v") || fileName.endsWith(".mp4") || fileName.endsWith(".mpg") || fileName.endsWith(".mpeg") || fileName.endsWith(".wmv")) {
                         FormingVideoFileAndVideo();
                     } else if (fileName.endsWith(".mp3")) {
                         FormingAudioFileAndAudio();
@@ -123,7 +124,7 @@ public class Upload_files extends HttpServlet {
                     if (caption.equals("ArticlesUpload")) {
                         req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
                     } else {
-                        req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+                        req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                     }
                     return;
                 } else {
@@ -188,16 +189,20 @@ public class Upload_files extends HttpServlet {
 //        userPath = servletContext.getRealPath("/Upload-photos");
         username = (String) session.getAttribute("username");
         filepaths = new TreeSet<>();
+        Map<String, List<String>> mediaMapping = new TreeMap<>();
         String media = request.getParameter("media");
+        String articleId = session.getAttribute("articleID") + "";
 //        later on when the findingTheRightFile is working plz comment allOrSelf out to user findingTheRightFile to direct.
         allOrSelf(media, request);
         File file = new File(userPath);
         //This is not done yet do to some small changes
 //        List<File> filesList = findingTheRightFile(file,username);
-
-        Set<String> list = findingDirectory(file);
-        Map<String, List<String>> mediaMapping = mapSetUp();
-        assigningMultipleMediaIntoMap(list, mediaMapping);
+        List<File> listofFiles = findingTheRightFile(file, articleId);
+        for (File listofFile : listofFiles) {
+            Set<String> list = findingDirectory(listofFile);
+            mediaMapping = mapSetUp();
+            assigningMultipleMediaIntoMap(list, mediaMapping);
+        }
         request.setAttribute("mediaOutPut", mediaMapping);
         request.getRequestDispatcher("/WEB-INF/webthings/MultiMedia.jsp").forward(request, response);
     }
@@ -258,7 +263,7 @@ public class Upload_files extends HttpServlet {
         return file1.getPath().substring(file1.getPath().indexOf("Upload-photos\\"));
     }
 
-    //This is danger needed to check is there a article number as such before running this since it is recussion.
+    //This is Dangerous!!!! needed to check is there a article number as such before running this since it is recussion.
     //This function returns a list of file that is depending the target given, which can be used to search speific username's or article id.
     private List<File> findingTheRightFile(File file, String target) {
         List<File> listOfFiles = new ArrayList<>();
