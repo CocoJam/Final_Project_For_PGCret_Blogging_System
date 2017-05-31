@@ -30,7 +30,9 @@ public class ArticleMedia extends Upload_files {
         String userPath = servletContext.getRealPath("/Upload-photos");
         File startingFile = new File(userPath);
         findingTheRightFile(startingFile,articleID);
-        Set<String> list = findingDirectory(new File(targetLocation));
+        Set<String> filepaths = new TreeSet<>();
+        Set<String> list = findingDirectory(new File(targetLocation),filepaths);
+        System.out.println("here is the list " + list );
         Map<String, List<String>> mediaMapping = mapSetUp();
         assigningMultipleMediaIntoMap(list, mediaMapping);
         request.setAttribute("mediaOutPut", mediaMapping);
@@ -44,6 +46,7 @@ public class ArticleMedia extends Upload_files {
                 System.out.println(file1 + " found");
                 System.out.println(file1.getParent());
                 targetLocation = file1.getParent();
+                System.out.println(targetLocation);
                 return;
             }
             System.out.println("break");
@@ -56,5 +59,11 @@ public class ArticleMedia extends Upload_files {
                 findingTheRightFile(new File(file1.getPath()), target);
             }
         }
+    }
+
+    @Override
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+       String youtubeVideo = req.getParameter("youtube");
+
     }
 }

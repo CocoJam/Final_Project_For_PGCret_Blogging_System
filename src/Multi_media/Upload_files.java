@@ -38,7 +38,7 @@ public class Upload_files extends HttpServlet {
     private String fileName;
     private String caption;
     private String dir_name;
-    private Set<String> filepaths;
+//    private Set<String> filepaths;
     private String userPath;
     private String username;
 
@@ -187,7 +187,9 @@ public class Upload_files extends HttpServlet {
         String media = request.getParameter("media");
         allOrSelf(media, request);
         File file = new File(userPath);
-        Set<String> list = findingDirectory(file);
+        Set<String> filepaths = new TreeSet<>();
+        System.out.println(filepaths.size()+ " paths");
+        Set<String> list = findingDirectory(file,filepaths);
         Map<String, List<String>> mediaMapping = mapSetUp();
         assigningMultipleMediaIntoMap(list, mediaMapping);
         request.setAttribute("mediaOutPut", mediaMapping);
@@ -230,21 +232,23 @@ public class Upload_files extends HttpServlet {
 
     //This is danger needed to check is there a article number as such before running this since it is recussion.
     //This function uses recussion to find the leaf files from the file input onwards.
-    protected Set<String> findingDirectory(File file) {
+    protected Set<String> findingDirectory(File file , Set<String> filepaths) {
 
         System.out.println(file + " finding the directory");
         if (!file.isDirectory()) {
-            filepaths = new TreeSet<>();
+
             File[] parent = file.getParentFile().listFiles();
             for (File file1 : parent) {
                 System.out.println("found it !!!!!! "+ file1);
+                System.out.println(filepaths);
                 filepaths.add(filePath(file1));
             }
+            return filepaths;
         } else {
             File[] directory = file.listFiles();
             for (File file1 : directory) {
                 System.out.println("chile files: " + file1);
-                findingDirectory(new File(file1.getPath()));
+                findingDirectory(new File(file1.getPath()), filepaths);
             }
         }
         return filepaths;

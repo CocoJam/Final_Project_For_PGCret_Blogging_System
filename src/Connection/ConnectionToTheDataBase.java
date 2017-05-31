@@ -62,6 +62,13 @@ public class ConnectionToTheDataBase {
             }
             e.printStackTrace();
         }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

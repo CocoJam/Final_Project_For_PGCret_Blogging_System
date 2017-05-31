@@ -31,7 +31,7 @@
 <% String userPath = request.getRealPath("/Upload-photos");
     System.out.println(userPath + " Paths");
     String username = (String) session.getAttribute("username");
-    File listofThings = new File(userPath + "/" + username+"/photo");
+    File listofThings = new File(userPath + "/" + username + "/photo");
     System.out.println(listofThings.getPath());
     File[] files = listofThings.listFiles();
     if (files != null) {
@@ -60,11 +60,12 @@
     <label for="date">date:</label>
     <input type="date" id="date" name="date" value="${profileInfo.date}">
 
-    <%
+    <% if (username != null) {
         for (String listofphoto : listofphotos) {
             System.out.println(listofphoto);
             out.println(" <input type=\"radio\" name=\"profilePicture\" value=\"" + listofphoto + "\"> <img  src=\"Upload-photos/" + username + "/photo/" + listofphoto + "\"><br>");
         }
+    }
     %>
 
     <c:choose>
@@ -80,7 +81,7 @@
 <form action="/Upload" method="post"
       enctype="multipart/form-data">
     <input type="file" name="file" size="50"/>
-    <input type="submit"  name="Upload" value="ProfileUpload"/>
+    <input type="submit" name="Upload" value="ProfileUpload"/>
     <br>
 </form>
 <button id="responseToCheck">Check For UserNames</button>

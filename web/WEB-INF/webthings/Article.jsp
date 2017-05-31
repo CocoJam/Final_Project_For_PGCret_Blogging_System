@@ -49,20 +49,6 @@
     </form>
 </c:if>
 
-
-<%--<%--%>
-    <%--String username = (String) session.getAttribute("username");--%>
-    <%--int articleId = (int) session.getAttribute("articleID");--%>
-    <%--String userPath = request.getRealPath("/Upload-photos/" + username + "/" + articleId + "/");--%>
-    <%--Set<String> listofphotos = listing(userPath + "photo");--%>
-    <%--Set<String> listofVideos = listing(userPath + "audio");--%>
-    <%--Set<String> listofAudio = listing(userPath + "video");--%>
-<%--%>--%>
-
-<%--<% displaySetMedia(out, username, articleId, listofphotos, Media.photo);%>--%>
-<%--<% displaySetMedia(out, username, articleId, listofVideos, Media.video);%>--%>
-<%--<% displaySetMedia(out, username, articleId, listofAudio, Media.audio);%>--%>
-
 <c:forEach items="${commentlist}" var="content">
     <p>${content.username}</p>
     <p>${content.content}</p>
@@ -78,6 +64,10 @@
             <input type="text" name="commentcontent" value="${content.content}">
             <input type="submit" name="comments" value="EditComment">
         </form>
+        <form   action="/ArticleUpload" method="post">
+            <input type="text" name="youtube">
+            <input type="submit" name="youtubeVideoSubmition" value="">
+        </form>
     </c:if>
 </c:forEach>
 
@@ -92,60 +82,3 @@
 
 </body>
 </html>
-
-<%--<%!--%>
-    <%--private void printingAudio(JspWriter out, String username, int articleId, Set<String> set) throws IOException {--%>
-        <%--for (String filename : set) {--%>
-            <%--out.println("<audio controls>\n" +--%>
-                    <%--"  <source src=\"Upload-photos/" + username + "/" + articleId + "/audio/" + filename + "\" type=\"audio/ogg\">\n" +--%>
-                    <%--"Your browser does not support the audio element.\n" +--%>
-                    <%--"</audio>\n");--%>
-        <%--}--%>
-    <%--}--%>
-
-    <%--private void printingVideo(JspWriter out, String username, int articleId, Set<String> set) throws IOException {--%>
-        <%--for (String filename : set) {--%>
-            <%--out.println("<video width=\"400\" controls>\n" +--%>
-                    <%--"  <source src=\"Upload-photos/" + username + "/" + articleId + "/video/" + filename + "\">\n" +--%>
-                    <%--"  Your browser does not support HTML5 video.\n" +--%>
-                    <%--"</video>");--%>
-        <%--}--%>
-    <%--}--%>
-
-    <%--private void printingImages(JspWriter out, String username, int articleId, Set<String> set, Media type) throws IOException {--%>
-        <%--for (String filename : set) {--%>
-            <%--out.println("<img src=\"Upload-photos/" + username + "/" + articleId + "/" + type + "/" + filename + "\">");--%>
-        <%--}--%>
-    <%--}--%>
-
-    <%--private void displaySetMedia(JspWriter out, String username, int articleId, Set<String> set, Media type) throws IOException {--%>
-        <%--if (set != null || set.size() != 0) {--%>
-            <%--if (type == Media.photo) {--%>
-                <%--printingImages(out, username, articleId, set, type);--%>
-            <%--}--%>
-            <%--if (type == Media.video) {--%>
-                <%--printingVideo(out, username, articleId, set);--%>
-            <%--}--%>
-            <%--if (type == Media.audio) {--%>
-                <%--printingAudio(out, username, articleId, set);--%>
-            <%--}--%>
-        <%--}--%>
-    <%--}--%>
-
-    <%--private Set<String> listing(String userPath) {--%>
-        <%--Set<String> set = new TreeSet<>();--%>
-        <%--File listofThings = new File(userPath);--%>
-        <%--System.out.println(listofThings.getPath());--%>
-        <%--File[] files = listofThings.listFiles();--%>
-        <%--if (files != null) {--%>
-            <%--for (File file : files) {--%>
-                <%--set.add(file.getName());--%>
-            <%--}--%>
-        <%--}--%>
-        <%--return set;--%>
-    <%--}--%>
-
-    <%--public enum Media {--%>
-        <%--video, photo, audio--%>
-    <%--}--%>
-<%--%>--%>

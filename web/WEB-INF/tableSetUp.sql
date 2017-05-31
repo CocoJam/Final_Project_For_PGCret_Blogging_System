@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS Articles(
 );
 
 
+
 CREATE TABLE IF NOT EXISTS Comments(
   CommentID int not NULL AUTO_INCREMENT,
   ArticlesID int not NULL,
@@ -51,4 +52,8 @@ CREATE TABLE IF NOT EXISTS Comments(
   FOREIGN KEY (CommenterName) REFERENCES UsersNames  (Username)
 );
 
-UPDATE UsersNames SET profilePicture = 'Chrysanthemum.jpg' WHERE Username = 'aaa';
+CREATE TABLE if not Exists youtube(
+ArticlesId int not NULL ,
+youtubeURL VARCHAR (1000) not NULL ,
+FOREIGN KEY (ArticlesID) REFERENCES Articles (ArticlesID)
+)
