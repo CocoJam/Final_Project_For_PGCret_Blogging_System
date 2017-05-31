@@ -38,7 +38,7 @@ public class Upload_files extends HttpServlet {
     private String fileName;
     private String caption;
     private String dir_name;
-//    private Set<String> filepaths;
+    //    private Set<String> filepaths;
     private String userPath;
     private String username;
 
@@ -188,8 +188,8 @@ public class Upload_files extends HttpServlet {
         allOrSelf(media, request);
         File file = new File(userPath);
         Set<String> filepaths = new TreeSet<>();
-        System.out.println(filepaths.size()+ " paths");
-        Set<String> list = findingDirectory(file,filepaths);
+        System.out.println(filepaths.size() + " paths");
+        Set<String> list = findingDirectory(file, filepaths);
         Map<String, List<String>> mediaMapping = mapSetUp();
         assigningMultipleMediaIntoMap(list, mediaMapping);
         request.setAttribute("mediaOutPut", mediaMapping);
@@ -232,22 +232,19 @@ public class Upload_files extends HttpServlet {
 
     //This is danger needed to check is there a article number as such before running this since it is recussion.
     //This function uses recussion to find the leaf files from the file input onwards.
-    protected Set<String> findingDirectory(File file , Set<String> filepaths) {
+    protected Set<String> findingDirectory(File file, Set<String> filepaths) {
 
         System.out.println(file + " finding the directory");
         if (!file.isDirectory()) {
 
             File[] parent = file.getParentFile().listFiles();
             for (File file1 : parent) {
-                System.out.println("found it !!!!!! "+ file1);
-                System.out.println(filepaths);
                 filepaths.add(filePath(file1));
             }
             return filepaths;
         } else {
             File[] directory = file.listFiles();
             for (File file1 : directory) {
-                System.out.println("chile files: " + file1);
                 findingDirectory(new File(file1.getPath()), filepaths);
             }
         }
@@ -257,9 +254,6 @@ public class Upload_files extends HttpServlet {
     private String filePath(File file1) {
         return file1.getPath().substring(file1.getPath().indexOf("Upload-photos\\"));
     }
-
-    //This is Dangerous!!!! needed to check is there a article number as such before running this since it is recussion.
-    //This function returns a list of file that is depending the target given, which can be used to search speific username's or article id.
 
 }
 

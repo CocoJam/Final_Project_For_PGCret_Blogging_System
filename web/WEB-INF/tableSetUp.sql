@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS Comments;
 DROP TABLE IF EXISTS Articles;
 DROP TABLE IF EXISTS UsersNames;
+Drop TABLE If EXISTS youtube;
+
 
 CREATE TABLE IF NOT EXISTS UsersNames(
   Username VARCHAR(64) not NULL ,

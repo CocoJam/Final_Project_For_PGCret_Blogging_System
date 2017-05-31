@@ -37,6 +37,11 @@
             <video width="400" controls> <source src="${media}"></video>
         </c:forEach>
     </c:if>
+    <c:if test="${mediagroups.key.equals(\"youtube\")}">
+        <c:forEach var="media" items="${mediagroups.value}">
+           ${media}
+        </c:forEach>
+    </c:if>
 </c:forEach>
 
 <c:if test="${articleContents.owner}">
@@ -66,7 +71,7 @@
         </form>
         <form   action="/ArticleUpload" method="post">
             <input type="text" name="youtube">
-            <input type="submit" name="youtubeVideoSubmition" value="">
+            <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">
         </form>
     </c:if>
 </c:forEach>
