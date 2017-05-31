@@ -189,20 +189,15 @@ public class Upload_files extends HttpServlet {
 //        userPath = servletContext.getRealPath("/Upload-photos");
         username = (String) session.getAttribute("username");
         filepaths = new TreeSet<>();
-        Map<String, List<String>> mediaMapping = new TreeMap<>();
         String media = request.getParameter("media");
-        String articleId = session.getAttribute("articleID") + "";
 //        later on when the findingTheRightFile is working plz comment allOrSelf out to user findingTheRightFile to direct.
         allOrSelf(media, request);
         File file = new File(userPath);
         //This is not done yet do to some small changes
 //        List<File> filesList = findingTheRightFile(file,username);
-        List<File> listofFiles = findingTheRightFile(file, articleId);
-        for (File listofFile : listofFiles) {
-            Set<String> list = findingDirectory(listofFile);
-            mediaMapping = mapSetUp();
-            assigningMultipleMediaIntoMap(list, mediaMapping);
-        }
+        Set<String> list = findingDirectory(file);
+        Map<String, List<String>> mediaMapping = mapSetUp();
+        assigningMultipleMediaIntoMap(list, mediaMapping);
         request.setAttribute("mediaOutPut", mediaMapping);
         request.getRequestDispatcher("/WEB-INF/webthings/MultiMedia.jsp").forward(request, response);
     }
