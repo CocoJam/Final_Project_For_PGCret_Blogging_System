@@ -88,4 +88,14 @@
         <url-pattern>/Comments</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ArticleUpload</servlet-name>
+        <servlet-class>Multi_media.ArticleMedia</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ArticleUpload</servlet-name>
+        <url-pattern>/ArticleUpload</url-pattern>
+    </servlet-mapping>
+
 </web-app>

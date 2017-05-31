@@ -1,7 +1,7 @@
 package ProfilePage;
 
 import Login.LoginPassing;
-import Login.Login_in;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +39,6 @@ public class Registration extends HttpServlet {
         HttpSession session = req.getSession();
         if (req.getParameter("log").equals("ChangeUserInformation")) {
                 session.setAttribute("Upload", "ProfilePageUpload");
-                req.setAttribute("log", "Update");
                 req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                 return;
             }

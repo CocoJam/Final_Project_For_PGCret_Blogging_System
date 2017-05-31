@@ -68,7 +68,7 @@
     %>
 
     <c:choose>
-        <c:when test="${log.equals('Update')}">
+        <c:when test="${log}">
             <input type="submit" name="log" value="ChangeUserInformation">
         </c:when>
         <c:otherwise>

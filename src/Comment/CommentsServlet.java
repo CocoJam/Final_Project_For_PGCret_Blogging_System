@@ -45,7 +45,7 @@ public class CommentsServlet extends HttpServlet {
         checkingForOwner();
         session.setAttribute("commentlist", listOfComments);
         closingConnection();
-        req.getRequestDispatcher("/Upload").forward(req,resp);
+        req.getRequestDispatcher("/ArticleUpload").forward(req,resp);
 //        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
         return;
 

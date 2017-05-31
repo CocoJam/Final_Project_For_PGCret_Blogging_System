@@ -71,6 +71,7 @@ public class ArticleServlet extends HttpServlet {
             if (addingArticles.equals("addNewArticle")) {
                 session.setAttribute("articleContents", null);
                 req.setAttribute("add", null);
+                session.setAttribute("Upload", "addNewArticle");
                 closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
                 return;
@@ -103,6 +104,7 @@ public class ArticleServlet extends HttpServlet {
                     indexList = new ArticleListObjectDAO().selectionArticlesList(username);
                 }
                 session.setAttribute("ArticleIndex", indexList);
+                session.setAttribute("Upload", null);
                 closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
                 return;

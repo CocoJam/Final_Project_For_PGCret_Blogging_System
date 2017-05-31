@@ -31,14 +31,12 @@ public class Upload_files extends HttpServlet {
         super();
     }
 
-    private boolean isMultipart;
     private String filePath;
     private int maxFileSize = 5000 * 1024;
     private int maxMemSize = 5000 * 1024;
     private File file;
     private String fileName;
     private String caption;
-    private String value;
     private String dir_name;
     private Set<String> filepaths;
     private String userPath;
@@ -108,9 +106,7 @@ public class Upload_files extends HttpServlet {
                             boolean made = Article.mkdir();
                             System.out.println("ArticleFile: " + made);
                         }
-//                        filePath += "/";
                     }
-                    System.out.println("is from field");
                     System.out.println(filePath);
                     if (fileName.endsWith(".flv") || fileName.endsWith(".m4v") || fileName.endsWith(".mp4") || fileName.endsWith(".mpg") || fileName.endsWith(".mpeg") || fileName.endsWith(".wmv")) {
                         FormingVideoFileAndVideo();
@@ -123,7 +119,11 @@ public class Upload_files extends HttpServlet {
                     fi.write(file);
                     if (caption.equals("ArticlesUpload")) {
                         req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
-                    } else {
+                    }
+//                    } else if (caption.equals("addNewArticle")){
+//                        req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
+//                    }
+                    else {
                         req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                     }
                     return;
@@ -136,8 +136,6 @@ public class Upload_files extends HttpServlet {
         } catch (Exception ex) {
             ex.getStackTrace();
         }
-
-
     }
 
     private void FormingPhotoFileAndPhoto() {
@@ -185,16 +183,10 @@ public class Upload_files extends HttpServlet {
                       HttpServletResponse response)
             throws ServletException, java.io.IOException {
         HttpSession session = request.getSession();
-//        ServletContext servletContext = getServletContext();
-//        userPath = servletContext.getRealPath("/Upload-photos");
         username = (String) session.getAttribute("username");
-        filepaths = new TreeSet<>();
         String media = request.getParameter("media");
-//        later on when the findingTheRightFile is working plz comment allOrSelf out to user findingTheRightFile to direct.
         allOrSelf(media, request);
         File file = new File(userPath);
-        //This is not done yet do to some small changes
-//        List<File> filesList = findingTheRightFile(file,username);
         Set<String> list = findingDirectory(file);
         Map<String, List<String>> mediaMapping = mapSetUp();
         assigningMultipleMediaIntoMap(list, mediaMapping);
@@ -202,7 +194,7 @@ public class Upload_files extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/webthings/MultiMedia.jsp").forward(request, response);
     }
 
-    private void assigningMultipleMediaIntoMap(Set<String> list, Map<String, List<String>> map) {
+    protected void assigningMultipleMediaIntoMap(Set<String> list, Map<String, List<String>> map) {
         for (String s : list) {
             if (s.endsWith(".flv") || s.endsWith(".m4v") || s.endsWith(".mp4") || s.endsWith(".mpg") || s.endsWith(".mpeg") || s.endsWith(".wmv")) {
                 map.get("video").add(s);
@@ -215,7 +207,6 @@ public class Upload_files extends HttpServlet {
     }
 
     private void allOrSelf(String media, HttpServletRequest request) {
-
         if (media != null) {
             ServletContext servletContext = getServletContext();
             if (media.equals("all")) {
@@ -226,7 +217,7 @@ public class Upload_files extends HttpServlet {
         }
     }
 
-    private Map<String, List<String>> mapSetUp() {
+    protected Map<String, List<String>> mapSetUp() {
         Map<String, List<String>> map = new TreeMap<>();
         List<String> video = new ArrayList<>();
         List<String> audio = new ArrayList<>();
@@ -239,15 +230,20 @@ public class Upload_files extends HttpServlet {
 
     //This is danger needed to check is there a article number as such before running this since it is recussion.
     //This function uses recussion to find the leaf files from the file input onwards.
-    private Set<String> findingDirectory(File file) {
+    protected Set<String> findingDirectory(File file) {
+
+        System.out.println(file + " finding the directory");
         if (!file.isDirectory()) {
+            filepaths = new TreeSet<>();
             File[] parent = file.getParentFile().listFiles();
             for (File file1 : parent) {
+                System.out.println("found it !!!!!! "+ file1);
                 filepaths.add(filePath(file1));
             }
         } else {
             File[] directory = file.listFiles();
             for (File file1 : directory) {
+                System.out.println("chile files: " + file1);
                 findingDirectory(new File(file1.getPath()));
             }
         }
@@ -260,25 +256,6 @@ public class Upload_files extends HttpServlet {
 
     //This is Dangerous!!!! needed to check is there a article number as such before running this since it is recussion.
     //This function returns a list of file that is depending the target given, which can be used to search speific username's or article id.
-    private List<File> findingTheRightFile(File file, String target) {
-        List<File> listOfFiles = new ArrayList<>();
-        if (file.getPath().endsWith(target)) {
-            File[] parent = file.listFiles();
-            for (File file1 : parent) {
-                listOfFiles.add(file1.getParentFile());
-            }
-            System.out.println("break");
-            return listOfFiles;
-        } else {
-            if (file.isDirectory()) {
-                File[] directory = file.listFiles();
-                System.out.println(directory.length);
-                for (File file1 : directory) {
-                    findingTheRightFile(new File(file1.getPath()), target);
-                }
-            }
-        }
-        return listOfFiles;
-    }
+
 }
 

@@ -91,6 +91,7 @@ public class Login_in extends HttpServlet {
             } else {
                 if (registration.equals("Registration")) {
                     closingConnection();
+                    session.setAttribute("Upload", "ArticlesUpload");
                     req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                     return;
                 }
