@@ -48,13 +48,13 @@ public class LoginPassing {
                     System.out.println(username);
                     this.password = resultSet.getString(2);
                     System.out.println(password);
-
+                    return true;
                 }
-                return true;
             }
         } catch (SQLException e) {
             return false;
         }
+        return false;
     }
 
 
