@@ -144,19 +144,29 @@
       <Primary>1</Primary>
     </key>
     <column id="38" parent="9" name="ArticlesId">
-      <Position>1</Position>
+      <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="39" parent="9" name="youtubeURL">
-      <Position>2</Position>
+      <Position>3</Position>
       <DataType>varchar(1000)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="40" parent="9" name="ArticlesId">
+    <column id="40" parent="9" name="youtubeId">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <index id="41" parent="9" name="ArticlesId">
       <ColNames>ArticlesId</ColNames>
     </index>
-    <foreign-key id="41" parent="9" name="youtube_ibfk_1">
+    <key id="42" parent="9" name="PRIMARY">
+      <ColNames>youtubeId</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="43" parent="9" name="youtube_ibfk_1">
       <ColNames>ArticlesId</ColNames>
       <RefSchemaName>uoaslashn</RefSchemaName>
       <RefTableName>Articles</RefTableName>

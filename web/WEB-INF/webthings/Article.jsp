@@ -21,6 +21,12 @@
 <p>${articleContents.username}</p>
 <p>${articleContents.datecreated}</p>
 
+<%--<c:if test="${articleContents.owner}">--%>
+    <%--<form action="/Deleting" method="post">--%>
+        <%--<input type="submit" name="log" value="DeleteArticle">--%>
+    <%--</form>--%>
+<%--</c:if>--%>
+
 <c:forEach var="mediagroups" items="${mediaOutPut}">
     <c:if test="${mediagroups.key.equals(\"photo\")}">
         <c:forEach var="media" items="${mediagroups.value}">
@@ -44,6 +50,7 @@
     </c:if>
 </c:forEach>
 
+
 <c:if test="${articleContents.owner}">
     <p>${articleContents.owner}</p>
     <form action="/Articles" method="post">
@@ -51,6 +58,10 @@
     </form>
     <form action="/Deleting" method="post">
         <input type="submit" name="log" value="DeleteArticle">
+    </form>
+    <form   action="/ArticleUpload" method="post">
+        <input type="text" name="youtube">
+        <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">
     </form>
 </c:if>
 
@@ -68,10 +79,6 @@
             <input type="hidden" name="commentId" value="${content.commentId}">
             <input type="text" name="commentcontent" value="${content.content}">
             <input type="submit" name="comments" value="EditComment">
-        </form>
-        <form   action="/ArticleUpload" method="post">
-            <input type="text" name="youtube">
-            <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">
         </form>
     </c:if>
 </c:forEach>

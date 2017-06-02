@@ -53,7 +53,9 @@ public class Registration extends HttpServlet {
                String usernameCheck = req.getParameter("usernameCheck");
                 System.out.println(usernameCheck);
                 LoginPassing loginPassing = new LoginPassing();
-                resp.getWriter().print(loginPassing.selectionUsersCheck(usernameCheck));
+                boolean asdna= loginPassing.selectionUsersCheck(usernameCheck);
+            System.out.println(asdna);
+                resp.getWriter().print(asdna);
                 closingConnection();
                 return;
             }

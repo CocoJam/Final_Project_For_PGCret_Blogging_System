@@ -25,8 +25,10 @@ public class MediaDAO extends LoginPassing {
                     "INSERT INTO youtube (ArticlesID , youtubeURL) VALUES( ? ,?);"
             );
             {
+                String youtube = "<iframe width=\"854\" height=\"480\" src=\""+ youtubeurl+ "\" frameborder=\"0\" allowfullscreen></iframe>";
+                youtube.replace("watch?v=", "embed/");
                 statement.setInt(1, ArticleID);
-                statement.setString(2, youtubeurl);
+                statement.setString(2, youtube);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {

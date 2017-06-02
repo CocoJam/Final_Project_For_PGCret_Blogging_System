@@ -127,7 +127,8 @@ public class Upload_files extends HttpServlet {
                     fileNameEditting(); //this slims down the filenname before it is written
                     fi.write(file);
                     if (caption.equals("ArticlesUpload")) {
-                        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
+//                        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
+                        req.getRequestDispatcher("/ArticleUpload").forward(req, resp);
                     }
 //                    } else if (caption.equals("addNewArticle")){
 //                        req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
@@ -141,6 +142,8 @@ public class Upload_files extends HttpServlet {
                 }
             }
         } catch (FileUploadException ex) {
+            System.out.println("Upload not successful due to the file size exceeding limit");
+            req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
             System.out.println(ex);
         } catch (Exception ex) {
             ex.getStackTrace();
