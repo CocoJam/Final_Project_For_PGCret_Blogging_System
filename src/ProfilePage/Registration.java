@@ -60,20 +60,27 @@ public class Registration extends HttpServlet {
 
     }
 
+    //The doPOST method receives information from the form within the registration page via the POST method.
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         session.setAttribute("Upload", "ProfilePageUpload");
+
+        // profileSetUp is used to simplify the logic here. All the setters of the profilepage Object is done within this method (see profileSetUp()).
         profileSetUp(req);
+
 //        updataTables.updataUsersProfile(username,password);
         //        uncomment to check the hashing function
 //        Login.Passwords_Checker passwords_checker = new Login.Passwords_Checker();
-//        String hashedPassowrd = passwords_checker.hashing(password, 5 , 500);
+//        String hashedPassword = passwords_checker.hashing(password, 5 , 500);
+
         profilePageDAO = new ProfilePageDAO();
         if (req.getParameter("log") != null) {
             System.out.println("Regs");
             //TODO refactor to switch statement if possible.
-            //The below is an editing scenario.
+
+            //
+            // Scenario 1: The below is an editing scenario.
             if (req.getParameter("log").equals("ChangeUserInformation")) {
                 System.out.println("Trying for info update");
                 profilePage = profilePageDAO.updataUsersProfile((String) session.getAttribute("username"), (String) session.getAttribute("password"), profilePage,password);
@@ -83,27 +90,32 @@ public class Registration extends HttpServlet {
                 closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                 return;
-            } else {
+            }
+//            Scenario 2: create new profile scenario
+            else {
                 try {
                     System.out.println("Create");
                     profilePageDAO.createUsersProfile(profilePage, password);
                 } catch (SQLException e1) {
+                    //If SQL Exception thrown by profilePageDAO.CreateUsersProfile() (when username already exists), then this is caught here and the user is redirected to the registration page where they have to start again.
                     closingConnection();
                     req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                     return;
                 }
             }
         }
-        profilePage = profilePageDAO.getUsersProfile(profilePage.getUsername());
-        session.setAttribute("profileInfo", profilePage);
-        System.out.println(profilePage.getUsername());
-        session.setAttribute("username", profilePage.getUsername());
-        session.setAttribute("password", password);
-        closingConnection();
-        req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
-        return;
+//TODO cleanup of following required: This code is previous implementation which is not required anymore, check before deleting
+//        profilePage = profilePageDAO.getUsersProfile(profilePage.getUsername());
+//        session.setAttribute("profileInfo", profilePage);
+//        System.out.println(profilePage.getUsername());
+//        session.setAttribute("username", profilePage.getUsername());
+//        session.setAttribute("password", password);
+//        closingConnection();
+//        req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+//        return;
     }
 
+    //This is the setup of the profile page whether for logged in or new registration users. Takes parameters from the form and sets them to the JAVABEAN Object instance variables.
     private void profileSetUp(HttpServletRequest req) {
         profilePage = new ProfilePAge();
         profilePage.setUsername(req.getParameter("username"));
@@ -118,7 +130,6 @@ public class Registration extends HttpServlet {
         System.out.println("profile pic :" +req.getParameter("profilePicture"));
         sqlDateparsing();
         profilePage.setDate(sqlFormateDate);
-
     }
 
     //Fixed the date parsing problem
@@ -138,6 +149,4 @@ public class Registration extends HttpServlet {
         }
         sqlFormateDate = new java.sql.Date(date.getTime());
     }
-
-
 }

@@ -24,16 +24,22 @@
 <img  src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}">
 </c:if>
 
-<a href="/ArticlesIndex?articleList=self">To articles index</a>
+<%--The following are GET methods into either your article index or ALL article index--%>
+<a href="/ArticlesIndex?articleList=self">To my articles index</a>
 <a href="/ArticlesIndex?articleList=all">To all articles index</a>
+
+<%--This goes to LogOut servlet, session invalidated--%>
 <form action="/logout" method="get">
     <input type="submit" value="Logout">
 </form>
 
+<%--This goes to changeUserInformation in GET method, see Registration serlvet--%>
 <form action="/Registration" method="get">
     <input type="submit" name="log" value="ChangeUserInformation">
 </form>
 
+<%--This deletes the whole profile and corresponding database entries (incl youtube links, comments, ) by POST method--%>
+<%--TODO not being able to drop folders--%>
 <form action="/Deleting" method="post">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username">
@@ -42,13 +48,7 @@
     <input type="submit" name="log" value="DeletingProfile">
 </form>
 
-<%--<form action="/Upload" method="post"--%>
-      <%--enctype="multipart/form-data">--%>
-    <%--<input type="file" name="file" size="50"/>--%>
-    <%--<input type="submit"  name="Upload" value="ProfileUpload"/>--%>
-    <%--<br>--%>
-<%--</form>--%>
-
+<%--These links goes either to users own media, or all media (both accessed by GET method) goes to /Upload servlet--%>
 <a href="/Upload?media=self">To self media</a>
 <a href="/Upload?media=all">To all media</a>
 </body>

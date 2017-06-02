@@ -63,7 +63,7 @@
     <label for="ethnicity">ethnicity:</label>
     <input type="text" id="ethnicity" name="ethnicity" value="${profileInfo.ethnicity}">
     <label for="date">date:</label>
-    <input type="date" id="date" name="date" value="${profileInfo.date}">
+    <input type="date" id="date" name="date" value="${profileInfo.date}"> <%--THIS   DOES NOT WORK IN IE IE DONT USE IE--%>
 
     <%--2nd part: uses the above set to display the images in the set, by going through the list of photoname strings, and then accessing by pathing in the photo by the username folder--%>
     <% if (username != null) {
