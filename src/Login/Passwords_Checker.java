@@ -11,21 +11,23 @@ import java.util.Base64;
 import java.util.Random;
 
 /**
- * @author Cameron Grout
- *
- * A utility class to hash passwords and check passwords vs hashed values. Based on code from
- * <a href="http://stackoverflow.com/a/18143616">this StackOverflow post</a>, modified to be
- * inline with OWASP recommendations for algorithm and salt length. Overloads and base64 helpers
- * have been added for ease-of-use.
+ * @author Team Slash N
+ *         <p>
+ *         The utility class to hash passwords and check passwords vs hashed values. Deployed code from
+ *         <a href="http://stackoverflow.com/a/18143616">this StackOverflow post</a>, modified to be
+ *         inline with OWASP recommendations for algorithm and salt length. Overload and base-64 minions
+ *         have been added for ease.
  */
+//TODO Security pack improvement. NEED to edit and finalised.
+
 public class Passwords_Checker {
     private static final Random RANDOM = new SecureRandom();
     private static final int DEFAULT_ITERATIONS = 100_000;
     private static final int KEY_LENGTH = 512;
     private static final int DEFAULT_SALT_LENGTH = 32;
 
-    public Passwords_Checker() { }
-
+    public Passwords_Checker() {
+    }
 
     public static byte[] getNextSalt() {
         return getNextSalt(DEFAULT_SALT_LENGTH);
@@ -37,7 +39,6 @@ public class Passwords_Checker {
         RANDOM.nextBytes(salt);
         return salt;
     }
-
 
     public static byte[] insecureHash(String password) {
         try {
@@ -69,7 +70,6 @@ public class Passwords_Checker {
         return hash(password, salt, DEFAULT_ITERATIONS);
     }
 
-
     public static byte[] hash(char[] password, byte[] salt, int iterations) {
         PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, KEY_LENGTH);
 
@@ -86,11 +86,9 @@ public class Passwords_Checker {
         }
     }
 
-
     public static boolean isExpectedPassword(char[] password, byte[] salt, byte[] expectedHash) {
         return isExpectedPassword(password, salt, DEFAULT_ITERATIONS, expectedHash);
     }
-
 
     public static boolean isExpectedPassword(char[] password, byte[] salt, int iterations, byte[] expectedHash) {
         byte[] pwdHash = hash(password, salt, iterations);
@@ -107,10 +105,8 @@ public class Passwords_Checker {
                 return false;
             }
         }
-
         return true;
     }
-
 
     public static byte[] base64Decode(String b64) throws IllegalArgumentException {
         return Base64.getDecoder().decode(b64);
@@ -120,7 +116,7 @@ public class Passwords_Checker {
         return Base64.getEncoder().encodeToString(array);
     }
 
-    public String hashing(String password , int salt , int iterations) {
+    public String hashing(String password, int salt, int iterations) {
         byte[] saltbyte = {(byte) salt};
         byte[] passwordHashed = hash(password.toCharArray(), saltbyte, iterations);
         password = base64Encode(passwordHashed);

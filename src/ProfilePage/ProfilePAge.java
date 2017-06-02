@@ -6,6 +6,8 @@ import java.util.Date;
 /**
  * Created by ljam763 on 25/05/2017.
  */
+
+//Javabean for ProfilePAge
 public class ProfilePAge {
 
     private String username;
@@ -14,7 +16,7 @@ public class ProfilePAge {
     private String address;
     private String education;
     private String ethnicity;
-    private java.sql.Date date;
+    private java.sql.Date date;//formatting for date has been done TODO check.
     private boolean update;
     private String photoname;
     private String profilepic;

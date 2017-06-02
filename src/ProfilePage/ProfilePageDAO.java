@@ -1,10 +1,17 @@
 package ProfilePage;
+
 import Connection.*;
 import Login.*;
+
 import java.sql.*;
+
 /**
  * Created by ljam763 on 25/05/2017.
  */
+
+//TODO: SQL Exceptions.
+//TODO: SQL Injection preventions
+//This DAO handles all the connections to the UserNames Table concerning profile details. This hides all the logic for database.
 public class ProfilePageDAO extends LoginPassing {
 
     private String usernames;
@@ -13,7 +20,7 @@ public class ProfilePageDAO extends LoginPassing {
     private String address;
     private String education;
     private String ethnicity;
-    private String profilepciture;
+    private String profilePicture;
     private Date date;
 
     public ProfilePageDAO() {
@@ -21,7 +28,7 @@ public class ProfilePageDAO extends LoginPassing {
         this.pass = new Passwords_Checker();
     }
 
-    public ProfilePAge getUsersProfile(String username)  {
+    public ProfilePAge getUsersProfile(String username) {
         ProfilePAge profilePAge = new ProfilePAge();
         try {
             PreparedStatement statement = conn.prepareStatement(
@@ -50,14 +57,15 @@ public class ProfilePageDAO extends LoginPassing {
     }
 
 
-    public ProfilePAge createUsersProfile(ProfilePAge profilePAge, String password) throws SQLException{
+    public ProfilePAge createUsersProfile(ProfilePAge profilePAge, String password) throws SQLException {
         ProfilePageGetters(profilePAge);
         try {
             PreparedStatement statement = conn.prepareStatement(
                     "INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth, Password) VALUES( ?, ? ,?,?,?,?,?,?);"
             );
-            {   statement.setString(1, usernames);
-                sqlSetStatment( password, statement);
+            {
+                statement.setString(1, usernames);
+                sqlSetStatment(password, statement);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -69,17 +77,18 @@ public class ProfilePageDAO extends LoginPassing {
         return getUsersProfile(profilePAge.getUsername());
     }
 
-    public ProfilePAge updataUsersProfile(String username, String password , ProfilePAge profilePAge, String newPassword) {
+    public ProfilePAge updataUsersProfile(String username, String password, ProfilePAge profilePAge, String newPassword) {
         ProfilePageGetters(profilePAge);
         try {
             PreparedStatement statement = conn.prepareStatement(
                     "UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?, Password=?, profilePicture=?  WHERE  Password= ? AND Username = ?;"
             );
-            {   statement.setString(1, username);
-                sqlSetStatment(password,statement);
-                statement.setString(8,newPassword);
-                statement.setString(9,profilepciture);
-                statement.setString(10,password);
+            {
+                statement.setString(1, username);
+                sqlSetStatment(password, statement);
+                statement.setString(8, newPassword);
+                statement.setString(9, profilePicture);
+                statement.setString(10, password);
                 statement.setString(11, usernames);
                 statement.executeUpdate();
             }
@@ -89,13 +98,12 @@ public class ProfilePageDAO extends LoginPassing {
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-            System.out.println("Can not update user infor based on the username and password");
+            System.out.println("Can not update user information based on the username and password");
         }
         return getUsersProfile(username);
     }
 
-
-
+//This is the shortcut for setting strings for all normal user details apart from password and username.
     private void sqlSetStatment(String password, PreparedStatement statement) throws SQLException {
 
         statement.setString(2, name);
@@ -103,11 +111,11 @@ public class ProfilePageDAO extends LoginPassing {
         statement.setString(4, address);
         statement.setString(5, education);
         statement.setString(6, ethnicity);
-        statement.setDate(7,date);
-        statement.setString(8,password);
+        statement.setDate(7, date);
+        statement.setString(8, password);
     }
 
-
+    //Setting the javabean instance variables for ProfilePage
     private ProfilePAge makeProfilePAge(ResultSet resultSet) throws SQLException {
         ProfilePAge profilePAge = new ProfilePAge();
         sqlGetStatments(resultSet);
@@ -118,11 +126,12 @@ public class ProfilePageDAO extends LoginPassing {
         profilePAge.setEducation(education);
         profilePAge.setEthnicity(ethnicity);
         profilePAge.setDate(date);
-        profilePAge.setProfilepic(profilepciture);
-        System.out.println("setting "+ profilepciture);
+        profilePAge.setProfilepic(profilePicture);
+        System.out.println("setting " + profilePicture);
         return profilePAge;
     }
 
+    //This is grabbing information from result sets into the variables that you later set to the profile page.
     private void sqlGetStatments(ResultSet resultSet) throws SQLException {
         usernames = resultSet.getString(1);
         name = resultSet.getString(2);
@@ -131,20 +140,19 @@ public class ProfilePageDAO extends LoginPassing {
         education = resultSet.getString(5);
         ethnicity = resultSet.getString(6);
         date = resultSet.getDate(7);
-        profilepciture = resultSet.getString(8);
+        profilePicture = resultSet.getString(8);
     }
 
-    private void ProfilePageGetters (ProfilePAge profilePAge){
+    //Getting things from the profile page and putting to the Database page.
+    private void ProfilePageGetters(ProfilePAge profilePAge) {
         usernames = profilePAge.getUsername();
-        name= profilePAge.getName();
+        name = profilePAge.getName();
         email = profilePAge.getEmail();
-        address =profilePAge.getAddress();
+        address = profilePAge.getAddress();
         education = profilePAge.getEducation();
         ethnicity = profilePAge.getEthnicity();
         date = profilePAge.getDate();
-        profilepciture = profilePAge.getProfilepic();
-        System.out.println("getting :"+ profilepciture);
+        profilePicture = profilePAge.getProfilepic();
+        System.out.println("getting :" + profilePicture);
     }
-
-
 }

@@ -1,12 +1,15 @@
 package Login;
+
 import Connection.*;
+
 import java.sql.*;
 
 /**
  * Created by ljam763 on 24/05/2017.
  */
-public class LoginPassing {
 
+//This is superclass of all DAO's to access the connection and Config details.
+public class LoginPassing {
 
     public String getUsername() {
         return username;
@@ -75,7 +78,7 @@ public class LoginPassing {
                 return true;
             }
         } catch (SQLException e) {
-                return false;
+            return false;
         }
     }
 

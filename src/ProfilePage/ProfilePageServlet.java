@@ -15,10 +15,14 @@ import static Connection.ConnectionToTheDataBase.conn;
 /**
  * Created by ljam763 on 25/05/2017.
  */
+
+//This is the servlet which gets the POST and GET methods for the ProfilePage.jsp
+
 public class ProfilePageServlet extends HttpServlet{
     ProfilePageDAO profilePageDAO;
     private String username;
 
+//    Grabs the profile page from the Database based on the username (stored in session)
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         profilePageDAO = new ProfilePageDAO();
@@ -31,8 +35,7 @@ public class ProfilePageServlet extends HttpServlet{
         return;
     }
 
-
-
+//    The point of this: TODO need to cleanup connections from Login/Registration servlet (Maybe POST directly(?))
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req,resp);
