@@ -26,6 +26,8 @@ import java.util.*;
 /**
  * Created by James lam on 14/05/2017.
  */
+
+//This is uploading and viewing multimedia TODO rename servlet to multimedia
 public class Upload_files extends HttpServlet {
     public Upload_files() {
         super();
@@ -47,21 +49,25 @@ public class Upload_files extends HttpServlet {
         System.out.println();
     }
 
+    //doPost SHOULD come from 2 places (1) Upload while changing profile; (2)upload inside article itself (but currently it is stuffing up)
     public void doPost(HttpServletRequest req,
                        HttpServletResponse resp)
             throws ServletException, java.io.IOException {
         HttpSession session = req.getSession();
+
         caption = (String) session.getAttribute("Upload");
         System.out.println(caption);
         System.out.println("What");
         ServletContext servletContext = getServletContext();
         filePath = servletContext.getRealPath("/Upload-photos");
+
         File uploads = new File(filePath);
         if (!uploads.exists()) {
             System.out.println("upload-photos");
             boolean made = uploads.mkdir();
             System.out.println(made);
         }
+
         filePath = servletContext.getRealPath("/Upload-photos") + "/";
         dir_name = (String) session.getAttribute("username");
         File dir = new File(filePath + dir_name);
@@ -98,6 +104,7 @@ public class Upload_files extends HttpServlet {
                     boolean isInMemory = fi.isInMemory();
                     long sizeInBytes = fi.getSize();
 
+                    //This is the differentiator where it checks where it is from. ArticleMedia class stuffed things up after this was added in. CREATE Article ID folder. TODO currently not working need fixes.
                     if (caption.equals("ArticlesUpload")) {
                         String filing = ((int) session.getAttribute("articleID")) + "/";
                         filePath += filing;
@@ -107,6 +114,8 @@ public class Upload_files extends HttpServlet {
                             System.out.println("ArticleFile: " + made);
                         }
                     }
+
+                    //Filters writing into right folder
                     System.out.println(filePath);
                     if (fileName.endsWith(".flv") || fileName.endsWith(".m4v") || fileName.endsWith(".mp4") || fileName.endsWith(".mpg") || fileName.endsWith(".mpeg") || fileName.endsWith(".wmv")) {
                         FormingVideoFileAndVideo();
@@ -115,7 +124,7 @@ public class Upload_files extends HttpServlet {
                     } else if (fileName.endsWith(".jpg") || fileName.endsWith(".png")) {
                         FormingPhotoFileAndPhoto();
                     }
-                    fileNameEditting();
+                    fileNameEditting(); //this slims down the filenname before it is written
                     fi.write(file);
                     if (caption.equals("ArticlesUpload")) {
                         req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
@@ -138,6 +147,7 @@ public class Upload_files extends HttpServlet {
         }
     }
 
+    //altering filepath to put into the photo folder.
     private void FormingPhotoFileAndPhoto() {
         filePath += "photo";
         File videoFile = new File(filePath);
@@ -148,6 +158,7 @@ public class Upload_files extends HttpServlet {
         filePath += "/";
     }
 
+    //altering filepath to put into the audio folder.
     private void FormingAudioFileAndAudio() {
         filePath += "audio";
         File videoFile = new File(filePath);
@@ -158,6 +169,7 @@ public class Upload_files extends HttpServlet {
         filePath += "/";
     }
 
+    //altering filepath to put into the video folder.
     private void FormingVideoFileAndVideo() {
         filePath += "video";
         File videoFile = new File(filePath);
@@ -168,6 +180,7 @@ public class Upload_files extends HttpServlet {
         filePath += "/";
     }
 
+    //This slims down the filename for ease of access purposes.
     private void fileNameEditting() {
         if (fileName.lastIndexOf("\\") >= 0) {
             file = new File(filePath +
@@ -178,24 +191,35 @@ public class Upload_files extends HttpServlet {
         }
     }
 
+
+    //doGET is when you want to show the media, both for self and all.
+    //Grab the parameter called media which is submitted by the submitmedia hyperlink button, make file and path
+
     //Only tested on jsp due to database issue (TestingMultiMedia.jsp as testing grounds), but this should work ing theory.
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
             throws ServletException, java.io.IOException {
+
         HttpSession session = request.getSession();
         username = (String) session.getAttribute("username");
         String media = request.getParameter("media");
         allOrSelf(media, request);
+
         File file = new File(userPath);
+
         Set<String> filepaths = new TreeSet<>();
+
         System.out.println(filepaths.size() + " paths");
+        //This is the recursions, finding all the directories. (START OF TRILOGY 1) TODO unify the 3 trilogies together.
         Set<String> list = findingDirectory(file, filepaths);
         Map<String, List<String>> mediaMapping = mapSetUp();
+
         assigningMultipleMediaIntoMap(list, mediaMapping);
         request.setAttribute("mediaOutPut", mediaMapping);
         request.getRequestDispatcher("/WEB-INF/webthings/MultiMedia.jsp").forward(request, response);
     }
 
+    //Trilogy 3: Using end of the file name to sort into the right folders.
     protected void assigningMultipleMediaIntoMap(Set<String> list, Map<String, List<String>> map) {
         for (String s : list) {
             if (s.endsWith(".flv") || s.endsWith(".m4v") || s.endsWith(".mp4") || s.endsWith(".mpg") || s.endsWith(".mpeg") || s.endsWith(".wmv")) {
@@ -219,6 +243,7 @@ public class Upload_files extends HttpServlet {
         }
     }
 
+    //Trilogy 2: map of name of media
     protected Map<String, List<String>> mapSetUp() {
         Map<String, List<String>> map = new TreeMap<>();
         List<String> video = new ArrayList<>();

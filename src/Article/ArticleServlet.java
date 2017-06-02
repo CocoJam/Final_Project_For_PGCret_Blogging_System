@@ -18,6 +18,9 @@ import static Connection.ConnectionToTheDataBase.conn;
 /**
  * Created by ljam763 on 25/05/2017.
  */
+
+//This servlet is for displaying the actual individual article with its content.
+
 public class ArticleServlet extends HttpServlet {
     private ArticlesDAO articlesDAO;
     private int ArticleID;
@@ -34,6 +37,7 @@ public class ArticleServlet extends HttpServlet {
         return listOfComments = commentsDAO.selectionComments(articleID);
     }
 
+    //Grab everything that is related to the article, set sessions with the article content and comments list (AND ownership) and dispatch to comments servlet to get the comments.
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String editing = req.getParameter("edit");
@@ -46,12 +50,14 @@ public class ArticleServlet extends HttpServlet {
         }
         System.out.println(ArticleID + "articleid");
         article = articlesDAO.selectionArticles(ArticleID);
-        System.out.println(article.getUsername()+ "This is user");
+        System.out.println(article.getUsername() + "This is user");
         if (session.getAttribute("username") != null) {
             if (article.getUsername().equals(session.getAttribute("username"))) {
                 article.setOwner(true);
             }
         }
+
+        //The below is comments in the article.
         session.setAttribute("articleID", ArticleID);
         session.setAttribute("articleContents", article);
         listOfComments = gettingTheListOfComments(ArticleID);
@@ -61,6 +67,8 @@ public class ArticleServlet extends HttpServlet {
         return;
     }
 
+
+    //doPost gets POST request to add or edit article depends on where the button was pushed (dependent on the parameter value).
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         articlesDAO = new ArticlesDAO();
@@ -68,6 +76,8 @@ public class ArticleServlet extends HttpServlet {
         HttpSession session = req.getSession();
         String username = (String) session.getAttribute("username");
         if (addingArticles != null) {
+
+            //Scenario 1: When adding new article when pressed within the articleIndex.jsp.
             if (addingArticles.equals("addNewArticle")) {
                 session.setAttribute("articleContents", null);
                 req.setAttribute("add", null);
@@ -75,6 +85,8 @@ public class ArticleServlet extends HttpServlet {
                 closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
                 return;
+
+                //Scenario 2: Edit inside of your own article, therefore setting ownership is important. Dispatches to the ArticleCreationPage.jsp (but in editing mode).
             } else if (addingArticles.equals("EditArticle")) {
                 session.setAttribute("articleID", ArticleID);
                 session.setAttribute("Upload", "ArticlesUpload");
@@ -82,6 +94,9 @@ public class ArticleServlet extends HttpServlet {
                 closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
                 return;
+
+                //Scenario 3: Redirect from Article Creation page once editing complete.
+                // This is when you have finished editing the article and redirecting back to the article page from the article creation page, and then update that SQL the article details.
             } else if (addingArticles.equals("Editted")) {
                 ArticleName = req.getParameter("ArticleName");
                 ArticleContent = req.getParameter("ArticleContent");
@@ -91,6 +106,8 @@ public class ArticleServlet extends HttpServlet {
                 closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
                 return;
+
+                //Scenario 4: Redirect from Article Creation page once creation of a new page is completed.
             } else if (addingArticles.equals("addingToDataBase")) {
                 System.out.println(username);
                 String ArticleName = req.getParameter("ArticleName");
@@ -103,6 +120,9 @@ public class ArticleServlet extends HttpServlet {
                 } else if (Listformation.equals("self")) {
                     indexList = new ArticleListObjectDAO().selectionArticlesList(username);
                 }
+
+                // dispatching back into the articleIndex after finished creating new article and have uploaded the info to SQL via DAO
+                // TODO whether to redirect to the new article page instead
                 session.setAttribute("ArticleIndex", indexList);
                 session.setAttribute("Upload", null);
                 closingConnection();

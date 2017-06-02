@@ -21,6 +21,7 @@
 <%--map.get("photo").add(s);--%>
 <%--}--%>
 
+<%--Triology Part 3.5 TODO display this in tables--%>
 
 <c:forEach var="mediagroups" items="${mediaOutPut}">
     <c:if test="${mediagroups.key.equals(\"photo\")}">

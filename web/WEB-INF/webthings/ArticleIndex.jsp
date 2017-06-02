@@ -48,7 +48,7 @@
 
 </table>
 
-
+<%--This is to add a new article--%>
 <form action="/Articles" method="post">
     <input type="submit" name="add" value="addNewArticle" id="addNewArticle">
 </form>
