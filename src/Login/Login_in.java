@@ -1,5 +1,7 @@
 package Login;
 
+import com.sun.xml.internal.bind.v2.TODO;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,24 +20,30 @@ public class Login_in extends HttpServlet {
     private String username;
     private String password;
 
+
+    //doPost gets the shit and umm does something. Oh shit its logged in.
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         System.out.println("Processing login");
         username = req.getParameter("username");
         password = req.getParameter("password");
-        LoginPassing loginPassing = new LoginPassing();
+        LoginPassing loginPassing = new LoginPassing(); //See loginPassing class: stores all the methods for login including DAO query the database.
 
         if (session.getAttribute("log") != null) {
             if ((boolean) session.getAttribute("log")) {
                 //checking for when a user is logined in and other user tries to login within the same session.
-                //This will logout the first person's account then login the second person. Hence when the second person logout everyone should be logined out.
-                if (!username.equals(session.getAttribute("username")) && !username.equals(session.getAttribute("password"))) {
+                //This will logout the first person's account then login the second person. Hence when the second person logout everyone should be logged out.
+
+                //this is to bounce people out if people are already logged in. IF username and password is not in session bounces to profile and logs out the previous user.
+                if (!username.equals(session.getAttribute("username")) && !password.equals(session.getAttribute("password"))) {
                     if (loginLogic(req, resp, session, loginPassing)) {
                         closingConnection();
                         req.getRequestDispatcher("/ProfilePage").forward(req, resp);
                         return;
                     }
+
+                    //There is a major bug, even though there is someone logged in ppl can still bypass it because it does not check the login here.
                 } else {
                     System.out.println("Login");
                     closingConnection();
@@ -44,41 +52,48 @@ public class Login_in extends HttpServlet {
                 }
             }
         }
+        //TODO check hashing algorithm, need to check if it works.
+
 //        uncomment to check the hashing function
 //        Login.Passwords_Checker passwords_checker = new Login.Passwords_Checker();
-//        String hashedPassowrd = passwords_checker.hashing(password, 5 , 500);
-//        loginPassing.selectionUsersNames(username,hashedPassowrd);
+//        String hashedPassword = passwords_checker.hashing(password, 5 , 500);
+//        loginPassing.selectionUsersNames(username,hashedPassword);
+
         loginLogic(req, resp, session, loginPassing);
         return;
+
+        //TODO dispatch back to the login page.
     }
 
-    // just refactor this out for convenience
+    //This is to check the login logic used by doPost to check user login from the login_page.jsp.
+    // TODO just refactor this out for convenience
     public boolean loginLogic(HttpServletRequest req, HttpServletResponse resp, HttpSession session, LoginPassing loginPassing) throws ServletException, IOException {
         if (loginPassing.selectionUsersNames(username, password)) {
             session.setAttribute("username", username);
             session.setAttribute("password", password);
-            session.setAttribute("log", true);
-            System.out.println("loged-in");
+            session.setAttribute("log", true); //TODO refactoring for login status.
+            System.out.println("logged-in");
             System.out.println(session.getAttribute("username"));
             closingConnection();
-            req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+            req.getRequestDispatcher("/ProfilePage").forward(req, resp); //TODO to take out.
             return true;
         } else {
-            session.setAttribute("log", false);
-            System.out.println("loged-in rejected");
+            session.setAttribute("log", false); //TODO refactoring for login status.
+            System.out.println("logged-in rejected");
             closingConnection();
             req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
             return false;
         }
     }
 
-    //Registration bug found when a user logged out and then click registration error appears.//fixed
+
+    //doGet is when a GET request sent from the login page where the user wants to goto the register page to register a new account.
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         String registration = req.getParameter("Registration");
         session.setAttribute("Registration", false);
-        if (registration != null) {
+        if (registration != null) { //TODO refactor to switch statement.
             //checking if user is login already bound back to profilepage when registration is clicked.
             if (session.getAttribute("log") == null) {
                 req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);

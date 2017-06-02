@@ -26,7 +26,7 @@ public class Registration extends HttpServlet {
     private String password;
     private String dateofbirth;
     private java.sql.Date sqlFormateDate;
-    private ProfilePAge profilePAge;
+    private ProfilePAge profilePage;
     private ProfilePageDAO profilePageDAO;
     private int salt;
     private int iterations;
@@ -37,11 +37,18 @@ public class Registration extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+
+        //The following if and else does two different actions, depends on the different GET calls, determined by the log parameter.
+
+        //This is a call from the Profile page, "changeuserinfo" button. This is to redirect user to update the userInfo
         if (req.getParameter("log").equals("ChangeUserInformation")) {
                 session.setAttribute("Upload", "ProfilePageUpload");
                 req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                 return;
             }
+
+        //  TODO check logic of returning boolean from selectionUsersCheck()
+        // This is related to the AJAX call in Registration.jsp
             else if (req.getParameter("log").equals("RegistrationCheck")){
                String usernameCheck = req.getParameter("usernameCheck");
                 System.out.println(usernameCheck);
@@ -65,11 +72,13 @@ public class Registration extends HttpServlet {
         profilePageDAO = new ProfilePageDAO();
         if (req.getParameter("log") != null) {
             System.out.println("Regs");
+            //TODO refactor to switch statement if possible.
+            //The below is an editing scenario.
             if (req.getParameter("log").equals("ChangeUserInformation")) {
                 System.out.println("Trying for info update");
-                profilePAge = profilePageDAO.updataUsersProfile((String) session.getAttribute("username"), (String) session.getAttribute("password"), profilePAge,password);
+                profilePage = profilePageDAO.updataUsersProfile((String) session.getAttribute("username"), (String) session.getAttribute("password"), profilePage,password);
                 System.out.println("info updated");
-                session.setAttribute("profileInfo", profilePAge);
+                session.setAttribute("profileInfo", profilePage);
                 session.setAttribute("password",password);
                 closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
@@ -77,7 +86,7 @@ public class Registration extends HttpServlet {
             } else {
                 try {
                     System.out.println("Create");
-                    profilePageDAO.createUsersProfile(profilePAge, password);
+                    profilePageDAO.createUsersProfile(profilePage, password);
                 } catch (SQLException e1) {
                     closingConnection();
                     req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
@@ -85,10 +94,10 @@ public class Registration extends HttpServlet {
                 }
             }
         }
-        profilePAge = profilePageDAO.getUsersProfile(profilePAge.getUsername());
-        session.setAttribute("profileInfo", profilePAge);
-        System.out.println(profilePAge.getUsername());
-        session.setAttribute("username", profilePAge.getUsername());
+        profilePage = profilePageDAO.getUsersProfile(profilePage.getUsername());
+        session.setAttribute("profileInfo", profilePage);
+        System.out.println(profilePage.getUsername());
+        session.setAttribute("username", profilePage.getUsername());
         session.setAttribute("password", password);
         closingConnection();
         req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
@@ -96,19 +105,19 @@ public class Registration extends HttpServlet {
     }
 
     private void profileSetUp(HttpServletRequest req) {
-        profilePAge = new ProfilePAge();
-        profilePAge.setUsername(req.getParameter("username"));
-        profilePAge.setName(req.getParameter("name"));
-        profilePAge.setEducation(req.getParameter("education"));
-        profilePAge.setAddress(req.getParameter("address"));
-        profilePAge.setEthnicity(req.getParameter("ethnicity"));
-        profilePAge.setEmail(req.getParameter("email"));
+        profilePage = new ProfilePAge();
+        profilePage.setUsername(req.getParameter("username"));
+        profilePage.setName(req.getParameter("name"));
+        profilePage.setEducation(req.getParameter("education"));
+        profilePage.setAddress(req.getParameter("address"));
+        profilePage.setEthnicity(req.getParameter("ethnicity"));
+        profilePage.setEmail(req.getParameter("email"));
         dateofbirth = req.getParameter("date");
         password = req.getParameter("password");
-        profilePAge.setProfilepic(req.getParameter("profilePicture"));
+        profilePage.setProfilepic(req.getParameter("profilePicture"));
         System.out.println("profile pic :" +req.getParameter("profilePicture"));
         sqlDateparsing();
-        profilePAge.setDate(sqlFormateDate);
+        profilePage.setDate(sqlFormateDate);
 
     }
 

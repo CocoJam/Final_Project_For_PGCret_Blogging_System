@@ -21,6 +21,8 @@
 </head>
 <body>
 <%! Set<String> listofphotos = new TreeSet<>(); %>
+
+<%--This is to check if person has logged in and if so it will not goto the registration page, so this is another bouncing mechanism. This is a duplicate of the servlet bouncing mechanism.--%>
 <%
     if (session.getAttribute("log") != null && session.getAttribute("Registration") != null) {
         if ((boolean) session.getAttribute("Registration")) {
@@ -28,6 +30,8 @@
         }
     }
 %>
+
+<%--1st part: Grabbing all the strings of all the photo names and adding into a set. (NOTE the actual upload of the image is in the servlet)--%>
 <% String userPath = request.getRealPath("/Upload-photos");
     System.out.println(userPath + " Paths");
     String username = (String) session.getAttribute("username");
@@ -41,6 +45,7 @@
     }
 %>
 
+<%--This form is generic for both states of logged in/register new user. The reason is if a new registration is taking place the values with profileInfo will be empty and not display anything and vice versa--%>
 <form action="/Registration" id="form" method="post">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" value="${profileInfo.username}">
@@ -60,6 +65,7 @@
     <label for="date">date:</label>
     <input type="date" id="date" name="date" value="${profileInfo.date}">
 
+    <%--2nd part: uses the above set to display the images in the set, by going through the list of photoname strings, and then accessing by pathing in the photo by the username folder--%>
     <% if (username != null) {
         for (String listofphoto : listofphotos) {
             System.out.println(listofphoto);
@@ -67,6 +73,7 @@
         }
     }
     %>
+    <%--This is to differentiate between whether user is logged in or not, and displays different button functionality--%>
 
     <c:choose>
         <c:when test="${log}">
@@ -84,8 +91,13 @@
     <input type="submit" name="Upload" value="ProfileUpload"/>
     <br>
 </form>
+
+<%--Button is to check for availability of username--%>
+<%--TODO Extra: add functionality to allow when click away that ajax function sent--%>
 <button id="responseToCheck">Check For UserNames</button>
+
 <script type="text/javascript">
+    <%--SCRIPT onclick on FORM above. Checks if form contains any space or empty, if so then submission will be --%>
     $("#form").submit(function (event) {
         if ($("#username").val().startsWith(" ") || $("#password").val().startsWith(" ") || $("#username").val() == "" || $("#password").val() == "") {
             alert("validation failed false");
@@ -95,14 +107,18 @@
         alert("validations passed");
         return;
     });
+
+//    Sending AJAX call to /Registration servlet by GET method which goes to Database and matches the typed username and comes back with boolean which confirms availability.
+    //TODO the boolean appears to be returning true all the time, check if right message being sent back by doGET method in Registration.java
+
     console.log($("#username").val());
     $("#responseToCheck").click(function () {
         $.ajax({
             url: '/Registration',
             type: 'GET',
             data: {"log": "RegistrationCheck", "usernameCheck": $("#username").val()},
-            success: function (msg) {
-                console.log(msg)
+            success: function (msg) { //specifically msg is coming back with the boolean.
+                console.log(msg);
                 $(reponseToUsername).text(msg);
                 //msg is returning a boolean for check if false meaning no such username so ok
                 if (msg) {
