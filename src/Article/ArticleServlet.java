@@ -104,7 +104,7 @@ public class ArticleServlet extends HttpServlet {
             } else if (addingArticles.equals("Editted")) {
                 ArticleName = req.getParameter("ArticleName");
                 ArticleContent = req.getParameter("ArticleContent");
-                article = articlesDAO.updataArticles(ArticleName, ArticleContent, ArticleID);
+                article = articlesDAO.updateArticles(ArticleName, ArticleContent, ArticleID);
                 req.setAttribute("articleContents", article);
                 session.setAttribute("Upload", null);
                 closingConnection();

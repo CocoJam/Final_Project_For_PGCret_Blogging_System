@@ -45,11 +45,13 @@ public class LoginPassing {
                         return true;
                     }
                 }
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
+            System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
-        System.out.println("Error creating database connection");
         return false;
     }
 
@@ -67,9 +69,11 @@ public class LoginPassing {
                         return true;
                     }
                 }
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            System.out.println("Error creating database connection");
+            System.out.println("Error creating database connection.");
             return false;
         }
         return false;

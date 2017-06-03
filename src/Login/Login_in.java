@@ -84,7 +84,11 @@ public class Login_in extends HttpServlet {
         } else {
             session.setAttribute("log", false); //TODO refactoring for login status.
             System.out.println("logged-in rejected");
-            closingConnection();
+            try {
+                System.out.println("CONNECTION CLOSED: " + conn.isClosed());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
             return false;
         }
@@ -104,12 +108,20 @@ public class Login_in extends HttpServlet {
                 return;
             }
             if ((boolean) session.getAttribute("log")) {
-                closingConnection();
+                try {
+                    System.out.println("CONNECTION CLOSED: " + conn.isClosed());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 req.getRequestDispatcher("/ProfilePage").forward(req, resp);
                 return;
             } else {
                 if (registration.equals("Registration")) {
-                    closingConnection();
+                    try {
+                        System.out.println("CONNECTION CLOSED: " + conn.isClosed());
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     session.setAttribute("Upload", "ArticlesUpload");
                     req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                     return;

@@ -39,13 +39,13 @@ public class ProfilePageDAO extends LoginPassing {
                         profilePAge = makeProfilePAge(resultSet);
                     }
                 }
-                return profilePAge;
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
         } catch (SQLException e) {
+            System.out.println("Error. No profile page under this username.");
             e.printStackTrace();
-            System.out.println("No ProfilePage under this username");
         }
-        return null;
+        return profilePAge;
     }
 
 
@@ -60,32 +60,35 @@ public class ProfilePageDAO extends LoginPassing {
                 statement.executeUpdate();
                 System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
-            return getUsersProfile(profilePAge.getUsername());
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            System.out.println("Error username already exist. Cannot create profile page.");
-            System.out.println("SQL error");
+            System.out.println("Error. Username already exist. Cannot create profile page.");
+            e.printStackTrace();
         }
-        return null;
+        return getUsersProfile(profilePAge.getUsername());
     }
 
     public ProfilePAge updateUsersProfile(String username, String password, ProfilePAge profilePAge, String newPassword) {
         ProfilePageGetters(profilePAge);
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-            try (PreparedStatement statement = connection.prepareStatement("UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?, Password=?, profilePicture=?  WHERE  Password= ? AND Username = ?;")) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE UsersNames SET Username = ?, Name = ?, Email = ?, Address = ?, Education = ?, Ethnicity = ?, DateOfBirth = ?, Password = ?, profilePicture = ?  WHERE  Password = ? AND Username = ?;")) {
+                System.out.println(statement);
                 statement.setString(1, username);
                 sqlSetStatment(password, statement);
                 statement.setString(8, newPassword);
                 statement.setString(9, profilePicture);
                 statement.setString(10, password);
                 statement.setString(11, usernames);
+                System.out.println(statement);
                 statement.executeUpdate();
                 System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
-            return getUsersProfile(username);
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            System.out.println("Can not update user information based on the username and password");
+            System.out.println("Error. Cannot update user information based on the username and password.");
+            e.printStackTrace();
         }
-        return null;
+        return getUsersProfile(username);
     }
 
     //This is the shortcut for setting strings for all normal user details apart from password and username.

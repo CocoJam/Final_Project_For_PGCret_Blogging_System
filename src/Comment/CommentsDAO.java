@@ -1,7 +1,8 @@
 package Comment;
 
-import Login.LoginPassing;
+import Connection.*;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * Created by ljam763 on 25/05/2017.
  */
-public class CommentsDAO extends LoginPassing {
+public class CommentsDAO {
 
     public CommentsDAO() {
         super();
@@ -20,21 +21,17 @@ public class CommentsDAO extends LoginPassing {
 
     public List<Comments> selectionComments(int CommentID, int articleID) {
         List<Comments> listOfComments = new ArrayList<>();
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM UsersNAmes WHERE ArticlesID = ? AND CommentID = ?;"
-            );
-            {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM UsersNames WHERE ArticlesID = ? AND CommentID = ?;")) {
+                System.out.println(statement);
                 statement.setInt(2, CommentID);
                 statement.setInt(1, articleID);
                 makeComment(listOfComments, statement);
+                System.out.println(statement);
             }
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
+            System.out.println("Error. Comment not found");
             e.printStackTrace();
         }
         return listOfComments;
@@ -43,16 +40,16 @@ public class CommentsDAO extends LoginPassing {
 
     public List<Comments> selectionComments(int articlesID) {
         List<Comments> listOfComments = new ArrayList<>();
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM Comments WHERE ArticlesID = ?;"
-            );
-            {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT CommentID, ArticlesID, CommenterName, Comments, CommentTime FROM Comments WHERE ArticlesID = ?;")) {
+                System.out.println(statement);
                 statement.setInt(1, articlesID);
                 makeComment(listOfComments, statement);
+                System.out.println(statement);
             }
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            System.out.println("Comments not here");
+            System.out.println("Error. Comment not found.");
             e.printStackTrace();
         }
         return listOfComments;
@@ -60,37 +57,37 @@ public class CommentsDAO extends LoginPassing {
 
     public List<Comments> selectionComments(String CommenterName) {
         List<Comments> listOfComments = new ArrayList<>();
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM Comments WHERE CommenterName = ?;"
-            );
-            {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM Comments WHERE CommenterName = ?;")) {
+                System.out.println(statement);
                 statement.setString(1, CommenterName);
                 makeComment(listOfComments, statement);
+                System.out.println(statement);
             }
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
+            System.out.println("Error. Comment not found");
             e.printStackTrace();
         }
         return listOfComments;
     }
 
     private void makeComment(List<Comments> listOfComments, PreparedStatement statement) throws SQLException {
-        ResultSet resultSet = statement.executeQuery();
-        while (resultSet.next()) {
-            Comments comments = new Comments();
-            int CommentID = resultSet.getInt(1);
-            int ArticleID = resultSet.getInt(2);
-            String CommentName = resultSet.getString(3);
-            String  Comment = resultSet.getString(4);
-            Date CommentTime = resultSet.getTimestamp(5);
-            commentsSetStatments(comments, CommentID, ArticleID, CommentName, Comment, CommentTime);
-            listOfComments.add(comments);
-            System.out.println(listOfComments.size());
+        try (ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                Comments comments = new Comments();
+                int CommentID = resultSet.getInt(1);
+                int ArticleID = resultSet.getInt(2);
+                String CommentName = resultSet.getString(3);
+                String Comment = resultSet.getString(4);
+                Date CommentTime = resultSet.getTimestamp(5);
+                commentsSetStatments(comments, CommentID, ArticleID, CommentName, Comment, CommentTime);
+                listOfComments.add(comments);
+                System.out.println(listOfComments.size());
+            }
+        } catch (SQLException e) {
+            System.out.println("Error creating database connection.");
+            e.printStackTrace();
         }
     }
 
@@ -104,42 +101,36 @@ public class CommentsDAO extends LoginPassing {
 
 
     public void AddingCommentsToDataBase(int ArticlesID, String CommenterName, String Comments) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO Comments (ArticlesID, CommenterName, Comments) VALUES( ?, ? ,?);"
-            );
-            {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Comments (ArticlesID, CommenterName, Comments) VALUES(?,?,?);")) {
+                System.out.println(statement);
                 statement.setInt(1, ArticlesID);
                 statement.setString(2, CommenterName);
                 statement.setString(3, Comments);
+                System.out.println(statement);
                 statement.executeUpdate();
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
+            System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
     }
 
-    public void editComments(String Comment, int CommentId){
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "UPDATE  Comments SET Comments=? WHERE CommentID=?;"
-            );
-            {
+    public void editComments(String Comment, int CommentId) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE Comments SET Comments = ? WHERE CommentID = ?;")) {
+                System.out.println(statement);
                 statement.setString(1, Comment);
                 statement.setInt(2, CommentId);
+                System.out.println(statement);
                 statement.executeUpdate();
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
+            System.out.println("Error. Username already exist. Cannot create profile page.");
             e.printStackTrace();
         }
     }
