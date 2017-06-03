@@ -62,7 +62,11 @@ public class ArticleServlet extends HttpServlet {
         session.setAttribute("articleContents", article);
         listOfComments = gettingTheListOfComments(ArticleID);
         session.setAttribute("commentlist", listOfComments);
-        closingConnection();
+        try {
+            System.out.println(conn.isClosed()+ " is this closed?");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         req.getRequestDispatcher("/Comments").forward(req, resp);
         return;
     }
@@ -101,7 +105,7 @@ public class ArticleServlet extends HttpServlet {
             } else if (addingArticles.equals("Editted")) {
                 ArticleName = req.getParameter("ArticleName");
                 ArticleContent = req.getParameter("ArticleContent");
-                article = articlesDAO.updataArticles(ArticleName, ArticleContent, ArticleID);
+                article = articlesDAO.updateArticles(ArticleName, ArticleContent, ArticleID);
                 req.setAttribute("articleContents", article);
                 session.setAttribute("Upload", null);
                 closingConnection();

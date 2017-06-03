@@ -15,7 +15,7 @@ import java.util.Random;
 //This DAO handles all the connections to the UserNames Table concerning profile details. This hides all the logic for database.
 public class ProfilePageDAO extends LoginPassing {
 
-    private String usernames;
+    private String usernames; // Stores username as globally accessible variable
     private String name;
     private String email;
     private String address;
@@ -28,76 +28,60 @@ public class ProfilePageDAO extends LoginPassing {
     private int oldSalt;
     private int oldIterations;
 
+
     public ProfilePageDAO() {
-        this.conn = ConnectionToTheDataBase.conn;
         this.pass = new Passwords_Checker();
     }
 
-
-
-
-
-    public ProfilePAge getUsersProfile(String username) {
+    public ProfilePAge getUsersProfile(String username) { // Pass in username from GET
         ProfilePAge profilePAge = new ProfilePAge();
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "SELECT Username, Name ,Email, Address, Education, Ethnicity, DateOfBirth, profilePicture FROM UsersNames WHERE Username = ?;"
-            );
-            {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT Username, Name, Email, Address, Education, Ethnicity, DateOfBirth, profilePicture FROM UsersNames WHERE Username = ?;")) {
                 System.out.println(statement);
                 statement.setString(1, username);
                 System.out.println(statement);
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    profilePAge = makeProfilePAge(resultSet);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        profilePAge = makeProfilePAge(resultSet);
+                    }
                 }
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
-
-            return profilePAge;
         } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            System.out.println("No ProfilePage under this username");
+            System.out.println("Error. No profile page under this username.");
+            e.printStackTrace();
         }
-        return null;
+        return profilePAge;
     }
 
 
     public ProfilePAge createUsersProfile(ProfilePAge profilePAge, String password) throws SQLException {
         ProfilePageGetters(profilePAge);
         saltAndIteration();
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth, Password, salt, iteration) VALUES( ?, ? ,?,?,?,?,?,?,?,?);"
-            );
-            {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth, Password, salt, iteration) VALUES( ?, ? ,?,?,?,?,?,?,?,?);")) {
+                System.out.println(statement);
                 statement.setString(1, usernames);
-                sqlSetStatment(pass.hashing(password,salt,iterations), statement);
+                sqlSetStatment(pass.hashing(password, salt, iterations), statement);
                 statement.setInt(9, salt);
                 statement.setInt(10, iterations);
                 statement.executeUpdate();
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            System.out.println("Error there is such username already");
-            System.out.println("SQL error");
-            conn.close();
-            throw new SQLException();
+            System.out.println("Error. Username already exist. Cannot create profile page.");
+            e.printStackTrace();
         }
         return getUsersProfile(profilePAge.getUsername());
     }
 
-    public ProfilePAge updataUsersProfile(String username, String password, ProfilePAge profilePAge, String newPassword) {
+    public ProfilePAge updateUsersProfile(String username, String password, ProfilePAge profilePAge, String newPassword) {
         ProfilePageGetters(profilePAge);
         getSaltAndIteration(username);
         saltAndIteration();
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?, Password=?, profilePicture=?, salt=?, iteration=?  WHERE  Password= ? AND Username = ?;"
-            );
-            {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?, Password=?, profilePicture=?, salt=?, iteration=?  WHERE  Password= ? AND Username = ?;")) {
                 statement.setString(1, username);
                 sqlSetStatment(password, statement);
                 System.out.println(newPassword);
@@ -106,45 +90,63 @@ public class ProfilePageDAO extends LoginPassing {
                 System.out.println(iterations);
                 System.out.println(oldSalt);
                 System.out.println(oldIterations);
-                System.out.println(pass.hashing(newPassword,salt,iterations));
-                System.out.println(pass.hashing(password,oldSalt,oldIterations));
-                statement.setString(8, pass.hashing(newPassword,salt,iterations) );
+                System.out.println(pass.hashing(newPassword, salt, iterations));
+                System.out.println(pass.hashing(password, oldSalt, oldIterations));
+                statement.setString(8, pass.hashing(newPassword, salt, iterations));
                 statement.setString(9, profilePicture);
-                statement.setInt(10,salt);
-                statement.setInt(11,iterations);
-                statement.setString(12, pass.hashing(password,oldSalt,oldIterations) );
+                statement.setInt(10, salt);
+                statement.setInt(11, iterations);
+                statement.setString(12, pass.hashing(password, oldSalt, oldIterations));
                 statement.setString(13, usernames);
 
                 System.out.println(statement);
                 statement.executeUpdate();
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            System.out.println("Can not update user information based on the username and password");
+            System.out.println("Error. Cannot update user information based on the username and password.");
+            e.printStackTrace();
         }
         return getUsersProfile(username);
     }
 
-//This is the shortcut for setting strings for all normal user details apart from password and username.
-    private void sqlSetStatment(String password, PreparedStatement statement) throws SQLException {
+    public void getSaltAndIteration(String username) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            //user pass.hashing() with the password needed to be hash to match and salt number with iteration numbers
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "SELECT salt,iteration FROM UsersNames WHERE Username = ?;"
+            )) {
+                statement.setString(1, username);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        oldSalt = resultSet.getInt(1);
+                        System.out.println(oldSalt);
+                        oldIterations = resultSet.getInt(2);
+                        System.out.println(oldIterations);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    //This is the shortcut for setting strings for all normal user details apart from password and username.
+    private void sqlSetStatment(String password, PreparedStatement statement) throws SQLException {
         statement.setString(2, name);
         statement.setString(3, email);
         statement.setString(4, address);
         statement.setString(5, education);
         statement.setString(6, ethnicity);
         statement.setDate(7, date);
-        statement.setString(8,password);
+        statement.setString(8, password);
     }
 
     //Setting the javabean instance variables for ProfilePage
     private ProfilePAge makeProfilePAge(ResultSet resultSet) throws SQLException {
         ProfilePAge profilePAge = new ProfilePAge();
-        sqlGetStatments(resultSet);
+        sqlGetStatements(resultSet);
         profilePAge.setUsername(usernames);
         profilePAge.setName(name);
         profilePAge.setEmail(email);
@@ -158,7 +160,7 @@ public class ProfilePageDAO extends LoginPassing {
     }
 
     //This is grabbing information from result sets into the variables that you later set to the profile page.
-    private void sqlGetStatments(ResultSet resultSet) throws SQLException {
+    private void sqlGetStatements(ResultSet resultSet) throws SQLException {
         usernames = resultSet.getString(1);
         name = resultSet.getString(2);
         email = resultSet.getString(3);
@@ -187,26 +189,5 @@ public class ProfilePageDAO extends LoginPassing {
         iterations = rand.nextInt(1000-1) + 1;
         System.out.println(salt);
         System.out.println(iterations);
-    }
-
-    public  void getSaltAndIteration(String username) {
-        try {
-            //user pass.hashing() with the password needed to be hash to match and salt number with iteration numbers
-            PreparedStatement statement = conn.prepareStatement(
-                    "SELECT salt,iteration FROM UsersNames WHERE Username = ?;"
-            );
-            {
-                statement.setString(1, username);
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    oldSalt = resultSet.getInt(1);
-                    System.out.println(oldSalt);
-                    oldIterations = resultSet.getInt(2);
-                    System.out.println(oldIterations);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

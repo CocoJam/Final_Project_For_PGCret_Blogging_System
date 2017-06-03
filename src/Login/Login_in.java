@@ -11,6 +11,7 @@ import java.io.IOException;
 
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
+import static Connection.ConnectionToTheDataBase.conn;
 
 
 /**
@@ -20,7 +21,6 @@ public class Login_in extends HttpServlet {
     private String username;
     private String password;
     private Passwords_Checker passwords_checker = new Passwords_Checker();
-
 
     //doPost gets the shit and umm does something. Oh shit its logged in.
     @Override
@@ -78,13 +78,21 @@ public class Login_in extends HttpServlet {
             session.setAttribute("log", true); //TODO refactoring for login status.
             System.out.println("logged-in");
             System.out.println(session.getAttribute("username"));
-            closingConnection();
+            try {
+                System.out.println(conn.isClosed());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             req.getRequestDispatcher("/ProfilePage").forward(req, resp); //TODO to take out.
             return true;
         } else {
             session.setAttribute("log", false); //TODO refactoring for login status.
             System.out.println("logged-in rejected");
-            closingConnection();
+            try {
+                System.out.println("CONNECTION CLOSED: " + conn.isClosed());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
             return false;
         }
@@ -104,12 +112,20 @@ public class Login_in extends HttpServlet {
                 return;
             }
             if ((boolean) session.getAttribute("log")) {
-                closingConnection();
+                try {
+                    System.out.println("CONNECTION CLOSED: " + conn.isClosed());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 req.getRequestDispatcher("/ProfilePage").forward(req, resp);
                 return;
             } else {
                 if (registration.equals("Registration")) {
-                    closingConnection();
+                    try {
+                        System.out.println("CONNECTION CLOSED: " + conn.isClosed());
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     session.setAttribute("Upload", "ArticlesUpload");
                     req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                     return;

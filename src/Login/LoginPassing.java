@@ -19,93 +19,83 @@ public class LoginPassing {
         return password;
     }
 
-    public Connection getConn() {
-        return conn;
-    }
-
     private String username;
     private String password;
-    public Connection conn;
-    protected Passwords_Checker pass;
     private int salt;
     private int iteration;
+
+    protected Passwords_Checker pass;
+
     public LoginPassing() {
-        ConnectionToTheDataBase.ConnectionToBase(ConnectionToTheDataBase.ConnectionTypes.Get);
-        this.conn = ConnectionToTheDataBase.conn;
         this.pass = new Passwords_Checker();
     }
 
     public boolean selectionUsersNames(String username, String password) {
-        try {
-            getSaltAndIteration(username);
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             //user pass.hashing() with the password needed to be hash to match and salt number with iteration numbers
-            PreparedStatement statement = conn.prepareStatement(
-                    "SELECT Username, Password FROM UsersNames WHERE Username = ? AND Password = ?;"
-            );
-            {
-                System.out.println(statement);
-                System.out.println(salt);
-                System.out.println(iteration);
+            try (PreparedStatement statement = connection.prepareStatement("SELECT Username, Password FROM UsersNames WHERE Username = ? AND Password = ?;")) {
+                getSaltAndIteration(username);
                 statement.setString(1, username);
                 statement.setString(2, pass.hashing(password,salt,iteration));
                 System.out.println(statement);
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    this.username = resultSet.getString(1);
-                    System.out.println(username);
-                    return true;
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        this.username = resultSet.getString(1);
+                        return true;
+                    }
                 }
-
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            System.out.println("Error login");
-            return false;
-        }
-        catch (IllegalArgumentException e){
-            return false;
+            System.out.println("Error creating database connection.");
+            e.printStackTrace();
         }
         return false;
     }
 
 
-    public  void getSaltAndIteration(String username) {
-        try {
+    public boolean selectionUsersCheck(String username) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             //user pass.hashing() with the password needed to be hash to match and salt number with iteration numbers
-            PreparedStatement statement = conn.prepareStatement(
-                    "SELECT salt,iteration FROM UsersNames WHERE Username = ?;"
-            );
-            {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT Username FROM UsersNames WHERE Username = ?;")) {
+                System.out.println(statement);
                 statement.setString(1, username);
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                   salt = resultSet.getInt(1);
-                   iteration = resultSet.getInt(2);
+                System.out.println(statement);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        this.username = resultSet.getString(1);
+                        return true;
+                    }
+                }
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+            }
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+        } catch (SQLException e) {
+            System.out.println("Error creating database connection.");
+            return false;
+        }
+        return false;
+    }
+
+    public void getSaltAndIteration(String username) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            //user pass.hashing() with the password needed to be hash to match and salt number with iteration numbers
+            try (PreparedStatement statement = connection.prepareStatement("SELECT salt,iteration FROM UsersNames WHERE Username = ?;")) {
+                statement.setString(1, username);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        salt = resultSet.getInt(1);
+                        iteration = resultSet.getInt(2);
+                    }
                 }
             }
-        } catch (SQLException e) {
+        } catch (
+                SQLException e)
+        {
             e.printStackTrace();
         }
     }
 
-    public boolean selectionUsersCheck(String username) {
-        try {
-            //user pass.hashing() with the password needed to be hash to match and salt number with iteration numbers
-            PreparedStatement statement = conn.prepareStatement(
-                    "SELECT Username FROM UsersNames WHERE Username = ?;"
-            );
-            {
-                statement.setString(1, username);
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    this.username = resultSet.getString(1);
-                    return true;
-                }
-
-            }
-        } catch (SQLException e) {
-            return false;
-        }
-        return false;
-    }
 
 }
