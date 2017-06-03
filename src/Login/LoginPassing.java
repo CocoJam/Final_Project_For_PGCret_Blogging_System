@@ -53,6 +53,7 @@ public class LoginPassing {
                     System.out.println(password);
                     return true;
                 }
+
             }
         } catch (SQLException e) {
             System.out.println("Error login");
@@ -73,13 +74,12 @@ public class LoginPassing {
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     this.username = resultSet.getString(1);
-                    return true;
                 }
+                return true;
             }
         } catch (SQLException e) {
             return false;
         }
-        return false;
     }
 
 }

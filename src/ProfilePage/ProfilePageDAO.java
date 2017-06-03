@@ -66,6 +66,7 @@ public class ProfilePageDAO extends LoginPassing {
             {
                 statement.setString(1, usernames);
                 sqlSetStatment(password, statement);
+
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -90,6 +91,7 @@ public class ProfilePageDAO extends LoginPassing {
                 statement.setString(9, profilePicture);
                 statement.setString(10, password);
                 statement.setString(11, usernames);
+                System.out.println(statement);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {

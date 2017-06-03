@@ -267,6 +267,7 @@ public class Upload_files extends HttpServlet {
 
             File[] parent = file.getParentFile().listFiles();
             for (File file1 : parent) {
+                System.out.println(file1 + " added");
                 filepaths.add(filePath(file1));
             }
             return filepaths;

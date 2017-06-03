@@ -16,12 +16,16 @@ import static Connection.ConnectionToTheDataBase.closingConnection;
 public class ArticlesIndexServlet extends HttpServlet {
     private List<Articles> indexList;
     private String username;
+    private String ArticleListStatus;
 
     //Hyperlink from the Profilepage.jsp has parameter called ArticleList and the value of the parameter will return ALL or SELF.
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         username = (String) session.getAttribute("username");
+        if (req.getParameter("articleList") != null){
+        session.setAttribute("ArticleListStatus", req.getParameter("articleList"));}
+        ArticleListStatus = (String) session.getAttribute("ArticleListStatus");
         switchbetweenAllOrSelf(req, session, username);
         closingConnection();
         req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
@@ -30,14 +34,15 @@ public class ArticlesIndexServlet extends HttpServlet {
 
     //This: (1) determines whether to grab ALL or SELF (2) populate the list to be sent back
     private void switchbetweenAllOrSelf(HttpServletRequest req, HttpSession session, String username) {
-        if (req.getParameter("articleList") != null) {
-            if (req.getParameter("articleList").equals("self")) {
+        System.out.println("Checking self or all");
+        if (ArticleListStatus != null) {
+            if (ArticleListStatus.equals("self")) {
                 System.out.println("self");
                 session.setAttribute("articleList", "self");
                 indexList = new ArticleListObjectDAO().selectionArticlesList(username);
                 checkingForOwnership(username);
                 session.setAttribute("ArticleIndex", indexList);
-            } else if (req.getParameter("articleList").equals("all")) {
+            } else if (ArticleListStatus.equals("all")) {
                 System.out.println("all");
                 session.setAttribute("articleList", "all");
                 indexList = new ArticleListObjectDAO().selectionAllArticlesList();
@@ -46,6 +51,7 @@ public class ArticlesIndexServlet extends HttpServlet {
             }
         }
     }
+
     //Using session username to check if the accessor is the owner, set Article .setOwner
     private void checkingForOwnership(String username) {
         for (Articles articles : indexList) {

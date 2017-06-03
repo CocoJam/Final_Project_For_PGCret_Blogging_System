@@ -1,5 +1,8 @@
 package Article;
 
+import Connection.ConnectionToTheDataBase;
+
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,10 +19,12 @@ public class ArticleListObjectDAO extends ArticlesDAO {
     private String ArticleName = null;
     private Date DateCreated = null;
     private String UsernameID = null;
+    private ConnectionToTheDataBase connectionToTheDataBase;
+    private Connection conn;
 
 
     public ArticleListObjectDAO() {
-        super();
+        connectionToTheDataBase = new ConnectionToTheDataBase();
     }
 
     public List<Articles> selectionAllArticlesList() {
@@ -44,6 +49,30 @@ public class ArticleListObjectDAO extends ArticlesDAO {
         System.out.println("Article size" + ListIndex.size());
         return ListIndex;
     }
+
+
+//    public List<Articles> selectionAllArticlesList() {
+//        List<Articles> ListIndex = new ArrayList<>();
+//        try( Connection conn = connectionToTheDataBase.ConnectionToBase(ConnectionToTheDataBase.ConnectionTypes.Get);
+//            PreparedStatement statement = conn.prepareStatement(
+//                    "SELECT ArticlesID, ArticlesName,SpecificDateCreated, UserIDName FROM Articles;"
+//            )) {
+//            {
+//                ResultSet resultSet = statement.executeQuery();
+//                addingArticlesIntoTheList(ListIndex, resultSet);
+//            }
+//            conn.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("Article size" + ListIndex.size());
+//        try {
+//            System.out.println("is that dataBase closed? "+ conn.isClosed());
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return ListIndex;
+//    }
 
 
     public List<Articles> selectionArticlesList(String UserIDName) {

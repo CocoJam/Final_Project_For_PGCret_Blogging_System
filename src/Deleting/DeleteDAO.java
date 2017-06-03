@@ -122,6 +122,24 @@ public class DeleteDAO extends LoginPassing {
         }
     }
 
+//    public void dropUserInformation(String username) {
+//        try {
+//            PreparedStatement statement = conn.prepareStatement(
+//                    "DELETE FROM UsersNames WHERE Username=?;"
+//            );
+//            statement.setString(1, username);
+//            System.out.println("deleting");
+//            statement.executeUpdate();
+//        } catch (SQLException e) {
+//            try {
+//                conn.close();
+//            } catch (SQLException e1) {
+//                e1.printStackTrace();
+//            }
+//            e.printStackTrace();
+//        }
+//    }
+
     public void dropAllByUsername(String username) {
         dropComments(username);
         dropArticles(username);
