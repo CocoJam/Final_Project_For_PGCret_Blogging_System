@@ -71,7 +71,7 @@ public class Registration extends HttpServlet {
         // profileSetUp is used to simplify the logic here. All the setters of the profilepage Object is done within this method (see profileSetUp()).
         profileSetUp(req);
 
-//        updataTables.updataUsersProfile(username,password);
+//        updataTables.updateUsersProfile(username,password);
         //        uncomment to check the hashing function
 //        Login.Passwords_Checker passwords_checker = new Login.Passwords_Checker();
 //        String hashedPassword = passwords_checker.hashing(password, 5 , 500);
@@ -85,7 +85,7 @@ public class Registration extends HttpServlet {
             // Scenario 1: The below is an editing scenario.
             if (req.getParameter("log").equals("ChangeUserInformation")) {
                 System.out.println("Trying for info update");
-                profilePage = profilePageDAO.updataUsersProfile((String) session.getAttribute("username"), (String) session.getAttribute("password"), profilePage,password);
+                profilePage = profilePageDAO.updateUsersProfile((String) session.getAttribute("username"), (String) session.getAttribute("password"), profilePage,password);
                 System.out.println("info updated");
                 session.setAttribute("profileInfo", profilePage);
                 session.setAttribute("password",password);

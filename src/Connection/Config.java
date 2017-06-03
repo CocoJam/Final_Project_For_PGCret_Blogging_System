@@ -19,8 +19,8 @@ public class Config {
                 case Admin:
 
                     properties = new Properties(System.getProperties());
-                    properties.setProperty("user", "ljam763");
-                    properties.setProperty("password", "b9638527410");
+                    properties.setProperty("user", "ylin183");
+                    properties.setProperty("password", "381nily");
                     properties.setProperty("useSSL", "true");
                     break;
                 case Get:

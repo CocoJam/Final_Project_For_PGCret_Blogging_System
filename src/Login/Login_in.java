@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
+import static Connection.ConnectionToTheDataBase.conn;
 
 
 /**
@@ -19,7 +20,6 @@ import static Connection.ConnectionToTheDataBase.closingConnection;
 public class Login_in extends HttpServlet {
     private String username;
     private String password;
-
 
     //doPost gets the shit and umm does something. Oh shit its logged in.
     @Override
@@ -74,7 +74,11 @@ public class Login_in extends HttpServlet {
             session.setAttribute("log", true); //TODO refactoring for login status.
             System.out.println("logged-in");
             System.out.println(session.getAttribute("username"));
-            closingConnection();
+            try {
+                System.out.println(conn.isClosed());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             req.getRequestDispatcher("/ProfilePage").forward(req, resp); //TODO to take out.
             return true;
         } else {

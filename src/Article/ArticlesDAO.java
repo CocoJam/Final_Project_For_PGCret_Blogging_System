@@ -15,8 +15,7 @@ public class ArticlesDAO extends LoginPassing {
     private String ArticleName = null;
     private String username = null;
     private String Content = null;
-    private Date DateCreated =null;
-
+    private Date DateCreated = null;
 
 
     public ArticlesDAO() {
@@ -24,18 +23,15 @@ public class ArticlesDAO extends LoginPassing {
     }
 
     public Articles selectionArticles(String articleName) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "SELECT ArticlesID, ArticlesName , UserIDName, Content, SpecificDateCreated FROM Articles WHERE ArticlesName = ?;"
-            );
-            {
-                statement.setString(1, articleName);
-                ResultSet resultSet = statement.executeQuery();
+        try (PreparedStatement statement = conn.prepareStatement("SELECT ArticlesID, ArticlesName, UserIDName, Content, SpecificDateCreated FROM Articles WHERE ArticlesName = ?;")) {
+            statement.setString(1, articleName);
+            try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                return makeArticle(resultSet);
-            }
+                    return makeArticle(resultSet);
+                }
             }
         } catch (SQLException e) {
+            System.out.println("Error creating database connection");
             e.printStackTrace();
         }
         return null;
@@ -43,13 +39,9 @@ public class ArticlesDAO extends LoginPassing {
 
 
     public Articles selectionArticles(int articlesID) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "SELECT ArticlesID, ArticlesName , UserIDName, Content, SpecificDateCreated FROM Articles WHERE ArticlesID = ?;"
-            );
-            {
-                statement.setInt(1, articlesID);
-                ResultSet resultSet = statement.executeQuery();
+        try (PreparedStatement statement = conn.prepareStatement("SELECT ArticlesID, ArticlesName, UserIDName, Content, SpecificDateCreated FROM Articles WHERE ArticlesID = ?;")) {
+            statement.setInt(1, articlesID);
+            try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     return makeArticle(resultSet);
                 }
@@ -62,17 +54,11 @@ public class ArticlesDAO extends LoginPassing {
     }
 
     public void madeArticles(String ArticleName, String UserIDName, String content) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO Articles (ArticlesName, UserIDName, Content) VALUES( ? ,?,?);"
-            );
-            {
-                statement.setString(1, ArticleName);
-                statement.setString(2, UserIDName);
-                statement.setString(3, content);
-                statement.executeUpdate();
-            }
-            conn.close();
+        try (PreparedStatement statement = conn.prepareStatement("INSERT INTO Articles (ArticlesName, UserIDName, Content) VALUES( ? ,?,?);")) {
+            statement.setString(1, ArticleName);
+            statement.setString(2, UserIDName);
+            statement.setString(3, content);
+            statement.executeUpdate();
         } catch (SQLException e) {
             try {
                 conn.close();
@@ -83,7 +69,7 @@ public class ArticlesDAO extends LoginPassing {
         }
     }
 
-    public Articles updataArticles( String ArticleName,String content, int ArticleID) {
+    public Articles updataArticles(String ArticleName, String content, int ArticleID) {
         try {
             PreparedStatement statement = conn.prepareStatement(
                     "UPDATE Articles SET ArticlesName = ?, Content= ? WHERE ArticlesID = ?;"
@@ -94,10 +80,10 @@ public class ArticlesDAO extends LoginPassing {
                 statement.setInt(3, ArticleID);
                 statement.executeUpdate();
             }
-            conn.close();
+            System.out.println(conn.isClosed());
         } catch (SQLException e) {
             try {
-                conn.close();
+                System.out.println(conn.isClosed());
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }

@@ -62,7 +62,11 @@ public class ArticleServlet extends HttpServlet {
         session.setAttribute("articleContents", article);
         listOfComments = gettingTheListOfComments(ArticleID);
         session.setAttribute("commentlist", listOfComments);
-        closingConnection();
+        try {
+            System.out.println(conn.isClosed()+ " is this closed?");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         req.getRequestDispatcher("/Comments").forward(req, resp);
         return;
     }
