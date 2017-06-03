@@ -83,7 +83,7 @@ public class DeletingServlet extends HttpServlet {
         if (new File(filePath).exists()){
             System.out.println("Deleted? "+ new File(filePath).delete());
         }
-        req.getRequestDispatcher("/Articles").forward(req, resp);
+        req.getRequestDispatcher("/ArticleUpload").forward(req, resp);
     }
 
     private void tryingTodeleteWholeArticle(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

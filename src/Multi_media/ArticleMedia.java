@@ -38,7 +38,7 @@ public class ArticleMedia extends Upload_files {
             System.out.println(e);
         }
         String articleID = ArticleID + "";
-        System.out.println(articleID+ " No:");
+        System.out.println(articleID + " No:");
         ServletContext servletContext = getServletContext();
         String userPath = servletContext.getRealPath("/Upload-photos");
         File startingFile = new File(userPath);
@@ -88,14 +88,16 @@ public class ArticleMedia extends Upload_files {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String youtubeVideo = req.getParameter("youtube");
         HttpSession session = req.getSession();
+        System.out.println("Adding youtube");
         try {
             ArticleID = Integer.parseInt(session.getAttribute("articleID") + "");
         } catch (NumberFormatException e) {
             System.out.println(e);
         }
-
-        MediaDAO mediaDAO = new MediaDAO();
-        mediaDAO.addingYoutubeToDatabase(ArticleID, youtubeVideo);
+        if (youtubeVideo != null) {
+            MediaDAO mediaDAO = new MediaDAO();
+            mediaDAO.addingYoutubeToDatabase(ArticleID, youtubeVideo);
+        }
         closingConnection();
 
         //Sends doGet to go back

@@ -88,6 +88,7 @@ public class ArticleServlet extends HttpServlet {
 
                 //Scenario 2: Edit inside of your own article, therefore setting ownership is important. Dispatches to the ArticleCreationPage.jsp (but in editing mode).
             } else if (addingArticles.equals("EditArticle")) {
+                System.out.println("TRying to edit article");
                 session.setAttribute("articleID", ArticleID);
                 session.setAttribute("Upload", "ArticlesUpload");
                 req.setAttribute("articleContents", article);
@@ -106,7 +107,6 @@ public class ArticleServlet extends HttpServlet {
                 closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
                 return;
-
                 //Scenario 4: Redirect from Article Creation page once creation of a new page is completed.
             } else if (addingArticles.equals("addingToDataBase")) {
                 System.out.println(username);

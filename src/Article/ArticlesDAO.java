@@ -94,13 +94,8 @@ public class ArticlesDAO extends LoginPassing {
                 statement.setInt(3, ArticleID);
                 statement.executeUpdate();
             }
-            conn.close();
+
         } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
             e.printStackTrace();
         }
 
