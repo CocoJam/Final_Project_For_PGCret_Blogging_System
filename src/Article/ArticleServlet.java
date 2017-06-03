@@ -63,7 +63,7 @@ public class ArticleServlet extends HttpServlet {
         listOfComments = gettingTheListOfComments(ArticleID);
         session.setAttribute("commentlist", listOfComments);
         try {
-            System.out.println(conn.isClosed()+ " is this closed?");
+            System.out.println(conn.isClosed() + " is this closed?");
         } catch (SQLException e) {
             e.printStackTrace();
         }
