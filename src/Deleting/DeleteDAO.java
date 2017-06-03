@@ -123,5 +123,6 @@ public class DeleteDAO {
         dropComments(username);
         dropArticles(username);
         dropUserInformation(username);
+
     }
 }

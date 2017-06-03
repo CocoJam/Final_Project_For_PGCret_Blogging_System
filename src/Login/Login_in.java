@@ -28,8 +28,8 @@ public class Login_in extends HttpServlet {
         HttpSession session = req.getSession();
         System.out.println("Processing login");
         username = req.getParameter("username");
-
         password = req.getParameter("password");
+
         LoginPassing loginPassing = new LoginPassing(); //See loginPassing class: stores all the methods for login including DAO query the database.
         System.out.println( passwords_checker.hashing(password,5,500));
 
@@ -61,8 +61,15 @@ public class Login_in extends HttpServlet {
 //        Login.Passwords_Checker passwords_checker = new Login.Passwords_Checker();
 //        String hashedPassword = passwords_checker.hashing(password, 5 , 500);
 //        loginPassing.selectionUsersNames(username,hashedPassword);
-
-        loginLogic(req, resp, session, loginPassing);
+        if (!password.trim().equals("")&& !password.trim().isEmpty() && password.trim() != null){
+            System.out.println("hashing");
+            loginLogic(req, resp, session, loginPassing);
+        }
+        else {
+            session.setAttribute("log", false); //TODO refactoring for login status.
+            System.out.println("logged-in rejected");
+            req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
+        }
         return;
 
         //TODO dispatch back to the login page.
@@ -78,21 +85,11 @@ public class Login_in extends HttpServlet {
             session.setAttribute("log", true); //TODO refactoring for login status.
             System.out.println("logged-in");
             System.out.println(session.getAttribute("username"));
-            try {
-                System.out.println(conn.isClosed());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
             req.getRequestDispatcher("/ProfilePage").forward(req, resp); //TODO to take out.
             return true;
         } else {
             session.setAttribute("log", false); //TODO refactoring for login status.
             System.out.println("logged-in rejected");
-            try {
-                System.out.println("CONNECTION CLOSED: " + conn.isClosed());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
             req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
             return false;
         }
@@ -112,20 +109,12 @@ public class Login_in extends HttpServlet {
                 return;
             }
             if ((boolean) session.getAttribute("log")) {
-                try {
-                    System.out.println("CONNECTION CLOSED: " + conn.isClosed());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+
                 req.getRequestDispatcher("/ProfilePage").forward(req, resp);
                 return;
             } else {
                 if (registration.equals("Registration")) {
-                    try {
-                        System.out.println("CONNECTION CLOSED: " + conn.isClosed());
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
+
                     session.setAttribute("Upload", "ArticlesUpload");
                     req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                     return;

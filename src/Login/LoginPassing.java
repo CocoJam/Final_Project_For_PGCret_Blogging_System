@@ -87,6 +87,8 @@ public class LoginPassing {
                     while (resultSet.next()) {
                         salt = resultSet.getInt(1);
                         iteration = resultSet.getInt(2);
+                        System.out.println(salt);
+                        System.out.println(iteration);
                     }
                 }
             }

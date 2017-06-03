@@ -88,7 +88,7 @@ public class Registration extends HttpServlet {
                 profilePage = profilePageDAO.updateUsersProfile((String) session.getAttribute("username"), (String) session.getAttribute("password"), profilePage,password);
                 System.out.println("info updated");
                 session.setAttribute("profileInfo", profilePage);
-                session.setAttribute("password",password);
+//                session.setAttribute("password",password);
                 closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                 return;
@@ -102,7 +102,7 @@ public class Registration extends HttpServlet {
                     session.setAttribute("profileInfo", profilePage);
                     System.out.println(profilePage.getUsername());
                     session.setAttribute("username", profilePage.getUsername());
-                    session.setAttribute("password", password);
+//                    session.setAttribute("password", password);
                     session.setAttribute("log",true);
                     req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                 } catch (SQLException e1) {
