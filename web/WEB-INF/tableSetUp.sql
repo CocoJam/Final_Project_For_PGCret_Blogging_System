@@ -59,3 +59,5 @@ ArticlesId int not NULL ,
 youtubeURL VARCHAR (1000) not NULL ,
 FOREIGN KEY (ArticlesID) REFERENCES Articles (ArticlesID)
 )
+ALTER TABLE table_name
+ADD column_name datatype;

@@ -64,9 +64,17 @@ public class DeletingServlet extends HttpServlet {
             } else if (req.getParameter("log").equals("DeleteMedia")){
                 tryingToDeleteSpeificMedia(req, resp);
             } else if (req.getParameter("log").equals("DeleteYoutube")){
-
+                TryingTodeleteAYoutubeVideo(req, resp);
             }
         }
+    }
+
+    private void TryingTodeleteAYoutubeVideo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String youtubeURL = req.getParameter("media");
+        System.out.println(youtubeURL);
+        deleteDAO.dropSpeificYoutube(youtubeURL);
+        closingConnection();
+        req.getRequestDispatcher("/Articles").forward(req, resp);
     }
 
     private void tryingToDeleteSpeificMedia(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -104,7 +112,6 @@ public class DeletingServlet extends HttpServlet {
     }
 
     private void tryingTodeleteAComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException, IOException {
-        //needed to renew the Article comments. Bugggggg
         deleteDAO.dropSpeificComment(commentId);
         closingConnection();
         req.getRequestDispatcher("/ArticlesIndex").forward(req, resp);

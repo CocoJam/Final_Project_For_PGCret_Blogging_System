@@ -112,7 +112,7 @@
     //TODO the boolean appears to be returning true all the time, check if right message being sent back by doGET method in Registration.java
 
     console.log($("#username").val());
-    $("#responseToCheck").click(function () {
+    $("#username").change(function () {
         $.ajax({
             url: '/Registration',
             type: 'GET',

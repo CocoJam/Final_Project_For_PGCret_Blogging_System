@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
+
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
 
@@ -19,6 +19,7 @@ import static Connection.ConnectionToTheDataBase.closingConnection;
 public class Login_in extends HttpServlet {
     private String username;
     private String password;
+    private Passwords_Checker passwords_checker = new Passwords_Checker();
 
 
     //doPost gets the shit and umm does something. Oh shit its logged in.
@@ -27,8 +28,10 @@ public class Login_in extends HttpServlet {
         HttpSession session = req.getSession();
         System.out.println("Processing login");
         username = req.getParameter("username");
+
         password = req.getParameter("password");
         LoginPassing loginPassing = new LoginPassing(); //See loginPassing class: stores all the methods for login including DAO query the database.
+        System.out.println( passwords_checker.hashing(password,5,500));
 
         if (session.getAttribute("log") != null) {
             if ((boolean) session.getAttribute("log")) {
@@ -64,6 +67,7 @@ public class Login_in extends HttpServlet {
 
         //TODO dispatch back to the login page.
     }
+
 
     //This is to check the login logic used by doPost to check user login from the login_page.jsp.
     // TODO just refactor this out for convenience

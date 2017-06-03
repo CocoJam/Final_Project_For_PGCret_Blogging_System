@@ -4,6 +4,7 @@ import Connection.*;
 import Login.*;
 
 import java.sql.*;
+import java.util.Random;
 
 /**
  * Created by ljam763 on 25/05/2017.
@@ -22,11 +23,19 @@ public class ProfilePageDAO extends LoginPassing {
     private String ethnicity;
     private String profilePicture;
     private Date date;
+    private int salt;
+    private int iterations;
+    private int oldSalt;
+    private int oldIterations;
 
     public ProfilePageDAO() {
         this.conn = ConnectionToTheDataBase.conn;
         this.pass = new Passwords_Checker();
     }
+
+
+
+
 
     public ProfilePAge getUsersProfile(String username) {
         ProfilePAge profilePAge = new ProfilePAge();
@@ -59,14 +68,16 @@ public class ProfilePageDAO extends LoginPassing {
 
     public ProfilePAge createUsersProfile(ProfilePAge profilePAge, String password) throws SQLException {
         ProfilePageGetters(profilePAge);
+        saltAndIteration();
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth, Password) VALUES( ?, ? ,?,?,?,?,?,?);"
+                    "INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth, Password, salt, iteration) VALUES( ?, ? ,?,?,?,?,?,?,?,?);"
             );
             {
                 statement.setString(1, usernames);
-                sqlSetStatment(password, statement);
-
+                sqlSetStatment(pass.hashing(password,salt,iterations), statement);
+                statement.setInt(9, salt);
+                statement.setInt(10, iterations);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -80,17 +91,30 @@ public class ProfilePageDAO extends LoginPassing {
 
     public ProfilePAge updataUsersProfile(String username, String password, ProfilePAge profilePAge, String newPassword) {
         ProfilePageGetters(profilePAge);
+        getSaltAndIteration(username);
+        saltAndIteration();
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?, Password=?, profilePicture=?  WHERE  Password= ? AND Username = ?;"
+                    "UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?, Password=?, profilePicture=?, salt=?, iteration=?  WHERE  Password= ? AND Username = ?;"
             );
             {
                 statement.setString(1, username);
                 sqlSetStatment(password, statement);
-                statement.setString(8, newPassword);
+                System.out.println(newPassword);
+                System.out.println(password);
+                System.out.println(salt);
+                System.out.println(iterations);
+                System.out.println(oldSalt);
+                System.out.println(oldIterations);
+                System.out.println(pass.hashing(newPassword,salt,iterations));
+                System.out.println(pass.hashing(password,oldSalt,oldIterations));
+                statement.setString(8, pass.hashing(newPassword,salt,iterations) );
                 statement.setString(9, profilePicture);
-                statement.setString(10, password);
-                statement.setString(11, usernames);
+                statement.setInt(10,salt);
+                statement.setInt(11,iterations);
+                statement.setString(12, pass.hashing(password,oldSalt,oldIterations) );
+                statement.setString(13, usernames);
+
                 System.out.println(statement);
                 statement.executeUpdate();
             }
@@ -114,7 +138,7 @@ public class ProfilePageDAO extends LoginPassing {
         statement.setString(5, education);
         statement.setString(6, ethnicity);
         statement.setDate(7, date);
-        statement.setString(8, password);
+        statement.setString(8,password);
     }
 
     //Setting the javabean instance variables for ProfilePage
@@ -156,5 +180,33 @@ public class ProfilePageDAO extends LoginPassing {
         date = profilePAge.getDate();
         profilePicture = profilePAge.getProfilepic();
         System.out.println("getting :" + profilePicture);
+    }
+    private void saltAndIteration() {
+        Random rand = new Random();
+        salt = rand.nextInt(255-1) + 1;
+        iterations = rand.nextInt(1000-1) + 1;
+        System.out.println(salt);
+        System.out.println(iterations);
+    }
+
+    public  void getSaltAndIteration(String username) {
+        try {
+            //user pass.hashing() with the password needed to be hash to match and salt number with iteration numbers
+            PreparedStatement statement = conn.prepareStatement(
+                    "SELECT salt,iteration FROM UsersNames WHERE Username = ?;"
+            );
+            {
+                statement.setString(1, username);
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    oldSalt = resultSet.getInt(1);
+                    System.out.println(oldSalt);
+                    oldIterations = resultSet.getInt(2);
+                    System.out.println(oldIterations);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
