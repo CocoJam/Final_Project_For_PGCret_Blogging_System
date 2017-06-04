@@ -1,24 +1,15 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Navigation Bar Template</title>
 
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
-    <!-- Do not edit -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <!-- Responsive settings -->
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-    <!-- Fonts and icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/><!-- Google material design icons -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"/><!-- Google Roboto font -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/><!-- Font awesome icon library -->
-    <!-- CSS Files -->
-    <link href="../../assets/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="../../assets/css/material-kit.css" rel="stylesheet"/>
-    <link href="../../assets/css/style.css" rel="stylesheet"/><!-- Additional Custom CSS -->
+    <%--HEADER TEMPLATE RETRIEVED FROM THE HTML FILE--%>
+
+    <%@ include file="Template (HTML components)/Header(styling Template).html" %>
+
 </head>
 <body>
 
@@ -38,7 +29,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- Navbar name of our website, displays on left -->
-            <a class="navbar-brand" href="#"><i class="material-icons">apps</i>
+            <a class="navbar-brand" href=""><i class="material-icons">apps</i>
                 Slash N</a>
         </div>
 
@@ -46,20 +37,46 @@
         <!-- Container for elements to hide on mobile -->
         <div class="collapse navbar-collapse" id="expand-navbar-icons">
 
-            <!-- TODO need to use JSTL to dynamically change the icons on the right side on the nav bar depending on login status -->
+
 
             <!-- Nav bar right side icons -->
             <!-- Use on all other pages except login/register -->
             <ul class="nav navbar-nav navbar-right">
+
                 <li>
-                    <a href="#"><i class="material-icons">fullscreen</i>registration</a>
+                    <a href= "../WEB-INF/webthings/ProfilePage.jsp"><i class="material-icons">face</i>Profile</a>
                 </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="material-icons">fullscreen</i>Articles
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li class="dropdown-header">Options</li>
+                        <li><a href="/ArticlesIndex?articleList=self"><i class="material-icons">fullscreen</i>My Articles</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/ArticlesIndex?articleList=all"><i class="material-icons">fullscreen</i>All Articles</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="material-icons">fullscreen</i>Articles
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li class="dropdown-header">Options</li>
+                        <li><a href="/ArticlesIndex?articleList=self"><i class="material-icons">fullscreen</i>My Articles</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/ArticlesIndex?articleList=all"><i class="material-icons">fullscreen</i>All Articles</a></li>
+                    </ul>
+                </li>
+
                 <li>
-                    <a href="#"><i class="material-icons">fullscreen</i>Articles</a>
+                    <a href="#"><i class="material-icons">account_circle</i>Change User Info</a>
                 </li>
-                <li>
-                    <a href="#"><i class="material-icons">face</i>Profile</a>
-                </li>
+
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="material-icons">settings</i>Options
@@ -67,8 +84,6 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">Options</li>
-                        <li><a href="#">My Articles</a></li>
-                        <li class="divider"></li>
                         <li><a href="#">Edit Profile</a></li>
                         <li class="divider"></li>
                         <li><a href="#">Sign Out</a></li>
@@ -95,20 +110,5 @@
 <!-- !!! NAVIGATION BAR END !!! -->
 
 </body>
-
-
-<!--   Core JS Files   -->
-<script src="../../assets/js/jquery.min.js" type="text/javascript"></script>
-<script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="../../assets/js/material.min.js"></script>
-
-<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-<script src="../../assets/js/nouislider.min.js" type="text/javascript"></script>
-
-<!--  Plugin for the Datepicker, full documentation here: http://www.eyecon.ro/bootstrap-datepicker/ -->
-<script src="../../assets/js/bootstrap-datepicker.js" type="text/javascript"></script>
-
-<!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
-<script src="../../assets/js/material-kit.js" type="text/javascript"></script>
 
 </html>
