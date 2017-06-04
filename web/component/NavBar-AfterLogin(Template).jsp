@@ -29,7 +29,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- Navbar name of our website, displays on left -->
-            <a class="navbar-brand" href=""><i class="material-icons">apps</i>
+            <a class="navbar-brand" href="/ProfilePage"><i class="material-icons">apps</i>
                 Slash N</a>
         </div>
 
@@ -44,7 +44,7 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li>
-                    <a href= "../WEB-INF/webthings/ProfilePage.jsp"><i class="material-icons">face</i>Profile</a>
+                    <a href="/ProfilePage"><i class="material-icons">face</i>Profile</a>
                 </li>
 
                 <li class="dropdown">
@@ -62,19 +62,21 @@
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="material-icons">fullscreen</i>Articles
+                        <i class="material-icons">photo_library</i>Media
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">Options</li>
-                        <li><a href="/ArticlesIndex?articleList=self"><i class="material-icons">fullscreen</i>My Articles</a></li>
+                        <li><a href="Upload?media=self"><i class="material-icons">fullscreen</i>My Media</a></li>
                         <li class="divider"></li>
-                        <li><a href="/ArticlesIndex?articleList=all"><i class="material-icons">fullscreen</i>All Articles</a></li>
+                        <li><a href="Upload?media=all"><i class="material-icons">fullscreen</i>All Media</a></li>
                     </ul>
                 </li>
 
                 <li>
-                    <a href="#"><i class="material-icons">account_circle</i>Change User Info</a>
+                    <a href="/Registration?log=ChangeUserInformation">
+                        <i class="material-icons">create</i>
+                        Change User Info</a>
                 </li>
 
                 <li class="dropdown">
@@ -86,7 +88,7 @@
                         <li class="dropdown-header">Options</li>
                         <li><a href="#">Edit Profile</a></li>
                         <li class="divider"></li>
-                        <li><a href="#">Sign Out</a></li>
+                        <li><a href="/logout?submit=Logout">Sign Out</a></li>
                     </ul>
                 </li>
             </ul>

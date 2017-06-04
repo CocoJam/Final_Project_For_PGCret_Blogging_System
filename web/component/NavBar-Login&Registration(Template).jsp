@@ -19,7 +19,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- Navbar name of our website, displays on left -->
-            <a class="navbar-brand" href=""><i class="material-icons">apps</i>
+            <a class="navbar-brand" href="login_page.jsp"><i class="material-icons">apps</i>
                 Slash N</a>
         </div>
 
@@ -35,12 +35,12 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li>
-                <a href="/login?Registration=Registration" target="_self">
-                    <i class="material-icons">create</i>
-                    Register
-                </a>
+                    <a href="/login?Registration=Registration" target="_self">
+                        <i class="material-icons">create</i>
+                        Register
+                    </a>
 
-            </li>
+                </li>
 
                 <%--This script allows sending a POST method for GET--%>
                 <script>

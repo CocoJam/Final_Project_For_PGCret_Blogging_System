@@ -9,48 +9,80 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>ArticleIndex -> Article</title>
+    <title>ArticleIndex</title>
+
+    <%@include file="../../component/Template (HTML components)/Header(styling Template).html" %>
+
 </head>
-<body>
-<table>
-    <tr>
-        <th>
-            Article Numbers
-        </th>
-        <th>
-            Article Names
-        </th>
-        <th>
-            Date Created
-        </th>
-<%--Scenario 1: ALL articles are requested--%>
-        <c:if test="${articleList.equals('all')}">
-            <th>
-                Article Author
-            </th>
-        </c:if>
+<body class="profile-page">
 
-    </tr>
-    <%--Looping through the Article Index (list of articles in the ArticleIndex Servlet) and populates a row per article--%>
-    <c:forEach items="${ArticleIndex}" var="index">
-        <tr>
-            <td>${index.articleid}</td>
-            <td><a href="/Articles?acticleId=${index.articleid}">${index.articlename}</a></td>
-            <td>${index.datecreated}</td>
+<!-- !!! NAVIGATION BAR START !!! -->
 
-            <c:if test="${articleList.equals('all')}">
-                <td>
-                        ${index.username}
-                </td>
-            </c:if>
-        </tr>
-    </c:forEach>
+<%@ include file="../../component/NavBar-AfterLogin(Template).jsp" %>
 
-</table>
+<!-- !!! NAVIGATION BAR END !!! -->
 
-<%--This is to add a new article--%>
-<form action="/Articles" method="post">
-    <input type="submit" name="add" value="addNewArticle" id="addNewArticle">
-</form>
+<!-- !!! MAIN CONTENT START !!! -->
+
+<div class="wrapper">
+    <div class="header header-filter" id="custom-bg-user"></div><!-- background div -->
+
+    <div class="container">
+        <div class="row">
+
+
+            <table>
+                <tr>
+                    <th>
+                        Article Numbers
+                    </th>
+                    <th>
+                        Article Names
+                    </th>
+                    <th>
+                        Date Created
+                    </th>
+                    <%--Scenario 1: ALL articles are requested--%>
+                    <c:if test="${articleList.equals('all')}">
+                        <th>
+                            Article Author
+                        </th>
+                    </c:if>
+
+                </tr>
+                <%--Looping through the Article Index (list of articles in the ArticleIndex Servlet) and populates a row per article--%>
+                <c:forEach items="${ArticleIndex}" var="index">
+                    <tr>
+                        <td>${index.articleid}</td>
+                        <td><a href="/Articles?acticleId=${index.articleid}">${index.articlename}</a></td>
+                        <td>${index.datecreated}</td>
+
+                        <c:if test="${articleList.equals('all')}">
+                            <td>
+                                    ${index.username}
+                            </td>
+                        </c:if>
+                    </tr>
+                </c:forEach>
+
+            </table>
+
+            <%--This is to add a new article--%>
+            <form action="/Articles" method="post">
+                <input type="submit" name="add" value="addNewArticle" id="addNewArticle">
+            </form>
+
+
+
+        </div><!-- main container end -->
+
+    </div><!-- outer div 2 -->
+</div><!-- outer div 1 -->
+</div><!-- wrapper div -->
+
+<!-- FOOTER START -->
+<%@ include file="../../component/Template (HTML components)/Footer(Template).html" %>
+<!-- FOOTER END -->
+
 </body>
 </html>
