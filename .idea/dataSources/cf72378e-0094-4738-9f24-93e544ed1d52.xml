@@ -8,7 +8,7 @@
     </schema>
     <schema id="3" parent="1" name="information_schema"/>
     <schema id="4" parent="1" name="sample_db"/>
-    <schema id="5" parent="1" name="jwon117"/>
+    <schema id="5" parent="1" name="ljam763"/>
     <table id="6" parent="2" name="Articles"/>
     <table id="7" parent="2" name="Comments"/>
     <table id="8" parent="2" name="UsersNames"/>

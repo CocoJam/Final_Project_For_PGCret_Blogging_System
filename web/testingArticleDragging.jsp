@@ -127,36 +127,43 @@
     });
 
 
-    //    $( function() {
-    //        $( "#draggable" ).draggable();
-    //        $( "#droppable" ).droppable({
-    //            drop: function( event, ui ) {
-    //                $( this )
-    //                    .addClass( "ui-state-highlight" )
-    //                    .find( "p" )
-    //                    .html( "Dropped!" );
-    //            }
-    //        });
-    //    } );
 
-
-    //var number = 0;
-    //$("#textarea").bind('input',function () {
-    //    console.log(number);
-    //    console.log($("#textarea").val());
-    //    console.log("changing");
-    //    $(".testing").eq(number).text($("#textarea").val());
-    //});
-    //    $("#textarea").on('keyup', function (e) {
-    //        if (e.keyCode == 13) {
-    //            console.log(number);
-    //            $("#textarea").val("");
-    //            var paragraph = document.createElement("p");
-    //            paragraph.className = "testing";
-    //            $(".testing").eq(number).append(paragraph);
-    //            number++;
-    //        }
-    //    });
+//    var number = 0;
+//    var paragraphNum = 0;
+//    $("#textarea").bind('input', function () {
+//        console.log(number);
+//        console.log($("#textarea").val());
+//        console.log("changing");
+//        var current = $(".ui-state-default").eq(number);
+//        console.log(paragraphNum);
+//        current.children().eq(paragraphNum).text($("#textarea").val());
+//    });
+//    $("#textarea").on('keyup', function (e) {
+//        if (e.keyCode == 17) {
+//            number++;
+//            console.log(number);
+//            $("#textarea").val("");
+//            var paragraph1 = document.createElement("li");
+//            paragraph1.className = "ui-state-default";
+//            var paragraph = document.createElement("p");
+//            $("#sortable").append(paragraph1);
+//            $(paragraph1).append(paragraph);
+//            paragraphNum = 0;
+//        }
+//        if (e.keyCode == 46) {
+//            if (number > -1) {
+//                $(".ui-state-default").eq(number).remove();
+//                console.log("removing");
+//                number--;
+//            }
+//        }
+////        if (e.keyCode == 13) {
+////            $("#textarea").val("");
+////            var paragraph = document.createElement("p");
+////            $(".ui-state-default").eq(number).append(paragraph);
+////            paragraphNum++
+////        }
+//    });
 
 </script>
 </html>

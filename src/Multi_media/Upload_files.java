@@ -54,7 +54,6 @@ public class Upload_files extends HttpServlet {
                        HttpServletResponse resp)
             throws ServletException, java.io.IOException {
         HttpSession session = req.getSession();
-
         caption = (String) session.getAttribute("Upload");
         System.out.println(caption);
         System.out.println("What");
@@ -128,7 +127,8 @@ public class Upload_files extends HttpServlet {
                     fi.write(file);
                     if (caption.equals("ArticlesUpload")) {
 //                        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
-                        req.getRequestDispatcher("/ArticleUpload").forward(req, resp);
+                        resp.getWriter().print(filePath(file));
+//                        req.getRequestDispatcher("/ArticleUpload").forward(req, resp);
                     }
 //                    } else if (caption.equals("addNewArticle")){
 //                        req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);

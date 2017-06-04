@@ -95,7 +95,7 @@ public class ArticleServlet extends HttpServlet {
                 System.out.println("TRying to edit article");
                 session.setAttribute("articleID", ArticleID);
                 session.setAttribute("Upload", "ArticlesUpload");
-                req.setAttribute("articleContents", article);
+                session.setAttribute("articleContents", article);
                 closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
                 return;
@@ -106,7 +106,7 @@ public class ArticleServlet extends HttpServlet {
                 ArticleName = req.getParameter("ArticleName");
                 ArticleContent = req.getParameter("ArticleContent");
                 article = articlesDAO.updateArticles(ArticleName, ArticleContent, ArticleID);
-                req.setAttribute("articleContents", article);
+                session.setAttribute("articleContents", article);
                 session.setAttribute("Upload", null);
                 closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);

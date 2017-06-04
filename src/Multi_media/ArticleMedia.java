@@ -58,10 +58,10 @@ public class ArticleMedia extends Upload_files {
         mediaMapping.put("youtube", youtubeList);
 
         assigningMultipleMediaIntoMap(list, mediaMapping);
-        request.setAttribute("mediaOutPut", mediaMapping);
-
+//          request.setAttribute("mediaOutPut", mediaMapping);
+        response.getWriter().print(mediaMapping);
         closingConnection();
-        request.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(request, response);
+//        request.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(request, response);
     }
 
     //This function finds the absolutely right file based on the name and not the path. TODO Need to consider security risks: Can find all folders. (see the vulnerability with endsWith())

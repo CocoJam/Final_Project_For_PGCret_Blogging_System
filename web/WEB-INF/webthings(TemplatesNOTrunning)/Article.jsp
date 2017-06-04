@@ -59,7 +59,7 @@
     <form action="/Deleting" method="post">
         <input type="submit" name="log" value="DeleteArticle">
     </form>
-    <form   action="/ArticleUpload" method="post">
+    <form  action="/ArticleUpload" method="post">
         <input type="text" name="youtube">
         <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">
     </form>
