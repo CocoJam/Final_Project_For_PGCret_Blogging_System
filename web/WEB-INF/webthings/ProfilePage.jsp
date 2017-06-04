@@ -11,7 +11,7 @@
 <head>
     <title>Profile Page</title>
 
-    <%@include file="../Template (HTML components)/Header(styling Template).html" %>
+    <%@include file="../../component/Template (HTML components)/Header(styling Template).html" %>
 
 </head>
 <body class="profile-page">
@@ -20,7 +20,7 @@
 
 <!-- !!! NAVIGATION BAR START !!! -->
 
-        <%@ include file="../Template (HTML components)/NavBar-AfterLogin(Template).html" %>
+        <%@ include file="../../component/NavBar-AfterLogin(Template).jsp" %>
 
 <!-- !!! NAVIGATION BAR END !!! -->
 
@@ -112,9 +112,9 @@
                                     </form>
 
                                     <%--These links goes either to users own media, or all media (both accessed by GET method) goes to /Upload servlet--%>
-                                    <a href="/Upload?media=self">To self media</a>
+                                    <a href="Upload?media=self">To self media</a>
                                     <br>
-                                    <a href="/Upload?media=all">To all media</a>
+                                    <a href="Upload?media=all">To all media</a>
 
                                 </div>
                             </div>
@@ -130,7 +130,7 @@
 </div><!-- wrapper div -->
 
 <!-- FOOTER START -->
-<%@ include file="../Template (HTML components)/Footer(Template).html" %>
+<%@ include file="../../component/Template (HTML components)/Footer(Template).html" %>
 <!-- FOOTER END -->
 
 </body>

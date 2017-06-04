@@ -18,7 +18,7 @@
 <head>
     <title>Login Page</title>
 
-    <%@include file="../Template (HTML components)/Header(styling Template).html" %>
+    <%@include file="../../component/Template (HTML components)/Header(styling Template).html" %>
 
 </head>
 <body class="signup-page">
@@ -26,10 +26,10 @@
 <!-- !!! NAVIGATION BAR START !!! -->
 <c:choose>
     <c:when test="${log}">
-        <%@ include file="../Template (HTML components)/NavBar-AfterLogin(Template).html" %>
+        <%@ include file="../../component/NavBar-AfterLogin(Template).jsp" %>
     </c:when>
     <c:otherwise>
-        <%@ include file="../Template (HTML components)/NavBar-Login&Registration(Template).html" %>
+        <%@ include file="../../component/NavBar-Login&Registration(Template).jsp" %>
     </c:otherwise>
 </c:choose>
 
@@ -297,7 +297,7 @@
         <!-- !!! MAIN CONTENT END !!! -->
 
         <!-- FOOTER START -->
-        <%@ include file="../Template (HTML components)/Footer(Template).html" %>
+        <%@ include file="../../component/Template (HTML components)/Footer(Template).html" %>
         <!-- FOOTER END -->
 
     </div><!-- background div end -->

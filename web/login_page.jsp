@@ -1,17 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
     <title>Login Page</title>
 
-    <%@ include file="WEB-INF/Template (HTML components)/Header(styling Template).html" %>
+    <%@ include file="component/Template (HTML components)/Header(styling Template).html" %>
 
 </head>
 <body class="signup-page">
 
 <!-- !!! NAVIGATION BAR START !!! -->
-<%@ include file="WEB-INF/Template (HTML components)/NavBar-Login&Registration(Template).html" %>
+<%@ include file="/component/NavBar-Login&Registration(Template).jsp" %>
 <!-- !!! NAVIGATION BAR END !!! -->
-
 
 
 <!-- !!! MAIN CONTENT START !!! -->
@@ -99,7 +100,7 @@
         <!-- !!! MAIN CONTENT END !!! -->
 
         <!-- FOOTER START -->
-        <%@ include file="WEB-INF/Template (HTML components)/Footer(Template).html" %>
+        <%@ include file="/component/Template (HTML components)/Footer(Template).html" %>
         <!-- FOOTER END -->
 
     </div><!-- background div end -->
