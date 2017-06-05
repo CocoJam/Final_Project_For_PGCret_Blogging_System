@@ -136,6 +136,9 @@
                                            class="form-control"
                                            value="${password}"/>
                                 </div>
+                                <p style="text-align: center">
+                                    Password Strength: <span id="reponseToPassword"></span>
+                                </p>
                                 <!-- Text input box end -->
 
                                 <!-- Text input box start -->
@@ -285,6 +288,35 @@
                                 alert("validations passed");
                                 return;
                             });
+                            var passwordStrengthStrong = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/i;
+                            var passwordStrengthMiddle = /(?=.*[a-z]{2,})(?=.*[A-Z]{2,})(?=.*[0-9]{2,})(?=.*[!@#\$%\^&\*]{2,})(?=.{8,})/i;
+                            var passwordStrengthWeakMiddle = /(?=.*[a-z]{4,})(?=.*[A-Z]{4,})(?=.*[0-9]{4,})(?=.*[!@#\$%\^&\*]{4,})(?=.{8,})/i;
+                            $("#password").bind('input', function () {
+                                if ($("#password").val().match(passwordStrengthStrong)) {
+                                    $("#reponseToPassword").text("Strong");
+                                    return console.log("strong")
+                                }
+                                if ($("#password").val().match(passwordStrengthMiddle)) {
+                                    $("#reponseToPassword").text("Middle");
+                                    return console.log("middle")
+                                }
+                                if ($("#password").val().match(passwordStrengthWeakMiddle)) {
+                                    $("#reponseToPassword").text("WeakMiddle");
+                                    return console.log("weakMiddle")
+                                }
+                                if ($("#password").val().length < 8 && $("#password").val().length >0) {
+                                    $("#reponseToPassword").text("Weak");
+                                    return console.log("weak")
+                                }
+                                if ($("#password").val().length > 8 ) {
+                                    $("#reponseToPassword").text("Ok");
+                                    return console.log("ok")
+                                }
+                                if ($("#password").val().length == 0) {
+                                    $("#reponseToPassword").text("Please enter a password");
+                                    return console.log("ok")
+                                }
+                            })
 
                         </script>
 
