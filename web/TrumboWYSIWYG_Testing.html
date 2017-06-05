@@ -26,6 +26,13 @@
             padding: 5px;
             width: 100%;
         }
+
+        .section-selected {
+            border: 1px solid #c5c5c5;
+            background: #ededed;
+            color: #2b2b2b;
+        }
+
     </style>
 
 </head>
@@ -37,16 +44,15 @@
 <div class="wysiwys" placeholder="Enter some text here"></div>
 
 <!-- Make a new section, put current WYSIWYG content in -->
-<button onclick="getWYSIWYGcontent()">CLICKY MOI</button>
+<button onclick="addNewSection()">Add Section</button>
 
-<!-- Clear all WYSIWYG -->
-<button onclick="resetText()">RESET</button>
+<!-- Delete currently selected section -->
+<button onclick="deleteSection()">Delete Section</button>
 
-<!-- Make the selection number null, so it won't put the content of what's currently in the WYSIWYG directly into the selected section if made -->
+<!-- Clear all content inside WYSIWYG editor -->
+<button onclick="resetText()">Reset</button>
 
-
-<button onclick="deleting()">delete</button>
-<!-- Content holding space for uploading to DB -->
+<!-- Space for holding content to be uploaded to DB -->
 <div id="contents" style="border: dashed">
     <ul>
         <li class="ui-state draggable">Contents holding area</li>
@@ -58,17 +64,25 @@
 
 </body>
 
+<!-- Scripts for dealing with draggable sections -->
 <script>
     var mouse = -1;
     var number = -1;
-
+    var clicked = false;
     // Get ID of section we clicked on, grab the content, put back inside WYSIWYG
     function getid() {
-        mouse = this.id;
-        console.log("section id: " + mouse);
-        console.log($(".ui-state-default").eq(mouse).text());
-        $('.wysiwys').trumbowyg('html', $(".ui-state-default").eq(mouse).text());
-        console.log($('.wysiwys').trumbowyg.html);
+        if (!clicked) {
+            mouse = this.id;
+            console.log("section id: " + mouse);
+            console.log($(".ui-state-default").eq(mouse).text());
+            $('.wysiwys').trumbowyg('html', $(".ui-state-default").eq(mouse).text());
+            console.log($('.wysiwys').trumbowyg.html);
+            $(this).addClass("section-selected");
+            clicked = true;
+        }
+        else {
+            clearSelection();
+        }
     }
 
     // Typing and populating the section with content from the WYSIWYG
@@ -82,7 +96,7 @@
     //        $("#" + mouse).text(content);
     //    });
 
-    //
+
     $(function () {
         $("#sortable").sortable({
             revert: true
@@ -141,7 +155,7 @@
         $('.wysiwys').trumbowyg('empty');
     }
 
-    function getWYSIWYGcontent() {
+    function addNewSection() {
         var content = $('.wysiwys').trumbowyg('html');
         if (mouse == -1) {
             console.log("making");
@@ -156,16 +170,21 @@
             $("#sortable").append(paragraph1);
 //        $(paragraph1).append(paragraph);
             paragraph1.innerHTML = content;
+            resetText();
         }
+        <!-- Make the selection number null, so it won't put the content of what's currently in the WYSIWYG directly into the selected section if made -->
         else {
             console.log("change");
-            $("#"+mouse).html(content);
+            $("#" + mouse).html(content);
+            $("#" + mouse).removeClass("section-selected");
+            clicked = false;
             mouse = -1;
             resetText();
         }
     }
 
-    function deleting() {
+    // Delete currently selected section
+    function deleteSection() {
         if (mouse != null) {
             $(".ui-state-default").eq(mouse).remove();
         }
@@ -174,6 +193,15 @@
             console.log($(".ui-state-default").length);
             $(".ui-state-default").eq($(".ui-state-default").length - 1).remove();
         }
+    }
+
+    function clearSelection() {
+        mouse = -1;
+        clicked = false;
+        $(".section-selected").each(function () {
+            console.log("hello");
+            $(this).removeClass("section-selected");
+        })
     }
 
 </script>
