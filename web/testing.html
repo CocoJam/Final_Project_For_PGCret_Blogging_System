@@ -30,14 +30,26 @@
     <ul>
         <li class="ui-state draggable">content</li>
     </ul>
-
+    <li class="myClass">5</li>
+    <li class="myClass">4</li>
+    <li class="myClass">3</li>
+    <li class="myClass">2</li>
+    <li class="myClass">1</li>
     <ul id="sortable">
     </ul>
+    <p><p>asdasd</p></p>
 </div>
 </body>
 <script>
     var mouse = 0;
     var number = -1;
+    $("li").each(function () {
+        $(this).replaceWith(function () {
+            return $('<p>', {
+                html: this.innerHTML
+            });
+        });
+    });
 
     function getid(){
         mouse = this.id
@@ -53,6 +65,7 @@
     $("#textarea").on('keyup', function (e) {
         if (e.keyCode == 13) {
             number++;
+
             console.log(number);
             $("#textarea").val($(".ui-state-default").eq(mouse).text());
             var paragraph1 = document.createElement("li");
