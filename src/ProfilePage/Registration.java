@@ -85,7 +85,7 @@ public class Registration extends HttpServlet {
             // Scenario 1: The below is an editing scenario.
             if (req.getParameter("log").equals("ChangeUserInformation")) {
                 System.out.println("Trying for info update");
-                profilePage = profilePageDAO.updateUsersProfile((String) session.getAttribute("username"), (String) session.getAttribute("password"), profilePage,password);
+                profilePage = profilePageDAO.updateUsersProfile((String) session.getAttribute("username"), password, profilePage, req.getParameter("password"));
                 System.out.println("info updated");
                 session.setAttribute("profileInfo", profilePage);
 //                session.setAttribute("password",password);
@@ -97,12 +97,11 @@ public class Registration extends HttpServlet {
             else {
                 try {
                     System.out.println("Create");
-                    profilePageDAO.createUsersProfile(profilePage, password);
+                    profilePageDAO.createUsersProfile(profilePage, req.getParameter("password"));
                     profilePage = profilePageDAO.getUsersProfile(profilePage.getUsername());
                     session.setAttribute("profileInfo", profilePage);
                     System.out.println(profilePage.getUsername());
                     session.setAttribute("username", profilePage.getUsername());
-//                    session.setAttribute("password", password);
                     session.setAttribute("log",true);
                     req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                 } catch (SQLException e1) {
@@ -134,7 +133,7 @@ public class Registration extends HttpServlet {
         profilePage.setEthnicity(req.getParameter("ethnicity"));
         profilePage.setEmail(req.getParameter("email"));
         dateofbirth = req.getParameter("date");
-        password = req.getParameter("password");
+//        password = req.getParameter("password");
         profilePage.setProfilepic(req.getParameter("profilePicture"));
         System.out.println("profile pic :" +req.getParameter("profilePicture"));
         sqlDateparsing();

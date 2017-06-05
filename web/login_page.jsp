@@ -6,7 +6,9 @@
     <title>Login Page</title>
 
     <%@ include file="component/Template (HTML components)/Header(styling Template).html" %>
-
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
 </head>
 <body class="signup-page">
 
