@@ -22,52 +22,52 @@
 <p>${articleContents.datecreated}</p>
 
 
-<c:forEach var="mediagroups" items="${mediaOutPut}">
-    <c:if test="${mediagroups.key.equals(\"photo\")}">
-        <c:forEach var="media" items="${mediagroups.value}">
-            <img src="${media}">
-            <c:if test="${articleContents.owner}">
-                <form action="/Deleting" method="post">
-                    <input type="hidden" name="media" value="${media}">
-                    <input type="submit" name="log" value="DeleteMedia">
-                </form>
-            </c:if>
-        </c:forEach>
-    </c:if>
-    <c:if test="${mediagroups.key.equals(\"audio\")}">
-        <c:forEach var="media" items="${mediagroups.value}">
-            <audio controls><source src="${media}" type="audio/ogg"> </audio>
-            <c:if test="${articleContents.owner}">
-                <form action="/Deleting" method="post">
-                    <input type="hidden" name="media" value="${media}">
-                    <input type="submit" name="log" value="DeleteMedia">
-                </form>
-            </c:if>
-        </c:forEach>
-    </c:if>
-    <c:if test="${mediagroups.key.equals(\"video\")}">
-        <c:forEach var="media" items="${mediagroups.value}">
-            <video width="400" controls> <source src="${media}"></video>
-            <c:if test="${articleContents.owner}">
-                <form action="/Deleting" method="post">
-                    <input type="hidden" name="media" value="${media}">
-                    <input type="submit" name="log" value="DeleteMedia">
-                </form>
-            </c:if>
-        </c:forEach>
-    </c:if>
-    <c:if test="${mediagroups.key.equals(\"youtube\")}">
-        <c:forEach var="media" items="${mediagroups.value}">
-            <c:if test="${articleContents.owner}">
-                <form action="/Deleting" method="post">
-                    <input type="hidden" name="media" value="${media}">
-                    <input type="submit" name="log" value="DeleteYoutube">
-                </form>
-            </c:if>
-           ${media}
-        </c:forEach>
-    </c:if>
-</c:forEach>
+<%--<c:forEach var="mediagroups" items="${mediaOutPut}">--%>
+    <%--<c:if test="${mediagroups.key.equals(\"photo\")}">--%>
+        <%--<c:forEach var="media" items="${mediagroups.value}">--%>
+            <%--<img src="${media}">--%>
+            <%--<c:if test="${articleContents.owner}">--%>
+                <%--<form action="/Deleting" method="post">--%>
+                    <%--<input type="hidden" name="media" value="${media}">--%>
+                    <%--<input type="submit" name="log" value="DeleteMedia">--%>
+                <%--</form>--%>
+            <%--</c:if>--%>
+        <%--</c:forEach>--%>
+    <%--</c:if>--%>
+    <%--<c:if test="${mediagroups.key.equals(\"audio\")}">--%>
+        <%--<c:forEach var="media" items="${mediagroups.value}">--%>
+            <%--<audio controls><source src="${media}" type="audio/ogg"> </audio>--%>
+            <%--<c:if test="${articleContents.owner}">--%>
+                <%--<form action="/Deleting" method="post">--%>
+                    <%--<input type="hidden" name="media" value="${media}">--%>
+                    <%--<input type="submit" name="log" value="DeleteMedia">--%>
+                <%--</form>--%>
+            <%--</c:if>--%>
+        <%--</c:forEach>--%>
+    <%--</c:if>--%>
+    <%--<c:if test="${mediagroups.key.equals(\"video\")}">--%>
+        <%--<c:forEach var="media" items="${mediagroups.value}">--%>
+            <%--<video width="400" controls> <source src="${media}"></video>--%>
+            <%--<c:if test="${articleContents.owner}">--%>
+                <%--<form action="/Deleting" method="post">--%>
+                    <%--<input type="hidden" name="media" value="${media}">--%>
+                    <%--<input type="submit" name="log" value="DeleteMedia">--%>
+                <%--</form>--%>
+            <%--</c:if>--%>
+        <%--</c:forEach>--%>
+    <%--</c:if>--%>
+    <%--<c:if test="${mediagroups.key.equals(\"youtube\")}">--%>
+        <%--<c:forEach var="media" items="${mediagroups.value}">--%>
+            <%--<c:if test="${articleContents.owner}">--%>
+                <%--<form action="/Deleting" method="post">--%>
+                    <%--<input type="hidden" name="media" value="${media}">--%>
+                    <%--<input type="submit" name="log" value="DeleteYoutube">--%>
+                <%--</form>--%>
+            <%--</c:if>--%>
+           <%--${media}--%>
+        <%--</c:forEach>--%>
+    <%--</c:if>--%>
+<%--</c:forEach>--%>
 
 
 <c:if test="${articleContents.owner}">
@@ -106,6 +106,14 @@
     <input type="submit" name="comments" value="Add a Comment">
 </form>
 
-
+<script>
+    $("li").each(function () {
+        $(this).replaceWith(function () {
+            return $('<p>', {
+                html: this.innerHTML
+            });
+        });
+    });
+</script>
 </body>
 </html>

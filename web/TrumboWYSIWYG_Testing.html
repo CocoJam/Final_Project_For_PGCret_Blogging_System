@@ -57,70 +57,33 @@
 <!-- Clear all content inside WYSIWYG editor -->
 <button onclick="resetText()">Reset</button>
 
+<p></p>
+
 <!-- Space for holding content to be uploaded to DB -->
-Contents holding area
+<h2>Contents holding area</h2>
 <div id="contents">
+
+    <!-- creates new section boxes -->
     <ul>
         <li class="ui-state draggable"></li>
     </ul>
 
+    <!-- place where you drag stuff into for sorting their order -->
     <ul id="sortable">
     </ul>
+
 </div>
 
 </body>
-
-<!-- Scripts for dealing with draggable sections -->
-<script>
-    var mouse = -1;
-    var number = -1;
-    var clicked = false;
-    // Get ID of section we clicked on, grab the content, put back inside WYSIWYG
-    function getID() {
-        if (!clicked) {
-            mouse = this.id;
-            console.log("section id: " + mouse);
-            $('.wysiwys').trumbowyg('html', $(".ui-state-default").eq(mouse).text());
-            console.log($('.wysiwys').trumbowyg('html'));
-            $(this).addClass("section-selected");
-            console.log($(".ui-state-default section-selected").eq(mouse).text());
-            clicked = true;
-        }
-        else {
-            clearSection();
-        }
-    }
-
-    // Typing and populating the section with content from the WYSIWYG
-    // If mouse is null, won't do anything
-    // Binds all input from keystroke inside textarea, runs function - display what's inside textarea in console.log, assign the id to a section inside the contents div
-
-    //    $('.wysiwys').bind('input', function () {
-    //        var content = $('.wysiwys').trumbowyg('html');
-    //        console.log(content);
-    //        $("#textarea").text(content);
-    //        $("#" + mouse).text(content);
-    //    });
-
-
-    $(function () {
-        $("#sortable").sortable({
-            revert: true
-        });
-        $(".draggable").draggable({
-            connectToSortable: "#sortable",
-            revert: "invalid"
-        });
-        $("ul, li").disableSelection();
-    });
-
-</script>
 
 <!-- Load WYSIWYG JS -->
 <script src="Trumbowyg/dist/trumbowyg.min.js"></script>
 <script src="Trumbowyg/dist/plugins/preformatted/trumbowyg.preformatted.min.js"></script>
 <script src="Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
-<script src="Trumbowyg/plugins/upload/trumbowyg.upload.js"></script>
+<script src="Trumbowyg/dist/plugins/upload/trumbowyg.upload.js"></script>
+<script src="Trumbowyg/dist/plugins/emoji/trumbowyg.emoji.min.js"></script>
+<script src="Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
+
 
 <!-- WYSIWYG Editor Implementation START -->
 <script>
@@ -147,6 +110,8 @@ Contents holding area
             ['link'],
             ['image'],
             ['upload'],
+            ['emoji'],
+            ['audio'],
             'btnGrp-justify',
             'btnGrp-lists',
             ['foreColor', 'backColor'],
@@ -159,6 +124,7 @@ Contents holding area
 </script>
 <!-- WYSIWYG Editor Implementation END -->
 
+<!-- More WYSIWYG JS -->
 <script>
     function resetText() {
         $('.wysiwys').trumbowyg('empty');
@@ -213,6 +179,52 @@ Contents holding area
             $(this).removeClass("section-selected");
         })
     }
+
+</script>
+
+<!-- Scripts for dealing with draggable sections -->
+<script>
+    var mouse = -1;
+    var number = -1;
+    var clicked = false;
+    // Get ID of section we clicked on, grab the content, put back inside WYSIWYG
+    function getID() {
+        if (!clicked) {
+            mouse = this.id;
+            console.log("section id: " + mouse);
+            $('.wysiwys').trumbowyg('html', $(".ui-state-default").eq(mouse).text());
+            console.log($('.wysiwys').trumbowyg('html'));
+            $(this).addClass("section-selected");
+            console.log($(".ui-state-default section-selected").eq(mouse).text());
+            clicked = true;
+        }
+        else {
+            clearSection();
+        }
+    }
+
+    // Typing and populating the section with content from the WYSIWYG
+    // If mouse is null, won't do anything
+    // Binds all input from keystroke inside textarea, runs function - display what's inside textarea in console.log, assign the id to a section inside the contents div
+
+    //    $('.wysiwys').bind('input', function () {
+    //        var content = $('.wysiwys').trumbowyg('html');
+    //        console.log(content);
+    //        $("#textarea").text(content);
+    //        $("#" + mouse).text(content);
+    //    });
+
+
+    $(function () {
+        $("#sortable").sortable({
+            revert: true
+        });
+        $(".draggable").draggable({
+            connectToSortable: "#sortable",
+            revert: "invalid"
+        });
+        $("ul, li").disableSelection();
+    });
 
 </script>
 

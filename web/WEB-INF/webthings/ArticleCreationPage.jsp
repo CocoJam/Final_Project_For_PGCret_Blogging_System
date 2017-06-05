@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <!-- Load WYSIWYG STYLE -->
-    <link rel="stylesheet" href="Trumbowyg/dist/ui/trumbowyg.min.css">
-    <link rel="stylesheet" href="Trumbowyg/dist/plugins/colors/ui/trumbowyg.colors.min.css">
+    <link rel="stylesheet" href="../../Trumbowyg/dist/ui/trumbowyg.min.css">
+    <link rel="stylesheet" href="../../Trumbowyg/dist/plugins/colors/ui/trumbowyg.colors.min.css">
 
     <style>
         ul {
@@ -69,6 +69,49 @@
 <h1>WYSIWYG</h1>
 <div class="wysiwys" placeholder="Enter your content here"></div>
 
+<!-- Load WYSIWYG JS -->
+<script src="../../Trumbowyg/dist/trumbowyg.min.js"></script>
+<script src="../../Trumbowyg/dist/plugins/preformatted/trumbowyg.preformatted.min.js"></script>
+<script src="../../Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
+<script src="../../Trumbowyg/dist/plugins/upload/trumbowyg.upload.js"></script>
+
+<!-- WYSIWYG -->
+<!-- WYSIWYG Editor Implementation START -->
+<script>
+    $('.wysiwys').trumbowyg({
+        // Settings
+        semantic: true,
+        autogrow: true,
+        resetCss: true,
+
+        // Buttons
+        btnsDef: {
+            // Customizables dropdowns
+            image: {
+                dropdown: ['insertImage', 'upload', 'base64', 'noembed'],
+                ico: 'insertImage'
+            }
+        },
+        btns: [
+            ['viewHTML'],
+            ['undo', 'redo'],
+            ['formatting'],
+            'btnGrp-design',
+            ['link'],
+            ['image'],
+            ['upload'],
+            'btnGrp-justify',
+            'btnGrp-lists',
+            ['foreColor', 'backColor'],
+            ['preformatted'],
+            ['horizontalRule'],
+            ['removeformat'],
+            ['fullscreen']
+        ]
+    });
+</script>
+<!-- WYSIWYG Editor Implementation END -->
+
 <!-- Make a new section, put current WYSIWYG content in -->
 <button onclick="addNewSection()">Add Section</button>
 
@@ -78,16 +121,24 @@
 <!-- Clear all content inside WYSIWYG editor -->
 <button onclick="resetText()">Reset</button>
 
+<p></p>
+
 <!-- Space for holding content to be uploaded to DB -->
 <!-- DRAGGABLE SECTIONS -->
+<h2>Contents holding area</h2>
 <div id="contents">
     <c:choose>
         <c:when test="${not empty articleContents}">
             ${articleContents.content}
         </c:when>
         <c:otherwise>
+            <!-- creates new section boxes -->
+            <ul>
+                <li class="ui-state draggable"></li>
+            </ul>
+
+            <!-- place where you drag stuff into for sorting their order -->
             <ul id="sortable">
-                <li class="ui-state-default"><p></p></li>
             </ul>
         </c:otherwise>
     </c:choose>
@@ -104,6 +155,114 @@
     <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">
 </form>
 
+
+</body>
+
+<!-- More WYSIWYG JS -->
+<script>
+    function resetText() {
+        $('.wysiwys').trumbowyg('empty');
+    }
+
+    function addNewSection() {
+        var content = $('.wysiwys').trumbowyg('html');
+        if (mouse == -1) {
+            console.log("making");
+            console.log(content);
+            number++;
+            var paragraph1 = document.createElement("li");
+            paragraph1.className = "ui-state-default ";
+            paragraph1.onclick = getID; 
+//        var paragraph = document.createElement("p");
+//        paragraph1.class = "typing";
+            paragraph1.id = number;
+            $("#sortable").append(paragraph1);
+//        $(paragraph1).append(paragraph);
+            paragraph1.innerHTML = content;
+            resetText();
+        }
+        <!-- Make the selection number -1, so it won't put the content of what's currently in the WYSIWYG directly into the selected section if made -->
+        else {
+            console.log("change");
+            $("#" + mouse).html(content);
+            $("#" + mouse).removeClass("section-selected");
+            clicked = false;
+            mouse = -1;
+            resetText();
+        }
+    }
+
+    // Delete currently selected section
+    function deleteSection() {
+        if (mouse != -1) {
+            $("#"+mouse).remove();
+            mouse =-1;
+        }
+        else {
+            console.log(mouse);
+            console.log($(".ui-state-default").length);
+            $(".ui-state-default").eq($(".ui-state-default").length - 1).remove();
+        }
+    }
+
+    function clearSection() {
+        mouse = -1;
+        clicked = false;
+        $(".section-selected").each(function () {
+            console.log("hello");
+            $(this).removeClass("section-selected");
+        })
+    }
+
+</script>
+
+<!-- Scripts for dealing with draggable sections -->
+<script>
+    var mouse = -1;
+    var number = -1;
+    var clicked = false;
+    // Get ID of section we clicked on, grab the content, put back inside WYSIWYG
+    function getID() {
+        if (!clicked) {
+            mouse = this.id;
+            console.log("section id: " + mouse);
+            $('.wysiwys').trumbowyg('html', $(".ui-state-default").eq(mouse).text());
+            console.log($('.wysiwys').trumbowyg('html'));
+            $(this).addClass("section-selected");
+            console.log($(".ui-state-default section-selected").eq(mouse).text());
+            clicked = true;
+        }
+        else {
+            clearSection();
+        }
+    }
+
+    // Typing and populating the section with content from the WYSIWYG
+    // If mouse is null, won't do anything
+    // Binds all input from keystroke inside textarea, runs function - display what's inside textarea in console.log, assign the id to a section inside the contents div
+
+    //    $('.wysiwys').bind('input', function () {
+    //        var content = $('.wysiwys').trumbowyg('html');
+    //        console.log(content);
+    //        $("#textarea").text(content);
+    //        $("#" + mouse).text(content);
+    //    });
+
+
+    $(function () {
+        $("#sortable").sortable({
+            revert: true
+        });
+        $(".draggable").draggable({
+            connectToSortable: "#sortable",
+            revert: "invalid"
+        });
+        $("ul, li").disableSelection();
+    });
+
+</script>
+
+<!-- AJAX Upload -->
 <script>
     // AJAX UPLOAD
     $('#Upload')
@@ -116,21 +275,18 @@
                 contentType: false,
                 success: function (msg) {
                     console.log(msg);
-                    var image = document.createElement("ul");
-                    console.log(image);
                     var li = document.createElement("li");
                     li.className = "ui-state draggable";
                     if (msg.endsWith(".flv") || msg.endsWith(".m4v") || msg.endsWith(".mp4") || msg.endsWith(".mpg") || msg.endsWith(".mpeg") || msg.endsWith(".wmv")){
                         li.innerHTML = "<video width=\"400\" controls> <source src=\""+msg+"\"></video>";
                     }
-                   else if(msg.endsWith(".mp3")){
+                    else if(msg.endsWith(".mp3")){
                         li.innerHTML = " <audio controls><source src=\""+msg+"\" type=\"audio/ogg\"> </audio>";
                     }
-                    else if (msg.endsWith(".jpg") || msg.endsWith(".png")) {
+                    else if (msg.endsWith(".jpg") || msg.endsWith(".png")||msg.endsWith(".gif")||msg.endsWith(".jpeg")||msg.endsWith(".svg")) {
                         li.innerHTML = "<img src=\"" + msg + "\">";
                     }
-                    image.append(li);
-                    $("#sortable").append(image);
+                    $("#sortable").append(li);
                 }
             });
             e.preventDefault();
@@ -163,5 +319,4 @@
     });
 </script>
 
-</body>
 </html>
