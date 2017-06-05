@@ -48,8 +48,7 @@
 
     $("#textarea").bind('input', function () {
         console.log($("#textarea").val());
-        console.log("changing");
-        $(".ui-state-default").eq(mouse).text($("#textarea").val());
+        $("#"+mouse).text($("#textarea").val());
     });
     $("#textarea").on('keyup', function (e) {
         if (e.keyCode == 13) {
