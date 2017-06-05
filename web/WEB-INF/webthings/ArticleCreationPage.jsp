@@ -63,6 +63,11 @@
     <input type="submit" name="Upload" value="ArticlesUpload"/>
 </form>
 
+<form id="Youtube"  action="/ArticleUpload" method="post">
+    <input id="youtubeurl" type="text" name="youtube">
+    <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">
+</form>
+
 <script>
     var number = 0;
     $("#textarea").bind('input', function () {
@@ -79,6 +84,7 @@
             var paragraph1 = document.createElement("li");
             paragraph1.className = "ui-state-default";
             var paragraph = document.createElement("p");
+            paragraph.setAttribute('id', number);
             paragraph.className = "testing";
             $("#sortable").append(paragraph1);
             $(paragraph1).append(paragraph);
@@ -101,9 +107,6 @@
         });
         $("ul, li").disableSelection();
     });
-
-
-
 
     $('#Upload')
         .submit(function (e) {
@@ -134,37 +137,31 @@
             });
             e.preventDefault();
         });
+
+    $('#Youtube')
+        .submit(function (e) {
+            $.ajax({
+                url: '/ArticleUpload',
+                type: 'POST',
+                data: {"youtube":$("#youtubeurl").val()},
+                success: function (msg) {
+                    console.log(msg);
+                    var image = document.createElement("ul");
+                    console.log(image);
+                    var li = document.createElement("li");
+                    li.className = "ui-state draggable";
+                    li.innerHTML = msg;
+                    image.append(li);
+                    $("#sortable").append(image);
+                }
+            });
+            e.preventDefault();
+        });
+
     $("#form").submit(function () {
         $("input:hidden").val($("#contents").html());
     });
 </script>
-
-
-<%--if (fileName.endsWith(".flv") || fileName.endsWith(".m4v") || fileName.endsWith(".mp4") || fileName.endsWith(".mpg") || fileName.endsWith(".mpeg") || fileName.endsWith(".wmv")) {--%>
-<%--FormingVideoFileAndVideo();--%>
-<%--} else if (fileName.endsWith(".mp3")) {--%>
-<%--FormingAudioFileAndAudio();--%>
-<%--} else if (fileName.endsWith(".jpg") || fileName.endsWith(".png")) {--%>
-<%--FormingPhotoFileAndPhoto();--%>
-<%--}--%>
-<%--<c:forEach var="mediagroups" items="${mediaOutPut}">--%>
-    <%--<c:if test="${mediagroups.key.equals(\"photo\")}">--%>
-        <%--<c:forEach var="media" items="${mediagroups.value}">--%>
-            <%--<img src="${media}">--%>
-        <%--</c:forEach>--%>
-    <%--</c:if>--%>
-    <%--<c:if test="${mediagroups.key.equals(\"audio\")}">--%>
-        <%--<c:forEach var="media" items="${mediagroups.value}">--%>
-            <%--<audio controls><source src="${media}" type="audio/ogg"> </audio>--%>
-        <%--</c:forEach>--%>
-    <%--</c:if>--%>
-    <%--<c:if test="${mediagroups.key.equals(\"video\")}">--%>
-        <%--<c:forEach var="media" items="${mediagroups.value}">--%>
-            <%--<video width="400" controls> <source src="${media}"></video>--%>
-        <%--</c:forEach>--%>
-    <%--</c:if>--%>
-<%--</c:forEach>--%>
-
 
 </body>
 </html>

@@ -125,7 +125,7 @@ public class Upload_files extends HttpServlet {
                     }
                     fileNameEditting(); //this slims down the filenname before it is written
                     fi.write(file);
-                    if (caption.equals("ArticlesUpload")) {
+                    if (caption.equals("ArticlesUpload") ||caption.equals("addNewArticle")) {
 //                        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
                         resp.getWriter().print(filePath(file));
 //                        req.getRequestDispatcher("/ArticleUpload").forward(req, resp);
@@ -216,7 +216,6 @@ public class Upload_files extends HttpServlet {
         //This is the recursions, finding all the directories. (START OF TRILOGY 1) TODO unify the 3 trilogies together.
         Set<String> list = findingDirectory(file, filepaths);
         Map<String, List<String>> mediaMapping = mapSetUp();
-
         assigningMultipleMediaIntoMap(list, mediaMapping);
         request.setAttribute("mediaOutPut", mediaMapping);
         request.getRequestDispatcher("/WEB-INF/webthings/MultiMedia.jsp").forward(request, response);

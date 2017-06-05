@@ -88,19 +88,24 @@ public class ArticleMedia extends Upload_files {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String youtubeVideo = req.getParameter("youtube");
         HttpSession session = req.getSession();
+        if (youtubeVideo.contains("/watch?v=")){
+            youtubeVideo= youtubeVideo.replace("/watch?v=", "/embed/");
+        }
         System.out.println("Adding youtube");
-        try {
-            ArticleID = Integer.parseInt(session.getAttribute("articleID") + "");
-        } catch (NumberFormatException e) {
-            System.out.println(e);
-        }
-        if (youtubeVideo != null) {
-            MediaDAO mediaDAO = new MediaDAO();
-            mediaDAO.addingYoutubeToDatabase(ArticleID, youtubeVideo);
-        }
-        closingConnection();
-
+        String youtube = "<iframe width=\"854\" height=\"480\" src=\"" + youtubeVideo + "\" frameborder=\"0\" allowfullscreen></iframe>";
+        resp.getWriter().print(youtube);
+//        try {
+//            ArticleID = Integer.parseInt(session.getAttribute("articleID") + "");
+//        } catch (NumberFormatException e) {
+//            System.out.println(e);
+//        }
+//        if (youtubeVideo != null) {
+//            MediaDAO mediaDAO = new MediaDAO();
+//            mediaDAO.addingYoutubeToDatabase(ArticleID, youtubeVideo);
+//        }
+//        closingConnection();
+//
         //Sends doGet to go back
-        doGet(req, resp);
+//        doGet(req, resp);
     }
 }

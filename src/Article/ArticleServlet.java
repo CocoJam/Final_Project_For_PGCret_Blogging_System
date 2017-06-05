@@ -128,7 +128,6 @@ public class ArticleServlet extends HttpServlet {
                     indexList = new ArticleListObjectDAO().selectionArticlesList(username);
                     checkingForOwnership(username, indexList);
                 }
-
                 // dispatching back into the articleIndex after finished creating new article and have uploaded the info to SQL via DAO
                 // TODO whether to redirect to the new article page instead
                 session.setAttribute("ArticleIndex", indexList);
