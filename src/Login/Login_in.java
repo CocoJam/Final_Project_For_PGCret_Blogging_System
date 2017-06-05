@@ -8,9 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
+
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
+import static Connection.ConnectionToTheDataBase.conn;
 
 
 /**
@@ -19,7 +20,7 @@ import static Connection.ConnectionToTheDataBase.closingConnection;
 public class Login_in extends HttpServlet {
     private String username;
     private String password;
-
+    private Passwords_Checker passwords_checker = new Passwords_Checker();
 
     //doPost gets the shit and umm does something. Oh shit its logged in.
     @Override
@@ -28,7 +29,9 @@ public class Login_in extends HttpServlet {
         System.out.println("Processing login");
         username = req.getParameter("username");
         password = req.getParameter("password");
+
         LoginPassing loginPassing = new LoginPassing(); //See loginPassing class: stores all the methods for login including DAO query the database.
+        System.out.println( passwords_checker.hashing(password,5,500));
 
         if (session.getAttribute("log") != null) {
             if ((boolean) session.getAttribute("log")) {
@@ -58,12 +61,20 @@ public class Login_in extends HttpServlet {
 //        Login.Passwords_Checker passwords_checker = new Login.Passwords_Checker();
 //        String hashedPassword = passwords_checker.hashing(password, 5 , 500);
 //        loginPassing.selectionUsersNames(username,hashedPassword);
-
-        loginLogic(req, resp, session, loginPassing);
+        if (!password.trim().equals("")&& !password.trim().isEmpty() && password.trim() != null){
+            System.out.println("hashing");
+            loginLogic(req, resp, session, loginPassing);
+        }
+        else {
+            session.setAttribute("log", false); //TODO refactoring for login status.
+            System.out.println("logged-in rejected");
+            req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
+        }
         return;
 
         //TODO dispatch back to the login page.
     }
+
 
     //This is to check the login logic used by doPost to check user login from the login_page.jsp.
     // TODO just refactor this out for convenience
@@ -74,13 +85,11 @@ public class Login_in extends HttpServlet {
             session.setAttribute("log", true); //TODO refactoring for login status.
             System.out.println("logged-in");
             System.out.println(session.getAttribute("username"));
-            closingConnection();
             req.getRequestDispatcher("/ProfilePage").forward(req, resp); //TODO to take out.
             return true;
         } else {
             session.setAttribute("log", false); //TODO refactoring for login status.
             System.out.println("logged-in rejected");
-            closingConnection();
             req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
             return false;
         }
@@ -100,12 +109,11 @@ public class Login_in extends HttpServlet {
                 return;
             }
             if ((boolean) session.getAttribute("log")) {
-                closingConnection();
                 req.getRequestDispatcher("/ProfilePage").forward(req, resp);
                 return;
             } else {
                 if (registration.equals("Registration")) {
-                    closingConnection();
+
                     session.setAttribute("Upload", "ArticlesUpload");
                     req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                     return;

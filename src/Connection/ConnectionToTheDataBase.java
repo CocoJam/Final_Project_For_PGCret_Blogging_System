@@ -13,12 +13,13 @@ public class ConnectionToTheDataBase {
     }
 
     public Connection getConn() {
+        ConnectionToBase("GET");
         return conn;
     }
 
     public static Connection  conn;
 
-    public static Void ConnectionToBase(ConnectionTypes type) {
+    public Void ConnectionToBase(String type) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (Exception e) {
@@ -26,11 +27,11 @@ public class ConnectionToTheDataBase {
         }
         try {
             switch (type) {
-                case Admin:
+                case "ADMIN":
                     conn =   DriverManager.getConnection("jdbc:mysql://mysql1.sporadic.co.nz:3306/uoaslashn", Config.getProperties(ConnectionTypes.Admin));
                     System.out.println("Connect to Admin");
                     break;
-                case Get:
+                case "GET":
                     conn = DriverManager.getConnection("jdbc:mysql://mysql1.sporadic.co.nz:3306/uoaslashn", Config.getProperties(ConnectionTypes.Get));
                     System.out.println("Connect to Get");
                     break;

@@ -1,123 +1,120 @@
 package Deleting;
 
-import Article.Articles;
-import Login.LoginPassing;
+import Connection.ConnectionToTheDataBase;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
  * Created by ljam763 on 28/05/2017.
  */
-public class DeleteDAO extends LoginPassing {
+public class DeleteDAO {
 
     public DeleteDAO() {
         super();
     }
 
 
-    public void dropSpeificComment (int CommentID){
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "DELETE FROM Comments WHERE CommentID=?;"
-            );
-            System.out.println(CommentID);
-            statement.setInt(1, CommentID);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
+    public void dropSpeificComment(int CommentID) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Comments WHERE CommentID = ?;")) {
+                System.out.println(CommentID);
+                System.out.println(statement);
+                statement.setInt(1, CommentID);
+                System.out.println(statement);
+                statement.executeUpdate();
             }
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+        } catch (SQLException e) {
+            System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
     }
 
-    public void dropSpeificArticle (int ArticlesID){
-        try {
-            dropArticleAllComments(ArticlesID);
-            PreparedStatement statement = conn.prepareStatement(
-                    "DELETE FROM Articles WHERE ArticlesID=?;"
-            );
-            statement.setInt(1, ArticlesID);
-            statement.executeUpdate();
-        } catch (SQLException e) {
+    public void dropSpeificArticle(int ArticlesID) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
+                dropArticleAllComments(ArticlesID);
+                try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Articles WHERE ArticlesID = ?;")) {
+                    System.out.println(statement);
+                    statement.setInt(1, ArticlesID);
+                    System.out.println(statement);
+                    statement.executeUpdate();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error creating database connection.");
+                e.printStackTrace();
             }
+        } catch (SQLException e) {
+            System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
     }
 
-    public void dropArticleAllComments ( int ArticlesID){
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "DELETE FROM Comments WHERE ArticlesID=?;"
-            );
-            statement.setInt(1, ArticlesID);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
+    public void dropArticleAllComments(int ArticlesID) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Comments WHERE ArticlesID = ?;")) {
+                System.out.println(statement);
+                statement.setInt(1, ArticlesID);
+                System.out.println(statement);
+                statement.executeUpdate();
             }
+        } catch (SQLException e) {
+            System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
     }
 
     public void dropComments(String username) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "DELETE FROM Comments WHERE CommenterName=?;"
-            );
-            statement.setString(1, username);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Comments WHERE CommenterName = ?;")) {
+                System.out.println(statement);
+                statement.setString(1, username);
+                System.out.println(statement);
+                statement.executeUpdate();
             }
+        } catch (SQLException e) {
+            System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
-
     }
 
     public void dropArticles(String username) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "DELETE FROM Articles WHERE UserIDName=?;"
-            );
-            statement.setString(1, username);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Articles WHERE UserIDName = ?;")) {
+                statement.setString(1, username);
+                statement.executeUpdate();
             }
+        } catch (SQLException e) {
+            System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
     }
 
     public void dropUserInformation(String username) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "DELETE FROM UsersNames WHERE Username=?;"
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("DELETE FROM UsersNames WHERE Username = ?;")) {
+                statement.setString(1, username);
+                System.out.println("deleting");
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error creating database connection.");
+            e.printStackTrace();
+        }
+    }
+
+    public void dropSpeificYoutube(String youtubeURL) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()){
+            PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM youtube WHERE youtubeURL LIKE '%'?'%';"
             );
-            statement.setString(1, username);
+            statement.setString(1, youtubeURL);
             System.out.println("deleting");
             statement.executeUpdate();
         } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
+
             e.printStackTrace();
         }
     }
@@ -126,5 +123,6 @@ public class DeleteDAO extends LoginPassing {
         dropComments(username);
         dropArticles(username);
         dropUserInformation(username);
+
     }
 }

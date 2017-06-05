@@ -126,9 +126,10 @@ public class Upload_files extends HttpServlet {
                     }
                     fileNameEditting(); //this slims down the filenname before it is written
                     fi.write(file);
-                    if (caption.equals("ArticlesUpload")) {
+                    if (caption.equals("ArticlesUpload") ||caption.equals("addNewArticle")) {
 //                        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
-                        req.getRequestDispatcher("/ArticleUpload").forward(req, resp);
+                        resp.getWriter().print(filePath(file));
+//                        req.getRequestDispatcher("/ArticleUpload").forward(req, resp);
                     }
 //                    } else if (caption.equals("addNewArticle")){
 //                        req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
@@ -216,7 +217,6 @@ public class Upload_files extends HttpServlet {
         //This is the recursions, finding all the directories. (START OF TRILOGY 1) TODO unify the 3 trilogies together.
         Set<String> list = findingDirectory(file, filepaths);
         Map<String, List<String>> mediaMapping = mapSetUp();
-
         assigningMultipleMediaIntoMap(list, mediaMapping);
         request.setAttribute("mediaOutPut", mediaMapping);
         request.getRequestDispatcher("/WEB-INF/webthings/MultiMedia.jsp").forward(request, response);
@@ -239,10 +239,10 @@ public class Upload_files extends HttpServlet {
         if (media != null) {
             ServletContext servletContext = getServletContext();
             if (media.equals("all")) {
-                request.setAttribute("AllOrSelf", "all");
+                request.setAttribute("AllOrSelf","all");
                 userPath = servletContext.getRealPath("/Upload-photos");
             } else if (media.equals("self")) {
-                request.setAttribute("AllOrSelf", "self");
+                request.setAttribute("AllOrSelf","self");
                 userPath = servletContext.getRealPath("/Upload-photos/" + username);
             }
         }
@@ -269,6 +269,7 @@ public class Upload_files extends HttpServlet {
 
             File[] parent = file.getParentFile().listFiles();
             for (File file1 : parent) {
+                System.out.println(file1 + " added");
                 filepaths.add(filePath(file1));
             }
             return filepaths;

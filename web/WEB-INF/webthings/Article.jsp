@@ -17,38 +17,9 @@
 </head>
 <body>
 <h1>${articleContents.articlename}</h1>
-<textarea rows="50" cols="50">${articleContents.content}</textarea>
+<div>${articleContents.content}</div>
 <p>${articleContents.username}</p>
 <p>${articleContents.datecreated}</p>
-
-<%--<c:if test="${articleContents.owner}">--%>
-    <%--<form action="/Deleting" method="post">--%>
-        <%--<input type="submit" name="log" value="DeleteArticle">--%>
-    <%--</form>--%>
-<%--</c:if>--%>
-
-<c:forEach var="mediagroups" items="${mediaOutPut}">
-    <c:if test="${mediagroups.key.equals(\"photo\")}">
-        <c:forEach var="media" items="${mediagroups.value}">
-            <img src="${media}">
-        </c:forEach>
-    </c:if>
-    <c:if test="${mediagroups.key.equals(\"audio\")}">
-        <c:forEach var="media" items="${mediagroups.value}">
-            <audio controls><source src="${media}" type="audio/ogg"> </audio>
-        </c:forEach>
-    </c:if>
-    <c:if test="${mediagroups.key.equals(\"video\")}">
-        <c:forEach var="media" items="${mediagroups.value}">
-            <video width="400" controls> <source src="${media}"></video>
-        </c:forEach>
-    </c:if>
-    <c:if test="${mediagroups.key.equals(\"youtube\")}">
-        <c:forEach var="media" items="${mediagroups.value}">
-           ${media}
-        </c:forEach>
-    </c:if>
-</c:forEach>
 
 
 <c:if test="${articleContents.owner}">
@@ -58,10 +29,6 @@
     </form>
     <form action="/Deleting" method="post">
         <input type="submit" name="log" value="DeleteArticle">
-    </form>
-    <form   action="/ArticleUpload" method="post">
-        <input type="text" name="youtube">
-        <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">
     </form>
 </c:if>
 

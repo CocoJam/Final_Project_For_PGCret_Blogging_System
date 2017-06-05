@@ -1,11 +1,14 @@
 package Article;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import Connection.*;
 
 /**
  * Created by ljam763 on 25/05/2017.
@@ -24,21 +27,16 @@ public class ArticleListObjectDAO extends ArticlesDAO {
 
     public List<Articles> selectionAllArticlesList() {
         List<Articles> ListIndex = new ArrayList<>();
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "SELECT ArticlesID, ArticlesName,SpecificDateCreated, UserIDName FROM Articles;"
-            );
-            {
-                ResultSet resultSet = statement.executeQuery();
-                addingArticlesIntoTheList(ListIndex, resultSet);
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, SpecificDateCreated, UserIDName FROM Articles;")) {
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    addingArticlesIntoTheList(ListIndex, resultSet);
+                }
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
-            conn.close();
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
+            System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
         System.out.println("Article size" + ListIndex.size());
@@ -48,22 +46,18 @@ public class ArticleListObjectDAO extends ArticlesDAO {
 
     public List<Articles> selectionArticlesList(String UserIDName) {
         List<Articles> ListIndex = new ArrayList<>();
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "SELECT ArticlesID, ArticlesName,SpecificDateCreated, UserIDName FROM Articles WHERE UserIDName = ?;"
-            );
-            {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, SpecificDateCreated, UserIDName FROM Articles WHERE UserIDName = ?;")) {
+                System.out.println(statement);
                 statement.setString(1, UserIDName);
-                ResultSet resultSet = statement.executeQuery();
-                addingArticlesIntoTheList(ListIndex, resultSet);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    addingArticlesIntoTheList(ListIndex, resultSet);
+                }
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
-            conn.close();
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
+            System.out.println("Error article not found");
             e.printStackTrace();
         }
         System.out.println("Article size" + ListIndex.size());

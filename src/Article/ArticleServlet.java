@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import static Article.ArticlesIndexServlet.checkingForOwnership;
 import static Connection.ConnectionToTheDataBase.closingConnection;
 import static Connection.ConnectionToTheDataBase.conn;
 
@@ -50,6 +51,7 @@ public class ArticleServlet extends HttpServlet {
         }
         System.out.println(ArticleID + "articleid");
         article = articlesDAO.selectionArticles(ArticleID);
+        if (article!= null){
         System.out.println(article.getUsername() + "This is user");
         if (session.getAttribute("username") != null) {
             if (article.getUsername().equals(session.getAttribute("username"))) {
@@ -62,8 +64,15 @@ public class ArticleServlet extends HttpServlet {
         session.setAttribute("articleContents", article);
         listOfComments = gettingTheListOfComments(ArticleID);
         session.setAttribute("commentlist", listOfComments);
-        closingConnection();
-        req.getRequestDispatcher("/Comments").forward(req, resp);
+        try {
+            System.out.println(conn.isClosed() + " is this closed?");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        req.getRequestDispatcher("/Comments").forward(req, resp);}
+        else{
+            req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+        }
         return;
     }
 
@@ -88,9 +97,10 @@ public class ArticleServlet extends HttpServlet {
 
                 //Scenario 2: Edit inside of your own article, therefore setting ownership is important. Dispatches to the ArticleCreationPage.jsp (but in editing mode).
             } else if (addingArticles.equals("EditArticle")) {
+                System.out.println("TRying to edit article");
                 session.setAttribute("articleID", ArticleID);
                 session.setAttribute("Upload", "ArticlesUpload");
-                req.setAttribute("articleContents", article);
+                session.setAttribute("articleContents", article);
                 closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
                 return;
@@ -100,13 +110,13 @@ public class ArticleServlet extends HttpServlet {
             } else if (addingArticles.equals("Editted")) {
                 ArticleName = req.getParameter("ArticleName");
                 ArticleContent = req.getParameter("ArticleContent");
-                article = articlesDAO.updataArticles(ArticleName, ArticleContent, ArticleID);
-                req.setAttribute("articleContents", article);
+                article = articlesDAO.updateArticles(ArticleName, ArticleContent, ArticleID);
+                session.setAttribute("articleContents", article);
                 session.setAttribute("Upload", null);
+                checkingForOwnershipArticle(username,article);
                 closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
                 return;
-
                 //Scenario 4: Redirect from Article Creation page once creation of a new page is completed.
             } else if (addingArticles.equals("addingToDataBase")) {
                 System.out.println(username);
@@ -117,10 +127,11 @@ public class ArticleServlet extends HttpServlet {
                 System.out.println((String) session.getAttribute("articleList"));
                 if (Listformation.equals("all")) {
                     indexList = new ArticleListObjectDAO().selectionAllArticlesList();
+                    checkingForOwnership(username, indexList);
                 } else if (Listformation.equals("self")) {
                     indexList = new ArticleListObjectDAO().selectionArticlesList(username);
+                    checkingForOwnership(username, indexList);
                 }
-
                 // dispatching back into the articleIndex after finished creating new article and have uploaded the info to SQL via DAO
                 // TODO whether to redirect to the new article page instead
                 session.setAttribute("ArticleIndex", indexList);
@@ -129,6 +140,16 @@ public class ArticleServlet extends HttpServlet {
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
                 return;
             }
+        }
+    }
+
+    public void checkingForOwnershipArticle(String username, Articles article) {
+        if (article.getUsername().equals(username)) {
+            System.out.println("yes");
+            article.setOwner(true);
+        } else {
+            System.out.println("No");
+            article.setOwner(false);
         }
     }
 }

@@ -13,6 +13,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <title>Title</title>
 </head>
 <body>
@@ -21,7 +22,7 @@
 //    String userPath = request.getRealPath("/Upload-photos/"+username) ;
     String userPath = request.getRealPath("/Upload-photos");
     File file = new File(userPath);
-    String fileNames = findingDirectory(file, out);
+//    String fileNames = findingDirectory(file, out);
     Set<String> list = findingDirectory(file, out);
     findingarticleId(file);
     for (String s : list) {

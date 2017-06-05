@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            margin-bottom: 10px;
+        }
+
+        li {
+            margin: 5px;
+            padding: 5px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<textarea id="textarea"></textarea>
+
+
+<div id="contents">
+    <ul>
+        <li class="ui-state draggable">content</li>
+    </ul>
+
+    <ul id="sortable">
+    </ul>
+</div>
+</body>
+<script>
+    var mouse = 0;
+    var number = -1;
+
+    function getid(){
+        mouse = this.id
+        console.log("section id: "+ mouse)
+        console.log($(".ui-state-default").eq(mouse).text());
+        $("#textarea").val($(".ui-state-default").eq(mouse).text());
+    }
+
+    $("#textarea").bind('input', function () {
+        console.log($("#textarea").val());
+        $("#"+mouse).text($("#textarea").val());
+    });
+    $("#textarea").on('keyup', function (e) {
+        if (e.keyCode == 13) {
+            number++;
+            console.log(number);
+            $("#textarea").val($(".ui-state-default").eq(mouse).text());
+            var paragraph1 = document.createElement("li");
+            paragraph1.className = "ui-state-default ";
+            paragraph1.onclick = getid;
+            var paragraph = document.createElement("p");
+            paragraph1.class = "typing";
+            paragraph1.id = number;
+            $("#sortable").append(paragraph1);
+            $(paragraph1).append(paragraph);
+            console.log($(".ui-state-default "))
+        }
+        if (e.keyCode == 46) {
+            if (mouse !=null){
+                $(".ui-state-default").eq(mouse).remove();
+                mouse = null;
+            }
+                else {
+                console.log(mouse);
+                console.log($(".ui-state-default").length);
+                $(".ui-state-default").eq($(".ui-state-default").length-1).remove();
+            }
+        }
+        if (e.keyCode == 16){
+            console.log($("#contents").html())
+        }
+    });
+    $(function () {
+        $("#sortable").sortable({
+            revert: true
+        });
+        $(".draggable").draggable({
+            connectToSortable: "#sortable",
+            revert: "invalid"
+        });
+        $("ul, li").disableSelection();
+    });
+
+</script>
+</html>

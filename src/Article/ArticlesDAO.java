@@ -1,22 +1,22 @@
 package Article;
 
-import Login.LoginPassing;
+import Connection.*;
 
 import java.sql.*;
 import java.util.Date;
 
+import static Connection.ConnectionToTheDataBase.closingConnection;
 
 /**
  * Created by ljam763 on 25/05/2017.
  */
-public class ArticlesDAO extends LoginPassing {
+public class ArticlesDAO {
 
     private int ArticleID = 0;
     private String ArticleName = null;
     private String username = null;
     private String Content = null;
-    private Date DateCreated =null;
-
+    private Date DateCreated = null;
 
 
     public ArticlesDAO() {
@@ -24,18 +24,21 @@ public class ArticlesDAO extends LoginPassing {
     }
 
     public Articles selectionArticles(String articleName) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "SELECT ArticlesID, ArticlesName , UserIDName, Content, SpecificDateCreated FROM Articles WHERE ArticlesName = ?;"
-            );
-            {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, UserIDName, Content, SpecificDateCreated FROM Articles WHERE ArticlesName = ?;")) {
+                System.out.println(statement);
                 statement.setString(1, articleName);
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                return makeArticle(resultSet);
+                System.out.println(statement);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        return makeArticle(resultSet);
+                    }
+                }
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
-            }
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
+            System.out.println("Error. Article not found.");
             e.printStackTrace();
         }
         return null;
@@ -43,70 +46,60 @@ public class ArticlesDAO extends LoginPassing {
 
 
     public Articles selectionArticles(int articlesID) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "SELECT ArticlesID, ArticlesName , UserIDName, Content, SpecificDateCreated FROM Articles WHERE ArticlesID = ?;"
-            );
-            {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, UserIDName, Content, SpecificDateCreated FROM Articles WHERE ArticlesID = ?;")) {
+                System.out.println(statement);
                 statement.setInt(1, articlesID);
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    return makeArticle(resultSet);
+                System.out.println(statement);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        return makeArticle(resultSet);
+                    }
                 }
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            System.out.println("Article is not there");
+            System.out.println("Error. Article not found.");
             e.printStackTrace();
         }
         return null;
     }
 
     public void madeArticles(String ArticleName, String UserIDName, String content) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO Articles (ArticlesName, UserIDName, Content) VALUES( ? ,?,?);"
-            );
-            {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Articles (ArticlesName, UserIDName, Content) VALUES( ? ,?,?);")) {
+                System.out.println(statement);
                 statement.setString(1, ArticleName);
                 statement.setString(2, UserIDName);
                 statement.setString(3, content);
+                System.out.println(statement);
                 statement.executeUpdate();
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
-            conn.close();
         } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
+            System.out.println("Error creating article");
             e.printStackTrace();
         }
     }
 
-    public Articles updataArticles( String ArticleName,String content, int ArticleID) {
-        try {
-            PreparedStatement statement = conn.prepareStatement(
-                    "UPDATE Articles SET ArticlesName = ?, Content= ? WHERE ArticlesID = ?;"
-            );
-            {
+    public Articles updateArticles(String ArticleName, String content, int ArticleID) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE Articles SET ArticlesName = ?, Content= ? WHERE ArticlesID = ?;")) {
+                System.out.println(statement);
                 statement.setString(1, ArticleName);
                 statement.setString(2, content);
                 statement.setInt(3, ArticleID);
+                System.out.println(statement);
                 statement.executeUpdate();
+                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
-            conn.close();
         } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
+            System.out.println("Error updating article.");
             e.printStackTrace();
         }
-
         return selectionArticles(ArticleID);
     }
-
 
     private Articles makeArticle(ResultSet resultSet) throws SQLException {
         Articles articles = new Articles();
@@ -116,7 +109,7 @@ public class ArticlesDAO extends LoginPassing {
         Content = resultSet.getString(4);
         Date DateCreated = resultSet.getTimestamp(5);
         ArticlesSetStatments(articles, DateCreated);
-        conn.close();
+        closingConnection();
         return articles;
     }
 

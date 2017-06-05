@@ -4,11 +4,13 @@ import Article.Articles;
 import Article.ArticlesIndexServlet;
 import Login.LoginPassing;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -42,19 +44,11 @@ public class DeletingServlet extends HttpServlet {
         if (req.getParameter("log") != null) {
             if (req.getParameter("log").equals("DeletingProfile")) {
                 tryingTodeleteWholeProfile(req, resp, session);
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                closingConnection();
                 return;
             } else if (req.getParameter("log").equals("DeleteArticle")) {
                 tryingTodeleteWholeArticle(req, resp);
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                closingConnection();
                 return;
             } else if (req.getParameter("log").equals("DeleteComment")) {
                 System.out.println("converting id of article to int");
@@ -67,8 +61,29 @@ public class DeletingServlet extends HttpServlet {
                 tryingTodeleteAComment(req, resp, session);
                 closingConnection();
                 return;
+            } else if (req.getParameter("log").equals("DeleteMedia")){
+                tryingToDeleteSpeificMedia(req, resp);
+            } else if (req.getParameter("log").equals("DeleteYoutube")){
+                TryingTodeleteAYoutubeVideo(req, resp);
             }
         }
+    }
+
+    private void TryingTodeleteAYoutubeVideo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String youtubeURL = req.getParameter("media");
+        System.out.println(youtubeURL);
+        deleteDAO.dropSpeificYoutube(youtubeURL);
+        closingConnection();
+        req.getRequestDispatcher("/Articles").forward(req, resp);
+    }
+
+    private void tryingToDeleteSpeificMedia(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ServletContext servletContext = getServletContext();
+        String filePath = servletContext.getRealPath(req.getParameter("media"));
+        if (new File(filePath).exists()){
+            System.out.println("Deleted? "+ new File(filePath).delete());
+        }
+        req.getRequestDispatcher("/ArticleUpload").forward(req, resp);
     }
 
     private void tryingTodeleteWholeArticle(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -80,7 +95,6 @@ public class DeletingServlet extends HttpServlet {
             deleteDAO.dropSpeificArticle(article.getArticleid());
             closingConnection();
         }
-        //needed to renew the index. Bugggggg
         req.getRequestDispatcher("/ArticlesIndex").forward(req, resp);
         return;
     }
@@ -98,7 +112,6 @@ public class DeletingServlet extends HttpServlet {
     }
 
     private void tryingTodeleteAComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException, IOException {
-        //needed to renew the Article comments. Bugggggg
         deleteDAO.dropSpeificComment(commentId);
         closingConnection();
         req.getRequestDispatcher("/ArticlesIndex").forward(req, resp);
