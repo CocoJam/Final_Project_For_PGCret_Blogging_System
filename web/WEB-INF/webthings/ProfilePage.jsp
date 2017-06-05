@@ -66,62 +66,81 @@
                         </div>
 
                         <!-- Profile bio text -->
-                        <div class="description text-center">
+                        <div class="description text-center col-lg-offset-5 col-md-offset-5 col-sm-offset-5">
 
-                            <p>${profileInfo.username}</p>
-                            <p>${profileInfo.name}</p>
-                            <p>${profileInfo.email}</p>
-                            <p>${profileInfo.address}</p>
-                            <p>${profileInfo.education}</p>
-                            <p>${profileInfo.ethnicity}</p>
-                            <p>${profileInfo.date}</p>
+                            <table class="table borderless" align="center">
+                                <tr>
+                                    <th>Specs</th><th>Your details</th>
+                                </tr>
+                                <tr>
+                                    <td>Username: </td><td>${profileInfo.username}</td>
+                                </tr>
+                                <tr>
+                                    <td>Fullname: </td><td>${profileInfo.name}</td>
+                                </tr>
+                                <tr>
+                                    <td>Email: </td><td>${profileInfo.email}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address: </td><td>${profileInfo.address}</td>
+                                </tr>
+                                <tr>
+                                    <td>Education: </td><td>${profileInfo.education}</td>
+                                </tr>
+                                <tr>
+                                    <td>Ethnicity: </td><td>${profileInfo.ethnicity}</td>
+                                </tr>
+                                <tr>
+                                    <td>Date of Birth: </td><td>${profileInfo.date}</td>
+                                </tr>
 
+
+                            </table>
                         </div>
 
-                        <!-- Second profile row -->
-                        <div class="row">
-                            <div class="col-md-6 col-md-offset-3">
-                                <div class="profile-tabs">
-                                    <!-- MORE CONTENT GOES HERE IF NEEDED -->
-                                    Welcome to your page, please navigate by using the features below.
+                        <%--<!-- Second profile row -->--%>
+                        <%--<div class="row">--%>
+                            <%--<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">--%>
+                                <%--<div class="profile-tabs">--%>
+                                    <%--<!-- MORE CONTENT GOES HERE IF NEEDED -->--%>
+                                    <%--Welcome to your page, please navigate by using the features below.--%>
 
-                                    <%--The following are GET methods into either your article index or ALL article index--%>
-                                    <h4>Articles</h4>
-                                    <a href="/ArticlesIndex?articleList=self">To my articles index</a>
-                                    <br>
-                                    <a href="/ArticlesIndex?articleList=all">To all articles index</a>
+                                    <%--&lt;%&ndash;The following are GET methods into either your article index or ALL article index&ndash;%&gt;--%>
+                                    <%--<h4>Articles</h4>--%>
+                                    <%--<a href="/ArticlesIndex?articleList=self">To my articles index</a>--%>
+                                    <%--<br>--%>
+                                    <%--<a href="/ArticlesIndex?articleList=all">To all articles index</a>--%>
 
-                                    <%--These links goes either to users own media, or all media (both accessed by GET method) goes to /Upload servlet--%>
-                                    <a href="Upload?media=self">To self media</a>
-                                    <br>
-                                    <a href="Upload?media=all">To all media</a>
+                                    <%--&lt;%&ndash;These links goes either to users own media, or all media (both accessed by GET method) goes to /Upload servlet&ndash;%&gt;--%>
+                                    <%--<a href="Upload?media=self">To self media</a>--%>
+                                    <%--<br>--%>
+                                    <%--<a href="Upload?media=all">To all media</a>--%>
 
-                                    <%--This goes to LogOut servlet, session invalidated--%>
-                                    <form action="/logout" method="get">
-                                        <input type="submit" value="Logout">
-                                    </form>
+                                    <%--&lt;%&ndash;This goes to LogOut servlet, session invalidated&ndash;%&gt;--%>
+                                    <%--<form action="/logout" method="get">--%>
+                                        <%--<input type="submit" value="Logout">--%>
+                                    <%--</form>--%>
 
-                                    <%--This goes to changeUserInformation in GET method, see Registration serlvet--%>
-                                    <form action="/Registration" method="get">
-                                        <input type="submit" name="log" value="ChangeUserInformation">
-                                    </form>
+                                    <%--&lt;%&ndash;This goes to changeUserInformation in GET method, see Registration serlvet&ndash;%&gt;--%>
+                                    <%--<form action="/Registration" method="get">--%>
+                                        <%--<input type="submit" name="log" value="ChangeUserInformation">--%>
+                                    <%--</form>--%>
 
-                                    <%--This deletes the whole profile and corresponding database entries (incl youtube links, comments, ) by POST method--%>
-                                    <%--TODO not being able to drop folders--%>
-                                    <form action="/Deleting" method="post">
-                                        <label for="username">Username:</label>
-                                        <input type="text" id="username" name="username">
-                                        <label for="password">Password:</label>
-                                        <input type="password" id="password" name="password">
-                                        <input type="submit" name="log" value="DeletingProfile">
-                                    </form>
+                                    <%--&lt;%&ndash;This deletes the whole profile and corresponding database entries (incl youtube links, comments, ) by POST method&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;TODO not being able to drop folders&ndash;%&gt;--%>
+                                    <%--<form action="/Deleting" method="post">--%>
+                                        <%--<label for="username">Username:</label>--%>
+                                        <%--<input type="text" id="username" name="username">--%>
+                                        <%--<label for="password">Password:</label>--%>
+                                        <%--<input type="password" id="password" name="password">--%>
+                                        <%--<input type="submit" name="log" value="DeletingProfile">--%>
+                                    <%--</form>--%>
 
-
-
-                                </div>
-                            </div>
-                            <!--End Profile Tabs-->
-                        </div>
+                                    <%----%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<!--End Profile Tabs-->--%>
+                        <%--</div>--%>
                     </div>
 
                 </div>

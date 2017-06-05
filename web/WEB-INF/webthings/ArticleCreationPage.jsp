@@ -129,7 +129,7 @@
                         li.innerHTML = " <audio controls><source src=\""+msg+"\" type=\"audio/ogg\"> </audio>";
                     }
                     else if (msg.endsWith(".jpg") || msg.endsWith(".png")) {
-                        li.innerHTML = "<img src=\"" + msg + "\">";
+                        li.innerHTML = "<img src=\"" + msg + "\" height='30%'>";
                     }
                     image.append(li);
                     $("#sortable").append(image);

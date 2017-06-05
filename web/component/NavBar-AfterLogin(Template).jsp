@@ -44,7 +44,14 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li>
-                    <a href="ProfilePage"><i class="material-icons">portrait</i>Profile</a>
+                    <a href="ProfilePage"><c:choose>
+                        <c:when test="${profileInfo.profilepic != null}">
+                            <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}" height='20'>
+                        </c:when>
+                        <c:otherwise>
+                            <i class="material-icons">portrait</i>
+                        </c:otherwise>
+                    </c:choose>${profileInfo.username}</a>
                 </li>
 
                 <li class="dropdown">
@@ -54,9 +61,11 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">Article dropdown</li>
-                        <li><a href="ArticlesIndex?articleList=self"><i class="material-icons">fullscreen</i>My Articles</a></li>
+                        <li><a href="ArticlesIndex?articleList=self"><i class="material-icons">fullscreen</i>My Articles</a>
+                        </li>
                         <li class="divider"></li>
-                        <li><a href="ArticlesIndex?articleList=all"><i class="material-icons">fullscreen</i>All Articles</a></li>
+                        <li><a href="ArticlesIndex?articleList=all"><i class="material-icons">fullscreen</i>All Articles</a>
+                        </li>
                     </ul>
                 </li>
 
@@ -80,7 +89,8 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">Options</li>
-                        <li><a href="Registration?log=ChangeUserInformation"><i class="material-icons">create</i>Edit Profile</a></li>
+                        <li><a href="Registration?log=ChangeUserInformation"><i class="material-icons">create</i>Edit
+                            Profile</a></li>
                         <li class="divider"></li>
                         <li><a href="logout?submit=Logout">Sign Out</a></li>
                     </ul>
