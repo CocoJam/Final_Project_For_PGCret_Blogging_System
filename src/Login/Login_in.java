@@ -109,7 +109,6 @@ public class Login_in extends HttpServlet {
                 return;
             }
             if ((boolean) session.getAttribute("log")) {
-
                 req.getRequestDispatcher("/ProfilePage").forward(req, resp);
                 return;
             } else {

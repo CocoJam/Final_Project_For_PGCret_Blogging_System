@@ -26,43 +26,43 @@ public class ArticleMedia extends Upload_files {
         this.filepaths = new TreeSet<>();
     }
 
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        MediaDAO mediaDAO = new MediaDAO();
-        HttpSession session = request.getSession();
-        targetLocation = null;
-        //Grabs session to get articleID
-        try {
-            ArticleID = Integer.parseInt(session.getAttribute("articleID") + "");
-        } catch (NumberFormatException e) {
-            System.out.println(e);
-        }
-        String articleID = ArticleID + "";
-        System.out.println(articleID + " No:");
-        ServletContext servletContext = getServletContext();
-        String userPath = servletContext.getRealPath("/Upload-photos");
-        File startingFile = new File(userPath);
-
-//        Trilogy PART 4: This is the new hope see findingTheRightFile
-        findingTheRightFile(startingFile, articleID);
-        Set<String> list = new TreeSet<>();
-        if (targetLocation != null) {
-            Set<String> filepaths = new TreeSet<>();
-            list = findingDirectory(new File(targetLocation), filepaths);
-        }
-
-        Map<String, List<String>> mediaMapping = mapSetUp();
-        List<String> youtubeList = new ArrayList<>();
-
-        youtubeList = mediaDAO.gettingAllYoutube(ArticleID);
-        mediaMapping.put("youtube", youtubeList);
-
-        assigningMultipleMediaIntoMap(list, mediaMapping);
-//          request.setAttribute("mediaOutPut", mediaMapping);
-        response.getWriter().print(mediaMapping);
-        closingConnection();
-//        request.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(request, response);
-    }
+//    @Override
+//    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        MediaDAO mediaDAO = new MediaDAO();
+//        HttpSession session = request.getSession();
+//        targetLocation = null;
+//        //Grabs session to get articleID
+//        try {
+//            ArticleID = Integer.parseInt(session.getAttribute("articleID") + "");
+//        } catch (NumberFormatException e) {
+//            System.out.println(e);
+//        }
+//        String articleID = ArticleID + "";
+//        System.out.println(articleID + " No:");
+//        ServletContext servletContext = getServletContext();
+//        String userPath = servletContext.getRealPath("/Upload-photos");
+//        File startingFile = new File(userPath);
+//
+////        Trilogy PART 4: This is the new hope see findingTheRightFile
+//        findingTheRightFile(startingFile, articleID);
+//        Set<String> list = new TreeSet<>();
+//        if (targetLocation != null) {
+//            Set<String> filepaths = new TreeSet<>();
+//            list = findingDirectory(new File(targetLocation), filepaths);
+//        }
+//
+//        Map<String, List<String>> mediaMapping = mapSetUp();
+//        List<String> youtubeList = new ArrayList<>();
+//
+//        youtubeList = mediaDAO.gettingAllYoutube(ArticleID);
+//        mediaMapping.put("youtube", youtubeList);
+//
+//        assigningMultipleMediaIntoMap(list, mediaMapping);
+////          request.setAttribute("mediaOutPut", mediaMapping);
+//        response.getWriter().print(mediaMapping);
+//        closingConnection();
+////        request.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(request, response);
+//    }
 
     //This function finds the absolutely right file based on the name and not the path. TODO Need to consider security risks: Can find all folders. (see the vulnerability with endsWith())
     protected void findingTheRightFile(File file, String target) {

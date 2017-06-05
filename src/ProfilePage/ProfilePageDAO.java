@@ -81,7 +81,7 @@ public class ProfilePageDAO extends LoginPassing {
         getSaltAndIteration(username);
         saltAndIteration();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-            try (PreparedStatement statement = connection.prepareStatement("UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?, Password=?, profilePicture=?, salt=?, iteration=?  WHERE  Password= ? AND Username = ?;")) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?, Password=?, profilePicture=?, salt=?, iteration=?  WHERE  Username = ?;")) {
                 statement.setString(1, username);
                 sqlSetStatment(password, statement);
                 System.out.println(newPassword);
@@ -91,13 +91,13 @@ public class ProfilePageDAO extends LoginPassing {
                 System.out.println(oldSalt);
                 System.out.println(oldIterations);
                 System.out.println(pass.hashing(newPassword, salt, iterations));
-                System.out.println(pass.hashing(password, oldSalt, oldIterations));
+//                System.out.println(pass.hashing(password, oldSalt, oldIterations));
                 statement.setString(8, pass.hashing(newPassword, salt, iterations));
                 statement.setString(9, profilePicture);
                 statement.setInt(10, salt);
                 statement.setInt(11, iterations);
-                statement.setString(12, pass.hashing(password, oldSalt, oldIterations));
-                statement.setString(13, usernames);
+//                statement.setString(12, pass.hashing(password, oldSalt, oldIterations));
+                statement.setString(12, usernames);
 
                 System.out.println(statement);
                 statement.executeUpdate();

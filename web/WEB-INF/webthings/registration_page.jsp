@@ -18,7 +18,7 @@
 <head>
     <title>Login Page</title>
 
-    <%@include file="../../component/Template (HTML components)/Header(styling Template).html" %>
+    <%@include file="../../component/Header(styling Template).html" %>
 
 </head>
 <body class="signup-page">
@@ -66,8 +66,10 @@
 
 <div class="wrapper">
     <div class="header header-filter" id="custom-bg-container"><!-- background div -->
+
         <div class="container">
             <div class="row">
+
                 <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
                     <div class="card card-signup">
 
@@ -77,12 +79,31 @@
                             <!-- Form subtext -->
                             <!-- TODO need to use JSTL to dynamically change the header depending on login status -->
                             <div class="header header-info text-center">
-                                <h4>Sign up with Slash N</h4>
-                                <!-- TODO change this text when user is logged in to: "Edit profile" -->
 
+                                <c:choose>
+                                    <c:when test="${log}">
+                                        <h4>Edit profile</h4>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h4>Sign up with Slash N</h4>
+                                    </c:otherwise>
+                                </c:choose>
+
+                                <!-- TODO change this text when user is logged in to: "Edit profile" -->
                             </div>
+
+                            <c:choose>
+                                <c:when test="${log}">
+                                    <p class="text-divider">Please change your details below:</p>
+                                </c:when>
+                                <c:otherwise>
+                                    <p class="text-divider">Please enter your details to register</p>
+                                </c:otherwise>
+                            </c:choose>
+
+
                             <!-- TODO use JSTL to change this text dynamically based on login status -->
-                            <p class="text-divider">Please enter your details to register</p>
+
                             <!-- TODO change this text when user is logged in to: "Please update your details" -->
                             <div class="content">
 
@@ -101,7 +122,7 @@
 
                                 <%--The following paragraph is to click to check when the username is available TODO STYLING is required!! (consider taking this outside of <p> and into styled <div>--%>
                                 <p style="text-align: center">
-                                    Username taken: <span id="reponseToUsername"></span>
+                                    Username availability status: <span id="reponseToUsername"></span>
                                 </p>
 
                                 <%--The following is the script for username availability feature above--%>
@@ -117,8 +138,21 @@
                                             data: {"log": "RegistrationCheck", "usernameCheck": $("#username").val()},
                                             success: function (msg) { //specifically msg is coming back with the boolean.
                                                 console.log(msg);
-                                                $(reponseToUsername).text(msg);
+//                                                $(reponseToUsername).text(msg);
                                                 //msg is returning a boolean for check if false meaning no such username so ok
+
+                                                //If the msg is true, return 'The username already exists'
+                                                if (msg == "true"){
+                                                    $(reponseToUsername).text("The username already exists");
+                                                    $("#reponseToUsername").css({"color": "red", "font-weight": "bold"})
+                                                } else {
+                                                    $(reponseToUsername).text("You can use the username!");
+                                                    $("#reponseToUsername").css({
+                                                        "color": "green",
+                                                        "font-weight": "bold"
+                                                    });
+                                                }
+
                                                 if (msg) {
                                                     event.preventDefault();
                                                 }
@@ -136,6 +170,9 @@
                                            class="form-control"
                                            value="${password}"/>
                                 </div>
+                                <p style="text-align: center">
+                                    Password Strength: <span id="reponseToPassword"></span>
+                                </p>
                                 <!-- Text input box end -->
 
                                 <!-- Text input box start -->
@@ -285,6 +322,35 @@
                                 alert("validations passed");
                                 return;
                             });
+                            var passwordStrengthStrong = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/i;
+                            var passwordStrengthMiddle = /(?=.*[a-z]{2,})(?=.*[A-Z]{2,})(?=.*[0-9]{2,})(?=.*[!@#\$%\^&\*]{2,})(?=.{8,})/i;
+                            var passwordStrengthWeakMiddle = /(?=.*[a-z]{4,})(?=.*[A-Z]{4,})(?=.*[0-9]{4,})(?=.*[!@#\$%\^&\*]{4,})(?=.{8,})/i;
+                            $("#password").bind('input', function () {
+                                if ($("#password").val().match(passwordStrengthStrong)) {
+                                    $("#reponseToPassword").text("Strong");
+                                    return console.log("strong")
+                                }
+                                if ($("#password").val().match(passwordStrengthMiddle)) {
+                                    $("#reponseToPassword").text("Middle");
+                                    return console.log("middle")
+                                }
+                                if ($("#password").val().match(passwordStrengthWeakMiddle)) {
+                                    $("#reponseToPassword").text("WeakMiddle");
+                                    return console.log("weakMiddle")
+                                }
+                                if ($("#password").val().length < 8 && $("#password").val().length >0) {
+                                    $("#reponseToPassword").text("Weak");
+                                    return console.log("weak")
+                                }
+                                if ($("#password").val().length > 8 ) {
+                                    $("#reponseToPassword").text("Ok");
+                                    return console.log("ok")
+                                }
+                                if ($("#password").val().length == 0) {
+                                    $("#reponseToPassword").text("Please enter a password");
+                                    return console.log("ok")
+                                }
+                            })
 
                         </script>
 
@@ -297,7 +363,7 @@
         <!-- !!! MAIN CONTENT END !!! -->
 
         <!-- FOOTER START -->
-        <%@ include file="../../component/Template (HTML components)/Footer(Template).html" %>
+        <%@ include file="../../component/Footer(Template).html" %>
         <!-- FOOTER END -->
 
     </div><!-- background div end -->

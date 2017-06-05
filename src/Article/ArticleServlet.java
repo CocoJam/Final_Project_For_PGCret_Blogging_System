@@ -51,6 +51,7 @@ public class ArticleServlet extends HttpServlet {
         }
         System.out.println(ArticleID + "articleid");
         article = articlesDAO.selectionArticles(ArticleID);
+        if (article!= null){
         System.out.println(article.getUsername() + "This is user");
         if (session.getAttribute("username") != null) {
             if (article.getUsername().equals(session.getAttribute("username"))) {
@@ -68,7 +69,10 @@ public class ArticleServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        req.getRequestDispatcher("/Comments").forward(req, resp);
+        req.getRequestDispatcher("/Comments").forward(req, resp);}
+        else{
+            req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+        }
         return;
     }
 
