@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>WYSIWYG</title>
+    <title>Article</title>
 
     <!-- jQUERY & jQUERY UI -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
