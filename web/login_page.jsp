@@ -5,7 +5,7 @@
 <head>
     <title>Login Page</title>
 
-    <%@ include file="component/Template (HTML components)/Header(styling Template).html" %>
+    <%@ include file="component/Header(styling Template).html" %>
 
 </head>
 <body class="signup-page">
@@ -100,7 +100,7 @@
         <!-- !!! MAIN CONTENT END !!! -->
 
         <!-- FOOTER START -->
-        <%@ include file="/component/Template (HTML components)/Footer(Template).html" %>
+        <%@ include file="/component/Footer(Template).html" %>
         <!-- FOOTER END -->
 
     </div><!-- background div end -->

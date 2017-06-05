@@ -7,11 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
+<html lang="en">
 <head>
     <title>Profile Page</title>
 
-    <%@include file="../../component/Template (HTML components)/Header(styling Template).html" %>
+    <%@include file="../../component/Header(styling Template).html" %>
 
 </head>
 <body class="profile-page">
@@ -130,8 +130,9 @@
 </div><!-- wrapper div -->
 
 <!-- FOOTER START -->
-<%@ include file="../../component/Template (HTML components)/Footer(Template).html" %>
+<%@ include file="../../component/Footer(Template).html" %>
 <!-- FOOTER END -->
 
 </body>
+
 </html>
