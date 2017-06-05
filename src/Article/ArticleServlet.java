@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import static Article.ArticlesIndexServlet.checkingForOwnership;
 import static Connection.ConnectionToTheDataBase.closingConnection;
 import static Connection.ConnectionToTheDataBase.conn;
 
@@ -108,6 +109,7 @@ public class ArticleServlet extends HttpServlet {
                 article = articlesDAO.updateArticles(ArticleName, ArticleContent, ArticleID);
                 session.setAttribute("articleContents", article);
                 session.setAttribute("Upload", null);
+                checkingForOwnershipArticle(username,article);
                 closingConnection();
                 req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
                 return;
@@ -121,8 +123,10 @@ public class ArticleServlet extends HttpServlet {
                 System.out.println((String) session.getAttribute("articleList"));
                 if (Listformation.equals("all")) {
                     indexList = new ArticleListObjectDAO().selectionAllArticlesList();
+                    checkingForOwnership(username, indexList);
                 } else if (Listformation.equals("self")) {
                     indexList = new ArticleListObjectDAO().selectionArticlesList(username);
+                    checkingForOwnership(username, indexList);
                 }
 
                 // dispatching back into the articleIndex after finished creating new article and have uploaded the info to SQL via DAO
@@ -133,6 +137,16 @@ public class ArticleServlet extends HttpServlet {
                 req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
                 return;
             }
+        }
+    }
+
+    public void checkingForOwnershipArticle(String username, Articles article) {
+        if (article.getUsername().equals(username)) {
+            System.out.println("yes");
+            article.setOwner(true);
+        } else {
+            System.out.println("No");
+            article.setOwner(false);
         }
     }
 }

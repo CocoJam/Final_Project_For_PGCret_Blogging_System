@@ -17,7 +17,7 @@
 </head>
 <body>
 <h1>${articleContents.articlename}</h1>
-<textarea rows="50" cols="50">${articleContents.content}</textarea>
+<div>${articleContents.content}</div>
 <p>${articleContents.username}</p>
 <p>${articleContents.datecreated}</p>
 

@@ -40,20 +40,20 @@ public class ArticlesIndexServlet extends HttpServlet {
                 System.out.println("self");
                 session.setAttribute("articleList", "self");
                 indexList = new ArticleListObjectDAO().selectionArticlesList(username);
-                checkingForOwnership(username);
+                checkingForOwnership(username , indexList);
                 session.setAttribute("ArticleIndex", indexList);
             } else if (ArticleListStatus.equals("all")) {
                 System.out.println("all");
                 session.setAttribute("articleList", "all");
                 indexList = new ArticleListObjectDAO().selectionAllArticlesList();
-                checkingForOwnership(username);
+                checkingForOwnership(username , indexList);
                 session.setAttribute("ArticleIndex", indexList);
             }
         }
     }
 
     //Using session username to check if the accessor is the owner, set Article .setOwner
-    private void checkingForOwnership(String username) {
+    public static void checkingForOwnership(String username, List<Articles> indexList) {
         for (Articles articles : indexList) {
             if (articles.getUsername().equals(username)) {
                 System.out.println("yes");

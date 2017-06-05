@@ -30,7 +30,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
-<form action="/Articles" method="post">
+<form id="form" action="/Articles" method="post">
     <label for="ArticleName">Article Name</label>
     <input name="ArticleName" type="text" id="ArticleName" value="${articleContents.articlename}">
     <input type="hidden" name="ArticleContent">
@@ -45,72 +45,16 @@
 </form>
 <textarea rows="4" cols="50" id="textarea"></textarea>
 <div id="contents">
-    <ul id="sortable">
-        <li class="ui-state-default"><p></p></li>
-    </ul>
-    <c:forEach var="mediagroups" items="${mediaOutPut}">
-        <c:if test="${mediagroups.key.equals(\"photo\")}">
-            <c:forEach var="media" items="${mediagroups.value}">
-                <ul>
-                    <li class="ui-state draggable"><img src="${media}"></li>
-                </ul>
-                <c:if test="${articleContents.owner}">
-                    <form action="/Deleting" method="post">
-                        <input type="hidden" name="media" value="${media}">
-                        <input type="submit" name="log" value="DeleteMedia">
-                    </form>
-                </c:if>
-            </c:forEach>
-        </c:if>
-        <c:if test="${mediagroups.key.equals(\"audio\")}">
-            <c:forEach var="media" items="${mediagroups.value}">
-                <ul>
-                    <li class="ui-state draggable">
-                        <audio controls>
-                            <source src="${media}" type="audio/ogg">
-                        </audio>
-                    </li>
-                </ul>
-                <c:if test="${articleContents.owner}">
-                    <form action="/Deleting" method="post">
-                        <input type="hidden" name="media" value="${media}">
-                        <input type="submit" name="log" value="DeleteMedia">
-                    </form>
-                </c:if>
-            </c:forEach>
-        </c:if>
-        <c:if test="${mediagroups.key.equals(\"video\")}">
-            <c:forEach var="media" items="${mediagroups.value}">
-                <ul>
-                    <li class="ui-state draggable">
-                        <video width="400" controls>
-                            <source src="${media}">
-                        </video>
-                    </li>
-                </ul>
-
-                <c:if test="${articleContents.owner}">
-                    <form action="/Deleting" method="post">
-                        <input type="hidden" name="media" value="${media}">
-                        <input type="submit" name="log" value="DeleteMedia">
-                    </form>
-                </c:if>
-            </c:forEach>
-        </c:if>
-        <c:if test="${mediagroups.key.equals(\"youtube\")}">
-            <c:forEach var="media" items="${mediagroups.value}">
-                <ul>
-                    <li class="ui-state draggable">${media}</li>
-                </ul>
-                <c:if test="${articleContents.owner}">
-                    <form action="/Deleting" method="post">
-                        <input type="hidden" name="media" value="${media}">
-                        <input type="submit" name="log" value="DeleteYoutube">
-                    </form>
-                </c:if>
-            </c:forEach>
-        </c:if>
-    </c:forEach>
+    <c:choose>
+        <c:when test="${not empty articleContents}">
+            ${articleContents.content}
+        </c:when>
+        <c:otherwise>
+            <ul id="sortable">
+                <li class="ui-state-default"><p></p></li>
+            </ul>
+        </c:otherwise>
+    </c:choose>
 </div>
 
 <form action="/Upload" method="post" id="Upload"
@@ -146,11 +90,6 @@
                 number--;
             }
         }
-        if (e.keyCode == 16) {
-            console.log($("#contents").html())
-            $("input:hidden").val($("#contents").html());
-            console.log( $("input:hidden").val());
-        }
     });
     $(function () {
         $("#sortable").sortable({
@@ -162,6 +101,8 @@
         });
         $("ul, li").disableSelection();
     });
+
+
 
 
     $('#Upload')
@@ -178,33 +119,52 @@
                     console.log(image);
                     var li = document.createElement("li");
                     li.className = "ui-state draggable";
-                    li.innerHTML = "<img src=\""+msg+"\">";
+                    if (msg.endsWith(".flv") || msg.endsWith(".m4v") || msg.endsWith(".mp4") || msg.endsWith(".mpg") || msg.endsWith(".mpeg") || msg.endsWith(".wmv")){
+                        li.innerHTML = "<video width=\"400\" controls> <source src=\""+msg+"\"></video>";
+                    }
+                   else if(msg.endsWith(".mp3")){
+                        li.innerHTML = " <audio controls><source src=\""+msg+"\" type=\"audio/ogg\"> </audio>";
+                    }
+                    else if (msg.endsWith(".jpg") || msg.endsWith(".png")) {
+                        li.innerHTML = "<img src=\"" + msg + "\">";
+                    }
                     image.append(li);
-//                    image.html("<li class=\"ui-state draggable\">"+msg+"</li>");
                     $("#sortable").append(image);
-                    //msg is returning a boolean for check if false meaning no such username so ok
                 }
             });
             e.preventDefault();
         });
-    $("input:hidden").val($("#contents").html());
-    console.log( $("input:hidden").val());
-    //    $("#Upload").submit(function () {
-    //        console.log("sending")
-    //        $.ajax({
-    //            url: '/Upload',
-    //            type: 'post',
-    //            data: {"Upload": "ArticlesUpload", "file": $("#Upload").val()},
-    //            success: function (msg) { //specifically msg is coming back with the boolean.
-    //                console.log(msg);
-    //                $(reponseToUsername).text(msg);
-    //                //msg is returning a boolean for check if false meaning no such username so ok
-    //                if (msg) {
-    //                    event.preventDefault();
-    //                }
-    //            }
-    //        });
-    //    })
+    $("#form").submit(function () {
+        $("input:hidden").val($("#contents").html());
+    });
 </script>
+
+
+<%--if (fileName.endsWith(".flv") || fileName.endsWith(".m4v") || fileName.endsWith(".mp4") || fileName.endsWith(".mpg") || fileName.endsWith(".mpeg") || fileName.endsWith(".wmv")) {--%>
+<%--FormingVideoFileAndVideo();--%>
+<%--} else if (fileName.endsWith(".mp3")) {--%>
+<%--FormingAudioFileAndAudio();--%>
+<%--} else if (fileName.endsWith(".jpg") || fileName.endsWith(".png")) {--%>
+<%--FormingPhotoFileAndPhoto();--%>
+<%--}--%>
+<%--<c:forEach var="mediagroups" items="${mediaOutPut}">--%>
+    <%--<c:if test="${mediagroups.key.equals(\"photo\")}">--%>
+        <%--<c:forEach var="media" items="${mediagroups.value}">--%>
+            <%--<img src="${media}">--%>
+        <%--</c:forEach>--%>
+    <%--</c:if>--%>
+    <%--<c:if test="${mediagroups.key.equals(\"audio\")}">--%>
+        <%--<c:forEach var="media" items="${mediagroups.value}">--%>
+            <%--<audio controls><source src="${media}" type="audio/ogg"> </audio>--%>
+        <%--</c:forEach>--%>
+    <%--</c:if>--%>
+    <%--<c:if test="${mediagroups.key.equals(\"video\")}">--%>
+        <%--<c:forEach var="media" items="${mediagroups.value}">--%>
+            <%--<video width="400" controls> <source src="${media}"></video>--%>
+        <%--</c:forEach>--%>
+    <%--</c:if>--%>
+<%--</c:forEach>--%>
+
+
 </body>
 </html>
