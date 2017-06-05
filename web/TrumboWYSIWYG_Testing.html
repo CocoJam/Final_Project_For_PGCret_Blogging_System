@@ -32,30 +32,37 @@
 
 <body>
 
+<!-- Editor Box -->
 <h1>WYSIWYG</h1>
 <div class="wysiwys" placeholder="Enter some text here"></div>
 
-<h1>ORIGINAL TEXT AREA FOR TYPING STUFF IN</h1>
-<textarea id="textarea"></textarea>
+<!-- Make a new section, put current WYSIWYG content in -->
+<button onclick="getWYSIWYGcontent()">CLICKY MOI</button>
 
+<!-- Clear all WYSIWYG -->
+<button onclick="resetText()">RESET</button>
+
+<!-- Make the selection number null, so it won't put the content of what's currently in the WYSIWYG directly into the selected section if made -->
+
+
+<button onclick="deleting()">delete</button>
+<!-- Content holding space for uploading to DB -->
 <div id="contents" style="border: dashed">
     <ul>
-        <li class="ui-state draggable">content</li>
+        <li class="ui-state draggable">Contents holding area</li>
     </ul>
 
     <ul id="sortable">
     </ul>
 </div>
 
-<button onclick="getWYSIWYGcontent()">CLICKY MOI</button>
-<button onclick="resetText()">RESET</button>
-<button onclick="UpdateText()">Add</button>
 </body>
 
 <script>
-    var mouse = 0;
+    var mouse = -1;
     var number = -1;
 
+    // Get ID of section we clicked on, grab the content, put back inside WYSIWYG
     function getid() {
         mouse = this.id;
         console.log("section id: " + mouse);
@@ -64,15 +71,18 @@
         console.log($('.wysiwys').trumbowyg.html);
     }
 
+    // Typing and populating the section with content from the WYSIWYG
+    // If mouse is null, won't do anything
     // Binds all input from keystroke inside textarea, runs function - display what's inside textarea in console.log, assign the id to a section inside the contents div
-    $('.wysiwys').bind('input', function () {
 
-        var content = $('.wysiwys').trumbowyg('html');
-        console.log(content);
-        $("#textarea").text(content);
-        $("#" + mouse).text(content);
-    });
+    //    $('.wysiwys').bind('input', function () {
+    //        var content = $('.wysiwys').trumbowyg('html');
+    //        console.log(content);
+    //        $("#textarea").text(content);
+    //        $("#" + mouse).text(content);
+    //    });
 
+    //
     $(function () {
         $("#sortable").sortable({
             revert: true
@@ -133,26 +143,39 @@
 
     function getWYSIWYGcontent() {
         var content = $('.wysiwys').trumbowyg('html');
-        console.log(content);
-        number++;
-        console.log(number);
-        $("#textarea").val($(".ui-state-default").eq(mouse).text());
-        var paragraph1 = document.createElement("li");
-        paragraph1.className = "ui-state-default ";
-        paragraph1.onclick = getid;
+        if (mouse == -1) {
+            console.log("making");
+            console.log(content);
+            number++;
+            var paragraph1 = document.createElement("li");
+            paragraph1.className = "ui-state-default ";
+            paragraph1.onclick = getid;
 //        var paragraph = document.createElement("p");
 //        paragraph1.class = "typing";
-        paragraph1.id = number;
-        $("#sortable").append(paragraph1);
+            paragraph1.id = number;
+            $("#sortable").append(paragraph1);
 //        $(paragraph1).append(paragraph);
-        paragraph1.innerHTML = content;
-        console.log($(".ui-state-default "))
-        mouse++;
+            paragraph1.innerHTML = content;
+        }
+        else {
+            console.log("change");
+            $("#"+mouse).html(content);
+            mouse = -1;
+            resetText();
+        }
     }
-    function UpdateText() {
-        mouse = null;
-        resetText()
+
+    function deleting() {
+        if (mouse != null) {
+            $(".ui-state-default").eq(mouse).remove();
+        }
+        else {
+            console.log(mouse);
+            console.log($(".ui-state-default").length);
+            $(".ui-state-default").eq($(".ui-state-default").length - 1).remove();
+        }
     }
+
 </script>
 
 </html>
