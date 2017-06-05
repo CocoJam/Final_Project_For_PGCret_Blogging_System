@@ -30,7 +30,7 @@
     <div class="container">
         <div class="row">
 
-            <div class="main main-raised"><!-- main container start -->
+            <div class="main custom-container-main"><!-- main container start -->
 
                 <div class="profile-content">
                     <div class="container">
@@ -74,7 +74,7 @@
                             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
                                 <h1></h1>
 
-                                <table>
+                                <table class="table table-striped table-hover table-responsive">
                                     <tr>
                                         <th>
                                             Article Numbers

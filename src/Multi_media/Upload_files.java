@@ -239,8 +239,10 @@ public class Upload_files extends HttpServlet {
         if (media != null) {
             ServletContext servletContext = getServletContext();
             if (media.equals("all")) {
+                request.setAttribute("AllOrSelf", "all");
                 userPath = servletContext.getRealPath("/Upload-photos");
             } else if (media.equals("self")) {
+                request.setAttribute("AllOrSelf", "self");
                 userPath = servletContext.getRealPath("/Upload-photos/" + username);
             }
         }

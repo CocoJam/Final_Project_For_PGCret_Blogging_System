@@ -31,7 +31,7 @@
     <div class="container">
         <div class="row">
 
-            <div class="main main-raised"><!-- main container start -->
+            <div class="main custom-container-main"><!-- main container start -->
 
                 <div class="profile-content">
                     <div class="container">
@@ -91,6 +91,11 @@
                                     <br>
                                     <a href="/ArticlesIndex?articleList=all">To all articles index</a>
 
+                                    <%--These links goes either to users own media, or all media (both accessed by GET method) goes to /Upload servlet--%>
+                                    <a href="Upload?media=self">To self media</a>
+                                    <br>
+                                    <a href="Upload?media=all">To all media</a>
+
                                     <%--This goes to LogOut servlet, session invalidated--%>
                                     <form action="/logout" method="get">
                                         <input type="submit" value="Logout">
@@ -111,10 +116,7 @@
                                         <input type="submit" name="log" value="DeletingProfile">
                                     </form>
 
-                                    <%--These links goes either to users own media, or all media (both accessed by GET method) goes to /Upload servlet--%>
-                                    <a href="Upload?media=self">To self media</a>
-                                    <br>
-                                    <a href="Upload?media=all">To all media</a>
+
 
                                 </div>
                             </div>
