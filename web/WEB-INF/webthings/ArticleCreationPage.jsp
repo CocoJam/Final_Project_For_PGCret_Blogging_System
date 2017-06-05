@@ -9,9 +9,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <title>WYSIWYG</title>
+
+    <!-- jQUERY & jQUERY UI -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <!-- Load WYSIWYG STYLE -->
+    <link rel="stylesheet" href="Trumbowyg/dist/ui/trumbowyg.min.css">
+    <link rel="stylesheet" href="Trumbowyg/dist/plugins/colors/ui/trumbowyg.colors.min.css">
+
     <style>
         ul {
             list-style-type: none;
@@ -25,10 +33,22 @@
             padding: 5px;
             width: 100%;
         }
+
+        .section-selected {
+            border: 1px solid #ededed;
+            background: #c5c5c5;
+            color: #2b2b2b;
+        }
+
+        #contents {
+            border: 1px solid #ededed;
+            border-radius: 6px;
+            box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+        }
     </style>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 </head>
+
 <body>
 <form id="form" action="/Articles" method="post">
     <label for="ArticleName">Article Name</label>
@@ -43,7 +63,23 @@
     }
     %>
 </form>
-<textarea rows="4" cols="50" id="textarea"></textarea>
+
+<!-- WYSIWYG -->
+<!-- Editor Box -->
+<h1>WYSIWYG</h1>
+<div class="wysiwys" placeholder="Enter your content here"></div>
+
+<!-- Make a new section, put current WYSIWYG content in -->
+<button onclick="addNewSection()">Add Section</button>
+
+<!-- Delete currently selected section -->
+<button onclick="deleteSection()">Delete Section</button>
+
+<!-- Clear all content inside WYSIWYG editor -->
+<button onclick="resetText()">Reset</button>
+
+<!-- Space for holding content to be uploaded to DB -->
+<!-- DRAGGABLE SECTIONS -->
 <div id="contents">
     <c:choose>
         <c:when test="${not empty articleContents}">
@@ -69,45 +105,7 @@
 </form>
 
 <script>
-    var number = 0;
-    $("#textarea").bind('input', function () {
-        console.log(number);
-        console.log($("#textarea").val());
-        console.log("changing");
-        $(".ui-state-default>p").eq(number).text($("#textarea").val());
-    });
-    $("#textarea").on('keyup', function (e) {
-        if (e.keyCode == 13) {
-            number++;
-            console.log(number);
-            $("#textarea").val("");
-            var paragraph1 = document.createElement("li");
-            paragraph1.className = "ui-state-default";
-            var paragraph = document.createElement("p");
-            paragraph.setAttribute('id', number);
-            paragraph.className = "testing";
-            $("#sortable").append(paragraph1);
-            $(paragraph1).append(paragraph);
-        }
-        if (e.keyCode == 46) {
-            if (number > 0) {
-                $(".ui-state-default").eq(number).remove();
-                console.log("removing");
-                number--;
-            }
-        }
-    });
-    $(function () {
-        $("#sortable").sortable({
-            revert: true
-        });
-        $(".draggable").draggable({
-            connectToSortable: "#sortable",
-            revert: "invalid"
-        });
-        $("ul, li").disableSelection();
-    });
-
+    // AJAX UPLOAD
     $('#Upload')
         .submit(function (e) {
             $.ajax({
@@ -138,6 +136,7 @@
             e.preventDefault();
         });
 
+    // YOUTUBE AJAX
     $('#Youtube')
         .submit(function (e) {
             $.ajax({
@@ -158,6 +157,7 @@
             e.preventDefault();
         });
 
+    // SUBMITTING
     $("#form").submit(function () {
         $("input:hidden").val($("#contents").html());
     });
