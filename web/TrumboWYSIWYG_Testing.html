@@ -132,24 +132,18 @@
         var content = $('.wysiwys').trumbowyg('html');
         if (mouse == -1) {
             console.log("making");
-            console.log(content);
-            number++;
             var paragraph1 = document.createElement("li");
             paragraph1.className = "ui-state-default ";
-            paragraph1.onclick = getID;
-//        var paragraph = document.createElement("p");
-//        paragraph1.class = "typing";
-            paragraph1.id = number;
+            paragraph1.addEventListener("click", selection);
             $("#sortable").append(paragraph1);
-//        $(paragraph1).append(paragraph);
             paragraph1.innerHTML = content;
             resetText();
         }
         <!-- Make the selection number -1, so it won't put the content of what's currently in the WYSIWYG directly into the selected section if made -->
         else {
             console.log("change");
-            $("#" + mouse).html(content);
-            $("#" + mouse).removeClass("section-selected");
+            mouse.innerHTML = content;
+            mouse.class.removeClass("section-selected");
             clicked = false;
             mouse = -1;
             resetText();
@@ -159,11 +153,10 @@
     // Delete currently selected section
     function deleteSection() {
         if (mouse != -1) {
-            $("#"+mouse).remove();
-            mouse =-1;
+            mouse.remove();
+            mouse = -1;
         }
         else {
-            console.log(mouse);
             console.log($(".ui-state-default").length);
             $(".ui-state-default").eq($(".ui-state-default").length - 1).remove();
         }
@@ -183,23 +176,24 @@
 <!-- Scripts for dealing with draggable sections -->
 <script>
     var mouse = -1;
-    var number = -1;
     var clicked = false;
     // Get ID of section we clicked on, grab the content, put back inside WYSIWYG
-    function getID() {
+  function selection () {
+        console.log("clicked");
         if (!clicked) {
-            mouse = this.id;
+            mouse = this;
+            console.log(this);
+            console.log(mouse.innerHTML);
             console.log("section id: " + mouse);
-            $('.wysiwys').trumbowyg('html', $(".ui-state-default").eq(mouse).text());
+            $('.wysiwys').trumbowyg('html', mouse.innerHTML);
             console.log($('.wysiwys').trumbowyg('html'));
             $(this).addClass("section-selected");
-            console.log($(".ui-state-default section-selected").eq(mouse).text());
             clicked = true;
         }
         else {
             clearSection();
         }
-    }
+    };
 
     // Typing and populating the section with content from the WYSIWYG
     // If mouse is null, won't do anything
