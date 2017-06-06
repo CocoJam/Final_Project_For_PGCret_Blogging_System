@@ -84,12 +84,16 @@
                         </form>
                         <%--Notes for Nicole. This button is to goto the registration page, since this does not submit the details in the above form it is not possible to include as part of the above form as this will cause only one action. Thus a separate registration form is required. Please see corresponding POST and GET methods inside of the registration and login servlets--%>
                         <div class="footer text-center">
-                            <form action="/login" method="get">
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <input type="submit" value="Registration" name="Registration"
-                                           class="btn btn-block btn-danger btn-lg">
-                                </div>
-                            </form>
+
+                            Click <a href="/login?Registration=Registration" style="color: green">Register</a> to signup now
+                            <br><br>
+
+                            <%--<form action="/login" method="get">--%>
+                                <%--<div class="col-xs-12 col-sm-12 col-md-12">--%>
+                                    <%--<input type="submit" value="Registration" name="Registration"--%>
+                                           <%--class="btn btn-block btn-danger btn-lg">--%>
+                                <%--</div>--%>
+                            <%--</form>--%>
                         </div>
 
 

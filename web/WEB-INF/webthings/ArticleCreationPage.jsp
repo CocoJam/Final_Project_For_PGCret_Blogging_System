@@ -11,6 +11,8 @@
 <head>
     <title>Article</title>
 
+    <%@include file="../../component/Header(styling Template).html" %>
+
     <!-- jQUERY & jQUERY UI -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -49,112 +51,181 @@
 
 </head>
 
-<body>
-<form id="form" action="/Articles" method="post">
-    <label for="ArticleName">Article Name</label>
-    <input name="ArticleName" type="text" id="ArticleName" value="${articleContents.articlename}">
-    <input type="hidden" name="ArticleContent">
+<body class="profile-page">
 
-    <% if (session.getAttribute("articleContents") != null) {
-        System.out.println("EDIT");
-        out.println("<input type=\"submit\" name=\"add\" value=\"Editted\">");
-    } else {
-        out.println("<input type=\"submit\" name=\"add\" value=\"addingToDataBase\">");
-    }
-    %>
-</form>
+<!-- !!! NAVIGATION BAR START !!! -->
 
-<!-- WYSIWYG -->
-<!-- Editor Box -->
-<h1>WYSIWYG</h1>
-<div class="wysiwys" placeholder="Enter your content here"></div>
+<%@ include file="../../component/NavBar-AfterLogin(Template).jsp" %>
 
-<!-- Load WYSIWYG JS -->
-<script src="../../Trumbowyg/dist/trumbowyg.min.js"></script>
-<script src="../../Trumbowyg/dist/plugins/preformatted/trumbowyg.preformatted.min.js"></script>
-<script src="../../Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
-<script src="../../Trumbowyg/dist/plugins/upload/trumbowyg.upload.js"></script>
+<!-- !!! NAVIGATION BAR END !!! -->
 
-<!-- WYSIWYG -->
-<!-- WYSIWYG Editor Implementation START -->
-<script>
-    $('.wysiwys').trumbowyg({
-        // Settings
-        semantic: true,
-        autogrow: true,
-        resetCss: true,
+<!-- !!! MAIN CONTENT START !!! -->
 
-        // Buttons
-        btnsDef: {
-            // Customizables dropdowns
-            image: {
-                dropdown: ['insertImage', 'upload', 'base64', 'noembed'],
-                ico: 'insertImage'
-            }
-        },
-        btns: [
-            ['viewHTML'],
-            ['undo', 'redo'],
-            ['formatting'],
-            'btnGrp-design',
-            ['link'],
-            ['image'],
-            ['upload'],
-            'btnGrp-justify',
-            'btnGrp-lists',
-            ['foreColor', 'backColor'],
-            ['preformatted'],
-            ['horizontalRule'],
-            ['removeformat'],
-            ['fullscreen']
-        ]
-    });
-</script>
-<!-- WYSIWYG Editor Implementation END -->
+<div class="wrapper">
+    <div class="header header-filter" id="custom-bg-user"></div><!-- background div -->
 
-<!-- Make a new section, put current WYSIWYG content in -->
-<button onclick="addNewSection()">Add Section</button>
+    <div class="container">
+        <div class="row">
 
-<!-- Delete currently selected section -->
-<button onclick="deleteSection()">Delete Section</button>
+            <div class="main custom-container-main"><!-- main container start -->
 
-<!-- Clear all content inside WYSIWYG editor -->
-<button onclick="resetText()">Reset</button>
+                <div class="profile-content">
+                    <div class="container">
 
-<p></p>
+                        <div class="row">
+                            <div class="profile">
+                                <div class="avatar">
+                                    <%--<img src="" alt="Circle Image" class="img-rounded img-responsive img-raised">--%>
 
-<!-- Space for holding content to be uploaded to DB -->
-<!-- DRAGGABLE SECTIONS -->
-<h2>Contents holding area</h2>
-<div id="contents">
-    <c:choose>
-        <c:when test="${not empty articleContents}">
-            ${articleContents.content}
-        </c:when>
-        <c:otherwise>
-            <!-- creates new section boxes -->
-            <ul>
-                <li class="ui-state draggable"></li>
-            </ul>
+                                    <c:choose>
+                                        <c:when test="${articleList.equals('self')}">
+                                            <c:choose>
+                                                <c:when test="${profileInfo.profilepic != null}">
+                                                    <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
+                                                         alt="Circle Image"
+                                                         class="img-rounded img-responsive img-raised">
+                                                    <div class="name" id="custom-profile-name">
+                                                        <h3 class="title">${profileInfo.name}'s Articles list</h3>
+                                                    </div>
+                                                </c:when>
 
-            <!-- place where you drag stuff into for sorting their order -->
-            <ul id="sortable">
-            </ul>
-        </c:otherwise>
-    </c:choose>
+                                                <c:otherwise>
+                                                    <img src="Upload-photos/placeholder.gif" alt="Circle Image"
+                                                         class="img-rounded img-responsive img-raised">
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:when>
+
+                                        <c:otherwise>
+                                            <h1>ALL ARTICLES</h1>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+
+
+                                <form id="form" action="/Articles" method="post">
+                                    <label for="ArticleName">Article Name</label>
+                                    <input name="ArticleName" type="text" id="ArticleName"
+                                           value="${articleContents.articlename}">
+                                    <input type="hidden" name="ArticleContent">
+
+                                    <% if (session.getAttribute("articleContents") != null) {
+                                        System.out.println("EDIT");
+                                        out.println("<input type=\"submit\" name=\"add\" value=\"Editted\">");
+                                    } else {
+                                        out.println("<input type=\"submit\" name=\"add\" value=\"addingToDataBase\">");
+                                    }
+                                    %>
+                                </form>
+
+                                <!-- WYSIWYG -->
+                                <!-- Editor Box -->
+                                <h1>WYSIWYG</h1>
+                                <div class="wysiwys" placeholder="Enter your content here"></div>
+
+                                <!-- Load WYSIWYG JS -->
+                                <script src="../../Trumbowyg/dist/trumbowyg.min.js"></script>
+                                <script src="../../Trumbowyg/dist/plugins/preformatted/trumbowyg.preformatted.min.js"></script>
+                                <script src="../../Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
+                                <script src="../../Trumbowyg/dist/plugins/upload/trumbowyg.upload.js"></script>
+                                <script src="Trumbowyg/dist/plugins/emoji/trumbowyg.emoji.min.js"></script>
+                                <script src="Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
+
+                                <!-- WYSIWYG -->
+                                <!-- WYSIWYG Editor Implementation START -->
+                                <script>
+                                    $('.wysiwys').trumbowyg({
+                                        // Settings
+                                        semantic: true,
+                                        autogrow: true,
+                                        resetCss: true,
+
+                                        // Buttons
+                                        btnsDef: {
+                                            // Customizables dropdowns
+                                            image: {
+                                                dropdown: ['insertImage', 'upload', 'base64', 'noembed'],
+                                                ico: 'insertImage'
+                                            }
+                                        },
+                                        btns: [
+                                            ['viewHTML'],
+                                            ['undo', 'redo'],
+                                            ['formatting'],
+                                            'btnGrp-design',
+                                            ['link'],
+                                            ['image'],
+                                            ['upload'],
+                                            'btnGrp-justify',
+                                            'btnGrp-lists',
+                                            ['foreColor', 'backColor'],
+                                            ['preformatted'],
+                                            ['horizontalRule'],
+                                            ['removeformat'],
+                                            ['fullscreen']
+                                        ]
+                                    });
+                                </script>
+                                <!-- WYSIWYG Editor Implementation END -->
+
+                                <!-- Make a new section, put current WYSIWYG content in -->
+                                <button onclick="addNewSection()">Add Section</button>
+
+                                <!-- Delete currently selected section -->
+                                <button onclick="deleteSection()">Delete Section</button>
+
+                                <!-- Clear all content inside WYSIWYG editor -->
+                                <button onclick="resetText()">Reset</button>
+
+                                <p></p>
+
+                                <!-- Space for holding content to be uploaded to DB -->
+                                <!-- DRAGGABLE SECTIONS -->
+                                <h2>Contents holding area</h2>
+                                <div id="contents">
+                                    <c:choose>
+                                        <c:when test="${not empty articleContents}">
+                                            ${articleContents.content}
+                                        </c:when>
+                                        <c:otherwise>
+                                            <!-- creates new section boxes -->
+                                            <ul>
+                                                <li class="ui-state draggable"></li>
+                                            </ul>
+
+                                            <!-- place where you drag stuff into for sorting their order -->
+                                            <ul id="sortable">
+                                            </ul>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+
+                                <form action="/Upload" method="post" id="Upload"
+                                      enctype="multipart/form-data">
+                                    <input type="file" name="file" size="50"/>
+                                    <input type="submit" name="Upload" value="ArticlesUpload"/>
+                                </form>
+
+                                <form id="Youtube" action="/ArticleUpload" method="post">
+                                    <input id="youtubeurl" type="text" name="youtube">
+                                    <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<form action="/Upload" method="post" id="Upload"
-      enctype="multipart/form-data">
-    <input type="file" name="file" size="50"/>
-    <input type="submit" name="Upload" value="ArticlesUpload"/>
-</form>
-
-<form id="Youtube"  action="/ArticleUpload" method="post">
-    <input id="youtubeurl" type="text" name="youtube">
-    <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">
-</form>
-
 
 </body>
 
@@ -168,24 +239,18 @@
         var content = $('.wysiwys').trumbowyg('html');
         if (mouse == -1) {
             console.log("making");
-            console.log(content);
-            number++;
             var paragraph1 = document.createElement("li");
             paragraph1.className = "ui-state-default ";
-            paragraph1.onclick = getID;
-//        var paragraph = document.createElement("p");
-//        paragraph1.class = "typing";
-            paragraph1.id = number;
+            paragraph1.addEventListener("click", selection);
             $("#sortable").append(paragraph1);
-//        $(paragraph1).append(paragraph);
             paragraph1.innerHTML = content;
             resetText();
         }
         <!-- Make the selection number -1, so it won't put the content of what's currently in the WYSIWYG directly into the selected section if made -->
         else {
             console.log("change");
-            $("#" + mouse).html(content);
-            $("#" + mouse).removeClass("section-selected");
+            mouse.innerHTML = content;
+            mouse.class.removeClass("section-selected");
             clicked = false;
             mouse = -1;
             resetText();
@@ -195,11 +260,10 @@
     // Delete currently selected section
     function deleteSection() {
         if (mouse != -1) {
-            $("#"+mouse).remove();
-            mouse =-1;
+            mouse.remove();
+            mouse = -1;
         }
         else {
-            console.log(mouse);
             console.log($(".ui-state-default").length);
             $(".ui-state-default").eq($(".ui-state-default").length - 1).remove();
         }
@@ -219,23 +283,25 @@
 <!-- Scripts for dealing with draggable sections -->
 <script>
     var mouse = -1;
-    var number = -1;
     var clicked = false;
     // Get ID of section we clicked on, grab the content, put back inside WYSIWYG
-    function getID() {
+    function selection() {
+        console.log("clicked");
         if (!clicked) {
-            mouse = this.id;
+            mouse = this;
+            console.log(this);
+            console.log(mouse.innerHTML);
             console.log("section id: " + mouse);
-            $('.wysiwys').trumbowyg('html', $(".ui-state-default").eq(mouse).text());
+            $('.wysiwys').trumbowyg('html', mouse.innerHTML);
             console.log($('.wysiwys').trumbowyg('html'));
             $(this).addClass("section-selected");
-            console.log($(".ui-state-default section-selected").eq(mouse).text());
             clicked = true;
         }
         else {
             clearSection();
         }
     }
+    ;
 
     // Typing and populating the section with content from the WYSIWYG
     // If mouse is null, won't do anything
@@ -277,13 +343,13 @@
                     console.log(msg);
                     var li = document.createElement("li");
                     li.className = "ui-state draggable";
-                    if (msg.endsWith(".flv") || msg.endsWith(".m4v") || msg.endsWith(".mp4") || msg.endsWith(".mpg") || msg.endsWith(".mpeg") || msg.endsWith(".wmv")){
-                        li.innerHTML = "<video width=\"400\" controls> <source src=\""+msg+"\"></video>";
+                    if (msg.endsWith(".flv") || msg.endsWith(".m4v") || msg.endsWith(".mp4") || msg.endsWith(".mpg") || msg.endsWith(".mpeg") || msg.endsWith(".wmv")) {
+                        li.innerHTML = "<video width=\"400\" controls> <source src=\"" + msg + "\"></video>";
                     }
-                    else if(msg.endsWith(".mp3")){
-                        li.innerHTML = " <audio controls><source src=\""+msg+"\" type=\"audio/ogg\"> </audio>";
+                    else if (msg.endsWith(".mp3")) {
+                        li.innerHTML = " <audio controls><source src=\"" + msg + "\" type=\"audio/ogg\"> </audio>";
                     }
-                    else if (msg.endsWith(".jpg") || msg.endsWith(".png")||msg.endsWith(".gif")||msg.endsWith(".jpeg")||msg.endsWith(".svg")) {
+                    else if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
                         li.innerHTML = "<img src=\"" + msg + "\">";
                     }
                     $("#sortable").append(li);
@@ -298,7 +364,7 @@
             $.ajax({
                 url: '/ArticleUpload',
                 type: 'POST',
-                data: {"youtube":$("#youtubeurl").val()},
+                data: {"youtube": $("#youtubeurl").val()},
                 success: function (msg) {
                     console.log(msg);
                     var image = document.createElement("ul");

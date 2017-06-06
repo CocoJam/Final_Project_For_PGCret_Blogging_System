@@ -72,7 +72,6 @@
 
                         <div class="row">
                             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-                                <h1></h1>
 
                                 <table class="table table-striped table-hover table-responsive">
                                     <tr>

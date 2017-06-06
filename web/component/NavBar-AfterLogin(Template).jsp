@@ -66,6 +66,9 @@
                         <li class="divider"></li>
                         <li><a href="ArticlesIndex?articleList=all"><i class="material-icons">fullscreen</i>All Articles</a>
                         </li>
+                        <li class="divider"></li>
+                        <li><a href="Articles?add=addNewArticle"><i class="material-icons">create</i>New Article</a>
+                        </li>
                     </ul>
                 </li>
 
