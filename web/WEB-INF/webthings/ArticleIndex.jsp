@@ -28,8 +28,8 @@
 
         .gallery li {
             float: left;
-            width: 20%;
-            height: 20%;
+            width: 120px !important;
+            height: 200px !important;
             padding: 0.4em;
             margin: 0 0.4em 0.4em 0;
             text-align: center;
@@ -153,9 +153,7 @@
                                                              width="96" height="72">
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <img src="Upload-photos/placeholder/white-question-mark-on-a-black-circular-background_318-35996.jpg"
-                                                             alt="${index.articlename}"
-                                                             width="96" height="72">
+
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <p hidden>${index.content}</p>
@@ -310,29 +308,6 @@
         });
 
     });
-    // Resolve the icons behavior with event delegation
-
-    //        $(".dialog").each(function () {
-    //            $(this).dialog({
-    //                autoOpen: false,
-    //                show: {
-    //                    effect: "blind",
-    //                    duration: 1000
-    //                },
-    //                hide: {
-    //                    effect: "explode",
-    //                    duration: 1000
-    //                }
-    //            });
-    //        });
-    //        $(".dialogbutton").each(function () {
-    //            $(this).on("click", function () {
-    //                console.log($(this).siblings(".dialog"));
-    //                console.log($(this).siblings("div"));
-    //                $(this).siblings("div").dialog("open");
-    ////                $(this).dialog("open");
-    //            });
-    //        });
 
 
 </script>
