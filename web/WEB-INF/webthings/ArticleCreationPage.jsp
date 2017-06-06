@@ -55,7 +55,7 @@
 
 <!-- !!! NAVIGATION BAR START !!! -->
 
-<%@ include file="../../component/NavBar-AfterLogin(Template).jsp" %>
+<%--<%@ include file="../../component/NavBar-AfterLogin(Template).jsp" %>--%>
 
 <!-- !!! NAVIGATION BAR END !!! -->
 
@@ -85,7 +85,7 @@
                                                          alt="Circle Image"
                                                          class="img-rounded img-responsive img-raised">
                                                     <div class="name" id="custom-profile-name">
-                                                        <h3 class="title">${profileInfo.name}'s Articles list</h3>
+                                                        <h3 class="title">${profileInfo.name}'s Article</h3>
                                                     </div>
                                                 </c:when>
 
@@ -109,86 +109,52 @@
                         <div class="row">
                             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
 
-
+                                <!-- Articles Form for submitting new/changes to database -->
                                 <form id="form" action="/Articles" method="post">
-                                    <label for="ArticleName">Article Name</label>
-                                    <input name="ArticleName" type="text" id="ArticleName"
-                                           value="${articleContents.articlename}">
+                                    <div class="form-group label-floating">
+                                    <label for="ArticleName" class="control-label">Article Name</label>
+                                    <input name="ArticleName" class="form-control" type="text" id="ArticleName" value="${articleContents.articlename}">
+                                    </div>
                                     <input type="hidden" name="ArticleContent">
 
                                     <% if (session.getAttribute("articleContents") != null) {
                                         System.out.println("EDIT");
-                                        out.println("<input type=\"submit\" name=\"add\" value=\"Editted\">");
+                                        out.println("<input type=\"submit\" class=\"btn btn-success\" name=\"add\" value=\"Editted\">");
                                     } else {
-                                        out.println("<input type=\"submit\" name=\"add\" value=\"addingToDataBase\">");
+                                        out.println("<input type=\"submit\" class=\"btn btn-success\" name=\"add\" value=\"addingToDataBase\">");
                                     }
                                     %>
                                 </form>
 
                                 <!-- WYSIWYG -->
                                 <!-- Editor Box -->
-                                <h1>WYSIWYG</h1>
                                 <div class="wysiwys" placeholder="Enter your content here"></div>
 
-                                <!-- Load WYSIWYG JS -->
-                                <script src="../../Trumbowyg/dist/trumbowyg.min.js"></script>
-                                <script src="../../Trumbowyg/dist/plugins/preformatted/trumbowyg.preformatted.min.js"></script>
-                                <script src="../../Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
-                                <script src="../../Trumbowyg/dist/plugins/upload/trumbowyg.upload.js"></script>
-                                <script src="Trumbowyg/dist/plugins/emoji/trumbowyg.emoji.min.js"></script>
-                                <script src="Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
-
-                                <!-- WYSIWYG -->
-                                <!-- WYSIWYG Editor Implementation START -->
-                                <script>
-                                    $('.wysiwys').trumbowyg({
-                                        // Settings
-                                        semantic: true,
-                                        autogrow: true,
-                                        resetCss: true,
-
-                                        // Buttons
-                                        btnsDef: {
-                                            // Customizables dropdowns
-                                            image: {
-                                                dropdown: ['insertImage', 'upload', 'base64', 'noembed'],
-                                                ico: 'insertImage'
-                                            }
-                                        },
-                                        btns: [
-                                            ['viewHTML'],
-                                            ['undo', 'redo'],
-                                            ['formatting'],
-                                            'btnGrp-design',
-                                            ['link'],
-                                            ['image'],
-                                            ['upload'],
-                                            'btnGrp-justify',
-                                            'btnGrp-lists',
-                                            ['foreColor', 'backColor'],
-                                            ['preformatted'],
-                                            ['horizontalRule'],
-                                            ['removeformat'],
-                                            ['fullscreen']
-                                        ]
-                                    });
-                                </script>
-                                <!-- WYSIWYG Editor Implementation END -->
-
                                 <!-- Make a new section, put current WYSIWYG content in -->
-                                <button onclick="addNewSection()">Add Section</button>
+                                <button class="btn btn-info" onclick="addNewSection()">Add Section</button>
 
                                 <!-- Delete currently selected section -->
-                                <button onclick="deleteSection()">Delete Section</button>
+                                <button class="btn btn-danger" onclick="deleteSection()">Delete Section</button>
 
                                 <!-- Clear all content inside WYSIWYG editor -->
-                                <button onclick="resetText()">Reset</button>
+                                <button class="btn btn-warning" onclick="resetText()">Reset Editor</button>
 
                                 <p></p>
 
+                                <form action="/Upload" method="post" id="Upload"
+                                      enctype="multipart/form-data">
+                                    <input type="file" name="file" size="50"/>
+                                    <input type="submit" name="Upload" value="ArticlesUpload"/>
+                                </form>
+
+                                <form id="Youtube" action="/ArticleUpload" method="post">
+                                    <input id="youtubeurl" type="text" name="youtube">
+                                    <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">
+                                </form>
+
                                 <!-- Space for holding content to be uploaded to DB -->
                                 <!-- DRAGGABLE SECTIONS -->
-                                <h2>Contents holding area</h2>
+                                <h2>Preview Your Content</h2>
                                 <div id="contents">
                                     <c:choose>
                                         <c:when test="${not empty articleContents}">
@@ -207,17 +173,6 @@
                                     </c:choose>
                                 </div>
 
-                                <form action="/Upload" method="post" id="Upload"
-                                      enctype="multipart/form-data">
-                                    <input type="file" name="file" size="50"/>
-                                    <input type="submit" name="Upload" value="ArticlesUpload"/>
-                                </form>
-
-                                <form id="Youtube" action="/ArticleUpload" method="post">
-                                    <input id="youtubeurl" type="text" name="youtube">
-                                    <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">
-                                </form>
-
                             </div>
                         </div>
                     </div>
@@ -228,6 +183,112 @@
 </div>
 
 </body>
+
+<!-- WYSIWYG -->
+
+<!-- Load WYSIWYG JS -->
+<script src="../../Trumbowyg/dist/trumbowyg.min.js"></script>
+<script src="../../Trumbowyg/dist/plugins/preformatted/trumbowyg.preformatted.min.js"></script>
+<script src="../../Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
+<script src="../../Trumbowyg/dist/plugins/upload/trumbowyg.upload.js"></script>
+<script src="../../Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
+<script src="../../Trumbowyg/dist/plugins/noembed/trumbowyg.noembed.js"></script>
+
+<!-- WYSIWYG Editor Implementation START -->
+<script>
+
+    jQuery.trumbowyg.langs.en = {
+        _dir: "ltr", // This line is optionnal, but usefull to override the `dir` option
+
+        viewHTML: 'View HTML',
+
+        undo: 'Undo',
+        redo: 'Redo',
+
+        formatting: 'Formatting',
+        p: 'Paragraph',
+        blockquote: 'Quote',
+        code: 'Code',
+        header: 'Header',
+
+        bold: 'Bold',
+        italic: 'Italic',
+        strikethrough: 'Stroke',
+        underline: 'Underline',
+
+        strong: 'Strong',
+        em: 'Emphasis',
+        del: 'Deleted',
+
+        superscript: 'Superscript',
+        subscript: 'Subscript',
+
+        unorderedList: 'Unordered list',
+        orderedList: 'Ordered list',
+
+        justifyLeft: 'Align Left',
+        justifyCenter: 'Align Center',
+        justifyRight: 'Align Right',
+        justifyFull: 'Align Justify',
+
+        horizontalRule: 'Insert horizontal rule',
+        removeformat: 'Remove formatting',
+
+        fullscreen: 'Fullscreen',
+
+        close: 'Close',
+
+        submit: 'Confirm',
+        reset: 'Cancel',
+
+        required: 'Required',
+        description: 'Description',
+        title: 'Title',
+        text: 'Text',
+        target: 'Target',
+
+        link: "Hyperlink",
+        createLink: "Add hyperlink",
+        unlink: "Remove hyperlink",
+
+        insertImage: 'Insert Image',
+        upload: "Upload Image",
+        insertAudio: "Insert Audio",
+        noembed: "Embed Media"
+    };
+
+    $('.wysiwys').trumbowyg({
+        // Settings
+        semantic: true,
+        autogrow: true,
+        resetCss: true,
+
+        // Buttons
+        btnsDef: {
+            // Customizables dropdowns
+            Multimedia: {
+                dropdown: ['insertImage', 'upload', 'insertAudio', 'noembed'],
+                ico: 'upload'
+            }
+        },
+        btns: [
+            ['viewHTML'],
+            ['undo', 'redo'],
+            ['formatting'],
+            'btnGrp-design',
+            ['link'],
+            ['Multimedia'],
+            'btnGrp-justify',
+            'btnGrp-lists',
+            ['foreColor', 'backColor'],
+            ['preformatted'],
+            ['horizontalRule'],
+            ['removeformat'],
+            ['fullscreen']
+        ]
+    });
+</script>
+<!-- WYSIWYG Editor Implementation END -->
 
 <!-- More WYSIWYG JS -->
 <script>
@@ -301,7 +362,6 @@
             clearSection();
         }
     }
-    ;
 
     // Typing and populating the section with content from the WYSIWYG
     // If mouse is null, won't do anything

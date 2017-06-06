@@ -60,7 +60,7 @@
 <p></p>
 
 <!-- Space for holding content to be uploaded to DB -->
-<h2>Contents holding area</h2>
+<h2>Preview</h2>
 <div id="contents">
 
     <!-- creates new section boxes -->
@@ -81,12 +81,72 @@
 <script src="Trumbowyg/dist/plugins/preformatted/trumbowyg.preformatted.min.js"></script>
 <script src="Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
 <script src="Trumbowyg/dist/plugins/upload/trumbowyg.upload.js"></script>
-<script src="Trumbowyg/dist/plugins/emoji/trumbowyg.emoji.min.js"></script>
 <script src="Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
-
+<script src="Trumbowyg/dist/plugins/noembed/trumbowyg.noembed.js"></script>
 
 <!-- WYSIWYG Editor Implementation START -->
 <script>
+
+    jQuery.trumbowyg.langs.en = {
+        _dir: "ltr", // This line is optionnal, but usefull to override the `dir` option
+
+        viewHTML: 'View HTML',
+
+        undo: 'Undo',
+        redo: 'Redo',
+
+        formatting: 'Formatting',
+        p: 'Paragraph',
+        blockquote: 'Quote',
+        code: 'Code',
+        header: 'Header',
+
+        bold: 'Bold',
+        italic: 'Italic',
+        strikethrough: 'Stroke',
+        underline: 'Underline',
+
+        strong: 'Strong',
+        em: 'Emphasis',
+        del: 'Deleted',
+
+        superscript: 'Superscript',
+        subscript: 'Subscript',
+
+        unorderedList: 'Unordered list',
+        orderedList: 'Ordered list',
+
+        justifyLeft: 'Align Left',
+        justifyCenter: 'Align Center',
+        justifyRight: 'Align Right',
+        justifyFull: 'Align Justify',
+
+        horizontalRule: 'Insert horizontal rule',
+        removeformat: 'Remove formatting',
+
+        fullscreen: 'Fullscreen',
+
+        close: 'Close',
+
+        submit: 'Confirm',
+        reset: 'Cancel',
+
+        required: 'Required',
+        description: 'Description',
+        title: 'Title',
+        text: 'Text',
+        target: 'Target',
+
+        link: "Hyperlink",
+        createLink: "Add hyperlink",
+        unlink: "Remove hyperlink",
+
+        insertImage: 'Insert Image',
+        upload: "Upload Image",
+        insertAudio: "Insert Audio",
+        noembed: "Embed Media"
+    };
+
     $('.wysiwys').trumbowyg({
         // Settings
         semantic: true,
@@ -96,9 +156,9 @@
         // Buttons
         btnsDef: {
             // Customizables dropdowns
-            image: {
-                dropdown: ['insertImage', 'upload', 'base64', 'noembed'],
-                ico: 'insertImage'
+            Multimedia: {
+                dropdown: ['insertImage', 'upload', 'insertAudio', 'noembed'],
+                ico: 'upload'
             }
         },
         btns: [
@@ -107,9 +167,7 @@
             ['formatting'],
             'btnGrp-design',
             ['link'],
-            ['image'],
-            ['emoji'],
-            ['audio'],
+            ['Multimedia'],
             'btnGrp-justify',
             'btnGrp-lists',
             ['foreColor', 'backColor'],
@@ -193,7 +251,7 @@
         else {
             clearSection();
         }
-    };
+    }
 
     // Typing and populating the section with content from the WYSIWYG
     // If mouse is null, won't do anything
