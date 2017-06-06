@@ -12,9 +12,71 @@
     <title>ArticleIndex</title>
 
     <%@include file="../../component/Header(styling Template).html" %>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        #gallery {
+            float: left;
+            width: 65%;
+            min-height: 12em;
+        }
+
+        .gallery.custom-state-active {
+            background: #eee;
+        }
+
+        .gallery li {
+            float: left;
+            width: 20%;
+            height: 20%;
+            padding: 0.4em;
+            margin: 0 0.4em 0.4em 0;
+            text-align: center;
+        }
+
+        .gallery li h5 {
+            margin: 0 0 0.4em;
+            cursor: move;
+        }
+
+        .gallery li a {
+            float: right;
+        }
+
+        .gallery li a.ui-icon-zoomin {
+            float: left;
+        }
+
+        .gallery li img {
+            width: 100%;
+            cursor: move;
+        }
+
+        #save {
+            float: right;
+            width: 32%;
+            min-height: 18em;
+            padding: 1%;
+        }
+
+        #save h4 {
+            line-height: 16px;
+            margin: 0 0 0.4em;
+        }
+
+        #save h4 .ui-icon {
+            float: left;
+        }
+
+        #save .gallery h5 {
+            display: none;
+        }
+    </style>
 
 </head>
 <body class="profile-page">
+
 
 <!-- !!! NAVIGATION BAR START !!! -->
 
@@ -73,48 +135,44 @@
                         <div class="row">
                             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
 
-                                <table class="table table-striped table-hover table-responsive">
-                                    <tr>
-                                        <th>
-                                            Article Numbers
-                                        </th>
-                                        <th>
-                                            Article Names
-                                        </th>
-                                        <th>
-                                            Date Created
-                                        </th>
-                                        <%--Scenario 1: ALL articles are requested--%>
-                                        <c:if test="${articleList.equals('all')}">
-                                            <th>
-                                                Article Author
-                                            </th>
-                                        </c:if>
+                                <div class="ui-widget ui-helper-clearfix">
+                                    <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+                                        <c:forEach items="${ArticleIndex}" var="index">
 
-                                    </tr>
-                                    <%--Looping through the Article Index (list of articles in the ArticleIndex Servlet) and populates a row per article--%>
-                                    <c:forEach items="${ArticleIndex}" var="index">
-                                        <tr>
-                                            <td>${index.articleid}</td>
-                                            <td>
-                                                <a href="/Articles?acticleId=${index.articleid}">${index.articlename}</a>
-                                            </td>
-                                            <td>${index.datecreated}</td>
-
-                                            <c:if test="${articleList.equals('all')}">
-                                                <td>
-                                                        ${index.username}
-                                                </td>
-                                            </c:if>
-                                        </tr>
-                                    </c:forEach>
-
-                                </table>
-
-                                <%--This is to add a new article--%>
-                                <form action="/Articles" method="post">
-                                    <input type="submit" name="add" value="addNewArticle" id="addNewArticle">
-                                </form>
+                                            <li class="ui-widget-content ui-corner-tr">
+                                                <h5 class="ui-widget-header">${index.articlename}</h5>
+                                                <c:if test="${articleList.equals('all')}">
+                                                    <td>
+                                                        <p>${index.username}</p>
+                                                    </td>
+                                                </c:if>
+                                                <c:choose>
+                                                    <c:when test="${not empty index.firstimage}">
+                                                        <img src="${index.firstimage}"
+                                                             alt="${index.articlename}"
+                                                             width="96" height="72">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <img src="Upload-photos/placeholder/white-question-mark-on-a-black-circular-background_318-35996.jpg"
+                                                             alt="${index.articlename}"
+                                                             width="96" height="72">
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <p hidden>${index.content}</p>
+                                                <a href="/Articles?acticleId=${index.articleid}"
+                                                   title="View larger image"
+                                                   class="ui-icon ui-icon-zoomin">View larger</a>
+                                                <a href="link/to/trash/script/when/we/have/js/off"
+                                                   title="Delete this image" class="ui-icon ui-icon-trash">Delete
+                                                    image</a>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                    <div id="save" class="ui-widget-content ui-state-default">
+                                        <h4 class="ui-widget-header"><span
+                                                class="ui-icon ui-icon-plusthick">Save</span> Save</h4>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -133,6 +191,150 @@
 <!-- FOOTER START -->
 <%@ include file="../../component/Footer(Template).html" %>
 <!-- FOOTER END -->
+<script>
+    $(function () {
 
+        // There's the gallery and the trash
+        var $gallery = $("#gallery"),
+            $save = $("#save");
+
+        // Let the gallery items be draggable
+        $("li", $gallery).draggable({
+            cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+            revert: "invalid", // when not dropped, the item will revert back to its initial position
+            containment: "document",
+            helper: "clone",
+            cursor: "move"
+        });
+
+        // Let the trash be droppable, accepting the gallery items
+        $save.droppable({
+            accept: "#gallery > li",
+            classes: {
+                "ui-droppable-active": "ui-state-highlight"
+            },
+            drop: function (event, ui) {
+                deleteImage(ui.draggable);
+            }
+        });
+
+        // Let the gallery be droppable as well, accepting items from the trash
+        $gallery.droppable({
+            accept: "#save li",
+            classes: {
+                "ui-droppable-active": "custom-state-active"
+            },
+            drop: function (event, ui) {
+                recycleImage(ui.draggable);
+            }
+        });
+
+
+        // Image deletion function
+        var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>";
+
+        function deleteImage($item) {
+            console.log("put into save")
+            $item.fadeOut(function () {
+                var $list = $("ul", $save).length ?
+                    $("ul", $save) :
+                    $("<ul class='gallery ui-helper-reset'/>").appendTo($save);
+
+                $item.find("a.ui-icon-trash").remove();
+                $item.append(recycle_icon).appendTo($list).fadeIn(function () {
+                    $item
+                        .animate({width: "48px"})
+                        .find("img")
+                        .animate({height: "36px"});
+                });
+            });
+        }
+
+        // Image recycle function
+        var trash_icon = "<a href='link/to/trash/script/when/we/have/js/off' title='Delete this image' class='ui-icon ui-icon-trash'>Delete image</a>";
+
+        function recycleImage($item) {
+            console.log("recycle to gallery")
+            $item.fadeOut(function () {
+                $item
+                    .find("a.ui-icon-refresh")
+                    .remove()
+                    .end()
+                    .css("width", "96px")
+                    .append(trash_icon)
+                    .find("img")
+                    .css("height", "72px")
+                    .end()
+                    .appendTo($gallery)
+                    .fadeIn();
+            });
+        }
+
+        // Image preview function, demonstrating the ui.dialog used as a modal window
+        function viewLargerImage($link) {
+
+            var hyper = $link.attr('href');
+            var title = $link.siblings("h5").html();
+            var content = $link.siblings("p").html();
+            console.log(content);
+            console.log("123");
+
+            var img = $("<p>" + content + "</p>");
+            img.html("<a href=\"" + hyper + "\">" + title + "</a>"+"<p>" + content + "</p>");
+            var linking = $( "<a href=\"" + hyper + "\">");
+            setTimeout(function () {
+
+                console.log("Time out");
+                img.dialog({
+                    width: 400,
+                    height: 200,
+                    modal: true
+                });
+            }, 1);
+        }
+
+
+        $( "ul.gallery > li" ).on( "click", function( event ) {
+            var $item = $( this ),
+                $target = $( event.target );
+
+            if ( $target.is( "a.ui-icon-trash" ) ) {
+                deleteImage( $item );
+            } else if ( $target.is( "a.ui-icon-zoomin" ) ) {
+                viewLargerImage( $target );
+            } else if ( $target.is( "a.ui-icon-refresh" ) ) {
+                recycleImage( $item );
+            }
+
+            return false;
+        });
+
+    });
+    // Resolve the icons behavior with event delegation
+
+    //        $(".dialog").each(function () {
+    //            $(this).dialog({
+    //                autoOpen: false,
+    //                show: {
+    //                    effect: "blind",
+    //                    duration: 1000
+    //                },
+    //                hide: {
+    //                    effect: "explode",
+    //                    duration: 1000
+    //                }
+    //            });
+    //        });
+    //        $(".dialogbutton").each(function () {
+    //            $(this).on("click", function () {
+    //                console.log($(this).siblings(".dialog"));
+    //                console.log($(this).siblings("div"));
+    //                $(this).siblings("div").dialog("open");
+    ////                $(this).dialog("open");
+    //            });
+    //        });
+
+
+</script>
 </body>
 </html>

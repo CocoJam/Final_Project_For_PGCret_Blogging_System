@@ -19,6 +19,7 @@ public class ArticleListObjectDAO extends ArticlesDAO {
     private String ArticleName = null;
     private Date DateCreated = null;
     private String UsernameID = null;
+    private String ArticleContent = null;
 
 
     public ArticleListObjectDAO() {
@@ -28,7 +29,7 @@ public class ArticleListObjectDAO extends ArticlesDAO {
     public List<Articles> selectionAllArticlesList() {
         List<Articles> ListIndex = new ArrayList<>();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, SpecificDateCreated, UserIDName FROM Articles;")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, SpecificDateCreated, UserIDName, Content FROM Articles;")) {
                 try (ResultSet resultSet = statement.executeQuery()) {
                     addingArticlesIntoTheList(ListIndex, resultSet);
                 }
@@ -47,7 +48,7 @@ public class ArticleListObjectDAO extends ArticlesDAO {
     public List<Articles> selectionArticlesList(String UserIDName) {
         List<Articles> ListIndex = new ArrayList<>();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, SpecificDateCreated, UserIDName FROM Articles WHERE UserIDName = ?;")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, SpecificDateCreated, UserIDName, Content FROM Articles WHERE UserIDName = ?;")) {
                 System.out.println(statement);
                 statement.setString(1, UserIDName);
                 try (ResultSet resultSet = statement.executeQuery()) {
@@ -78,12 +79,16 @@ public class ArticleListObjectDAO extends ArticlesDAO {
         ArticleName = resultSet.getString(2);
         DateCreated = resultSet.getDate(3);
         UsernameID = resultSet.getString(4);
+        ArticleContent = resultSet.getString(5);
     }
 
     private void articleListObjectSetStatments(Articles articleListObject) {
+
         articleListObject.setArticleid(ArticleID);
         articleListObject.setArticlename(ArticleName);
         articleListObject.setDatecreated(DateCreated);
+        articleListObject.setContent(articleListObject.cuttingLines(ArticleContent));
+        articleListObject.setFirstimage(articleListObject.FirstImg(ArticleContent));
         if (UsernameID != null) {
             System.out.println("userId set");
             articleListObject.setUsername(UsernameID);
