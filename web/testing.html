@@ -63,7 +63,7 @@
         $("#"+mouse).text($("#textarea").val());
     });
     $("#textarea").on('keyup', function (e) {
-        if (e.keyCode == 13) {
+        if (e.keyCode == 13) { // Create new section when press enter
             number++;
 
             console.log(number);

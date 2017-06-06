@@ -41,6 +41,18 @@ public class ArticleServlet extends HttpServlet {
     //Grab everything that is related to the article, set sessions with the article content and comments list (AND ownership) and dispatch to comments servlet to get the comments.
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+//        This is when the create new article button is clicked on the navbar it forwards to the relevant Post method.
+        System.out.println("skjflksdjfklsdjflksdjfklsdjfklsdjflk");
+
+        if (req.getParameter("add") != null){
+            if (req.getParameter("add").equals("addNewArticle")){
+                System.out.println(req.getParameter("add"));
+                doPost(req,resp);
+                return;
+            }
+        }
+
         String editing = req.getParameter("edit");
         session = req.getSession();
         articlesDAO = new ArticlesDAO();

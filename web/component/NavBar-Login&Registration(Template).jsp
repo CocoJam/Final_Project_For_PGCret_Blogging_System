@@ -1,6 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ include file="Template (HTML components)/Header(styling Template).html" %>
+<html lang="en">
+<head>
+
+    <title>Navigation Bar Template</title>
+
+    <%--HEADER TEMPLATE RETRIEVED FROM THE HTML FILE--%>
+
+    <%--The below header compoonent should ONLY be enabled when testing the component standalone and NOT when being used as a component as part of a page.
+    NOTE. if you enable this the toggle menu function WILL NOT WORK--%>
+    <%--<%@include file="Header(styling Template).html"%>--%>
+
+</head>
+<body>
 
 <!-- Navbar with class to set color and position behaviour -->
 <nav class="navbar navbar-info navbar-transparent navbar-fixed-top navbar-color-on-scroll">
@@ -19,7 +32,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- Navbar name of our website, displays on left -->
-            <a class="navbar-brand" href=""><i class="material-icons">apps</i>
+            <a class="navbar-brand" href="login_page.jsp"><i class="material-icons">apps</i>
                 Slash N</a>
         </div>
 
@@ -35,12 +48,12 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li>
-                <a href="/login?Registration=Registration" target="_self">
-                    <i class="material-icons">create</i>
-                    Register
-                </a>
+                    <a href="/login?Registration=Registration" target="_self">
+                        <i class="material-icons">create</i>
+                        Register
+                    </a>
 
-            </li>
+                </li>
 
                 <%--This script allows sending a POST method for GET--%>
                 <script>
@@ -53,9 +66,6 @@
                     <a href="login_page.jsp"><i class="material-icons">fingerprint</i>Sign In</a>
                 </li>
 
-
-
-
             </ul>
             <!-- Nav bar right side icons ends -->
 
@@ -63,3 +73,7 @@
     </div>
 </nav>
 <!-- !!! NAVIGATION BAR END !!! -->
+
+
+</body>
+</html>

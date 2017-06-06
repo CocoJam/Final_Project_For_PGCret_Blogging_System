@@ -10,39 +10,121 @@
 <html>
 <head>
     <title>Title</title>
+
+    <%@include file="../../component/Header(styling Template).html" %>
+
 </head>
-<body>
+<body class="profile-page">
 
-<%--if (s.endsWith(".flv") || s.endsWith(".m4v") || s.endsWith(".mp4") || s.endsWith(".mpg") || s.endsWith(".mpeg") || s.endsWith(".wmv")) {--%>
-<%--map.get("video").add(s);--%>
-<%--} else if (s.endsWith(".mp3")) {--%>
-<%--map.get("audio").add(s);--%>
-<%--} else if (s.endsWith(".jpg") || s.endsWith(".png")) {--%>
-<%--map.get("photo").add(s);--%>
-<%--}--%>
+<!-- !!! NAVIGATION BAR START !!! -->
 
-<%--Triology Part 3.5 TODO display this in tables--%>
+<%@ include file="../../component/NavBar-AfterLogin(Template).jsp" %>
 
-<c:forEach var="mediagroups" items="${mediaOutPut}">
-    <c:if test="${mediagroups.key.equals(\"photo\")}">
-        <c:forEach var="media" items="${mediagroups.value}">
-            <img src="${media}">
-        </c:forEach>
-    </c:if>
-    <c:if test="${mediagroups.key.equals(\"audio\")}">
-        <c:forEach var="media" items="${mediagroups.value}">
-            <audio controls><source src="${media}" type="audio/ogg"> </audio>
-        </c:forEach>
-    </c:if>
-    <c:if test="${mediagroups.key.equals(\"video\")}">
-        <c:forEach var="media" items="${mediagroups.value}">
-            <video width="400" controls> <source src="${media}"></video>
-        </c:forEach>
-    </c:if>
-</c:forEach>
+<!-- !!! NAVIGATION BAR END !!! -->
+
+<!-- !!! MAIN CONTENT START !!! -->
+
+<div class="wrapper">
+    <div class="header header-filter" id="custom-bg-user"></div><!-- background div -->
+
+    <div class="container">
+        <div class="row">
+
+            <div class="main custom-container-main"><!-- main container start -->
+
+                <div class="profile-content">
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="profile">
+                                <div class="avatar">
+                                    <%--<img src="" alt="Circle Image" class="img-rounded img-responsive img-raised">--%>
+
+                                    <c:choose>
+                                        <c:when test="${AllOrSelf.equals('self')}">
+                                            <c:choose>
+                                                <c:when test="${profileInfo.profilepic != null}">
+                                                    <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
+                                                         alt="Circle Image"
+                                                         class="img-rounded img-responsive img-raised">
+                                                    <div class="name" id="custom-profile-name">
+                                                        <h3 class="title">${profileInfo.name}'s Media Gallery</h3>
+                                                    </div>
+                                                </c:when>
+
+                                                <c:otherwise>
+                                                    <img src="Upload-photos/placeholder.gif" alt="Circle Image"
+                                                         class="img-rounded img-responsive img-raised">
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:when>
+
+                                        <c:otherwise>
+                                            <h3>EVERYONE'S GALLERY</h3>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+
+                                <%--if (s.endsWith(".flv") || s.endsWith(".m4v") || s.endsWith(".mp4") || s.endsWith(".mpg") || s.endsWith(".mpeg") || s.endsWith(".wmv")) {--%>
+                                <%--map.get("video").add(s);--%>
+                                <%--} else if (s.endsWith(".mp3")) {--%>
+                                <%--map.get("audio").add(s);--%>
+                                <%--} else if (s.endsWith(".jpg") || s.endsWith(".png")) {--%>
+                                <%--map.get("photo").add(s);--%>
+                                <%--}--%>
+
+                                <%--Triology Part 3.5 TODO display this in tables--%>
+
+                                <c:forEach var="mediagroups" items="${mediaOutPut}">
+                                    <c:if test="${mediagroups.key.equals(\"photo\")}">
+                                        <c:forEach var="media" items="${mediagroups.value}">
+                                            <img src="${media}" height='30%'>
+                                        </c:forEach>
+                                    </c:if>
+                                    <c:if test="${mediagroups.key.equals(\"audio\")}">
+                                        <c:forEach var="media" items="${mediagroups.value}">
+                                            <audio controls>
+                                                <source src="${media}" type="audio/ogg">
+                                            </audio>
+                                        </c:forEach>
+                                    </c:if>
+                                    <c:if test="${mediagroups.key.equals(\"video\")}">
+                                        <c:forEach var="media" items="${mediagroups.value}">
+                                            <video width="400" controls>
+                                                <source src="${media}" height='30%'>
+                                            </video>
+                                        </c:forEach>
+                                    </c:if>
+                                </c:forEach>
 
 
-<audio controls><source src="" type="audio/ogg"> </audio>
+                                <audio controls>
+                                    <source src="" type="audio/ogg">
+                                </audio>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div><!-- outer div 2 -->
+    </div><!-- outer div 1 -->
+</div><!-- wrapper div -->
+
+<!-- FOOTER START -->
+<%@ include file="../../component/Footer(Template).html" %>
+<!-- FOOTER END -->
 
 </body>
 </html>

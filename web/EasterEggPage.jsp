@@ -10,7 +10,7 @@
 <head>
     <title>Easter Egg!</title>
 
-    <%@ include file="/component/Template (HTML components)/Header(styling Template).html" %>
+    <%@ include file="/component/Header(styling Template).html" %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
@@ -42,7 +42,7 @@
         <%--THE GAME ENDS--%>
 
         <!-- FOOTER START -->
-        <%@ include file="/component/Template (HTML components)/Footer(Template).html" %>
+        <%@ include file="/component/Footer(Template).html" %>
         <!-- FOOTER END -->
 
 

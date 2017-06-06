@@ -54,6 +54,7 @@ public class Upload_files extends HttpServlet {
                        HttpServletResponse resp)
             throws ServletException, java.io.IOException {
         HttpSession session = req.getSession();
+
         caption = (String) session.getAttribute("Upload");
         System.out.println(caption);
         System.out.println("What");
@@ -120,7 +121,7 @@ public class Upload_files extends HttpServlet {
                         FormingVideoFileAndVideo();
                     } else if (fileName.endsWith(".mp3")) {
                         FormingAudioFileAndAudio();
-                    } else if (fileName.endsWith(".jpg") || fileName.endsWith(".png")) {
+                    } else if (fileName.endsWith(".jpg") || fileName.endsWith(".png")||fileName.endsWith(".gif")||fileName.endsWith(".jpeg")||fileName.endsWith(".svg")) {
                         FormingPhotoFileAndPhoto();
                     }
                     fileNameEditting(); //this slims down the filenname before it is written
