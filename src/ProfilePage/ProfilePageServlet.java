@@ -53,6 +53,7 @@ public class ProfilePageServlet extends HttpServlet{
             ProfilePAge profilePAge = profilePageDAO.getUsersProfile(req.getParameter("accessFriend"));
             HttpSession session = req.getSession();
             List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(req.getParameter("accessFriend"));
+            System.out.println(req.getParameter("accessFriend"));
             session.setAttribute("IndexOfInterest", indexList);
             session.setAttribute("showFriend", profilePAge);
             req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req,resp);

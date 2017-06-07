@@ -1,5 +1,7 @@
 package Login;
 
+import Article.ArticleListObjectDAO;
+import Article.Articles;
 import com.sun.xml.internal.bind.v2.TODO;
 
 import javax.servlet.ServletException;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 
 import static Connection.ConnectionToTheDataBase.closingConnection;

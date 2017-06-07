@@ -142,9 +142,7 @@
 
                                             <li class="ui-widget-content ui-corner-tr">
                                                 <h5 class="ui-widget-header">${index.articlename}</h5>
-                                                <c:if test="${articleList.equals('all')}">
-                                                        <p class="username">${index.username}</p>
-                                                </c:if>
+
                                                 <c:choose>
                                                     <c:when test="${not empty index.firstimage}">
                                                         <img src="${index.firstimage}"
@@ -159,8 +157,12 @@
                                                 <a href="/Articles?acticleId=${index.articleid}"
                                                    title="View larger image"
                                                    class="ui-icon ui-icon-zoomin">View larger</a>
+                                                <c:if test="${articleList.equals('all')}">
+                                                    <a href=ProfilePage?accessFriend=${index.username}
+                                                       class="username">${index.username}</a>
+                                                </c:if>
                                                 <a href="link/to/trash/script/when/we/have/js/off"
-                                                   title="Delete this image" class="ui-icon ui-icon-trash">Delete
+                                                   title="Delete this image" class="ui-icon ui-icon-plusthick">Delete
                                                     image</a>
                                             </li>
                                         </c:forEach>
@@ -190,21 +192,21 @@
 <!-- FOOTER END -->
 <script>
     $(function () {
-        $("#searchBar").bind('keyup',function () {
+        $("#searchBar").bind('keyup', function () {
             var value = $(this).val();
             $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
                 console.log($(this));
                 var title = $(this).children().siblings("h5").text();
-                var username =  $(this).children().siblings(".username").text();
+                var username = $(this).children().siblings(".username").text();
                 console.log(title);
-                var matching = new RegExp(value,"gi");
-                if (title.match(matching)||username.match(matching)){
+                var matching = new RegExp(value, "gi");
+                if (title.match(matching) || username.match(matching)) {
                     $(this).fadeIn("fast", function () {
                         console.log("Fadein");
                         $(this).css("z-index", 0)
                     })
                 }
-                else{
+                else {
                     $(this).fadeOut("fast", function () {
                         console.log("Fadeout");
                         $(this).css("z-index", -1);
@@ -297,20 +299,24 @@
             var hyper = $link.attr('href');
             var image = $link.siblings("img").attr('src');
             var title = $link.siblings("h5").html();
-            var content = $link.siblings("div").html().substr(0,20);
+            var content = $link.siblings("div").html().substr(0, 20);
+            var username = null;
+            username = $link.siblings(".username").html();
+
             console.log(content);
             console.log(image);
             console.log("123");
             console.log($link.parent().html());
             console.log($link.siblings("div").html());
             var img = $("<p>" + content + "</p>");
-            if (image != undefined){
-            img.html("<a href=\"" + hyper + "\">" + title + "</a>"+"<br/>"+"<img src=\'"+image +"\'width=\"96\" height=\"72\">"+ "<p>" + content + "</p>");}
-            else{
-                console.log("no photo")
-            img.html("<a href=\"" + hyper + "\">" + title + "</a>"+"<p>" + content + "</p>");
+            if (image != undefined) {
+                img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<br/>" + "<img src=\'" + image + "\'width=\"96\" height=\"72\">" + "<p>" + content + "</p>");
             }
-            var linking = $( "<a href=\"" + hyper + "\">");
+            else {
+                console.log("no photo")
+                img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<p>" + content + "</p>");
+            }
+            var linking = $("<a href=\"" + hyper + "\">");
             setTimeout(function () {
 
                 console.log("Time out");
@@ -323,16 +329,20 @@
         }
 
 
-        $( "ul.gallery > li" ).on( "click", function( event ) {
-            var $item = $( this ),
-                $target = $( event.target );
+        $("ul.gallery > li").on("click", function (event) {
+            var $item = $(this),
+                $target = $(event.target);
 
-            if ( $target.is( "a.ui-icon-trash" ) ) {
-                deleteImage( $item );
-            } else if ( $target.is( "a.ui-icon-zoomin" ) ) {
-                viewLargerImage( $target );
-            } else if ( $target.is( "a.ui-icon-refresh" ) ) {
-                recycleImage( $item );
+            if ($target.is("a.ui-icon-trash")) {
+                deleteImage($item);
+            } else if ($target.is("a.ui-icon-zoomin")) {
+                viewLargerImage($target);
+            } else if ($target.is("a.ui-icon-refresh")) {
+                recycleImage($item);
+            } else if ($target.is(".username")) {
+                console.log($target);
+                console.log($target.attr("href"));
+                return $target.attr('href');
             }
 
             return false;
