@@ -145,7 +145,7 @@
 <script>
     $("#textarea").bind('keyup',function () {
         var value = $(this).val();
-        $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle").each(function () {
+        $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
             console.log($(this));
             var title = $(this).children().siblings("h5").text();
             var username =  $(this).children().siblings(".made").text();
