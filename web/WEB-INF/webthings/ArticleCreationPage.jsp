@@ -1,9 +1,9 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: ljam763
-  Date: 26/05/2017
-  Time: 11:57 AM
-  To change this template use File | Settings | File Templates.
+ Created by IntelliJ IDEA.
+ User: ljam763
+ Date: 26/05/2017
+ Time: 11:57 AM
+ To change this template use File | Settings | File Templates.
 --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -154,49 +154,48 @@
                                     </div>
                                 </div>
 
-                                    <!-- Space for holding content to be uploaded to DB -->
-                                    <!-- DRAGGABLE SECTIONS -->
-                                    <h2>Preview Your Content</h2>
-                                    <div id="contents">
-                                        <c:choose>
-                                            <c:when test="${not empty articleContents}">
-                                                ${articleContents.content}
-                                            </c:when>
-                                            <c:otherwise>
-                                                <!-- creates new section boxes -->
-                                                <ul>
-                                                    <li class="ui-state draggable"></li>
-                                                </ul>
+                                <!-- Space for holding content to be uploaded to DB -->
+                                <!-- DRAGGABLE SECTIONS -->
+                                <h2>Preview Your Content</h2>
+                                <div id="contents">
+                                    <c:choose>
+                                        <c:when test="${not empty articleContents}">
+                                            ${articleContents.content}
+                                        </c:when>
+                                        <c:otherwise>
+                                            <!-- creates new section boxes -->
+                                            <ul>
+                                                <li class="ui-state draggable"></li>
+                                            </ul>
 
-                                                <!-- place where you drag stuff into for sorting their order -->
-                                                <ul id="sortable">
-                                                </ul>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
-
-                                    <!-- Media upload - TODO integrate with the uploader inside the WYSIWYG Editor -->
-                                    <form action="/Upload" method="post" id="Upload"
-                                          enctype="multipart/form-data">
-                                        <input type="file" name="file" size="50"/>
-                                        <input type="submit" name="Upload" value="ArticlesUpload"/>
-                                    </form>
-
-                                    <!-- Youtube upload -->
-                                    <%--<form id="Youtube" action="/ArticleUpload" method="post">--%>
-                                    <%--<input id="youtubeurl" type="text" name="youtube">--%>
-                                    <%--<input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">--%>
-                                    <%--</form>--%>
-
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-12">
-                                            <button id="formsubmit" class="btn btn-success btn-block"
-                                                    onclick="whenClickAdd()">Submit
-                                            </button>
-                                        </div>
-                                    </div>
-
+                                            <!-- place where you drag stuff into for sorting their order -->
+                                            <ul id="sortable">
+                                            </ul>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
+
+                                <!-- Media upload - TODO integrate with the uploader inside the WYSIWYG Editor -->
+                                <form action="/Upload" method="post" id="Upload"
+                                      enctype="multipart/form-data">
+                                    <input type="file" name="file" size="50"/>
+                                    <input type="submit" name="Upload" value="ArticlesUpload"/>
+                                </form>
+
+                                <!-- Youtube upload -->
+                                <%--<form id="Youtube" action="/ArticleUpload" method="post">--%>
+                                <%--<input id="youtubeurl" type="text" name="youtube">--%>
+                                <%--<input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">--%>
+                                <%--</form>--%>
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <button id="formsubmit" class="btn btn-success btn-block"
+                                                onclick="whenClickAdd()">Submit
+                                        </button>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -204,6 +203,7 @@
             </div>
         </div>
     </div>
+</div>
 
 <!-- FOOTER START -->
 <%@ include file="../../component/Footer(Template).html" %>
@@ -479,3 +479,4 @@
 </script>
 
 </html>
+
