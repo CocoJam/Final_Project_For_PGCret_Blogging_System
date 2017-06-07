@@ -115,23 +115,28 @@
 
                             <input type="button" id="loadProfile"
                                    onclick="location.href='/ArticlesIndex?articleList=self&profilePopulate=yes'"
-                                   value="Click to populate"/>
+                                   value="Click to populate" disabled />
+                            <script>
 
-                            <%--<script>--%>
+                                //                                $("#loadProfile").one("click", function(){
+                                //
+                                //                                    console.log("hello!")
+                                //                                });
+                                //                                document.getElementById("loadProfile").click();
 
-                                <%--//                                $("#loadProfile").one("click", function(){--%>
-                                <%--//--%>
-                                <%--//                                    console.log("hello!")--%>
-                                <%--//                                });--%>
+                                $(document).ready(function () {
+//                                    $(document).one("load", function(){
+//$("#loadProfile").attr("disabled", true);
+                                    $("#loadProfile").click();
 
-<%--//                                document.getElementById("loadProfile").click();--%>
-                                <%--$(document).ready(function(e){--%>
-                                    <%--$("#loadProfile").trigger('click');--%>
-                                    <%--e.preventDefault();--%>
+//                                    e.preventDefault();
+//                                    });
+                                })
 
-                                <%--})--%>
+                                //                                $(document).ready(function(e){
+                                //                                })
 
-                            <%--</script>--%>
+                            </script>
                             <%--testing article list--%>
 
                             <table class="table table-striped table-hover table-responsive">
