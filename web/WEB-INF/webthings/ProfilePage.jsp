@@ -117,21 +117,21 @@
                                    onclick="location.href='/ArticlesIndex?articleList=self&profilePopulate=yes'"
                                    value="Click to populate"/>
 
-                            <script>
+                            <%--<script>--%>
 
-                                //                                $("#loadProfile").one("click", function(){
-                                //
-                                //                                    console.log("hello!")
-                                //                                });
+                                <%--//                                $("#loadProfile").one("click", function(){--%>
+                                <%--//--%>
+                                <%--//                                    console.log("hello!")--%>
+                                <%--//                                });--%>
 
-//                                document.getElementById("loadProfile").click();
-                                $(document).ready(function(e){
-                                    $("#loadProfile").trigger('click');
-                                    e.preventDefault();
+<%--//                                document.getElementById("loadProfile").click();--%>
+                                <%--$(document).ready(function(e){--%>
+                                    <%--$("#loadProfile").trigger('click');--%>
+                                    <%--e.preventDefault();--%>
 
-                                })
+                                <%--})--%>
 
-                            </script>
+                            <%--</script>--%>
                             <%--testing article list--%>
 
                             <table class="table table-striped table-hover table-responsive">
