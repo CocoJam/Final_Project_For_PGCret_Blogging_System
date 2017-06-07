@@ -14,7 +14,8 @@
     <%@include file="../../component/Header(styling Template).html" %>
 
     <!-- jQUERY & jQUERY UI -->
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <%--the following jquery code has been omitted as it conflicts with the other existing jquery version.--%>
+    <%--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
@@ -30,7 +31,7 @@
             margin-bottom: 10px;
         }
 
-        li {
+        .wrapper li {
             margin: 5px;
             padding: 5px;
             width: 100%;
@@ -85,7 +86,7 @@
                                                          alt="Circle Image"
                                                          class="img-rounded img-responsive img-raised">
                                                     <div class="name" id="custom-profile-name">
-                                                        <h3 class="title">${profileInfo.name}'s Articles list</h3>
+                                                        <h3 class="title">Time to create an article ${profileInfo.name}!</h3>
                                                     </div>
                                                 </c:when>
 
@@ -97,7 +98,7 @@
                                         </c:when>
 
                                         <c:otherwise>
-                                            <h1>ALL ARTICLES</h1>
+                                            <h1>ERROR</h1>
                                         </c:otherwise>
                                     </c:choose>
 
@@ -118,16 +119,15 @@
 
                                     <% if (session.getAttribute("articleContents") != null) {
                                         System.out.println("EDIT");
-                                        out.println("<input type=\"submit\" name=\"add\" value=\"Editted\">");
+                                        out.println("<input type=\"submit\" name=\"add\" value=\"Editted\" style='visibility: hidden' id='submitButton'>");
                                     } else {
-                                        out.println("<input type=\"submit\" name=\"add\" value=\"addingToDataBase\">");
+                                        out.println("<input type=\"submit\" name=\"add\" value=\"addingToDataBase\" style='visibility: hidden' id='submitButton'>");
                                     }
                                     %>
                                 </form>
 
                                 <!-- WYSIWYG -->
                                 <!-- Editor Box -->
-                                <h1>WYSIWYG</h1>
                                 <div class="wysiwys" placeholder="Enter your content here"></div>
 
                                 <!-- Load WYSIWYG JS -->
@@ -135,8 +135,8 @@
                                 <script src="../../Trumbowyg/dist/plugins/preformatted/trumbowyg.preformatted.min.js"></script>
                                 <script src="../../Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
                                 <script src="../../Trumbowyg/dist/plugins/upload/trumbowyg.upload.js"></script>
-                                <script src="Trumbowyg/dist/plugins/emoji/trumbowyg.emoji.min.js"></script>
-                                <script src="Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
+                                <script src="../../Trumbowyg/dist/plugins/emoji/trumbowyg.emoji.min.js"></script>
+                                <script src="../../Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
 
                                 <!-- WYSIWYG -->
                                 <!-- WYSIWYG Editor Implementation START -->
@@ -218,6 +218,8 @@
                                     <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">
                                 </form>
 
+                                <button id="formsubmit" onclick="whenClickAdd()">Submit</button>
+
                             </div>
                         </div>
                     </div>
@@ -231,6 +233,17 @@
 
 <!-- More WYSIWYG JS -->
 <script>
+
+    function whenClickAdd(){
+
+        $("#formsubmit").click(function(){
+            $("#submitButton").click();
+        });
+
+
+    }
+
+
     function resetText() {
         $('.wysiwys').trumbowyg('empty');
     }

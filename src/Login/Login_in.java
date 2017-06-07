@@ -21,8 +21,9 @@ public class Login_in extends HttpServlet {
     private String username;
     private String password;
     private Passwords_Checker passwords_checker = new Passwords_Checker();
+//    private List<Articles> indexList = new ArrayList<>();
 
-    //doPost gets the shit and umm does something. Oh shit its logged in.
+    //doPost checks in login is possible and if so redirects to Profile page
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -31,7 +32,7 @@ public class Login_in extends HttpServlet {
         password = req.getParameter("password");
 
         LoginPassing loginPassing = new LoginPassing(); //See loginPassing class: stores all the methods for login including DAO query the database.
-        System.out.println( passwords_checker.hashing(password,5,500));
+        System.out.println(passwords_checker.hashing(password, 5, 500));
 
         if (session.getAttribute("log") != null) {
             if ((boolean) session.getAttribute("log")) {
@@ -61,11 +62,10 @@ public class Login_in extends HttpServlet {
 //        Login.Passwords_Checker passwords_checker = new Login.Passwords_Checker();
 //        String hashedPassword = passwords_checker.hashing(password, 5 , 500);
 //        loginPassing.selectionUsersNames(username,hashedPassword);
-        if (!password.trim().equals("")&& !password.trim().isEmpty() && password.trim() != null){
+        if (!password.trim().equals("") && !password.trim().isEmpty() && password.trim() != null) {
             System.out.println("hashing");
             loginLogic(req, resp, session, loginPassing);
-        }
-        else {
+        } else {
             session.setAttribute("log", false); //TODO refactoring for login status.
             System.out.println("logged-in rejected");
             req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
@@ -81,9 +81,15 @@ public class Login_in extends HttpServlet {
     public boolean loginLogic(HttpServletRequest req, HttpServletResponse resp, HttpSession session, LoginPassing loginPassing) throws ServletException, IOException {
         if (loginPassing.selectionUsersNames(username, password)) {
             session.setAttribute("username", username);
+            session.setAttribute("articleList", "self");
             session.setAttribute("log", true); //TODO refactoring for login status.
+
+            List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
+            session.setAttribute("IndexOfInterest", indexList);
+            System.out.println(indexList);
             System.out.println("logged-in");
             System.out.println(session.getAttribute("username"));
+
             req.getRequestDispatcher("/ProfilePage").forward(req, resp); //TODO to take out.
             return true;
         } else {

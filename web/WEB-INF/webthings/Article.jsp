@@ -27,45 +27,45 @@
 
 <!-- !!! MAIN CONTENT START !!! -->
 
-                                        <div class="wrapper">
-                                            <div class="header header-filter" id="custom-bg-user"></div><!-- background div -->
+<div class="wrapper">
+    <div class="header header-filter" id="custom-bg-user"></div><!-- background div -->
 
-                                            <div class="container">
-                                                <div class="row">
+    <div class="container">
+        <div class="row">
 
-                                                    <div class="main custom-container-main"><!-- main container start -->
+            <div class="main custom-container-main"><!-- main container start -->
 
-                                                        <div class="profile-content">
-                                                            <div class="container">
+                <div class="profile-content">
+                    <div class="container">
 
-                                                                <div class="row">
-                                                                    <div class="profile">
-                                                                        <div class="avatar">
-                                                                            <%--<img src="" alt="Circle Image" class="img-rounded img-responsive img-raised">--%>
+                        <div class="row">
+                            <div class="profile">
+                                <div class="avatar">
+                                    <%--<img src="" alt="Circle Image" class="img-rounded img-responsive img-raised">--%>
 
-                                                                            <c:choose>
-                                                                                <c:when test="${articleList.equals('self')}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${profileInfo.profilepic != null}">
-                                                                                            <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                                                                 alt="Circle Image"
-                                                                                                 class="img-rounded img-responsive img-raised">
-                                                                                            <div class="name" id="custom-profile-name">
-                                                                                                <h3 class="title">${profileInfo.name}'s Articles list</h3>
-                                                                                            </div>
-                                                                                        </c:when>
+                                    <c:choose>
+                                        <c:when test="${articleList.equals('self')}">
+                                            <c:choose>
+                                                <c:when test="${profileInfo.profilepic != null}">
+                                                    <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
+                                                         alt="Circle Image"
+                                                         class="img-rounded img-responsive img-raised">
+                                                    <div class="name" id="custom-profile-name">
+                                                        <h3 class="title">${profileInfo.name}'s Articles list</h3>
+                                                    </div>
+                                                </c:when>
 
-                                                                                        <c:otherwise>
-                                                                                            <img src="Upload-photos/placeholder.gif" alt="Circle Image"
-                                                                                                 class="img-rounded img-responsive img-raised">
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
+                                                <c:otherwise>
+                                                    <img src="Upload-photos/placeholder.gif" alt="Circle Image"
+                                                         class="img-rounded img-responsive img-raised">
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:when>
 
-                                                                                <c:otherwise>
-                                                                                    <h1>ALL ARTICLES</h1>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
+                                        <c:otherwise>
+                                            <h1>ALL ARTICLES</h1>
+                                        </c:otherwise>
+                                    </c:choose>
 
                                 </div>
 
@@ -165,15 +165,15 @@
                                     <input type="submit" name="comments" value="Add a Comment">
                                 </form>
 
-                                <%--<script>--%>
-                                    <%--$("li").each(function () {--%>
-                                        <%--$(this).replaceWith(function () {--%>
-                                            <%--return $('<p>', {--%>
-                                                <%--html: this.innerHTML--%>
-                                            <%--});--%>
-                                        <%--});--%>
-                                    <%--});--%>
-                                <%--</script>--%>
+                                <script>
+                                $(".wrapper li").each(function () {
+                                $(this).replaceWith(function () {
+                                return $('<p>', {
+                                html: this.innerHTML
+                                });
+                                });
+                                });
+                                </script>
 
                             </div>
                         </div>

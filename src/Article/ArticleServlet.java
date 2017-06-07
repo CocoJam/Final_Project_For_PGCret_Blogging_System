@@ -43,7 +43,7 @@ public class ArticleServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 //        This is when the create new article button is clicked on the navbar it forwards to the relevant Post method.
-        System.out.println("skjflksdjfklsdjflksdjfklsdjfklsdjflk");
+        System.out.println("Creating new article from Navbar");
 
         if (req.getParameter("add") != null){
             if (req.getParameter("add").equals("addNewArticle")){
@@ -81,7 +81,7 @@ public class ArticleServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        req.getRequestDispatcher("/Comments").forward(req, resp);}
+        req.getRequestDispatcher("/Comments").include(req, resp);}
         else{
             req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
         }
