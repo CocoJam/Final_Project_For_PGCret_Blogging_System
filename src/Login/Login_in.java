@@ -22,7 +22,7 @@ public class Login_in extends HttpServlet {
     private String password;
     private Passwords_Checker passwords_checker = new Passwords_Checker();
 
-    //doPost gets the shit and umm does something. Oh shit its logged in.
+    //doPost checks in login is possible and if so redirects to Profile page
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -81,7 +81,7 @@ public class Login_in extends HttpServlet {
     public boolean loginLogic(HttpServletRequest req, HttpServletResponse resp, HttpSession session, LoginPassing loginPassing) throws ServletException, IOException {
         if (loginPassing.selectionUsersNames(username, password)) {
             session.setAttribute("username", username);
-            session.setAttribute("password", password);
+            session.setAttribute("articleList", "self");
             session.setAttribute("log", true); //TODO refactoring for login status.
             System.out.println("logged-in");
             System.out.println(session.getAttribute("username"));

@@ -23,30 +23,48 @@ public class ArticlesIndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         username = (String) session.getAttribute("username");
-        if (req.getParameter("articleList") != null){
-        session.setAttribute("ArticleListStatus", req.getParameter("articleList"));}
+        if (req.getParameter("articleList") != null) {
+            session.setAttribute("ArticleListStatus", req.getParameter("articleList"));
+        }
         ArticleListStatus = (String) session.getAttribute("ArticleListStatus");
         switchbetweenAllOrSelf(req, session, username);
         closingConnection();
-        req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
-        return;
+        System.out.println("TESTA");
+//        req.getRequestDispatcher("/Articles").include(req, resp);
+        System.out.println("TESTB");
+
+        if (req.getParameter("profilePopulate") == null || !req.getParameter("profilePopulate").equals("yes")) {
+            //This is when the navbar click to article index (either self or all) is clicked
+            req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp); //testing
+            System.out.println("TESTC");
+            return;
+        }
+
+        else {
+            //This is when the display button is clicked to populate the user's article list on the profile-page.
+            req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+            System.out.println("TESTD");
+            return;
+        }
     }
 
     //This: (1) determines whether to grab ALL or SELF (2) populate the list to be sent back
     private void switchbetweenAllOrSelf(HttpServletRequest req, HttpSession session, String username) {
         System.out.println("Checking self or all");
         if (ArticleListStatus != null) {
+
             if (ArticleListStatus.equals("self")) {
                 System.out.println("self");
                 session.setAttribute("articleList", "self");
                 indexList = new ArticleListObjectDAO().selectionArticlesList(username);
-                checkingForOwnership(username , indexList);
+                checkingForOwnership(username, indexList);
                 session.setAttribute("ArticleIndex", indexList);
+
             } else if (ArticleListStatus.equals("all")) {
                 System.out.println("all");
                 session.setAttribute("articleList", "all");
                 indexList = new ArticleListObjectDAO().selectionAllArticlesList();
-                checkingForOwnership(username , indexList);
+                checkingForOwnership(username, indexList);
                 session.setAttribute("ArticleIndex", indexList);
             }
         }

@@ -30,6 +30,7 @@ public class ProfilePageServlet extends HttpServlet{
         username = (String) session.getAttribute("username");
         ProfilePAge profilePAge = profilePageDAO.getUsersProfile(username);
         session.setAttribute("profileInfo", profilePAge);
+        session.setAttribute("articleList", "self"); //added in to ensure that the articles displaying on the Profile page is self only.
         closingConnection();
         req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req,resp);
         return;
