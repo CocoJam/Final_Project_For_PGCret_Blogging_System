@@ -42,7 +42,7 @@ public class ArticlesIndexServlet extends HttpServlet {
 
         else {
             //This is when the display button is clicked to populate the user's article list on the profile-page.
-            req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").include(req, resp);
             System.out.println("TESTD");
             return;
         }

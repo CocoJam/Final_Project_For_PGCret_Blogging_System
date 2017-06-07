@@ -103,7 +103,7 @@
 
                                             <c:if test="${articleList.equals('all')}">
                                                 <td>
-                                                        ${index.username}
+                                                        <a href="/ProfilePage?accessFriend=${index.username}">${index.username}</a>
                                                 </td>
                                             </c:if>
                                         </tr>

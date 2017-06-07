@@ -1,4 +1,5 @@
-<%--
+<%@ page import="sun.java2d.cmm.Profile" %>
+<%@ page import="ProfilePage.ProfilePAge" %><%--
   Created by IntelliJ IDEA.
   User: ljam763
   Date: 25/05/2017
@@ -23,6 +24,13 @@
 <%@ include file="../../component/NavBar-AfterLogin(Template).jsp" %>
 
 <!-- !!! NAVIGATION BAR END !!! -->
+
+<%----%>
+<% ProfilePAge currentuser = null;
+    if (session.getAttribute("showFriend") != null) {
+        currentuser = (ProfilePAge) session.getAttribute("profileInfo");
+        session.setAttribute("profileInfo", session.getAttribute("showFriend"));
+    }%>
 
 <!-- !!! MAIN CONTENT START !!! -->
 <div class="wrapper">
@@ -112,33 +120,6 @@
                             <%--<input type="submit" name="profilePopulate" value="yes" id="helloWorld"/>--%>
                             <%--</form>--%>
 
-
-                            <input type="button" id="loadProfile"
-                                   onclick="location.href='/ArticlesIndex?articleList=self&profilePopulate=yes'"
-                                   value="Click to populate" disabled />
-                            <script>
-
-                                //                                $("#loadProfile").one("click", function(){
-                                //
-                                //                                    console.log("hello!")
-                                //                                });
-                                //                                document.getElementById("loadProfile").click();
-
-                                $(document).ready(function () {
-//                                    $(document).one("load", function(){
-//$("#loadProfile").attr("disabled", true);
-                                    $("#loadProfile").click();
-
-//                                    e.preventDefault();
-//                                    });
-                                })
-
-                                //                                $(document).ready(function(e){
-                                //                                })
-
-                            </script>
-                            <%--testing article list--%>
-
                             <table class="table table-striped table-hover table-responsive">
                                 <tr>
                                     <th>
@@ -159,7 +140,7 @@
 
                                 </tr>
                                 <%--Looping through the Article Index (list of articles in the ArticleIndex Servlet) and populates a row per article--%>
-                                <c:forEach items="${ArticleIndex}" var="index">
+                                <c:forEach items="${IndexOfInterest}" var="index">
                                     <tr>
                                         <td>${index.articleid}</td>
                                         <td>
@@ -238,6 +219,11 @@
 <%@ include file="../../component/Footer(Template).html" %>
 <!-- FOOTER END -->
 
+<%
+    if (session.getAttribute("showFriend") != null) {
+        session.setAttribute("profileInfo", currentuser);
+        session.setAttribute("showFriend", null);
+    }%>
 
 </body>
 
