@@ -18,7 +18,7 @@
     <style>
         #gallery {
             float: left;
-            width: 65%;
+            width: 70%;
             min-height: 12em;
         }
 
@@ -55,7 +55,7 @@
 
         #save {
             float: right;
-            width: 32%;
+            width: 30%;
             min-height: 18em;
             padding: 1%;
         }
@@ -134,7 +134,7 @@
 
                         <div class="row">
                             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-
+                                <input type="text" id="searchBar">
                                 <div class="ui-widget ui-helper-clearfix">
                                     <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
                                         <c:forEach items="${ArticleIndex}" var="index">
@@ -142,9 +142,7 @@
                                             <li class="ui-widget-content ui-corner-tr">
                                                 <h5 class="ui-widget-header">${index.articlename}</h5>
                                                 <c:if test="${articleList.equals('all')}">
-                                                    <td>
-                                                        <p>${index.username}</p>
-                                                    </td>
+                                                        <p class="username">${index.username}</p>
                                                 </c:if>
                                                 <c:choose>
                                                     <c:when test="${not empty index.firstimage}">
@@ -156,7 +154,7 @@
 
                                                     </c:otherwise>
                                                 </c:choose>
-                                                <p hidden>${index.content}</p>
+                                                <div hidden>${index.content}</div>
                                                 <a href="/Articles?acticleId=${index.articleid}"
                                                    title="View larger image"
                                                    class="ui-icon ui-icon-zoomin">View larger</a>
@@ -191,6 +189,30 @@
 <!-- FOOTER END -->
 <script>
     $(function () {
+        $("#searchBar").bind('keyup',function () {
+            var value = $(this).val();
+            $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle").each(function () {
+                console.log($(this));
+                var title = $(this).children().siblings("h5").text();
+                var username =  $(this).children().siblings(".username").text();
+                console.log(title);
+                var matching = new RegExp(value,"gi");
+                if (title.match(matching)||username.match(matching)){
+                    $(this).fadeIn("fast", function () {
+                        console.log("Fadein");
+                        $(this).css("z-index", 0)
+                    })
+                }
+                else{
+                    $(this).fadeOut("fast", function () {
+                        console.log("Fadeout");
+                        $(this).css("z-index", -1);
+                        $(this).css("z-index", -1)
+                    })
+                }
+            })
+        });
+
 
         // There's the gallery and the trash
         var $gallery = $("#gallery"),
@@ -272,13 +294,21 @@
         function viewLargerImage($link) {
 
             var hyper = $link.attr('href');
+            var image = $link.siblings("img").attr('src');
             var title = $link.siblings("h5").html();
-            var content = $link.siblings("p").html();
+            var content = $link.siblings("div").html().substr(0,20);
             console.log(content);
+            console.log(image);
             console.log("123");
-
+            console.log($link.parent().html());
+            console.log($link.siblings("div").html());
             var img = $("<p>" + content + "</p>");
+            if (image != undefined){
+            img.html("<a href=\"" + hyper + "\">" + title + "</a>"+"<br/>"+"<img src=\'"+image +"\'width=\"96\" height=\"72\">"+ "<p>" + content + "</p>");}
+            else{
+                console.log("no photo")
             img.html("<a href=\"" + hyper + "\">" + title + "</a>"+"<p>" + content + "</p>");
+            }
             var linking = $( "<a href=\"" + hyper + "\">");
             setTimeout(function () {
 

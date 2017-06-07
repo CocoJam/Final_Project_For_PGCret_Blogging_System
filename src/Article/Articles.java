@@ -97,42 +97,22 @@ public class Articles {
     public static void main(String[] args) {
         Articles articles= new Articles();
         String thing =("\n" +
-                "    \n" +
-                "        \n" +
-                "            \n" +
-                "    \n" +
-                "        \n" +
-                "            \n" +
-                "    \n" +
-                "        \n" +
-                "            \n" +
-                "    \n" +
-                "        \n" +
-                "        \n" +
-                "            <!-- creates new section boxes -->\n" +
-                "            <ul>\n" +
-                "                <li style=\"position: relative;\" class=\"ui-state draggable ui-draggable ui-draggable-handle\"></li>\n" +
-                "            </ul>\n" +
+                "                                    \n" +
+                "                                        \n" +
+                "                                        \n" +
+                "                                            <!-- creates new section boxes -->\n" +
+                "                                            <ul>\n" +
+                "                                                <li class=\"ui-state draggable ui-draggable ui-draggable-handle\" style=\"position: relative;\"></li>\n" +
+                "                                            </ul>\n" +
                 "\n" +
-                "            <!-- place where you drag stuff into for sorting their order -->\n" +
-                "            <ul class=\"ui-sortable\" id=\"sortable\">\n" +
-                "            <li style=\"\" id=\"1\" class=\"ui-state-default ui-sortable-handle\"><iframe src=\"https://www.youtube.com/embed/fvWXstffJBQ\" allowfullscreen=\"\" height=\"315\" width=\"560\" frameborder=\"0\"></iframe></li><li style=\"\" id=\"2\" class=\"ui-state-default ui-sortable-handle\"><img alt=\"\" src=\"https://media.giphy.com/media/l0IykI5OLMhjtnB60/giphy.gif\"></li><li id=\"3\" class=\"ui-state-default ui-sortable-handle\"><img alt=\"\" src=\"https://media.giphy.com/media/FxEwsOF1D79za/giphy.gif\"></li><li id=\"5\" class=\"ui-state-default ui-sortable-handle\"><img alt=\"\" src=\"https://media.giphy.com/media/y8Mz1yj13s3kI/giphy.gif\"></li><li id=\"6\" class=\"ui-state-default ui-sortable-handle\"><img alt=\"\" src=\"https://media.giphy.com/media/f6pOe5e8ShRhS/giphy.gif\"></li><li id=\"7\" class=\"ui-state-default ui-sortable-handle\"><img alt=\"\" src=\"https://media.giphy.com/media/3oKIPkZx3Y9RS1wG9q/giphy.gif\"></li><li id=\"8\" class=\"ui-state-default ui-sortable-handle\"><img alt=\"\" src=\"https://media.giphy.com/media/26ueZiMhTdWLIVGGk/giphy.gif\"></li><li style=\"\" id=\"9\" class=\"ui-state-default ui-sortable-handle\"><img alt=\"\" src=\"https://media.giphy.com/media/JSueytO5O29yM/giphy.gif\"></li></ul>\n" +
-                "        \n" +
-                "    \n" +
-                "\n" +
-                "        \n" +
-                "        \n" +
-                "    \n" +
-                "\n" +
-                "        \n" +
-                "        \n" +
-                "    \n" +
-                "\n" +
-                "        \n" +
-                "        \n" +
-                "    \n");
-
-
+                "                                            <!-- place where you drag stuff into for sorting their order -->\n" +
+                "                                            <ul id=\"sortable\" class=\"ui-sortable\">\n" +
+                "                                            <li class=\"ui-state-default \">pokepokepoke</li></ul>\n" +
+                "                                        \n" +
+                "                                    \n" +
+                "                                ");
+        String lines = articles.cuttingLines(thing);
+        System.out.println(lines);
     }
 
 
