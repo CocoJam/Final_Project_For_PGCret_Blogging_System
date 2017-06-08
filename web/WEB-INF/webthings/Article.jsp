@@ -77,6 +77,11 @@
                             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
 
                                 <h1>${articleContents.articlename}</h1>
+
+                                <c:if test="${not empty articleContents.category}">
+                                    <h3>Category is: ${articleContents.category}</h3>
+                                </c:if>
+
                                 <div>${articleContents.content}</div>
                                 <p>${articleContents.username}</p>
                                 <p>${articleContents.datecreated}</p>

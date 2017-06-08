@@ -11,6 +11,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="en">
 <head>
     <title>Profile Page</title>
@@ -126,7 +127,9 @@
                                 </tr>
                                 <tr>
                                     <td>Date of Birth:</td>
-                                    <td>${profileInfo.date}</td>
+                                    <td>
+                                    <fmt:formatDate value="${profileInfo.date}" pattern="dd MMMM YYYY"/>
+                                    </td>
                                 </tr>
 
 
@@ -157,6 +160,10 @@
                                         </th>
                                     </c:if>
 
+                                    <th>
+                                        Article Category
+                                    </th>
+
                                 </tr>
                                 <%--Looping through the Article Index (list of articles in the ArticleIndex Servlet) and populates a row per article--%>
                                 <c:forEach items="${IndexOfInterest}" var="index">
@@ -172,6 +179,10 @@
                                                     ${index.username}
                                             </td>
                                         </c:if>
+                                        <td>
+                                            ${index.category}
+                                        </td>
+
                                     </tr>
                                 </c:forEach>
 

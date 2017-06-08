@@ -143,7 +143,10 @@ public class Registration extends HttpServlet {
     //Fixed the date parsing problem
     private void sqlDateparsing() {
 
+        System.out.println(dateofbirth);
+
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println(sdf1);
         Date date = null;
         if (dateofbirth.equals("")) {
             sqlFormateDate = null;

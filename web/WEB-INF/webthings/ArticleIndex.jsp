@@ -172,9 +172,27 @@
                                                 class="ui-icon ui-icon-plusthick">Save</span> Save</h4>
                                     </div>
                                 </div>
+                                            <td>${index.category}</td>
+
+                                            <c:if test="${articleList.equals('all')}">
+                                                <td>
+                                                        <a href="/ProfilePage?accessFriend=${index.username}">${index.username}</a>
+                                                </td>
+                                            </c:if>
+                                        </tr>
+                                    </c:forEach>
+
+                                </table>
+
+                                <%--This is to add a new article--%>
+                                <form action="/Articles" method="post">
+                                    <input type="submit" name="add" value="addNewArticle" id="addNewArticle">
+                                </form>
                             </div>
 
                         </div>
+
+
                     </div>
                 </div>
             </div>
