@@ -50,9 +50,7 @@
                                                     <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
                                                          alt="Circle Image"
                                                          class="img-rounded img-responsive img-raised">
-                                                    <div class="name" id="custom-profile-name">
-                                                        <h3 class="title">${profileInfo.name}'s Articles list</h3>
-                                                    </div>
+
                                                 </c:when>
 
                                                 <c:otherwise>
@@ -60,10 +58,13 @@
                                                          class="img-rounded img-responsive img-raised">
                                                 </c:otherwise>
                                             </c:choose>
+                                            <div class="name" id="custom-profile-name">
+                                                <h3 class="title">${profileInfo.name}'s Articles</h3>
+                                            </div>
                                         </c:when>
 
                                         <c:otherwise>
-                                            <h1>ALL ARTICLES</h1>
+                                            <h3>${articleContents.username}</h3>
                                         </c:otherwise>
                                     </c:choose>
 

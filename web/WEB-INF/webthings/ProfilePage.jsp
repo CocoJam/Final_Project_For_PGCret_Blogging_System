@@ -239,26 +239,27 @@
 <%@ include file="../../component/Footer(Template).html" %>
 <!-- FOOTER END -->
 
-<% if (!friended) {
-    out.println("    <script>\n" +
-            "    $(\"#addfriend\").fadeIn(\"fast\",function () {\n" +
-            "        $(this).css(\"z-index\", 0);\n" +
-            "    });\n" +
-            "    $(\"#unfriend\").fadeOut(\"fast\",function () {\n" +
-            "        $(this).css(\"z-index\", -1);\n" +
-            "    });\n" +
-            "    </script>");
-} else {
-    out.println("    <script>\n" +
-            "    $(\"#unfriend\").fadeIn(\"fast\",function () {\n" +
-            "        $(this).css(\"z-index\", 0);\n" +
-            "    });\n" +
-            "    $(\"#addfriend\").fadeOut(\"fast\",function () {\n" +
-            "        $(this).css(\"z-index\", -1);\n" +
-            "    });\n" +
-            "    </script>");
-}
+<%
     if (session.getAttribute("showFriend") != null) {
+        if (!friended) {
+            out.println("    <script>\n" +
+                    "    $(\"#addfriend\").fadeIn(\"fast\",function () {\n" +
+                    "        $(this).css(\"z-index\", 0);\n" +
+                    "    });\n" +
+                    "    $(\"#unfriend\").fadeOut(\"fast\",function () {\n" +
+                    "        $(this).css(\"z-index\", -1);\n" +
+                    "    });\n" +
+                    "    </script>");
+        } else {
+            out.println("    <script>\n" +
+                    "    $(\"#unfriend\").fadeIn(\"fast\",function () {\n" +
+                    "        $(this).css(\"z-index\", 0);\n" +
+                    "    });\n" +
+                    "    $(\"#addfriend\").fadeOut(\"fast\",function () {\n" +
+                    "        $(this).css(\"z-index\", -1);\n" +
+                    "    });\n" +
+                    "    </script>");
+        }
         out.println("<script>\n" +
                 "    $(\"#addfriend\").click(function () {\n" +
                 "        console.log(\"hello there?\");\n" +
