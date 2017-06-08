@@ -2,6 +2,8 @@ package ProfilePage;
 
 import Article.ArticleListObjectDAO;
 import Article.Articles;
+import Friend.Friend;
+import Friend.FriendDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -53,6 +55,9 @@ public class ProfilePageServlet extends HttpServlet{
             ProfilePAge profilePAge = profilePageDAO.getUsersProfile(req.getParameter("accessFriend"));
             HttpSession session = req.getSession();
             List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(req.getParameter("accessFriend"));
+            List<Friend> friendList = new FriendDAO().selectionListOfFriends(req.getParameter("accessFriend"));
+            session.setAttribute("accessFriendfirendlist", friendList);
+            System.out.println("Firend list" + friendList);
             System.out.println(req.getParameter("accessFriend"));
             session.setAttribute("IndexOfInterest", indexList);
             session.setAttribute("showFriend", profilePAge);

@@ -98,4 +98,15 @@
         <url-pattern>/ArticleUpload</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>Friend</servlet-name>
+        <servlet-class>Friend.FriendServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Friend</servlet-name>
+        <url-pattern>/Friend</url-pattern>
+    </servlet-mapping>
+
 </web-app>

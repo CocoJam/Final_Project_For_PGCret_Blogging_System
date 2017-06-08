@@ -2,6 +2,8 @@ package Login;
 
 import Article.ArticleListObjectDAO;
 import Article.Articles;
+import Friend.Friend;
+import Friend.FriendDAO;
 import com.sun.xml.internal.bind.v2.TODO;
 
 import javax.servlet.ServletException;
@@ -86,13 +88,13 @@ public class Login_in extends HttpServlet {
             session.setAttribute("username", username);
             session.setAttribute("articleList", "self");
             session.setAttribute("log", true); //TODO refactoring for login status.
-
             List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
             session.setAttribute("IndexOfInterest", indexList);
             System.out.println(indexList);
+            List<Friend> friendList = new FriendDAO().selectionListOfFriends(username);
+            session.setAttribute("firendlist", friendList);
             System.out.println("logged-in");
             System.out.println(session.getAttribute("username"));
-
             req.getRequestDispatcher("/ProfilePage").forward(req, resp); //TODO to take out.
             return true;
         } else {

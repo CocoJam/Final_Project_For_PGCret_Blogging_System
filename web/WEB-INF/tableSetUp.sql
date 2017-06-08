@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS Comments;
 DROP TABLE IF EXISTS Articles;
 DROP TABLE IF EXISTS UsersNames;
 Drop TABLE If EXISTS youtube;
-
+Drop TABLE If EXISTS Friendlist;
 
 CREATE TABLE IF NOT EXISTS UsersNames(
   Username VARCHAR(64) not NULL ,
@@ -54,10 +54,17 @@ CREATE TABLE IF NOT EXISTS Comments(
   FOREIGN KEY (CommenterName) REFERENCES UsersNames  (Username)
 );
 
-CREATE TABLE if not Exists youtube(
-ArticlesId int not NULL ,
-youtubeURL VARCHAR (1000) not NULL ,
-FOREIGN KEY (ArticlesID) REFERENCES Articles (ArticlesID)
-)
+-- CREATE TABLE if not Exists youtube(
+-- ArticlesId int not NULL ,
+-- youtubeURL VARCHAR (1000) not NULL ,
+-- FOREIGN KEY (ArticlesID) REFERENCES Articles (ArticlesID)
+-- )
+CREATE TABLE if not Exists Friendlist(
+username VARCHAR(64) not NULL ,
+friendusername VARCHAR (64) not NULL ,
+FOREIGN KEY (username) REFERENCES UsersNames (Username),
+FOREIGN KEY (friendusername) REFERENCES UsersNames (Username)
+);
+
 ALTER TABLE table_name
 ADD column_name datatype;

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ page import="Friend.FriendDAO" %>
 <html lang="en">
 <head>
 
@@ -11,9 +11,17 @@
     <%--The below header compoonent should ONLY be enabled when testing the component standalone and NOT when being used as a component as part of a page.
     NOTE. if you enable this the toggle menu function WILL NOT WORK--%>
     <%--<%@include file="Header(styling Template).html"%>--%>
-
+    <style>
+        input {
+            color: black !important;
+        }
+    </style>
 </head>
 <body>
+
+<%
+    List<String> nameList = new FriendDAO().GetAllPeopleUsername();
+%>
 
 <nav class="navbar navbar-info navbar-transparent navbar-fixed-top navbar-color-on-scroll">
 
@@ -43,10 +51,12 @@
             <!-- Use on all other pages except login/register -->
             <ul class="nav navbar-nav navbar-right">
 
+
                 <li>
                     <a href="ProfilePage"><c:choose>
                         <c:when test="${profileInfo.profilepic != null}">
-                            <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}" height='20'>
+                            <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
+                                 height='20'>
                         </c:when>
                         <c:otherwise>
                             <i class="material-icons">portrait</i>
@@ -98,12 +108,31 @@
                         <li><a href="logout?submit=Logout">Sign Out</a></li>
                     </ul>
                 </li>
+                <%--Friend search bar here--%>
+                <li>
+                    <form id="searchBar" action="/ProfilePage" method="get">
+                        <input list="usernames" name="accessFriend">
+                        <datalist id="usernames">
+                            <% for (String s : nameList) {
+                                out.println("<option value=\"" + s + "\">");
+                            }
+                            %>
+                        </datalist>
+                    </form>
+                </li>
+                <%--Friend search bar here--%>
             </ul>
 
         </div>
     </div>
 </nav>
 <!-- !!! NAVIGATION BAR END !!! -->
-
+<script>
+    $("[name='accessFriend']").on('keyup', function (e) {
+        if (e.keyCode == 13) {
+            return $("#searchBar").submit;
+        }
+    });
+</script>
 </body>
 </html>

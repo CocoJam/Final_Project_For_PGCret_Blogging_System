@@ -39,7 +39,28 @@
     </ul>
     <p><p>asdasd</p></p>
 </div>
+<input list="usernames">
+<datalist id="usernames">
+    <%
+    user
+    %>
+    <option value="Internet Explorer">
+    <option value="Firefox">
+    <option value="Chrome">
+    <option value="Opera">
+    <option value="Safari">
+</datalist>
 </body>
+<script>
+    $("#addfriend").click(function () {
+        console.log("hello there?");
+        $.post( "/Friend", { username: "John", firendname: "2pm" })
+            .done(function( data ) {
+                $(this).id= undefined;
+                $(this).innerHTML = unadd;
+            });
+    });
+</script>
 <script>
     var mouse = 0;
     var number = -1;
@@ -50,6 +71,7 @@
             });
         });
     });
+
 
     function getid(){
         mouse = this.id

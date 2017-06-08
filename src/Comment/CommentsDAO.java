@@ -15,10 +15,6 @@ import java.util.List;
  */
 public class CommentsDAO {
 
-    public CommentsDAO() {
-        super();
-    }
-
     public List<Comments> selectionComments(int CommentID, int articleID) {
         List<Comments> listOfComments = new ArrayList<>();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
