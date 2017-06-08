@@ -2,6 +2,7 @@ package Comment;
 
 import Connection.*;
 
+import javax.xml.stream.events.Comment;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,14 +16,14 @@ import java.util.List;
  */
 public class CommentsDAO {
 
-    public List<Comments> selectionComments(int CommentID, int articleID) {
-        List<Comments> listOfComments = new ArrayList<>();
+
+    public Comments selectionComment(int CommentID) {
+        Comments comment = null;
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM UsersNames WHERE ArticlesID = ? AND CommentID = ?;")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM Comments WHERE CommentID = ?;")) {
                 System.out.println(statement);
-                statement.setInt(2, CommentID);
-                statement.setInt(1, articleID);
-                makeComment(listOfComments, statement);
+                statement.setInt(1, CommentID);
+                comment = makeComment( statement);
                 System.out.println(statement);
             }
             System.out.println("CONNECTION CLOSED: " + connection.isClosed());
@@ -30,7 +31,7 @@ public class CommentsDAO {
             System.out.println("Error. Comment not found");
             e.printStackTrace();
         }
-        return listOfComments;
+        return comment;
     }
 
 
@@ -87,6 +88,25 @@ public class CommentsDAO {
         }
     }
 
+    private Comments makeComment( PreparedStatement statement) throws SQLException {
+        try (ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                Comments comments = new Comments();
+                int CommentID = resultSet.getInt(1);
+                int ArticleID = resultSet.getInt(2);
+                String CommentName = resultSet.getString(3);
+                String Comment = resultSet.getString(4);
+                Date CommentTime = resultSet.getTimestamp(5);
+                commentsSetStatments(comments, CommentID, ArticleID, CommentName, Comment, CommentTime);
+                return comments;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error creating database connection.");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private void commentsSetStatments(Comments comments, int commentID, int articleID, String commentName, String comment, Date commentTime) {
         comments.setActicleId(articleID);
         comments.setContent(comment);
@@ -129,5 +149,19 @@ public class CommentsDAO {
             System.out.println("Error. Username already exist. Cannot create profile page.");
             e.printStackTrace();
         }
+    }
+
+    public Comments selectionLastComment() {
+        Comments comments = null;
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Comments ORDER BY CommentID DESC Limit 1;")) {
+                comments = makeComment(statement);
+            }
+            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+        } catch (SQLException e) {
+            System.out.println("Error. Comment not found");
+            e.printStackTrace();
+        }
+        return comments;
     }
 }

@@ -82,54 +82,6 @@
                                 <p>${articleContents.datecreated}</p>
 
 
-                                <%--<c:forEach var="mediagroups" items="${mediaOutPut}">--%>
-                                <%--<c:if test="${mediagroups.key.equals(\"photo\")}">--%>
-                                <%--<c:forEach var="media" items="${mediagroups.value}">--%>
-                                <%--<img src="${media}">--%>
-                                <%--<c:if test="${articleContents.owner}">--%>
-                                <%--<form action="/Deleting" method="post">--%>
-                                <%--<input type="hidden" name="media" value="${media}">--%>
-                                <%--<input type="submit" name="log" value="DeleteMedia">--%>
-                                <%--</form>--%>
-                                <%--</c:if>--%>
-                                <%--</c:forEach>--%>
-                                <%--</c:if>--%>
-                                <%--<c:if test="${mediagroups.key.equals(\"audio\")}">--%>
-                                <%--<c:forEach var="media" items="${mediagroups.value}">--%>
-                                <%--<audio controls><source src="${media}" type="audio/ogg"> </audio>--%>
-                                <%--<c:if test="${articleContents.owner}">--%>
-                                <%--<form action="/Deleting" method="post">--%>
-                                <%--<input type="hidden" name="media" value="${media}">--%>
-                                <%--<input type="submit" name="log" value="DeleteMedia">--%>
-                                <%--</form>--%>
-                                <%--</c:if>--%>
-                                <%--</c:forEach>--%>
-                                <%--</c:if>--%>
-                                <%--<c:if test="${mediagroups.key.equals(\"video\")}">--%>
-                                <%--<c:forEach var="media" items="${mediagroups.value}">--%>
-                                <%--<video width="400" controls> <source src="${media}"></video>--%>
-                                <%--<c:if test="${articleContents.owner}">--%>
-                                <%--<form action="/Deleting" method="post">--%>
-                                <%--<input type="hidden" name="media" value="${media}">--%>
-                                <%--<input type="submit" name="log" value="DeleteMedia">--%>
-                                <%--</form>--%>
-                                <%--</c:if>--%>
-                                <%--</c:forEach>--%>
-                                <%--</c:if>--%>
-                                <%--<c:if test="${mediagroups.key.equals(\"youtube\")}">--%>
-                                <%--<c:forEach var="media" items="${mediagroups.value}">--%>
-                                <%--<c:if test="${articleContents.owner}">--%>
-                                <%--<form action="/Deleting" method="post">--%>
-                                <%--<input type="hidden" name="media" value="${media}">--%>
-                                <%--<input type="submit" name="log" value="DeleteYoutube">--%>
-                                <%--</form>--%>
-                                <%--</c:if>--%>
-                                <%--${media}--%>
-                                <%--</c:forEach>--%>
-                                <%--</c:if>--%>
-                                <%--</c:forEach>--%>
-
-
                                 <c:if test="${articleContents.owner}">
                                     <p>${articleContents.owner}</p>
                                     <form action="/Articles" method="post">
@@ -139,51 +91,76 @@
                                         <input type="submit" name="log" value="DeleteArticle">
                                     </form>
                                 </c:if>
+                                <div id="containComments">
+                                    <c:forEach items="${commentlist}" var="content">
+                                        <div id="${content.commentId}">
+                                            <p id="${content.commentId}username">${content.username}</p>
+                                            <p id="${content.commentId}content">${content.content}</p>
+                                            <p id="${content.commentId}commentedTime">${content.commentedTime}</p>
+                                            <c:if test="${content.owner || articleContents.owner}">
+                                                <button id="${content.commentId}delete">Delete</button>
+                                                <script>
+                                                    $("#${content.commentId}delete").click(function () {
+                                                        $.post("/Deleting", {
+                                                            "commentId": "${content.commentId}",
+                                                            "log": "DeleteComment"
+                                                        })
+                                                            .done(function (data) {
+                                                                $("#${content.commentId}").remove();
+                                                                $(this).remove();
+                                                                console.log("hello");
+                                                            });
+                                                    });
+                                                </script>
+                                            </c:if>
+                                            <c:if test="${content.owner}">
+                                                <input type="text" id="${content.commentId}text">
+                                                <button id="${content.commentId}edit">Edit</button>
+                                                <script>
+                                                    $("#${content.commentId}edit").click(function () {
+                                                        $.ajax({
+                                                            url: '/Comments',
+                                                            type: 'Post',
+                                                            data: {
+                                                                "commentId": "${content.commentId}",
+                                                                "commentcontent": $("#${content.commentId}text").val(),
+                                                                "comments": "EditComment"
+                                                            },
+                                                            success: function (msg) {
+                                                                console.log(msg);
+                                                                var Data = JSON.parse(msg);
+                                                                var p1 = $("#${content.commentId}username");
+                                                                p1.html(Data.Username);
+                                                                var p2 =$("#${content.commentId}content");
+                                                                p2.html(Data.Content);
+                                                                var p3 = $("#${content.commentId}commentedTime");
+                                                                p3.html(Data.CommentedTime);
+                                                            }
+                                                        });
+                                                    });
+                                                </script>
+                                            </c:if>
+                                        </div>
 
-                                <c:forEach items="${commentlist}" var="content">
-                                    <p>${content.username}</p>
-                                    <p>${content.content}</p>
-                                    <p>${content.commentedTime}</p>
+                                        <%--needed to display the delete button when load, so needed to go through the commentsServlet first--%>
 
-
-                                    <%--needed to display the delete button when load, so needed to go through the commentsServlet first--%>
-                                    <c:if test="${content.owner || articleContents.owner}">
-                                    <form action="/Deleting" method="post">
-                                        <input type="hidden" name="commentId" value="${content.commentId}">
-                                        <input type="submit" name="log" value="DeleteComment">
-                                    </form>
-                                    </c:if>
-
-                                    <c:if test="${content.owner}">
-                                        <form action="/Comments" method="post">
-                                            <input type="hidden" name="commentId" value="${content.commentId}">
-                                            <input type="text" name="commentcontent" value="${content.content}">
-                                            <input type="submit" name="comments" value="EditComment">
-                                        </form>
-                                    </c:if>
-                                </c:forEach>
-
-
-                                <form action="/Comments" method="post">
-                                    <label for="comments">Comments: </label>
-                                    <br>
-                                    <textarea rows="4" cols="50" id="comments" name="commentcontent"></textarea>
-                                    <input type="submit" name="comments" value="Add a Comment">
-                                </form>
-
-                                <script>
-                                $(".wrapper li").each(function () {
-                                $(this).replaceWith(function () {
-                                return $('<p>', {
-                                html: this.innerHTML
-                                });
-                                });
-                                });
-                                </script>
-
+                                    </c:forEach>
+                                    <script>
+                                        $(".wrapper li").each(function () {
+                                            $(this).replaceWith(function () {
+                                                return $('<p>', {
+                                                    html: this.innerHTML
+                                                });
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                                <label for="comments">Comments: </label>
+                                <br>
+                                <textarea rows="4" cols="50" id="comments" name="commentcontent"></textarea>
+                                <button id="addComment">Add Comment</button>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -194,6 +171,38 @@
 <!-- FOOTER START -->
 <%@ include file="../../component/Footer(Template).html" %>
 <!-- FOOTER END -->
+<script>
+    $("#addComment").click(function () {
+        $.ajax({
+            url: '/Comments',
+            type: 'Post',
+            data: {
+                "commentcontent": $("#comments").val(),
+                "comments": "Add a Comment"
+            },
+            success: function (msg) {
+                var Data = JSON.parse(msg);
+                var contain = $("#containComments");
+                var div = document.createElement("div");
+                div.id = Data.CommentId;
+                var p1 = document.createElement("p");
+                p1.innerHTML = Data.Username;
+                var p2 = document.createElement("p");
+                p2.innerHTML = Data.Content;
+                var p3 = document.createElement("p");
+                p3.innerHTML = Data.CommentedTime;
+                var input = "<button id=\"" + (Data.CommentIDdelete) + "delete\">Delete</button>" +
+                    "<input type=\"text\" id=\"" + (Data.CommentIDdelete) + "text\">" +
+                    "<button id=\"" + (Data.CommentIDdelete) + "edit\">Edit</button>";
+                div.append(p1);
+                div.append(p2);
+                div.append(p3);
+                contain.append(div);
+                contain.append(input)
+            }
+        });
+    })
+</script>
 
 </body>
 </html>

@@ -1,5 +1,7 @@
 package Comment;
 
+import org.json.simple.JSONObject;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +38,12 @@ public class CommentsServlet extends HttpServlet {
 
             //Scenario 1: This is to add a new comment
             if (commentStatus.equals("Add a Comment")) {
-                commentsDAO.AddingCommentsToDataBase(articleID, username, comment);
+                System.out.println("ADd a comments");
+                 commentsDAO.AddingCommentsToDataBase(articleID, username, comment);
+                Comments comments = commentsDAO.selectionLastComment();
+                JSONObject jsonObject = getJsonObject(comments);
+                resp.getWriter().print(jsonObject);
+                return;
             }
             //Scenario 2: Editing comments
             else if (commentStatus.equals("EditComment")) {
@@ -47,6 +54,11 @@ public class CommentsServlet extends HttpServlet {
                 }
                 //updating comments (using DAO)
                 commentsDAO.editComments(comment, commentId);
+                Comments comments = commentsDAO.selectionComment(commentId);
+//                resp.setContentType("application/json");
+                JSONObject jsonObject = getJsonObject(comments);
+                resp.getWriter().print(jsonObject);
+                return;
             }
         }
 
@@ -61,7 +73,18 @@ public class CommentsServlet extends HttpServlet {
         return;
 
     }
-//Checking owner of the particular comment based on the session username.
+
+    private JSONObject getJsonObject(Comments comments) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("CommentId", comments.getCommentId());
+        jsonObject.put("ActicleId",comments.getActicleId()+"");
+        jsonObject.put("Username",comments.getUsername()+"");
+        jsonObject.put("CommentedTime",comments.getCommentedTime()+"");
+        jsonObject.put("Content",comments.getContent()+"");
+        return jsonObject;
+    }
+
+    //Checking owner of the particular comment based on the session username.
     private void checkingForOwner() {
         for (Comments userComments : listOfComments) {
             if (userComments.getUsername().equals(username)) {

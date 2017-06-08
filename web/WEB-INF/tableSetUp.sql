@@ -68,3 +68,5 @@ FOREIGN KEY (friendusername) REFERENCES UsersNames (Username)
 
 ALTER TABLE table_name
 ADD column_name datatype;
+
+
