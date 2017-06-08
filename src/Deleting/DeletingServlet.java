@@ -114,8 +114,9 @@ public class DeletingServlet extends HttpServlet {
     private void tryingTodeleteAComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException, IOException {
         deleteDAO.dropSpeificComment(commentId);
         closingConnection();
-        req.getRequestDispatcher("/ArticlesIndex").forward(req, resp);
-            return;
+        System.out.println("trying to delete the comment");
+        req.getRequestDispatcher("/Articles").forward(req, resp);
+        return;
     }
 
     private boolean usernameAndPasswordCheckForDelete() {

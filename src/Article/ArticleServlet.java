@@ -153,6 +153,8 @@ public class ArticleServlet extends HttpServlet {
                 return;
             }
         }
+        doGet(req,resp);
+        return;
     }
 
     public void checkingForOwnershipArticle(String username, Articles article) {

@@ -143,12 +143,17 @@
                                     <p>${content.username}</p>
                                     <p>${content.content}</p>
                                     <p>${content.commentedTime}</p>
+
+
+                                    <%--needed to display the delete button when load, so needed to go through the commentsServlet first--%>
+                                    <c:if test="${content.owner || articleContents.owner}">
+                                    <form action="/Deleting" method="post">
+                                        <input type="hidden" name="commentId" value="${content.commentId}">
+                                        <input type="submit" name="log" value="DeleteComment">
+                                    </form>
+                                    </c:if>
+
                                     <c:if test="${content.owner}">
-                                        <%--needed to display the delete button when load, so needed to go through the commentsServlet first--%>
-                                        <form action="/Deleting" method="post">
-                                            <input type="hidden" name="commentId" value="${content.commentId}">
-                                            <input type="submit" name="log" value="DeleteComment">
-                                        </form>
                                         <form action="/Comments" method="post">
                                             <input type="hidden" name="commentId" value="${content.commentId}">
                                             <input type="text" name="commentcontent" value="${content.content}">

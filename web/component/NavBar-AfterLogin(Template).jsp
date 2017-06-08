@@ -19,9 +19,6 @@
 </head>
 <body>
 
-<%
-    List<String> nameList = new FriendDAO().GetAllPeopleUsername();
-%>
 
 <nav class="navbar navbar-info navbar-transparent navbar-fixed-top navbar-color-on-scroll">
 
@@ -113,10 +110,9 @@
                     <form id="searchBar" action="/ProfilePage" method="get">
                         <input list="usernames" name="accessFriend">
                         <datalist id="usernames">
-                            <% for (String s : nameList) {
-                                out.println("<option value=\"" + s + "\">");
-                            }
-                            %>
+                            <c:forEach items="${userlist}" var="names">
+                                <option value="${names}">
+                            </c:forEach>
                         </datalist>
                     </form>
                 </li>

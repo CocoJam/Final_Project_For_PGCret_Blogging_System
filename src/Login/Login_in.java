@@ -92,7 +92,9 @@ public class Login_in extends HttpServlet {
             session.setAttribute("IndexOfInterest", indexList);
             System.out.println(indexList);
             List<Friend> friendList = new FriendDAO().selectionListOfFriends(username);
+            List<String> userList = new FriendDAO().GetAllPeopleUsername();
             session.setAttribute("firendlist", friendList);
+            session.setAttribute("userlist",userList);
             System.out.println("logged-in");
             System.out.println(session.getAttribute("username"));
             req.getRequestDispatcher("/ProfilePage").forward(req, resp); //TODO to take out.
