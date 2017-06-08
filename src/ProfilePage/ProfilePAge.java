@@ -21,6 +21,16 @@ public class ProfilePAge {
     private String photoname;
     private String profilepic;
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private String password;
+
     public String getProfilepic() {
         return profilepic;
     }

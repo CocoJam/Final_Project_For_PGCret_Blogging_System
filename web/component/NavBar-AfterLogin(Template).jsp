@@ -107,7 +107,7 @@
                 </li>
                 <%--Friend search bar here--%>
                 <li>
-                    <form id="searchBar" action="/ProfilePage" method="get">
+                    <form id="NameBar" action="/ProfilePage" method="get">
                         <input list="usernames" name="accessFriend">
                         <datalist id="usernames">
                             <c:forEach items="${userlist}" var="names">
@@ -126,7 +126,7 @@
 <script>
     $("[name='accessFriend']").on('keyup', function (e) {
         if (e.keyCode == 13) {
-            return $("#searchBar").submit;
+            return $("#NameBar").submit;
         }
     });
 </script>

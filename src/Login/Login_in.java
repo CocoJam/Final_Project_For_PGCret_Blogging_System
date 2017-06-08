@@ -86,6 +86,7 @@ public class Login_in extends HttpServlet {
     public boolean loginLogic(HttpServletRequest req, HttpServletResponse resp, HttpSession session, LoginPassing loginPassing) throws ServletException, IOException {
         if (loginPassing.selectionUsersNames(username, password)) {
             session.setAttribute("username", username);
+            session.setAttribute("password", password);
             session.setAttribute("articleList", "self");
             session.setAttribute("log", true); //TODO refactoring for login status.
             List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
