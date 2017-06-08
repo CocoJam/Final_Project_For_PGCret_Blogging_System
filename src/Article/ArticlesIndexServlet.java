@@ -57,6 +57,11 @@ public class ArticlesIndexServlet extends HttpServlet {
                 System.out.println("self");
                 session.setAttribute("articleList", "self");
                 indexList = new ArticleListObjectDAO().selectionArticlesList(username);
+
+                //testing forloop below
+                for (Articles articles : indexList) {
+                    System.out.println("CATEGORY !!!" + articles.getCategory());
+                }
                 checkingForOwnership(username, indexList);
                 session.setAttribute("ArticleIndex", indexList);
 

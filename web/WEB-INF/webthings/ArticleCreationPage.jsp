@@ -110,11 +110,15 @@
                         <div class="row">
                             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
 
-
                                 <form id="form" action="/Articles" method="post">
+                                    <%--Input for Article Name --%>
                                     <label for="ArticleName">Article Name</label>
                                     <input name="ArticleName" type="text" id="ArticleName"
                                            value="${articleContents.articlename}">
+                                    <%--Input for Article Category--%>
+                                    <label for="ArticleName">Category</label>
+                                    <input name="ArticleCategory" type="text" id="ArticleCategory">
+
                                     <input type="hidden" name="ArticleContent">
 
                                     <% if (session.getAttribute("articleContents") != null) {

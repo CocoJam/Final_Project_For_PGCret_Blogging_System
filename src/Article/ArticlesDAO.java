@@ -4,6 +4,7 @@ import Connection.*;
 
 import java.sql.*;
 import java.util.Date;
+import java.util.Locale;
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
 
@@ -17,6 +18,7 @@ public class ArticlesDAO {
     private String username = null;
     private String Content = null;
     private Date DateCreated = null;
+    private String categoryName = null;
 
 
     public ArticlesDAO() {
@@ -25,7 +27,7 @@ public class ArticlesDAO {
 
     public Articles selectionArticles(String articleName) {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, UserIDName, Content, SpecificDateCreated FROM Articles WHERE ArticlesName = ?;")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, UserIDName, Category, Content, SpecificDateCreated FROM Articles WHERE ArticlesName = ?;")) {
                 System.out.println(statement);
                 statement.setString(1, articleName);
                 System.out.println(statement);
@@ -44,10 +46,9 @@ public class ArticlesDAO {
         return null;
     }
 
-
     public Articles selectionArticles(int articlesID) {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, UserIDName, Content, SpecificDateCreated FROM Articles WHERE ArticlesID = ?;")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, UserIDName, Category, Content, SpecificDateCreated FROM Articles WHERE ArticlesID = ?;")) {
                 System.out.println(statement);
                 statement.setInt(1, articlesID);
                 System.out.println(statement);
@@ -66,13 +67,15 @@ public class ArticlesDAO {
         return null;
     }
 
-    public void madeArticles(String ArticleName, String UserIDName, String content) {
+    //making a new article (DAO)
+    public void madeArticles(String ArticleName, String categoryName, String UserIDName, String content) {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Articles (ArticlesName, UserIDName, Content) VALUES( ? ,?,?);")) {
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Articles (ArticlesName, UserIDName, Category, Content) VALUES( ? ,? ,?, ?);")) {
                 System.out.println(statement);
                 statement.setString(1, ArticleName);
                 statement.setString(2, UserIDName);
-                statement.setString(3, content);
+                statement.setString(3, categoryName);
+                statement.setString(4, content);
                 System.out.println(statement);
                 statement.executeUpdate();
                 System.out.println("CONNECTION CLOSED: " + connection.isClosed());
@@ -83,13 +86,16 @@ public class ArticlesDAO {
         }
     }
 
-    public Articles updateArticles(String ArticleName, String content, int ArticleID) {
+    //updating existing article
+    public Articles updateArticles(String ArticleName, String categoryName, String content, int ArticleID) {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-            try (PreparedStatement statement = connection.prepareStatement("UPDATE Articles SET ArticlesName = ?, Content= ? WHERE ArticlesID = ?;")) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE Articles SET ArticlesName = ?, Category = ?, Content= ? WHERE ArticlesID = ?;")) {
                 System.out.println(statement);
                 statement.setString(1, ArticleName);
-                statement.setString(2, content);
-                statement.setInt(3, ArticleID);
+                statement.setString(2, categoryName);
+                statement.setString(3, content);
+                statement.setInt(4, ArticleID);
+
                 System.out.println(statement);
                 statement.executeUpdate();
                 System.out.println("CONNECTION CLOSED: " + connection.isClosed());
@@ -106,8 +112,10 @@ public class ArticlesDAO {
         ArticleID = resultSet.getInt(1);
         ArticleName = resultSet.getString(2);
         username = resultSet.getString(3);
-        Content = resultSet.getString(4);
-        Date DateCreated = resultSet.getTimestamp(5);
+        categoryName = resultSet.getString(4);
+        Content = resultSet.getString(5);
+        Date DateCreated = resultSet.getTimestamp(6);
+
         ArticlesSetStatments(articles, DateCreated);
         closingConnection();
         return articles;
@@ -116,9 +124,9 @@ public class ArticlesDAO {
     private void ArticlesSetStatments(Articles articles, Date dateCreated) {
         articles.setArticlename(ArticleName);
         articles.setArticleid(ArticleID);
+        articles.setCategory(categoryName);
         articles.setContent(Content);
         articles.setDatecreated(dateCreated);
         articles.setUsername(username);
     }
-
 }

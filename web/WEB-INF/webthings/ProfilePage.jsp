@@ -138,6 +138,10 @@
                                         </th>
                                     </c:if>
 
+                                    <th>
+                                        Article Category
+                                    </th>
+
                                 </tr>
                                 <%--Looping through the Article Index (list of articles in the ArticleIndex Servlet) and populates a row per article--%>
                                 <c:forEach items="${IndexOfInterest}" var="index">
@@ -153,6 +157,10 @@
                                                     ${index.username}
                                             </td>
                                         </c:if>
+                                        <td>
+                                            ${index.category}
+                                        </td>
+
                                     </tr>
                                 </c:forEach>
 

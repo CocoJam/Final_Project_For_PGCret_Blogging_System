@@ -84,6 +84,9 @@
                                         <th>
                                             Date Created
                                         </th>
+                                        <th>
+                                            Category
+                                        </th>
                                         <%--Scenario 1: ALL articles are requested--%>
                                         <c:if test="${articleList.equals('all')}">
                                             <th>
@@ -96,10 +99,14 @@
                                     <c:forEach items="${ArticleIndex}" var="index">
                                         <tr>
                                             <td>${index.articleid}</td>
+
                                             <td>
                                                 <a href="/Articles?acticleId=${index.articleid}">${index.articlename}</a>
                                             </td>
+
                                             <td>${index.datecreated}</td>
+
+                                            <td>${index.category}</td>
 
                                             <c:if test="${articleList.equals('all')}">
                                                 <td>
