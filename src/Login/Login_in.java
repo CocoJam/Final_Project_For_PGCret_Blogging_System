@@ -1,5 +1,7 @@
 package Login;
 
+import Article.ArticleListObjectDAO;
+import Article.Articles;
 import com.sun.xml.internal.bind.v2.TODO;
 
 import javax.servlet.ServletException;
@@ -8,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
@@ -21,6 +25,7 @@ public class Login_in extends HttpServlet {
     private String username;
     private String password;
     private Passwords_Checker passwords_checker = new Passwords_Checker();
+//    private List<Articles> indexList = new ArrayList<>();
 
     //doPost checks in login is possible and if so redirects to Profile page
     @Override
@@ -31,7 +36,7 @@ public class Login_in extends HttpServlet {
         password = req.getParameter("password");
 
         LoginPassing loginPassing = new LoginPassing(); //See loginPassing class: stores all the methods for login including DAO query the database.
-        System.out.println( passwords_checker.hashing(password,5,500));
+        System.out.println(passwords_checker.hashing(password, 5, 500));
 
         if (session.getAttribute("log") != null) {
             if ((boolean) session.getAttribute("log")) {
@@ -61,11 +66,10 @@ public class Login_in extends HttpServlet {
 //        Login.Passwords_Checker passwords_checker = new Login.Passwords_Checker();
 //        String hashedPassword = passwords_checker.hashing(password, 5 , 500);
 //        loginPassing.selectionUsersNames(username,hashedPassword);
-        if (!password.trim().equals("")&& !password.trim().isEmpty() && password.trim() != null){
+        if (!password.trim().equals("") && !password.trim().isEmpty() && password.trim() != null) {
             System.out.println("hashing");
             loginLogic(req, resp, session, loginPassing);
-        }
-        else {
+        } else {
             session.setAttribute("log", false); //TODO refactoring for login status.
             System.out.println("logged-in rejected");
             req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
@@ -83,8 +87,13 @@ public class Login_in extends HttpServlet {
             session.setAttribute("username", username);
             session.setAttribute("articleList", "self");
             session.setAttribute("log", true); //TODO refactoring for login status.
+
+            List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
+            session.setAttribute("IndexOfInterest", indexList);
+            System.out.println(indexList);
             System.out.println("logged-in");
             System.out.println(session.getAttribute("username"));
+
             req.getRequestDispatcher("/ProfilePage").forward(req, resp); //TODO to take out.
             return true;
         } else {

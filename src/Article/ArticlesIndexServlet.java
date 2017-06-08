@@ -33,19 +33,19 @@ public class ArticlesIndexServlet extends HttpServlet {
 //        req.getRequestDispatcher("/Articles").include(req, resp);
         System.out.println("TESTB");
 
-        if (req.getParameter("profilePopulate") == null || !req.getParameter("profilePopulate").equals("yes")) {
+//        if (req.getParameter("profilePopulate") == null || !req.getParameter("profilePopulate").equals("yes")) {
             //This is when the navbar click to article index (either self or all) is clicked
             req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp); //testing
             System.out.println("TESTC");
             return;
-        }
+//        }
 
-        else {
-            //This is when the display button is clicked to populate the user's article list on the profile-page.
-            req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
-            System.out.println("TESTD");
-            return;
-        }
+//        else {
+//            //This is when the display button is clicked to populate the user's article list on the profile-page.
+//            req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").include(req, resp);
+//            System.out.println("TESTD");
+//            return;
+//        }
     }
 
     //This: (1) determines whether to grab ALL or SELF (2) populate the list to be sent back
@@ -57,6 +57,11 @@ public class ArticlesIndexServlet extends HttpServlet {
                 System.out.println("self");
                 session.setAttribute("articleList", "self");
                 indexList = new ArticleListObjectDAO().selectionArticlesList(username);
+
+                //testing forloop below
+                for (Articles articles : indexList) {
+                    System.out.println("CATEGORY !!!" + articles.getCategory());
+                }
                 checkingForOwnership(username, indexList);
                 session.setAttribute("ArticleIndex", indexList);
 

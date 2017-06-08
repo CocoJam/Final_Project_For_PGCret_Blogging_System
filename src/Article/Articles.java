@@ -7,6 +7,14 @@ import java.util.Date;
  */
 public class Articles {
 
+    private int articleid = 0;
+    private String articlename = null;
+    private String username = null;
+    private String content = null;
+    private Date datecreated =null;
+    private boolean owner= false;
+    private String category = null;
+
     public int getArticleid() {
         return articleid;
     }
@@ -47,13 +55,6 @@ public class Articles {
         this.datecreated = datecreated;
     }
 
-    private int articleid = 0;
-    private String articlename = null;
-    private String username = null;
-    private String content = null;
-    private Date datecreated =null;
-    private boolean owner= false;
-
     public boolean isOwner() {
         return owner;
     }
@@ -62,12 +63,14 @@ public class Articles {
         this.owner = owner;
     }
 
+    public String getCategory() {
+        return category;
+    }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public Articles() {
     }
-
-
-
-
 }

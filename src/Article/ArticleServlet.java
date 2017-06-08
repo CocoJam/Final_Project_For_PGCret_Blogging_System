@@ -27,6 +27,7 @@ public class ArticleServlet extends HttpServlet {
     private int ArticleID;
     private String ArticleName;
     private String ArticleContent;
+    private String articleCategory;
     private Articles article;
     private HttpSession session;
     private List<Articles> indexList;
@@ -61,10 +62,13 @@ public class ArticleServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             System.out.println(e);
         }
+
+        //This is viewing the Article
         System.out.println(ArticleID + "articleid");
         article = articlesDAO.selectionArticles(ArticleID);
         if (article!= null){
-        System.out.println(article.getUsername() + "This is user");
+        System.out.println(article.getUsername() + ": This is user");
+            System.out.println(article.getCategory() + ": This is the category");
         if (session.getAttribute("username") != null) {
             if (article.getUsername().equals(session.getAttribute("username"))) {
                 article.setOwner(true);
@@ -76,6 +80,8 @@ public class ArticleServlet extends HttpServlet {
         session.setAttribute("articleContents", article);
         listOfComments = gettingTheListOfComments(ArticleID);
         session.setAttribute("commentlist", listOfComments);
+
+        //Dispatching the article and comments.
         try {
             System.out.println(conn.isClosed() + " is this closed?");
         } catch (SQLException e) {
@@ -122,7 +128,8 @@ public class ArticleServlet extends HttpServlet {
             } else if (addingArticles.equals("Editted")) {
                 ArticleName = req.getParameter("ArticleName");
                 ArticleContent = req.getParameter("ArticleContent");
-                article = articlesDAO.updateArticles(ArticleName, ArticleContent, ArticleID);
+                articleCategory = req.getParameter("ArticleCategory");
+                article = articlesDAO.updateArticles(ArticleName, articleCategory, ArticleContent, ArticleID);
                 session.setAttribute("articleContents", article);
                 session.setAttribute("Upload", null);
                 checkingForOwnershipArticle(username,article);
@@ -134,7 +141,8 @@ public class ArticleServlet extends HttpServlet {
                 System.out.println(username);
                 String ArticleName = req.getParameter("ArticleName");
                 String ArticleContent = req.getParameter("ArticleContent");
-                articlesDAO.madeArticles(ArticleName, username, ArticleContent);
+                String articleCategory = req.getParameter("ArticleCategory");
+                articlesDAO.madeArticles(ArticleName, articleCategory, username, ArticleContent);
                 String Listformation = (String) session.getAttribute("articleList");
                 System.out.println((String) session.getAttribute("articleList"));
                 if (Listformation.equals("all")) {
