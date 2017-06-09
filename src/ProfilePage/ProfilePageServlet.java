@@ -24,11 +24,11 @@ import static Connection.ConnectionToTheDataBase.conn;
 
 //This is the servlet which gets the POST and GET methods for the ProfilePage.jsp
 
-public class ProfilePageServlet extends HttpServlet{
+public class ProfilePageServlet extends HttpServlet {
     ProfilePageDAO profilePageDAO;
     private String username;
 
-//    Grabs the profile page from the Database based on the username (stored in session)
+    //    Grabs the profile page from the Database based on the username (stored in session)
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         profilePageDAO = new ProfilePageDAO();
@@ -40,28 +40,30 @@ public class ProfilePageServlet extends HttpServlet{
         session.setAttribute("profileInfo", profilePAge);
         session.setAttribute("articleList", "self"); //added in to ensure that the articles displaying on the Profile page is self only.
         closingConnection();
-        req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req,resp);
+        req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
         return;
     }
 
-//    The point of this: TODO need to cleanup connections from Login/Registration servlet (Maybe POST directly(?))
+    //    The point of this: TODO need to cleanup connections from Login/Registration servlet (Maybe POST directly(?))
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("accessFriend") == null){
+        if (req.getParameter("accessFriend") == null) {
             System.out.println("sdgfdrjgkldjglkdfjglkdfjglkdfjglkdfjglkdjlgdfj");
-            doPost(req,resp);
+            doPost(req, resp);
             return;
         } else {
             ProfilePAge profilePAge = profilePageDAO.getUsersProfile(req.getParameter("accessFriend"));
             HttpSession session = req.getSession();
             List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(req.getParameter("accessFriend"));
             List<Friend> friendList = new FriendDAO().selectionListOfFriends(req.getParameter("accessFriend"));
-            session.setAttribute("accessFriendfirendlist", friendList);
-            System.out.println("Firend list" + friendList);
-            System.out.println(req.getParameter("accessFriend"));
-            session.setAttribute("IndexOfInterest", indexList);
-            session.setAttribute("showFriend", profilePAge);
-            req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req,resp);
+            if (friendList.size() > 0) {
+                session.setAttribute("accessFriendfirendlist", friendList);
+                System.out.println("Firend list" + friendList);
+                System.out.println(req.getParameter("accessFriend"));
+                session.setAttribute("IndexOfInterest", indexList);
+                session.setAttribute("showFriend", profilePAge);
+            }
+            req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
             return;
         }
     }

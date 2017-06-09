@@ -86,7 +86,8 @@
                                                          alt="Circle Image"
                                                          class="img-rounded img-responsive img-raised">
                                                     <div class="name" id="custom-profile-name">
-                                                        <h3 class="title">Time to create an article ${profileInfo.name}!</h3>
+                                                        <h3 class="title">Time to create an
+                                                            article ${profileInfo.name}!</h3>
                                                     </div>
                                                 </c:when>
 
@@ -130,6 +131,16 @@
                                     %>
                                 </form>
 
+                                <form action="/Upload" method="post" id="Upload"
+                                      enctype="multipart/form-data">
+                                    <input type="file" name="file" size="50"/>
+                                    <input type="submit" name="Upload" value="ArticlesUpload"/>
+                                </form>
+
+                                <form id="Youtube" action="/ArticleUpload" method="post">
+                                    <input id="youtubeurl" type="text" name="youtube">
+                                    <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">
+                                </form>
                                 <!-- WYSIWYG -->
                                 <!-- Editor Box -->
                                 <div class="wysiwys" placeholder="Enter your content here"></div>
@@ -152,21 +163,21 @@
                                         resetCss: true,
 
                                         // Buttons
-                                        btnsDef: {
-                                            // Customizables dropdowns
-                                            image: {
-                                                dropdown: ['insertImage', 'upload', 'base64', 'noembed'],
-                                                ico: 'insertImage'
-                                            }
-                                        },
+                                        //                                        btnsDef: {
+                                        //                                            // Customizables dropdowns
+                                        //                                            image: {
+                                        //                                                dropdown: ['insertImage', 'upload', 'base64', 'noembed'],
+                                        //                                                ico: 'insertImage'
+                                        //                                            }
+                                        //                                        },
                                         btns: [
                                             ['viewHTML'],
                                             ['undo', 'redo'],
                                             ['formatting'],
                                             'btnGrp-design',
                                             ['link'],
-                                            ['image'],
-                                            ['upload'],
+                                            ['insertImage'],
+//                                            ['upload'],
                                             'btnGrp-justify',
                                             'btnGrp-lists',
                                             ['foreColor', 'backColor'],
@@ -211,16 +222,6 @@
                                     </c:choose>
                                 </div>
 
-                                <form action="/Upload" method="post" id="Upload"
-                                      enctype="multipart/form-data">
-                                    <input type="file" name="file" size="50"/>
-                                    <input type="submit" name="Upload" value="ArticlesUpload"/>
-                                </form>
-
-                                <form id="Youtube" action="/ArticleUpload" method="post">
-                                    <input id="youtubeurl" type="text" name="youtube">
-                                    <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">
-                                </form>
 
                                 <button id="formsubmit" onclick="whenClickAdd()">Submit</button>
 
@@ -238,9 +239,9 @@
 <!-- More WYSIWYG JS -->
 <script>
 
-    function whenClickAdd(){
+    function whenClickAdd() {
 
-        $("#formsubmit").click(function(){
+        $("#formsubmit").click(function () {
             $("#submitButton").click();
         });
 
@@ -333,6 +334,11 @@
 
 
     $(function () {
+
+        $(".ui-state-default ").each(function () {
+            $(this).on("click", selection);
+        });
+
         $("#sortable").sortable({
             revert: true
         });
@@ -357,6 +363,10 @@
                 processData: false,
                 contentType: false,
                 success: function (msg) {
+                    if (msg == "") {
+                        alert("This upload is invaild.");
+                        return;
+                    }
                     console.log(msg);
                     var li = document.createElement("li");
                     li.className = "ui-state draggable";
@@ -370,6 +380,10 @@
                         li.innerHTML = "<img src=\"" + msg + "\">";
                     }
                     $("#sortable").append(li);
+                },
+                error: function (request, status, error) {
+                    console.log("upload fail");
+                    alert("Upload File Fail.");
                 }
             });
             e.preventDefault();
@@ -383,6 +397,10 @@
                 type: 'POST',
                 data: {"youtube": $("#youtubeurl").val()},
                 success: function (msg) {
+                    if (msg == "") {
+                        alert("This upload is invaild.");
+                        return;
+                    }
                     console.log(msg);
                     var image = document.createElement("ul");
                     console.log(image);
@@ -392,6 +410,7 @@
                     image.append(li);
                     $("#sortable").append(image);
                 }
+
             });
             e.preventDefault();
         });

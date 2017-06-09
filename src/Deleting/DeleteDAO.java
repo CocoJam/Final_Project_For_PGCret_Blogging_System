@@ -114,7 +114,6 @@ public class DeleteDAO {
             System.out.println("deleting");
             statement.executeUpdate();
         } catch (SQLException e) {
-
             e.printStackTrace();
         }
     }

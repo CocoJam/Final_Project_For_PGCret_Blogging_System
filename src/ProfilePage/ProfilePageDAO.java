@@ -73,6 +73,9 @@ public class ProfilePageDAO extends LoginPassing {
             System.out.println("Error. Username already exist. Cannot create profile page.");
             e.printStackTrace();
         }
+        catch (IllegalArgumentException e){
+            return null;
+        }
         return getUsersProfile(profilePAge.getUsername());
     }
 
@@ -107,6 +110,9 @@ public class ProfilePageDAO extends LoginPassing {
         } catch (SQLException e) {
             System.out.println("Error. Cannot update user information based on the username and password.");
             e.printStackTrace();
+        }
+        catch (IllegalArgumentException e){
+            return null;
         }
         return getUsersProfile(username);
     }
