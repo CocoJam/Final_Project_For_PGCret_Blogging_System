@@ -191,11 +191,6 @@
                                     </div>
 
                                     <!-- Media upload - TODO integrate with the uploader inside the WYSIWYG Editor -->
-                                    <form action="/Upload" method="post" id="Upload"
-                                          enctype="multipart/form-data">
-                                        <input type="file" name="file" size="50"/>
-                                        <input type="submit" name="Upload" value="ArticlesUpload"/>
-                                    </form>
 
                                     <!-- Youtube upload -->
                                     <%--<form id="Youtube" action="/ArticleUpload" method="post">--%>
@@ -302,7 +297,7 @@
         btnsDef: {
             // Customizables dropdowns
             Multimedia: {
-                dropdown: ['insertImage', 'upload', 'insertAudio', 'noembed'],
+                dropdown: ['insertImage','insertAudio', 'noembed'],
                 ico: 'upload'
             }
         },

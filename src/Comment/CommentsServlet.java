@@ -55,7 +55,6 @@ public class CommentsServlet extends HttpServlet {
                 //updating comments (using DAO)
                 commentsDAO.editComments(comment, commentId);
                 Comments comments = commentsDAO.selectionComment(commentId);
-//                resp.setContentType("application/json");
                 JSONObject jsonObject = getJsonObject(comments);
                 resp.getWriter().print(jsonObject);
                 return;
