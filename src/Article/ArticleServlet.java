@@ -66,6 +66,7 @@ public class ArticleServlet extends HttpServlet {
         //This is viewing the Article
         System.out.println(ArticleID + "articleid");
         article = articlesDAO.selectionArticles(ArticleID);
+        session.setAttribute("articleList", "self");
         if (article!= null){
         System.out.println(article.getUsername() + ": This is user");
             System.out.println(article.getCategory() + ": This is the category");
@@ -106,6 +107,7 @@ public class ArticleServlet extends HttpServlet {
 
             //Scenario 1: When adding new article when pressed within the articleIndex.jsp.
             if (addingArticles.equals("addNewArticle")) {
+                session.setAttribute("articleList", "self");
                 session.setAttribute("articleContents", null);
                 req.setAttribute("add", null);
                 session.setAttribute("Upload", "addNewArticle");
@@ -116,6 +118,7 @@ public class ArticleServlet extends HttpServlet {
                 //Scenario 2: Edit inside of your own article, therefore setting ownership is important. Dispatches to the ArticleCreationPage.jsp (but in editing mode).
             } else if (addingArticles.equals("EditArticle")) {
                 System.out.println("TRying to edit article");
+                session.setAttribute("articleList", "self");
                 session.setAttribute("articleID", ArticleID);
                 session.setAttribute("Upload", "ArticlesUpload");
                 session.setAttribute("articleContents", article);
@@ -130,6 +133,7 @@ public class ArticleServlet extends HttpServlet {
                 ArticleContent = req.getParameter("ArticleContent");
                 articleCategory = req.getParameter("ArticleCategory");
                 article = articlesDAO.updateArticles(ArticleName, articleCategory, ArticleContent, ArticleID);
+                session.setAttribute("articleList", "self");
                 session.setAttribute("articleContents", article);
                 session.setAttribute("Upload", null);
                 checkingForOwnershipArticle(username,article);

@@ -240,12 +240,7 @@
 <script>
 
     function whenClickAdd() {
-
-        $("#formsubmit").click(function () {
             $("#submitButton").click();
-        });
-
-
     }
 
 

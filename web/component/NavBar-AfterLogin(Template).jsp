@@ -68,15 +68,15 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">Article dropdown</li>
-                        <li><a href="ArticlesIndex?articleList=self" class="clickOnce"><i class="material-icons">fullscreen</i>My
+                        <li><a href="ArticlesIndex?articleList=self" class="clickOnce"><i class="material-icons">insert_drive_file</i>My
                             Articles</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="ArticlesIndex?articleList=all" class="clickOnce"><i class="material-icons">fullscreen</i>All
+                        <li><a href="ArticlesIndex?articleList=all" class="clickOnce"><i class="material-icons">library_books</i>All
                             Articles</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="Articles?add=addNewArticle" class="clickOnce"><i class="material-icons">create</i>New
+                        <li><a href="Articles?add=addNewArticle" class="clickOnce"><i class="material-icons">note_add</i>New
                             Article</a>
                         </li>
                     </ul>
@@ -89,10 +89,10 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">Media dropdown</li>
-                        <li><a href="Upload?media=self" class="clickOnce"><i class="material-icons">fullscreen</i>My
+                        <li><a href="Upload?media=self" class="clickOnce"><i class="material-icons">pages</i>My
                             Media</a></li>
                         <li class="divider"></li>
-                        <li><a href="Upload?media=all" class="clickOnce"><i class="material-icons">fullscreen</i>All
+                        <li><a href="Upload?media=all" class="clickOnce"><i class="material-icons">collections</i>All
                             Media</a></li>
                     </ul>
                 </li>
