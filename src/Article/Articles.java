@@ -16,6 +16,15 @@ public class Articles {
     private Date datecreated =null;
     private boolean owner= false;
     private String category = null;
+    private String firstimage = null;
+
+    public String getFirstimage() {
+        return firstimage;
+    }
+
+    public void setFirstimage(String firstimage) {
+        this.firstimage = firstimage;
+    }
 
     public int getArticleid() {
         return articleid;

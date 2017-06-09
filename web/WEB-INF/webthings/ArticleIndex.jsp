@@ -113,7 +113,6 @@
                                                         <h3 class="title">${profileInfo.name}'s Articles list</h3>
                                                     </div>
                                                 </c:when>
-
                                                 <c:otherwise>
                                                     <img src="Upload-photos/placeholder.gif" alt="Circle Image"
                                                          class="img-rounded img-responsive img-raised">
@@ -141,7 +140,11 @@
                                         <c:forEach items="${ArticleIndex}" var="index">
 
                                             <li class="ui-widget-content ui-corner-tr">
-                                                <h5 class="ui-widget-header">${index.articlename}</h5>
+                                                <h5 class="ui-widget-header">${index.articlename}<br><c:if
+                                                        test="${articleList.equals('all')}">
+                                                    <a href=ProfilePage?accessFriend=${index.username}
+                                                       class="username">${index.username}</a>
+                                                </c:if></h5>
 
                                                 <c:choose>
                                                     <c:when test="${not empty index.firstimage}">
@@ -157,13 +160,11 @@
                                                 <a href="/Articles?acticleId=${index.articleid}"
                                                    title="View larger image"
                                                    class="ui-icon ui-icon-zoomin">View larger</a>
-                                                <c:if test="${articleList.equals('all')}">
-                                                    <a href=ProfilePage?accessFriend=${index.username}
-                                                       class="username">${index.username}</a>
-                                                </c:if>
                                                 <a href="link/to/trash/script/when/we/have/js/off"
                                                    title="Delete this image" class="ui-icon ui-icon-plusthick">Delete
                                                     image</a>
+
+                                                <p class="category">${index.category}</p>
                                             </li>
                                         </c:forEach>
                                     </ul>
@@ -172,22 +173,6 @@
                                                 class="ui-icon ui-icon-plusthick">Save</span> Save</h4>
                                     </div>
                                 </div>
-                                            <td>${index.category}</td>
-
-                                            <c:if test="${articleList.equals('all')}">
-                                                <td>
-                                                        <a href="/ProfilePage?accessFriend=${index.username}">${index.username}</a>
-                                                </td>
-                                            </c:if>
-                                        </tr>
-                                    </c:forEach>
-
-                                </table>
-
-                                <%--This is to add a new article--%>
-                                <form action="/Articles" method="post">
-                                    <input type="submit" name="add" value="addNewArticle" id="addNewArticle">
-                                </form>
                             </div>
 
                         </div>
@@ -211,22 +196,20 @@
         $("#searchBar").bind('keyup', function () {
             var value = $(this).val();
             $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
-                console.log($(this));
                 var title = $(this).children().siblings("h5").text();
                 var username = $(this).children().siblings(".username").text();
-                console.log(title);
+                var category = $(this).children().siblings(".category").text().trim();
                 var matching = new RegExp(value, "gi");
-                if (title.match(matching) || username.match(matching)) {
+                if (title.match(matching) || username.match(matching) || (category.match(matching) && category.length > 0)) {
+                    console.log("hello")
+                    console.log(category);
                     $(this).fadeIn("fast", function () {
-                        console.log("Fadein");
                         $(this).css("z-index", 0)
                     })
                 }
                 else {
                     $(this).fadeOut("fast", function () {
-                        console.log("Fadeout");
                         $(this).css("z-index", -1);
-                        $(this).css("z-index", -1)
                     })
                 }
             })
@@ -279,7 +262,7 @@
                     $("ul", $save) :
                     $("<ul class='gallery ui-helper-reset'/>").appendTo($save);
 
-                $item.find("a.ui-icon-trash").remove();
+                $item.find("a.ui-icon-plusthick").remove();
                 $item.append(recycle_icon).appendTo($list).fadeIn(function () {
                     $item
                         .animate({width: "48px"})
@@ -290,7 +273,7 @@
         }
 
         // Image recycle function
-        var trash_icon = "<a href='link/to/trash/script/when/we/have/js/off' title='Delete this image' class='ui-icon ui-icon-trash'>Delete image</a>";
+        var trash_icon = "<a href='link/to/trash/script/when/we/have/js/off' title='Delete this image' class='ui-icon ui-icon-plusthick'>Delete image</a>";
 
         function recycleImage($item) {
             console.log("recycle to gallery")
@@ -349,7 +332,7 @@
             var $item = $(this),
                 $target = $(event.target);
 
-            if ($target.is("a.ui-icon-trash")) {
+            if ($target.is("a.ui-icon-plusthick")) {
                 deleteImage($item);
             } else if ($target.is("a.ui-icon-zoomin")) {
                 viewLargerImage($target);
