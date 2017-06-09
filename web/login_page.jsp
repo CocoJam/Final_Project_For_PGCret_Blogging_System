@@ -43,7 +43,7 @@
                             </div>
 
                             <!-- Form subtext -->
-                            <p class="text-divider">Please login or register to continue</p>
+                            <p class="text-divider">Please login to continue</p>
                             <div class="content">
 
                                 <!-- TEXT BOXES -->

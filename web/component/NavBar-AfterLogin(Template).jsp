@@ -36,7 +36,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- Navbar name of our website, displays on left -->
-            <a class="navbar-brand" href="ProfilePage"><i class="material-icons">apps</i>
+            <a href="ProfilePage" class="navbar-brand clickOnce"><i class="material-icons">apps</i>
                 Slash N</a>
         </div>
 
@@ -50,7 +50,7 @@
 
 
                 <li>
-                    <a href="ProfilePage"><c:choose>
+                    <a href="ProfilePage" class="clickOnce"><c:choose>
                         <c:when test="${profileInfo.profilepic != null}">
                             <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
                                  height='20'>
@@ -68,13 +68,16 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">Article dropdown</li>
-                        <li><a href="ArticlesIndex?articleList=self"><i class="material-icons">fullscreen</i>My Articles</a>
+                        <li><a href="ArticlesIndex?articleList=self" class="clickOnce"><i class="material-icons">fullscreen</i>My
+                            Articles</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="ArticlesIndex?articleList=all"><i class="material-icons">fullscreen</i>All Articles</a>
+                        <li><a href="ArticlesIndex?articleList=all" class="clickOnce"><i class="material-icons">fullscreen</i>All
+                            Articles</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="Articles?add=addNewArticle"><i class="material-icons">create</i>New Article</a>
+                        <li><a href="Articles?add=addNewArticle" class="clickOnce"><i class="material-icons">create</i>New
+                            Article</a>
                         </li>
                     </ul>
                 </li>
@@ -86,9 +89,11 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">Media dropdown</li>
-                        <li><a href="Upload?media=self"><i class="material-icons">fullscreen</i>My Media</a></li>
+                        <li><a href="Upload?media=self" class="clickOnce"><i class="material-icons">fullscreen</i>My
+                            Media</a></li>
                         <li class="divider"></li>
-                        <li><a href="Upload?media=all"><i class="material-icons">fullscreen</i>All Media</a></li>
+                        <li><a href="Upload?media=all" class="clickOnce"><i class="material-icons">fullscreen</i>All
+                            Media</a></li>
                     </ul>
                 </li>
 
@@ -99,10 +104,11 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">Options</li>
-                        <li><a href="Registration?log=ChangeUserInformation"><i class="material-icons">create</i>Edit
+                        <li><a href="Registration?log=ChangeUserInformation" class="clickOnce"><i
+                                class="material-icons">create</i>Edit
                             Profile</a></li>
                         <li class="divider"></li>
-                        <li><a href="logout?submit=Logout">Sign Out</a></li>
+                        <li><a href="logout?submit=Logout" class="clickOnce">Sign Out</a></li>
                     </ul>
                 </li>
                 <%--Friend search bar here--%>
@@ -111,8 +117,8 @@
                         <input list="usernames" name="accessFriend">
                         <datalist id="usernames">
                             <c:forEach items="${userlist}" var="names">
-                                <option value="${names}">
-                            </c:forEach>
+                            <option value="${names}">
+                                </c:forEach>
                         </datalist>
                     </form>
                 </li>
@@ -129,6 +135,33 @@
             return $("#NameBar").submit;
         }
     });
+</script>
+
+<%--This script limits clicking of the button to one click--%>
+<script>
+
+    var clicked = false;
+    $(".clickOnce").on("click", function (e) {
+        if (clicked === false) {
+            clicked = true;
+        } else {
+            e.preventDefault();
+        }
+    });
+
+//    $('.clickOnce').click(function (e) {
+//        e.preventDefault();
+//    });
+
+    //    $(document).ready(
+    //        function clickOnce() {
+    //            $(".clickOnce").on("click", function () {
+    //                $(this).off('click');
+    //            })
+    //        }
+    //    )
+
+
 </script>
 </body>
 </html>

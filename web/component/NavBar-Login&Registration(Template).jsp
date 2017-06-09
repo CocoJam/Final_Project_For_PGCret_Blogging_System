@@ -52,15 +52,8 @@
                         <i class="material-icons">create</i>
                         Register
                     </a>
-
                 </li>
 
-                <%--This script allows sending a POST method for GET--%>
-                <script>
-                    function DoPost(){
-                        $.post("/login", {name: "Registration", value: "Registration"} );
-                    }
-                </script>
 
                 <li>
                     <a href="login_page.jsp"><i class="material-icons">fingerprint</i>Sign In</a>
