@@ -37,7 +37,8 @@
     <li class="myClass">1</li>
     <ul id="sortable">
     </ul>
-    <p><p>asdasd</p></p>
+    <p>
+    <p>asdasd</p></p>
 </div>
 <input list="usernames">
 <datalist id="usernames">
@@ -54,8 +55,8 @@
 <script>
     $("#addfriend").click(function () {
         console.log("hello there?");
-        $.post( "/Friend", { username: "John", firendname: "2pm" })
-            .done(function( data ) {
+        $.post("/Friend", {username: "John", firendname: "2pm"})
+            .done(function (data) {
             });
     });
 </script>
@@ -71,16 +72,16 @@
     });
 
 
-    function getid(){
+    function getid() {
         mouse = this.id
-        console.log("section id: "+ mouse)
+        console.log("section id: " + mouse)
         console.log($(".ui-state-default").eq(mouse).text());
         $("#textarea").val($(".ui-state-default").eq(mouse).text());
     }
 
     $("#textarea").bind('input', function () {
         console.log($("#textarea").val());
-        $("#"+mouse).text($("#textarea").val());
+        $("#" + mouse).text($("#textarea").val());
     });
     $("#textarea").on('keyup', function (e) {
         if (e.keyCode == 13) { // Create new section when press enter
@@ -99,17 +100,17 @@
             console.log($(".ui-state-default "))
         }
         if (e.keyCode == 46) {
-            if (mouse !=null){
+            if (mouse != null) {
                 $(".ui-state-default").eq(mouse).remove();
                 mouse = null;
             }
-                else {
+            else {
                 console.log(mouse);
                 console.log($(".ui-state-default").length);
-                $(".ui-state-default").eq($(".ui-state-default").length-1).remove();
+                $(".ui-state-default").eq($(".ui-state-default").length - 1).remove();
             }
         }
-        if (e.keyCode == 16){
+        if (e.keyCode == 16) {
             console.log($("#contents").html())
         }
     });
@@ -122,6 +123,48 @@
             revert: "invalid"
         });
         $("ul, li").disableSelection();
+    });
+
+
+</script>
+<script>
+    $("#addfriend").fadeIn("1", function () {
+        $(this).css("z-index", 0)
+    });
+    $("#unfriend").fadeOut("1", function () {
+        $(this).css("z-index", -1)
+    });
+
+
+    $("#unfriend").fadeIn("1", function () {
+        $(this).css("z-index", 0)
+    });
+    $("#addfriend").fadeOut("1", function () {
+        $(this).css("z-index", -1)
+    });
+
+    $("#addfriend").click(function () {
+        $.post("Friend", {username: "", friendname: "", friendprocess: "add"})
+            .done(function () {
+                $("#unfriend").fadeIn("1", function () {
+                    $(this).css("z-index", 0)
+                });
+                $("#addfriend").fadeOut("1", function () {
+                    $(this).css("z-index", -1)
+                });
+            })
+    });
+
+    $("#unfriend").click(function () {
+        $.post("Friend", {username: "", friendname: "", friendprocess: "unadd"})
+            .done(function () {
+                $("#addfriend").fadeIn("1", function () {
+                    $(this).css("z-index", 0)
+                });
+                $("#unfriend").fadeOut("1", function () {
+                    $(this).css("z-index", -1)
+                });
+            })
     });
 
 </script>

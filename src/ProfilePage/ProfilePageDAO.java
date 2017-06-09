@@ -34,7 +34,7 @@ public class ProfilePageDAO extends LoginPassing {
     }
 
     public ProfilePAge getUsersProfile(String username) { // Pass in username from GET
-        ProfilePAge profilePAge = new ProfilePAge();
+        ProfilePAge profilePAge = null;
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT Username, Name, Email, Address, Education, Ethnicity, DateOfBirth, profilePicture FROM UsersNames WHERE Username = ?;")) {
                 System.out.println(statement);

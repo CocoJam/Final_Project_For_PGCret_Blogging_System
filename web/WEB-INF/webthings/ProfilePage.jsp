@@ -33,7 +33,6 @@
 <%----%>
 <% ProfilePAge currentuser = null;
     if (session.getAttribute("showFriend") != null) {
-//        out.println("<button id=\"addfriend\">add</button>");
         currentuser = (ProfilePAge) session.getAttribute("profileInfo");
         session.setAttribute("profileInfo", session.getAttribute("showFriend"));
     }%>
@@ -72,11 +71,9 @@
                                         if (session.getAttribute("firendlist") != null) {
                                             System.out.println("yes this is friend");
                                             friendList = (ArrayList<Friend>) session.getAttribute("firendlist");
-                                            for (Friend friend : friendList) {
-                                                if (friend.getFriendusername().equals(((ProfilePAge) session.getAttribute("profileInfo")).getUsername())) {
-                                                    System.out.println("yes it is one of your friend");
-                                                    friended = true;
-                                                }
+                                            if (friendList.contains(((ProfilePAge) session.getAttribute("profileInfo")).getUsername())) {
+                                                System.out.println("yes it is one of your friend");
+                                                friended = true;
                                             }
                                         }
                                         if (session.getAttribute("showFriend") != null) {
@@ -128,7 +125,7 @@
                                 <tr>
                                     <td>Date of Birth:</td>
                                     <td>
-                                    <fmt:formatDate value="${profileInfo.date}" pattern="dd MMMM YYYY"/>
+                                        <fmt:formatDate value="${profileInfo.date}" pattern="dd MMMM YYYY"/>
                                     </td>
                                 </tr>
 
@@ -180,7 +177,7 @@
                                             </td>
                                         </c:if>
                                         <td>
-                                            ${index.category}
+                                                ${index.category}
                                         </td>
 
                                     </tr>
@@ -250,55 +247,63 @@
 <%@ include file="../../component/Footer(Template).html" %>
 <!-- FOOTER END -->
 
+
 <%
-    if (session.getAttribute("showFriend") != null) {
-        if (!friended) {
-            out.println("    <script>\n" +
-                    "    $(\"#addfriend\").fadeIn(\"fast\",function () {\n" +
-                    "        $(this).css(\"z-index\", 0);\n" +
-                    "    });\n" +
-                    "    $(\"#unfriend\").fadeOut(\"fast\",function () {\n" +
-                    "        $(this).css(\"z-index\", -1);\n" +
-                    "    });\n" +
-                    "    </script>");
-        } else {
-            out.println("    <script>\n" +
-                    "    $(\"#unfriend\").fadeIn(\"fast\",function () {\n" +
-                    "        $(this).css(\"z-index\", 0);\n" +
-                    "    });\n" +
-                    "    $(\"#addfriend\").fadeOut(\"fast\",function () {\n" +
-                    "        $(this).css(\"z-index\", -1);\n" +
-                    "    });\n" +
-                    "    </script>");
-        }
-        out.println("<script>\n" +
-                "    $(\"#addfriend\").click(function () {\n" +
-                "        console.log(\"hello there?\");\n" +
-                "        $.post( \"/Friend\", { username:\"" + currentuser.getUsername() + "\", friendname:\"" + ((ProfilePAge) session.getAttribute("profileInfo")).getUsername() + "\", friendprocess: \"add\" })\n" +
-                "            .done(function( data ) {\n" +
-                "    $(\"#unfriend\").fadeIn(\"fast\",function () {\n" +
-                "        $(this).css(\"z-index\", 0);\n" +
-                "    });\n" +
-                "    $(\"#addfriend\").fadeOut(\"fast\",function () {\n" +
-                "        $(this).css(\"z-index\", -1);\n" +
-                "    });" +
-                "            });\n" +
-                "    });\n" +
-                "</script>");
-        out.println("<script>\n" +
-                "    $(\"#unfriend\").click(function () {\n" +
-                "        console.log(\"hello there?\");\n" +
-                "        $.post( \"/Friend\", { username:\"" + currentuser.getUsername() + "\", friendname:\"" + ((ProfilePAge) session.getAttribute("profileInfo")).getUsername() + "\", friendprocess: \"unadd\" })\n" +
-                "            .done(function( data ) {\n" +
-                "    $(\"#addfriend\").fadeIn(\"fast\",function () {\n" +
-                "        $(this).css(\"z-index\", 0);\n" +
-                "    });\n" +
-                "    $(\"#unfriend\").fadeOut(\"fast\",function () {\n" +
-                "        $(this).css(\"z-index\", -1);\n" +
-                "    });" +
-                "            });\n" +
-                "    });\n" +
-                "</script>");
+    if (session.getAttribute("showFriend") != null) { %>
+<script>
+
+    <% if (!friended){ %>
+    $("#addfriend").fadeIn("1", function () {
+        $(this).css("z-index", 0)
+    });
+    $("#unfriend").fadeOut("1", function () {
+        $(this).css("z-index", -1)
+    });
+    <% } else {%>
+    $("#unfriend").fadeIn("1", function () {
+        $(this).css("z-index", 0)
+    });
+    $("#addfriend").fadeOut("1", function () {
+        $(this).css("z-index", -1)
+    });
+    <% } %>
+    $("#addfriend").click(function () {
+        $("#unfriend").fadeIn("1", function () {
+            $(this).css("z-index", 0)
+        });
+        $("#addfriend").fadeOut("1", function () {
+            $(this).css("z-index", -1)
+        });
+        console.log("clicked")
+        $.post("Friend", {
+            username: "<%= currentuser.getUsername()%>",
+            friendname: "${profileInfo.username}",
+            friendprocess: "add"
+        })
+            .done(function () {
+                console.log("done adding");
+
+            })
+    });
+
+    $("#unfriend").click(function () {
+        $("#addfriend").fadeIn("1", function () {
+            $(this).css("z-index", 0)
+        });
+        $("#unfriend").fadeOut("1", function () {
+            $(this).css("z-index", -1)
+        });
+        $.post("Friend", {
+            username: "<%= currentuser.getUsername()%>",
+            friendname: "${profileInfo.username}",
+            friendprocess: "unadd"
+        })
+            .done(function () {
+                console.log("done unadding");
+            })
+    });
+</script>
+<%
         session.setAttribute("profileInfo", currentuser);
         session.setAttribute("showFriend", null);
     }%>
