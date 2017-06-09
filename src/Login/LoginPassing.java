@@ -50,6 +50,10 @@ public class LoginPassing {
         } catch (SQLException e) {
             System.out.println("Error creating database connection.");
             e.printStackTrace();
+            return false;
+        }
+        catch (IllegalArgumentException e){
+            return false;
         }
         return false;
     }

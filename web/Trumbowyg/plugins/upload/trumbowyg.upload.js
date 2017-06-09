@@ -83,9 +83,11 @@
         plugins: {
             upload: {
                 init: function (trumbowyg) {
+                    console.log("1")
                     trumbowyg.o.plugins.upload = $.extend(true, {}, defaultOptions, trumbowyg.o.plugins.upload || {});
                     var btnDef = {
                         fn: function () {
+                            console.log("2")
                             trumbowyg.saveRange();
 
                             var file,
@@ -112,6 +114,7 @@
 
                                 // Callback
                                 function (values) {
+                                    console.log("3")
                                     var data = new FormData();
                                     data.append(trumbowyg.o.plugins.upload.fileFieldName, file);
 
@@ -150,6 +153,7 @@
                                         },
 
                                         success: function (data) {
+                                            console.log("4")
                                             if (trumbowyg.o.plugins.upload.success) {
                                                 trumbowyg.o.plugins.upload.success(data, trumbowyg, $modal, values);
                                             } else {
@@ -172,6 +176,7 @@
                                         },
 
                                         error: trumbowyg.o.plugins.upload.error || function () {
+                                            console.log("5");
                                             trumbowyg.addErrorOnModalField(
                                                 $('input[type=file]', $modal),
                                                 trumbowyg.lang.uploadError

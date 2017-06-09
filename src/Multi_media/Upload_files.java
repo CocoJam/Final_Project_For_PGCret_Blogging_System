@@ -121,21 +121,15 @@ public class Upload_files extends HttpServlet {
                         FormingVideoFileAndVideo();
                     } else if (fileName.endsWith(".mp3")) {
                         FormingAudioFileAndAudio();
-                    } else if (fileName.endsWith(".jpg") || fileName.endsWith(".png")||fileName.endsWith(".gif")||fileName.endsWith(".jpeg")||fileName.endsWith(".svg")) {
+                    } else if (fileName.endsWith(".jpg") || fileName.endsWith(".png") || fileName.endsWith(".gif") || fileName.endsWith(".jpeg") || fileName.endsWith(".svg")) {
                         FormingPhotoFileAndPhoto();
                     }
                     fileNameEditting(); //this slims down the filenname before it is written
                     fi.write(file);
-                    if (caption.equals("ArticlesUpload") ||caption.equals("addNewArticle")) {
-//                        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
+                    if (caption.equals("ArticlesUpload") || caption.equals("addNewArticle")) {
                         resp.getWriter().print(filePath(file));
-//                        req.getRequestDispatcher("/ArticleUpload").forward(req, resp);
-                    }
-//                    } else if (caption.equals("addNewArticle")){
-//                        req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
-//                    }
-                    else {
-                        req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+                    } else {
+                        resp.getWriter().print(filePath(file));
                     }
                     return;
                 } else {
@@ -144,10 +138,12 @@ public class Upload_files extends HttpServlet {
             }
         } catch (FileUploadException ex) {
             System.out.println("Upload not successful due to the file size exceeding limit");
-            req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+            resp.getWriter().print("File Upload Exceeded File Size");
             System.out.println(ex);
+            return;
         } catch (Exception ex) {
-            ex.getStackTrace();
+            resp.getWriter().print("File Upload Error");
+            return;
         }
     }
 
@@ -239,10 +235,10 @@ public class Upload_files extends HttpServlet {
         if (media != null) {
             ServletContext servletContext = getServletContext();
             if (media.equals("all")) {
-                request.setAttribute("AllOrSelf","all");
+                request.setAttribute("AllOrSelf", "all");
                 userPath = servletContext.getRealPath("/Upload-photos");
             } else if (media.equals("self")) {
-                request.setAttribute("AllOrSelf","self");
+                request.setAttribute("AllOrSelf", "self");
                 userPath = servletContext.getRealPath("/Upload-photos/" + username);
             }
         }

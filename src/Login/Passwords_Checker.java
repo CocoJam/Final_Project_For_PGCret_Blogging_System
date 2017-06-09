@@ -70,7 +70,7 @@ public class Passwords_Checker {
         return hash(password, salt, DEFAULT_ITERATIONS);
     }
 
-    public static byte[] hash(char[] password, byte[] salt, int iterations) {
+    public static byte[] hash(char[] password, byte[] salt, int iterations) throws IllegalArgumentException{
         PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, KEY_LENGTH);
 
         // Blank out the provided password array - prevents accidental leakage of this information
@@ -116,7 +116,7 @@ public class Passwords_Checker {
         return Base64.getEncoder().encodeToString(array);
     }
 
-    public String hashing(String password, int salt, int iterations) {
+    public String hashing(String password, int salt, int iterations) throws IllegalArgumentException{
         byte[] saltbyte = {(byte) salt};
         byte[] passwordHashed = hash(password.toCharArray(), saltbyte, iterations);
         password = base64Encode(passwordHashed);

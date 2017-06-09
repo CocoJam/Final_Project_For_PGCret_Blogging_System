@@ -35,9 +35,7 @@ public class Login_in extends HttpServlet {
         System.out.println("Processing login");
         username = req.getParameter("username");
         password = req.getParameter("password");
-
         LoginPassing loginPassing = new LoginPassing(); //See loginPassing class: stores all the methods for login including DAO query the database.
-        System.out.println(passwords_checker.hashing(password, 5, 500));
 
         if (session.getAttribute("log") != null) {
             if ((boolean) session.getAttribute("log")) {

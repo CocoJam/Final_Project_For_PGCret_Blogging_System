@@ -53,6 +53,8 @@ public class ProfilePageServlet extends HttpServlet{
             return;
         } else {
             ProfilePAge profilePAge = profilePageDAO.getUsersProfile(req.getParameter("accessFriend"));
+            System.out.println(profilePAge + " is there anyone here?");
+            if (profilePAge != null){
             HttpSession session = req.getSession();
             List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(req.getParameter("accessFriend"));
             List<Friend> friendList = new FriendDAO().selectionListOfFriends(req.getParameter("accessFriend"));
@@ -60,7 +62,7 @@ public class ProfilePageServlet extends HttpServlet{
             System.out.println("Firend list" + friendList);
             System.out.println(req.getParameter("accessFriend"));
             session.setAttribute("IndexOfInterest", indexList);
-            session.setAttribute("showFriend", profilePAge);
+            session.setAttribute("showFriend", profilePAge);}
             req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req,resp);
             return;
         }
