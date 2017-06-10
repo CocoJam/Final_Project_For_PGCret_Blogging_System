@@ -24,7 +24,7 @@ public class ConnectionToTheDataBase {
         return conn;
     }
 
-    public static Connection  conn;
+    public static Connection conn;
 
     public Void ConnectionToBase(String type) {
         try {
@@ -35,7 +35,7 @@ public class ConnectionToTheDataBase {
         try {
             switch (type) {
                 case "ADMIN":
-                    conn =   DriverManager.getConnection("jdbc:mysql://mysql1.sporadic.co.nz:3306/uoaslashn", Config.getProperties(ConnectionTypes.Admin));
+                    conn = DriverManager.getConnection("jdbc:mysql://mysql1.sporadic.co.nz:3306/uoaslashn", Config.getProperties(ConnectionTypes.Admin));
                     System.out.println("Connect to Admin");
                     break;
                 case "GET":
@@ -61,7 +61,7 @@ public class ConnectionToTheDataBase {
             e.printStackTrace();
         }
         try {
-            System.out.println("Connection is closed :"+conn.isClosed());
+            System.out.println("Connection is closed :" + conn.isClosed());
         } catch (SQLException e) {
             try {
                 conn.close();
@@ -69,8 +69,7 @@ public class ConnectionToTheDataBase {
                 e1.printStackTrace();
             }
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 conn.close();
             } catch (SQLException e) {
@@ -79,10 +78,10 @@ public class ConnectionToTheDataBase {
         }
     }
 
-    public static void cookieTracker(HttpServletRequest req, HttpServletResponse resp){
+    public static void cookieTracker(HttpServletRequest req, HttpServletResponse resp) {
         Cookie[] cookies = req.getCookies();
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("pagemark")){
+            if (cookie.getName().equals("pagemark")) {
                 try {
                     req.getRequestDispatcher(cookie.getValue()).forward(req, resp);
                 } catch (ServletException e) {
@@ -93,6 +92,23 @@ public class ConnectionToTheDataBase {
             }
         }
         return;
+    }
+
+    public static void cookieLogOut(HttpServletRequest req, HttpServletResponse resp) {
+        Cookie[] cookies = req.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("pagemark")){
+                System.out.println("cookie is ok");
+                return;
+            }
+        }
+        try {
+            req.getRequestDispatcher("/logout").forward(req,resp);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

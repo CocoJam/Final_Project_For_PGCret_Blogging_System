@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
+import static Connection.ConnectionToTheDataBase.cookieLogOut;
 import static Connection.ConnectionToTheDataBase.cookieTracker;
 
 
@@ -31,6 +32,7 @@ public class CommentsServlet extends HttpServlet {
     //Article servlet will reroute here.
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        cookieLogOut(req, resp);
         commentsDAO = new CommentsDAO();
         Comments comments = null;
         HttpSession session = req.getSession();
@@ -58,7 +60,7 @@ public class CommentsServlet extends HttpServlet {
                 JSONObject jsonObject = getJsonObject(comments);
                 resp.getWriter().print(jsonObject);
             }
-            cookieTracker(req,resp);
+            cookieTracker(req, resp);
         }
         //Grabbing list again since it is fully updated.
         listOfComments = commentsDAO.selectionComments(articleID);

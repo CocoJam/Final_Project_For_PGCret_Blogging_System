@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
+import static Connection.ConnectionToTheDataBase.cookieLogOut;
 import static Connection.ConnectionToTheDataBase.cookieTracker;
 
 /**
@@ -24,6 +25,7 @@ public class ArticlesIndexServlet extends HttpServlet {
     //Hyperlink from the Profilepage.jsp has parameter called ArticleList and the value of the parameter will return ALL or SELF.
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        cookieLogOut(req,resp);
         HttpSession session = req.getSession();
         username = (String) session.getAttribute("username");
         if (req.getParameter("articleList") != null) {
@@ -85,6 +87,7 @@ public class ArticlesIndexServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        cookieLogOut(req,resp);
         doGet(req, resp);
     }
 }

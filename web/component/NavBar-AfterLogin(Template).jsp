@@ -20,7 +20,14 @@
 <body>
 <script>
     var ctx = "<%= request.getRequestURI() %>";
-    document.cookie = "pagemark="+ctx;
+    var date = new Date();
+    var currentTime = date.getTime();
+    console.log(currentTime);
+    ExpirationTime = currentTime + 1000*1800;
+    console.log(ExpirationTime);
+    date.setTime(ExpirationTime);
+    document.cookie = "pagemark="+ctx+";expires="+date.toGMTString()+";path=/";
+    console.log(date.toGMTString());
     console.log(document.cookie);
 </script>
 <nav class="navbar navbar-info navbar-transparent navbar-fixed-top navbar-color-on-scroll">

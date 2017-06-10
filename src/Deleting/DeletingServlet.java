@@ -14,9 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static Connection.ConnectionToTheDataBase.closingConnection;
-import static Connection.ConnectionToTheDataBase.conn;
-import static Connection.ConnectionToTheDataBase.cookieTracker;
+import static Connection.ConnectionToTheDataBase.*;
 
 /**
  * Created by ljam763 on 28/05/2017.
@@ -34,6 +32,7 @@ public class DeletingServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        cookieLogOut(req,resp);
         loginPassing =  new LoginPassing();
         deleteDAO = new DeleteDAO();
         HttpSession session = req.getSession();

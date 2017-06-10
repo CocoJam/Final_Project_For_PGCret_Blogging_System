@@ -12,9 +12,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static Article.ArticlesIndexServlet.checkingForOwnership;
-import static Connection.ConnectionToTheDataBase.closingConnection;
-import static Connection.ConnectionToTheDataBase.conn;
-import static Connection.ConnectionToTheDataBase.cookieTracker;
+import static Connection.ConnectionToTheDataBase.*;
 
 /**
  * Created by ljam763 on 25/05/2017.
@@ -41,7 +39,7 @@ public class ArticleServlet extends HttpServlet {
     //Grab everything that is related to the article, set sessions with the article content and comments list (AND ownership) and dispatch to comments servlet to get the comments.
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        cookieLogOut(req,resp);
 //        This is when the create new article button is clicked on the navbar it forwards to the relevant Post method.
         System.out.println("Creating new article from Navbar");
 
@@ -104,6 +102,7 @@ public class ArticleServlet extends HttpServlet {
     //doPost gets POST request to add or edit article depends on where the button was pushed (dependent on the parameter value).
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        cookieLogOut(req,resp);
         articlesDAO = new ArticlesDAO();
         String addingArticles = req.getParameter("add");
         HttpSession session = req.getSession();

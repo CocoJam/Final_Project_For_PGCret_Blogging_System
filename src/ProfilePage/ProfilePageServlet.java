@@ -17,6 +17,7 @@ import java.util.List;
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
 import static Connection.ConnectionToTheDataBase.conn;
+import static Connection.ConnectionToTheDataBase.cookieLogOut;
 
 /**
  * Created by ljam763 on 25/05/2017.
@@ -31,6 +32,7 @@ public class ProfilePageServlet extends HttpServlet{
 //    Grabs the profile page from the Database based on the username (stored in session)
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        cookieLogOut(req,resp);
         profilePageDAO = new ProfilePageDAO();
         HttpSession session = req.getSession();
         username = (String) session.getAttribute("username");
@@ -47,6 +49,7 @@ public class ProfilePageServlet extends HttpServlet{
 //    The point of this: TODO need to cleanup connections from Login/Registration servlet (Maybe POST directly(?))
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        cookieLogOut(req,resp);
         if (req.getParameter("accessFriend") == null){
             System.out.println("accessFirend == null");
             doPost(req,resp);

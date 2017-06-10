@@ -14,10 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-
-import static Connection.ConnectionToTheDataBase.closingConnection;
-import static Connection.ConnectionToTheDataBase.conn;
-import static Connection.ConnectionToTheDataBase.cookieTracker;
+import static Connection.ConnectionToTheDataBase.*;
 
 
 /**
@@ -32,6 +29,7 @@ public class Login_in extends HttpServlet {
     //doPost checks in login is possible and if so redirects to Profile page
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        cookieLogOut(req,resp);
         HttpSession session = req.getSession();
         System.out.println("Processing login");
         username = req.getParameter("username");

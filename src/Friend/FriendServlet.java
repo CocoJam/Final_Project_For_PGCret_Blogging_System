@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+import static Connection.ConnectionToTheDataBase.cookieLogOut;
 import static Connection.ConnectionToTheDataBase.cookieTracker;
 
 /**
@@ -16,6 +17,7 @@ import static Connection.ConnectionToTheDataBase.cookieTracker;
 public class FriendServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        cookieLogOut(req,resp);
         HttpSession session = req.getSession();
         FriendDAO friendDAO = new FriendDAO();
         System.out.println("posted");
