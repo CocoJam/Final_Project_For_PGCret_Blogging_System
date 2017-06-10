@@ -93,7 +93,7 @@
                 image</a>
         </li>
         <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-            <h5 class="ui-widget-header">bbbbbbb</h5>
+            <h5 class="ui-widget-header">cccccbbbbbbb</h5>
             <p class="made">blah</p>
             <!--<img src="images/high_tatras_min.jpg" alt="The peaks of High Tatras" width="150" height="150">-->
             <a href="images/high_tatras.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
@@ -101,7 +101,7 @@
                 image</a>
         </li>
         <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-            <h5 class="ui-widget-header">cccccc</h5>
+            <h5 class="ui-widget-header">aaaacasdasccsdasdccc</h5>
             <p class="made">blah</p>
             <!--<img src="images/high_tatras2_min.jpg" alt="The chalet at the Green mountain lake" width="96" height="72">-->
             <a href="images/high_tatras2.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
@@ -109,7 +109,7 @@
                 image</a>
         </li>
         <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-            <h5 class="ui-widget-header">ddddddd</h5>
+            <h5 class="ui-widget-header">ffffff</h5>
             <p class="made">ggggg</p>
             <!--<img src="images/high_tatras3_min.jpg" alt="Planning the ascent" width="96" height="72">-->
             <a href="images/high_tatras3.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
@@ -117,7 +117,7 @@
                 image</a>
         </li>
         <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-            <h5 class="ui-widget-header">eeeeeee</h5>
+            <h5 class="ui-widget-header">ccceeeeeee</h5>
             <p class="made">asdasdasd</p>
             <!--<img src="images/high_tatras4_min.jpg" alt="On top of Kozi kopka" width="96" height="72">-->
             <a href="images/high_tatras4.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
@@ -155,17 +155,43 @@
 
 <script>
     var things = [];
+    //    $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
+    //        things.push($(this));
+    //        console.log(things);
+    //    });
+
+    function defaultSort(elementX, elementY) {
+        if (elementX.children().siblings("h5").text() < elementY.children().siblings("h5").text())
+            return -1;
+        if (elementX.children().siblings("h5").text() > elementY.children().siblings("h5").text())
+            return 1;
+        return 0;
+    }
+
     $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
         things.push($(this));
-    })
+    });
+    //    mixture.sort(defaultSort);
     $("#textarea").bind('keyup', function () {
-        console.log(things);
-        var items = $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").children($("h5")).sort(function(a, b) {
-            var vA = $(keySelector, a).innerHTML;
-            var vB = $(keySelector, b).innerHTML;
-            return (vA < vB) ? -1 : (vA > vB) ? 1 : 0;
-        });
-        console.log(things);
+        for (var i = 0; i < things.length; i++) {
+            console.log("out");
+            things[i].fadeOut("fast");
+            things[i].promise().done(function () {
+                console.log("out z");
+                things[i].css("z-index", -1);
+            })
+        }
+        console.log(things)
+        var thins2 = things.sort(defaultSort);
+        console.log(thins2);
+        for (var i = 0; i < thins2.length; i++) {
+            console.log("in");
+            thins2[i].fadeIn("slow")
+            thins2[i].promise().done(function () {
+                console.log("out z");
+                things[i].css("z-index", 0);
+            })
+        }
     });
 
     $(function () {
