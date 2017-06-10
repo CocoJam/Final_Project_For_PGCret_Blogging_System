@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>jQuery UI Droppable - Simple photo manager</title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <style>
@@ -126,45 +127,45 @@
     </ul>
 
     <div id="save" class="ui-widget-content ui-state-default ui-droppable">
-        <ul class="gallery ui-helper-reset"><li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle" style="display: list-item; width: 48px;">
-            <h5 class="ui-widget-header">fffffffff</h5>
-            <!--<img src="images/high_tatras3_min.jpg" alt="Planning the ascent" width="96" height="72">-->
-            <a href="images/high_tatras3.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+        <ul class="gallery ui-helper-reset">
+            <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle"
+                style="display: list-item; width: 48px;">
+                <h5 class="ui-widget-header">fffffffff</h5>
+                <!--<img src="images/high_tatras3_min.jpg" alt="Planning the ascent" width="96" height="72">-->
+                <a href="images/high_tatras3.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View
+                    larger</a>
 
-            <a href="link/to/recycle/script/when/we/have/js/off" title="Recycle this image" class="ui-icon ui-icon-refresh">Recycle image</a></li><li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle" style="display: list-item; width: 48px;">
-            <h5 class="ui-widget-header">ggggggggg</h5>
-            <!--<img src="images/high_tatras2_min.jpg" alt="The chalet at the Green mountain lake" width="96" height="72">-->
-            <a href="images/high_tatras2.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+                <a href="link/to/recycle/script/when/we/have/js/off" title="Recycle this image"
+                   class="ui-icon ui-icon-refresh">Recycle image</a></li>
+            <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle"
+                style="display: list-item; width: 48px;">
+                <h5 class="ui-widget-header">ggggggggg</h5>
+                <!--<img src="images/high_tatras2_min.jpg" alt="The chalet at the Green mountain lake" width="96" height="72">-->
+                <a href="images/high_tatras2.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View
+                    larger</a>
 
-            <a href="link/to/recycle/script/when/we/have/js/off" title="Recycle this image" class="ui-icon ui-icon-refresh">Recycle image</a></li></ul></div>
+                <a href="link/to/recycle/script/when/we/have/js/off" title="Recycle this image"
+                   class="ui-icon ui-icon-refresh">Recycle image</a></li>
+        </ul>
+    </div>
     <textarea id="textarea"></textarea>
 
 
 </div>
 
 <script>
-    $("#textarea").bind('keyup',function () {
-        var value = $(this).val();
-        $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
-            console.log($(this));
-            var title = $(this).children().siblings("h5").text();
-            var username =  $(this).children().siblings(".made").text();
-            console.log(title);
-            var matching = new RegExp(value,"gi");
-            if (title.match(matching)||username.match(matching)){
-                $(this).fadeIn("fast", function () {
-                    console.log("Fadein");
-                    $(this).css("z-index", 0)
-                })
-            }
-            else{
-                $(this).fadeOut("fast", function () {
-                    console.log("Fadeout");
-                    $(this).css("z-index", -1);
-                    $(this).css("z-index", -1)
-                })
-            }
-        })
+    var things = [];
+    $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
+        things.push($(this));
+    })
+    $("#textarea").bind('keyup', function () {
+        console.log(things);
+        var items = $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").children($("h5")).sort(function(a, b) {
+            var vA = $(keySelector, a).innerHTML;
+            var vB = $(keySelector, b).innerHTML;
+            return (vA < vB) ? -1 : (vA > vB) ? 1 : 0;
+        });
+        console.log(things);
     });
 
     $(function () {
