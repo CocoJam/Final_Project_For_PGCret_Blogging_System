@@ -23,10 +23,10 @@
     var date = new Date();
     var currentTime = date.getTime();
     console.log(currentTime);
-    ExpirationTime = currentTime + 1000*1800;
+    ExpirationTime = currentTime + 1000 * 1800;
     console.log(ExpirationTime);
     date.setTime(ExpirationTime);
-    document.cookie = "pagemark="+ctx+";expires="+date.toGMTString()+";path=/";
+    document.cookie = "pagemark=" + ctx + ";expires=" + date.toGMTString() + ";path=/";
     console.log(date.toGMTString());
     console.log(document.cookie);
 </script>
@@ -58,6 +58,18 @@
             <!-- Use on all other pages except login/register -->
             <ul class="nav navbar-nav navbar-right">
 
+                <%--Search bar here--%>
+                <li>
+                    <form id="NameBar" action="/ProfilePage" method="get">
+                        <input list="usernames" name="accessFriend">
+                        <datalist id="usernames">
+                            <c:forEach items="${userlist}" var="names">
+                            <option value="${names}">
+                                </c:forEach>
+                        </datalist>
+                    </form>
+                </li>
+                <%--Search bar here--%>
 
                 <li>
                     <a href="ProfilePage" class="clickOnce"><c:choose>
@@ -86,7 +98,8 @@
                             Articles</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="Articles?add=addNewArticle" class="clickOnce"><i class="material-icons">note_add</i>New
+                        <li><a href="Articles?add=addNewArticle" class="clickOnce"><i
+                                class="material-icons">note_add</i>New
                             Article</a>
                         </li>
                     </ul>
@@ -118,29 +131,48 @@
                                 class="material-icons">create</i>Edit
                             Profile</a></li>
                         <li class="divider"></li>
+                        <li class="dropdown-header">Background</li>
+                        <li><a href="#" id="leftButton"><i
+                                class="material-icons">keyboard_arrow_left</i>Previous</a>
+                            <a href="#" id="rightButton"><i
+                                    class="material-icons">keyboard_arrow_right</i>Next</a>
+                        </li>
+                        <li class="divider"></li>
                         <li><a href="logout?submit=Logout" class="clickOnce">Sign Out</a></li>
                     </ul>
                 </li>
-                <%--Friend search bar here--%>
-                <li>
-                    <form id="NameBar" action="/ProfilePage" method="get">
-                        <input list="usernames" name="accessFriend">
-                        <datalist id="usernames">
-                            <c:forEach items="${userlist}" var="names">
-                            <option value="${names}">
-                                </c:forEach>
-                        </datalist>
-                    </form>
-                    <input id="imageselect" type="number" min="1" max="5">
-                </li>
-                <%--Friend search bar here--%>
             </ul>
 
         </div>
     </div>
 </nav>
 <!-- !!! NAVIGATION BAR END !!! -->
+
 <script>
+    var imageValue = 1;
+
+    $("#leftButton").click(function(){
+        if (imageValue > 1) {
+            imageValue = imageValue - 1;
+//            $("#imageselect").val(imageValue);
+            $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + imageValue + ".jpg')");
+        }
+    });
+
+
+    $("#rightButton").click(function(){
+
+        if (imageValue < 5){
+            imageValue = imageValue + 1;
+//            $("#imageselect").val(imageValue);
+            $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + imageValue + ".jpg')");
+        }
+    })
+
+    function clickRight() {
+
+    }
+
     $("[name='accessFriend']").on('keyup', function (e) {
         if (e.keyCode == 13) {
             return $("#NameBar").submit;
@@ -160,9 +192,9 @@
         }
     });
 
-//    $('.clickOnce').click(function (e) {
-//        e.preventDefault();
-//    });
+    //    $('.clickOnce').click(function (e) {
+    //        e.preventDefault();
+    //    });
 
     //    $(document).ready(
     //        function clickOnce() {
@@ -173,7 +205,7 @@
     //    )
     $(document).ready(function () {
         $("#imageselect").change(function () {
-            $('#custom-bg-user').css("background-image","url('../../assets/img/background/bg-0"+$("#imageselect").val()+".jpg')");
+            $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + imageValue + ".jpg')");
             console.log(document.getElementById('custom-bg-user'));
         });
     });

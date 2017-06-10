@@ -240,6 +240,16 @@
                                            value="${profileInfo.ethnicity}">
                                 </div>
 
+                                <!-- Introduction about the user -->
+                                <div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">chat</i>
+										</span>
+                                    <textarea form="form" id="Introduction" name="Introduction" placeholder="Let your classmates know a little bit about yourself"
+                                           class="form-control"
+                                              value="${profileInfo.introduction}"></textarea>
+                                </div>
+
                                 <%--Viewing list of users photos--%>
                                 <%--2nd part: uses the above set to display the images in the set, by going through the list of photoname strings, and then accessing by pathing in the photo by the username folder--%>
                                 <% if (username != null) {

@@ -8,206 +8,260 @@
     </schema>
     <schema id="3" parent="1" name="information_schema"/>
     <schema id="4" parent="1" name="sample_db"/>
-    <schema id="5" parent="1" name="ljam763"/>
+    <schema id="5" parent="1" name="jwon117"/>
     <table id="6" parent="2" name="Articles"/>
     <table id="7" parent="2" name="Comments"/>
-    <table id="8" parent="2" name="Friendlist"/>
-    <table id="9" parent="2" name="UsersNames"/>
-    <table id="10" parent="2" name="youtube"/>
-    <column id="11" parent="6" name="ArticlesID">
+    <table id="8" parent="2" name="Comments2"/>
+    <table id="9" parent="2" name="Friendlist"/>
+    <table id="10" parent="2" name="UsersNames"/>
+    <table id="11" parent="2" name="youtube"/>
+    <column id="12" parent="6" name="ArticlesID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="12" parent="6" name="ArticlesName">
+    <column id="13" parent="6" name="ArticlesName">
       <Position>2</Position>
       <DataType>varchar(64)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="13" parent="6" name="UserIDName">
+    <column id="14" parent="6" name="UserIDName">
       <Position>3</Position>
       <DataType>varchar(64)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="14" parent="6" name="Content">
+    <column id="15" parent="6" name="Content">
       <Position>4</Position>
       <DataType>text|0</DataType>
     </column>
-    <column id="15" parent="6" name="SpecificDateCreated">
+    <column id="16" parent="6" name="SpecificDateCreated">
       <Position>5</Position>
       <DataType>timestamp|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <column id="16" parent="6" name="Category">
+    <column id="17" parent="6" name="Category">
       <Position>6</Position>
       <DataType>varchar(64)|0</DataType>
     </column>
-    <index id="17" parent="6" name="UserIDName">
+    <index id="18" parent="6" name="UserIDName">
       <ColNames>UserIDName</ColNames>
     </index>
-    <key id="18" parent="6" name="PRIMARY">
+    <key id="19" parent="6" name="PRIMARY">
       <ColNames>ArticlesID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="19" parent="6" name="Articles_ibfk_1">
+    <foreign-key id="20" parent="6" name="Articles_ibfk_1">
       <ColNames>UserIDName</ColNames>
       <RefSchemaName>uoaslashn</RefSchemaName>
       <RefTableName>UsersNames</RefTableName>
       <RefColNames>Username</RefColNames>
     </foreign-key>
-    <column id="20" parent="7" name="CommentID">
+    <column id="21" parent="7" name="CommentID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="21" parent="7" name="ArticlesID">
+    <column id="22" parent="7" name="ArticlesID">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="22" parent="7" name="CommenterName">
+    <column id="23" parent="7" name="CommenterName">
       <Position>3</Position>
       <DataType>varchar(64)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="23" parent="7" name="Comments">
+    <column id="24" parent="7" name="Comments">
       <Position>4</Position>
       <DataType>varchar(64)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="24" parent="7" name="CommentTime">
+    <column id="25" parent="7" name="CommentTime">
       <Position>5</Position>
       <DataType>timestamp|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <index id="25" parent="7" name="ArticlesID">
+    <index id="26" parent="7" name="ArticlesID">
       <ColNames>ArticlesID</ColNames>
     </index>
-    <index id="26" parent="7" name="CommenterName">
+    <index id="27" parent="7" name="CommenterName">
       <ColNames>CommenterName</ColNames>
     </index>
-    <key id="27" parent="7" name="PRIMARY">
+    <key id="28" parent="7" name="PRIMARY">
       <ColNames>CommentID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="28" parent="7" name="Comments_ibfk_1">
+    <foreign-key id="29" parent="7" name="Comments_ibfk_1">
       <ColNames>ArticlesID</ColNames>
       <RefSchemaName>uoaslashn</RefSchemaName>
       <RefTableName>Articles</RefTableName>
       <RefColNames>ArticlesID</RefColNames>
     </foreign-key>
-    <foreign-key id="29" parent="7" name="Comments_ibfk_2">
+    <foreign-key id="30" parent="7" name="Comments_ibfk_2">
       <ColNames>CommenterName</ColNames>
       <RefSchemaName>uoaslashn</RefSchemaName>
       <RefTableName>UsersNames</RefTableName>
       <RefColNames>Username</RefColNames>
     </foreign-key>
-    <column id="30" parent="8" name="username">
-      <Position>1</Position>
-      <DataType>varchar(64)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="31" parent="8" name="friendusername">
-      <Position>2</Position>
-      <DataType>varchar(64)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <index id="32" parent="8" name="friendusername">
-      <ColNames>friendusername</ColNames>
-    </index>
-    <index id="33" parent="8" name="username">
-      <ColNames>username</ColNames>
-    </index>
-    <foreign-key id="34" parent="8" name="Friendlist_ibfk_1">
-      <ColNames>username</ColNames>
-      <RefSchemaName>uoaslashn</RefSchemaName>
-      <RefTableName>UsersNames</RefTableName>
-      <RefColNames>Username</RefColNames>
-    </foreign-key>
-    <foreign-key id="35" parent="8" name="Friendlist_ibfk_2">
-      <ColNames>friendusername</ColNames>
-      <RefSchemaName>uoaslashn</RefSchemaName>
-      <RefTableName>UsersNames</RefTableName>
-      <RefColNames>Username</RefColNames>
-    </foreign-key>
-    <column id="36" parent="9" name="Username">
-      <Position>1</Position>
-      <DataType>varchar(64)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="37" parent="9" name="Password">
-      <Position>2</Position>
-      <DataType>varchar(100)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="38" parent="9" name="Name">
-      <Position>3</Position>
-      <DataType>varchar(64)|0</DataType>
-    </column>
-    <column id="39" parent="9" name="Email">
-      <Position>4</Position>
-      <DataType>varchar(100)|0</DataType>
-    </column>
-    <column id="40" parent="9" name="Address">
-      <Position>5</Position>
-      <DataType>varchar(200)|0</DataType>
-    </column>
-    <column id="41" parent="9" name="Education">
-      <Position>6</Position>
-      <DataType>varchar(200)|0</DataType>
-    </column>
-    <column id="42" parent="9" name="Ethnicity">
-      <Position>7</Position>
-      <DataType>varchar(200)|0</DataType>
-    </column>
-    <column id="43" parent="9" name="DateOfBirth">
-      <Position>8</Position>
-      <DataType>date|0</DataType>
-    </column>
-    <column id="44" parent="9" name="profilePicture">
-      <Position>9</Position>
-      <DataType>text|0</DataType>
-    </column>
-    <column id="45" parent="9" name="salt">
-      <Position>10</Position>
-      <DataType>int(255)|0</DataType>
-    </column>
-    <column id="46" parent="9" name="iteration">
-      <Position>11</Position>
-      <DataType>int(255)|0</DataType>
-    </column>
-    <key id="47" parent="9" name="PRIMARY">
-      <ColNames>Username</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="48" parent="10" name="ArticlesId">
-      <Position>2</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="49" parent="10" name="youtubeURL">
-      <Position>3</Position>
-      <DataType>varchar(1000)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="50" parent="10" name="youtubeId">
+    <column id="31" parent="8" name="CommentID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <index id="51" parent="10" name="ArticlesId">
+    <column id="32" parent="8" name="ArticlesID">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="33" parent="8" name="CommenterName">
+      <Position>3</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="34" parent="8" name="Comments">
+      <Position>4</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="35" parent="8" name="CommentTime">
+      <Position>5</Position>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <index id="36" parent="8" name="ArticlesID">
+      <ColNames>ArticlesID</ColNames>
+    </index>
+    <index id="37" parent="8" name="CommenterName">
+      <ColNames>CommenterName</ColNames>
+    </index>
+    <key id="38" parent="8" name="PRIMARY">
+      <ColNames>CommentID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="39" parent="8" name="Comments2_ibfk_1">
+      <ColNames>ArticlesID</ColNames>
+      <RefSchemaName>uoaslashn</RefSchemaName>
+      <RefTableName>Articles</RefTableName>
+      <RefColNames>ArticlesID</RefColNames>
+    </foreign-key>
+    <foreign-key id="40" parent="8" name="Comments2_ibfk_2">
+      <ColNames>CommenterName</ColNames>
+      <RefSchemaName>uoaslashn</RefSchemaName>
+      <RefTableName>UsersNames</RefTableName>
+      <RefColNames>Username</RefColNames>
+    </foreign-key>
+    <column id="41" parent="9" name="username">
+      <Position>1</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="42" parent="9" name="friendusername">
+      <Position>2</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="43" parent="9" name="friendusername">
+      <ColNames>friendusername</ColNames>
+    </index>
+    <index id="44" parent="9" name="username">
+      <ColNames>username</ColNames>
+    </index>
+    <foreign-key id="45" parent="9" name="Friendlist_ibfk_1">
+      <ColNames>username</ColNames>
+      <RefSchemaName>uoaslashn</RefSchemaName>
+      <RefTableName>UsersNames</RefTableName>
+      <RefColNames>Username</RefColNames>
+    </foreign-key>
+    <foreign-key id="46" parent="9" name="Friendlist_ibfk_2">
+      <ColNames>friendusername</ColNames>
+      <RefSchemaName>uoaslashn</RefSchemaName>
+      <RefTableName>UsersNames</RefTableName>
+      <RefColNames>Username</RefColNames>
+    </foreign-key>
+    <column id="47" parent="10" name="Username">
+      <Position>1</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="48" parent="10" name="Password">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="49" parent="10" name="Name">
+      <Position>3</Position>
+      <DataType>varchar(64)|0</DataType>
+    </column>
+    <column id="50" parent="10" name="Email">
+      <Position>4</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="51" parent="10" name="Address">
+      <Position>5</Position>
+      <DataType>varchar(200)|0</DataType>
+    </column>
+    <column id="52" parent="10" name="Education">
+      <Position>6</Position>
+      <DataType>varchar(200)|0</DataType>
+    </column>
+    <column id="53" parent="10" name="Ethnicity">
+      <Position>7</Position>
+      <DataType>varchar(200)|0</DataType>
+    </column>
+    <column id="54" parent="10" name="DateOfBirth">
+      <Position>8</Position>
+      <DataType>date|0</DataType>
+    </column>
+    <column id="55" parent="10" name="profilePicture">
+      <Position>9</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="56" parent="10" name="salt">
+      <Position>10</Position>
+      <DataType>int(255)|0</DataType>
+    </column>
+    <column id="57" parent="10" name="iteration">
+      <Position>11</Position>
+      <DataType>int(255)|0</DataType>
+    </column>
+    <column id="58" parent="10" name="Introduction">
+      <Position>12</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <key id="59" parent="10" name="PRIMARY">
+      <ColNames>Username</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="60" parent="11" name="ArticlesId">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="61" parent="11" name="youtubeURL">
+      <Position>3</Position>
+      <DataType>varchar(1000)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="62" parent="11" name="youtubeId">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <index id="63" parent="11" name="ArticlesId">
       <ColNames>ArticlesId</ColNames>
     </index>
-    <key id="52" parent="10" name="PRIMARY">
+    <key id="64" parent="11" name="PRIMARY">
       <ColNames>youtubeId</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="53" parent="10" name="youtube_ibfk_1">
+    <foreign-key id="65" parent="11" name="youtube_ibfk_1">
       <ColNames>ArticlesId</ColNames>
       <RefSchemaName>uoaslashn</RefSchemaName>
       <RefTableName>Articles</RefTableName>

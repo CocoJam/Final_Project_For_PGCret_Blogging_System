@@ -55,24 +55,22 @@ public class ProfilePageServlet extends HttpServlet {
                         "\n" +
                         "\n" +
                         "                                </tr>\n";
-
                 for (Articles articles : indexList) {
                     message +=
                             "<tr>\n" +
-                            "                                        <td>\n" +
-                            "                                            <a href=\"/Articles?acticleId=" + articles.getArticleid() + "\">" + articles.getArticlename() + "</a>\n" +
-                            "                                        </td>\n" +
-                            "\n" +
-                            "                                        <td>\n" +
-                                                                            articles.getCategory() +
-                            "                                        </td>\n" +
-                            "\n" +
-                            "                                        <td>" + articles.getDatecreated() + "</td>\n" +
-                            "\n" +
-                            "\n" +
-                            "                                    </tr>\n";
+                                    "                                        <td>\n" +
+                                    "                                            <a href=\"/Articles?acticleId=" + articles.getArticleid() + "\">" + articles.getArticlename() + "</a>\n" +
+                                    "                                        </td>\n" +
+                                    "\n" +
+                                    "                                        <td>\n" +
+                                    articles.getCategory() +
+                                    "                                        </td>\n" +
+                                    "\n" +
+                                    "                                        <td>" + articles.getDatecreated() + "</td>\n" +
+                                    "\n" +
+                                    "\n" +
+                                    "                                    </tr>\n";
                 }
-
                 message += "</table>";
 
 //            JSONObject jsonObject = getJsonListObjects(indexList);
@@ -94,33 +92,34 @@ public class ProfilePageServlet extends HttpServlet {
         return;
     }
 
-//    The point of this: TODO need to cleanup connections from Login/Registration servlet (Maybe POST directly(?))
+    //    The point of this: TODO need to cleanup connections from Login/Registration servlet (Maybe POST directly(?))
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("accessFriend") == null) {
             System.out.println("sdgfdrjgkldjglkdfjglkdfjglkdfjglkdfjglkdjlgdfj");
             doPost(req, resp);
-        cookieLogOut(req,resp);
-        System.out.println("in pp doget");
-        if (req.getParameter("accessFriend") == null){
-            System.out.println("accessFirend == null");
-            doPost(req,resp);
-            return;
-        } else {
-            ProfilePAge profilePAge = profilePageDAO.getUsersProfile(req.getParameter("accessFriend"));
-            System.out.println(profilePAge + " is there anyone here?");
-            if (profilePAge != null) {
-                HttpSession session = req.getSession();
-                List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(req.getParameter("accessFriend"));
-                List<Friend> friendList = new FriendDAO().selectionListOfFriends(req.getParameter("accessFriend"));
-                session.setAttribute("accessFriendfirendlist", friendList);
-                System.out.println("Firend list" + friendList);
-                System.out.println(req.getParameter("accessFriend"));
-                session.setAttribute("IndexOfInterest", indexList);
-                session.setAttribute("showFriend", profilePAge);
+            cookieLogOut(req, resp);
+            System.out.println("in pp doget");
+//            if (req.getParameter("accessFriend") == null) {
+//                System.out.println("accessFirend == null");
+//                doPost(req, resp);
+//                return;
             }
-            req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
-            return;
+            else {
+                ProfilePAge profilePAge = profilePageDAO.getUsersProfile(req.getParameter("accessFriend"));
+                System.out.println(profilePAge + " is there anyone here?");
+                if (profilePAge != null) {
+                    HttpSession session = req.getSession();
+                    List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(req.getParameter("accessFriend"));
+                    List<Friend> friendList = new FriendDAO().selectionListOfFriends(req.getParameter("accessFriend"));
+                    session.setAttribute("accessFriendfirendlist", friendList);
+                    System.out.println("Firend list" + friendList);
+                    System.out.println(req.getParameter("accessFriend"));
+                    session.setAttribute("IndexOfInterest", indexList);
+                    session.setAttribute("showFriend", profilePAge);
+                }
+                req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+                return;
         }
     }
 }
