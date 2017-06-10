@@ -4,7 +4,6 @@ import Article.ArticleListObjectDAO;
 import Article.Articles;
 import Friend.Friend;
 import Friend.FriendDAO;
-import org.json.simple.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,13 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
 import static Connection.ConnectionToTheDataBase.conn;
+import static Connection.ConnectionToTheDataBase.cookieLogOut;
 
 /**
  * Created by ljam763 on 25/05/2017.
@@ -83,7 +81,7 @@ public class ProfilePageServlet extends HttpServlet {
                 return;
             }
         }
-        
+
 //        NB. Following commented out lines are redundant, as login does this functionality.
 //        List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
 //        session.setAttribute("IndexOfInterest", indexList);
@@ -96,41 +94,17 @@ public class ProfilePageServlet extends HttpServlet {
         return;
     }
 
-//    private JSONObject getJsonListObjects(List<Articles> indexList){
-//        JSONObject jsonList = new JSONObject();
-//
-////        String[] nameArray = new String[jsonList.size()-1];
-////        String[] categoryArray = new String[jsonList.size()-1];
-////        String[] dateArray = new String[jsonList.size()-1];
-//
-//
-//        for (int i = 0; i < jsonList.size()-1; i++){
-//            JSONObject jsonObject = new JSONObject();
-//
-//            String articleName =  indexList.get(i).getArticlename();
-//            jsonObject.put("articleName", articleName);
-//            String categoryName = indexList.get(i).getCategory();
-//            jsonObject.put("categoryName", categoryName);
-//
-//            Format formatter = new SimpleDateFormat("yyy-MM-dd");
-//            String dateCreated = formatter.format(indexList.get(i).getDatecreated());
-//            System.out.println(dateCreated);
-//
-//            jsonObject.put("dateCreated", dateCreated);
-//
-//            jsonList.put("Article" + i, jsonObject);
-//        }
-//
-//        return jsonList;
-//
-//    }
-
-    //    The point of this: TODO need to cleanup connections from Login/Registration servlet (Maybe POST directly(?))
+//    The point of this: TODO need to cleanup connections from Login/Registration servlet (Maybe POST directly(?))
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("accessFriend") == null) {
             System.out.println("sdgfdrjgkldjglkdfjglkdfjglkdfjglkdfjglkdjlgdfj");
             doPost(req, resp);
+        cookieLogOut(req,resp);
+        System.out.println("in pp doget");
+        if (req.getParameter("accessFriend") == null){
+            System.out.println("accessFirend == null");
+            doPost(req,resp);
             return;
         } else {
             ProfilePAge profilePAge = profilePageDAO.getUsersProfile(req.getParameter("accessFriend"));
