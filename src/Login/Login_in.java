@@ -87,9 +87,11 @@ public class Login_in extends HttpServlet {
             session.setAttribute("password", password);
             session.setAttribute("articleList", "self");
             session.setAttribute("log", true); //TODO refactoring for login status.
-            List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
-            session.setAttribute("IndexOfInterest", indexList);
-            System.out.println(indexList);
+
+//            List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
+//            session.setAttribute("IndexOfInterest", indexList);
+//            System.out.println(indexList);
+
             List<Friend> friendList = new FriendDAO().selectionListOfFriends(username);
             List<String> userList = new FriendDAO().GetAllPeopleUsername();
             session.setAttribute("firendlist", friendList);
