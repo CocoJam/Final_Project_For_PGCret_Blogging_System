@@ -198,7 +198,7 @@
 
                                 $("#showArticleList").click(function(){
 
-                                    clickStatus = !clickStatus;
+
 
                                     if (clickStatus) {
                                         $.ajax({
@@ -217,10 +217,11 @@
                                         });
 
                                         $("#showArticleList").html("Hide article list");
-
+                                        clickStatus = !clickStatus;
                                     } else {
                                         $("#ArticleTable").html("");
                                         $("#showArticleList").html("Show article list");
+                                        clickStatus = !clickStatus;
                                     }
 
 

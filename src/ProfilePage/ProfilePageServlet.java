@@ -83,9 +83,8 @@ public class ProfilePageServlet extends HttpServlet {
                 return;
             }
         }
-
-
-//        NB. Following is redundant, as login does this functionality.
+        
+//        NB. Following commented out lines are redundant, as login does this functionality.
 //        List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
 //        session.setAttribute("IndexOfInterest", indexList);
 //        session.setAttribute("articleList", "self"); //added in to ensure that the articles displaying on the Profile page is self only.
