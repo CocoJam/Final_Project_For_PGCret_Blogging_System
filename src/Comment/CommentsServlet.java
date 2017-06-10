@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
+import static Connection.ConnectionToTheDataBase.cookieTracker;
 
 
 /**
@@ -31,19 +32,16 @@ public class CommentsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         commentsDAO = new CommentsDAO();
+        Comments comments = null;
         HttpSession session = req.getSession();
         commentSetUp(req, session);
         String commentStatus = req.getParameter("comments");
         if (commentStatus != null) {
-
             //Scenario 1: This is to add a new comment
             if (commentStatus.equals("Add a Comment")) {
                 System.out.println("ADd a comments");
-                 commentsDAO.AddingCommentsToDataBase(articleID, username, comment);
-                Comments comments = commentsDAO.selectionLastComment();
-                JSONObject jsonObject = getJsonObject(comments);
-                resp.getWriter().print(jsonObject);
-                return;
+                commentsDAO.AddingCommentsToDataBase(articleID, username, comment);
+                comments = commentsDAO.selectionLastComment();
             }
             //Scenario 2: Editing comments
             else if (commentStatus.equals("EditComment")) {
@@ -54,20 +52,21 @@ public class CommentsServlet extends HttpServlet {
                 }
                 //updating comments (using DAO)
                 commentsDAO.editComments(comment, commentId);
-                Comments comments = commentsDAO.selectionComment(commentId);
+                comments = commentsDAO.selectionComment(commentId);
+            }
+            if (comments != null) {
                 JSONObject jsonObject = getJsonObject(comments);
                 resp.getWriter().print(jsonObject);
-                return;
             }
+            cookieTracker(req,resp);
         }
-
         //Grabbing list again since it is fully updated.
         listOfComments = commentsDAO.selectionComments(articleID);
-        checkingForOwner();
-        session.setAttribute("commentlist", listOfComments);
-        closingConnection();
-//
-//        req.getRequestDispatcher("/ArticleUpload").forward(req, resp);
+        if (listOfComments != null) {
+            checkingForOwner();
+            session.setAttribute("commentlist", listOfComments);
+            closingConnection();
+        }
         req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
         return;
 
@@ -76,10 +75,10 @@ public class CommentsServlet extends HttpServlet {
     private JSONObject getJsonObject(Comments comments) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("CommentId", comments.getCommentId());
-        jsonObject.put("ActicleId",comments.getActicleId()+"");
-        jsonObject.put("Username",comments.getUsername()+"");
-        jsonObject.put("CommentedTime",comments.getCommentedTime()+"");
-        jsonObject.put("Content",comments.getContent()+"");
+        jsonObject.put("ActicleId", comments.getActicleId() + "");
+        jsonObject.put("Username", comments.getUsername() + "");
+        jsonObject.put("CommentedTime", comments.getCommentedTime() + "");
+        jsonObject.put("Content", comments.getContent() + "");
         return jsonObject;
     }
 

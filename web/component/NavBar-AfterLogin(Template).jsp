@@ -18,8 +18,11 @@
     </style>
 </head>
 <body>
-
-
+<script>
+    var ctx = "<%= request.getRequestURI() %>";
+    document.cookie = "pagemark="+ctx;
+    console.log(document.cookie);
+</script>
 <nav class="navbar navbar-info navbar-transparent navbar-fixed-top navbar-color-on-scroll">
 
     <!-- responsive container for div --><!-- do not remove -->

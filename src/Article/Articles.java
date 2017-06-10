@@ -102,23 +102,9 @@ public class Articles {
 
     public static void main(String[] args) {
         Articles articles= new Articles();
-        String thing =("\n" +
-                "                                    \n" +
-                "                                        \n" +
-                "                                        \n" +
-                "                                            <!-- creates new section boxes -->\n" +
-                "                                            <ul>\n" +
-                "                                                <li class=\"ui-state draggable ui-draggable ui-draggable-handle\" style=\"position: relative;\"></li>\n" +
-                "                                            </ul>\n" +
-                "\n" +
-                "                                            <!-- place where you drag stuff into for sorting their order -->\n" +
-                "                                            <ul id=\"sortable\" class=\"ui-sortable\">\n" +
-                "                                            <li class=\"ui-state-default \">pokepokepoke</li></ul>\n" +
-                "                                        \n" +
-                "                                    \n" +
-                "                                ");
-        String lines = articles.cuttingLines(thing);
-        System.out.println(lines);
+        String thing =("http://localhost:8181/WEB-INF/webthings/ProfilePage.jsp");
+        String results = thing.replaceAll("http://[^/]*","");
+        System.out.println(results);
     }
 
 

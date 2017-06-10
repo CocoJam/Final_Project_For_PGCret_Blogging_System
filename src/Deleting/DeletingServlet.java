@@ -16,6 +16,7 @@ import java.sql.SQLException;
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
 import static Connection.ConnectionToTheDataBase.conn;
+import static Connection.ConnectionToTheDataBase.cookieTracker;
 
 /**
  * Created by ljam763 on 28/05/2017.
@@ -67,6 +68,8 @@ public class DeletingServlet extends HttpServlet {
                 TryingTodeleteAYoutubeVideo(req, resp);
             }
         }
+        cookieTracker(req,resp);
+        return;
     }
 
     private void TryingTodeleteAYoutubeVideo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

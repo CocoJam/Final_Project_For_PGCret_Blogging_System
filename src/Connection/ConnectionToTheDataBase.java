@@ -1,5 +1,12 @@
 package Connection;
 
+import com.sun.deploy.net.HttpRequest;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.*;
 
 /**
@@ -70,6 +77,22 @@ public class ConnectionToTheDataBase {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void cookieTracker(HttpServletRequest req, HttpServletResponse resp){
+        Cookie[] cookies = req.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("pagemark")){
+                try {
+                    req.getRequestDispatcher(cookie.getValue()).forward(req, resp);
+                } catch (ServletException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return;
     }
 
 }

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+import static Connection.ConnectionToTheDataBase.cookieTracker;
+
 /**
  * Created by ljam763 on 8/06/2017.
  */
@@ -24,9 +26,13 @@ public class FriendServlet extends HttpServlet {
            boolean addedoneway = friendDAO.AddFriends(username,friendname);
            boolean addedtwoway = friendDAO.AddFriends(friendname,username);
         }
-        if (username != null && friendname != null && friendprocess != null && friendprocess.equals("unadd")){
+        else if (username != null && friendname != null && friendprocess != null && friendprocess.equals("unadd")){
             boolean deleteFriends = friendDAO.DeleteFriends(username,friendname);
             boolean deleteFriends1 = friendDAO.DeleteFriends(friendname,username);
+        }
+        else {
+            cookieTracker(req,resp);
+            return;
         }
         System.out.println("ajax came here");
 //        List<Friend> friendList =friendDAO.selectionListOfFriends(username);

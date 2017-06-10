@@ -48,7 +48,7 @@ public class ProfilePageServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("accessFriend") == null){
-            System.out.println("sdgfdrjgkldjglkdfjglkdfjglkdfjglkdfjglkdjlgdfj");
+            System.out.println("accessFirend == null");
             doPost(req,resp);
             return;
         } else {
