@@ -32,7 +32,7 @@ public class ProfilePageServlet extends HttpServlet{
 //    Grabs the profile page from the Database based on the username (stored in session)
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        cookieLogOut(req,resp);
+        System.out.println("in pp dopost");
         profilePageDAO = new ProfilePageDAO();
         HttpSession session = req.getSession();
         username = (String) session.getAttribute("username");
@@ -50,6 +50,7 @@ public class ProfilePageServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         cookieLogOut(req,resp);
+        System.out.println("in pp doget");
         if (req.getParameter("accessFriend") == null){
             System.out.println("accessFirend == null");
             doPost(req,resp);

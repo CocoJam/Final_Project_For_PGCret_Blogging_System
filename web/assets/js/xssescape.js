@@ -3,6 +3,7 @@
  */
 $(document).ready(function () {
     var values = /<script[^]*<\/script>/i;
+
     $("textarea").keyup(function () {
         console.log("Mathcing textarea");
         var content = $(this).val();
