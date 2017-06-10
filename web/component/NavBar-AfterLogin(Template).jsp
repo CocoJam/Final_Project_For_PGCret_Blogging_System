@@ -131,6 +131,7 @@
                                 </c:forEach>
                         </datalist>
                     </form>
+                    <input id="imageselect" type="number" min="1" max="5">
                 </li>
                 <%--Friend search bar here--%>
             </ul>
@@ -170,7 +171,12 @@
     //            })
     //        }
     //    )
-
+    $(document).ready(function () {
+        $("#imageselect").change(function () {
+            $('#custom-bg-user').css("background-image","url('../../assets/img/background/bg-0"+$("#imageselect").val()+".jpg')");
+            console.log(document.getElementById('custom-bg-user'));
+        });
+    });
 
 </script>
 </body>
