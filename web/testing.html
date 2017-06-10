@@ -3,169 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <style>
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            margin-bottom: 10px;
-        }
-
-        li {
-            margin: 5px;
-            padding: 5px;
-            width: 100%;
-        }
-    </style>
 </head>
 <body>
-<textarea id="textarea"></textarea>
+<textarea id="textarea1"></textarea>
 
-
-<div id="contents">
-    <ul>
-        <li class="ui-state draggable">content</li>
-    </ul>
-    <li class="myClass">5</li>
-    <li class="myClass">4</li>
-    <li class="myClass">3</li>
-    <li class="myClass">2</li>
-    <li class="myClass">1</li>
-    <ul id="sortable">
-    </ul>
+<div><input id="blah1" type="text">
     <p>
-    <p>asdasd</p></p>
+    <div>
+        <div><input id="blah2" type="text">
+            <textarea id="textarea2"></textarea>
+        </div>
+    </p>
 </div>
-<input list="usernames">
-<datalist id="usernames">
-    <%
-    user
-    %>
-    <option value="Internet Explorer">
-    <option value="Firefox">
-    <option value="Chrome">
-    <option value="Opera">
-    <option value="Safari">
-</datalist>
 </body>
+
 <script>
-    $("#addfriend").click(function () {
-        console.log("hello there?");
-        $.post("/Friend", {username: "John", firendname: "2pm"})
-            .done(function (data) {
-            });
-    });
-</script>
-<script>
-    var mouse = 0;
-    var number = -1;
-    $("li").each(function () {
-        $(this).replaceWith(function () {
-            return $('<p>', {
-                html: this.innerHTML
-            });
-        });
-    });
-
-
-    function getid() {
-        mouse = this.id
-        console.log("section id: " + mouse)
-        console.log($(".ui-state-default").eq(mouse).text());
-        $("#textarea").val($(".ui-state-default").eq(mouse).text());
-    }
-
-    $("#textarea").bind('input', function () {
-        console.log($("#textarea").val());
-        $("#" + mouse).text($("#textarea").val());
-    });
-    $("#textarea").on('keyup', function (e) {
-        if (e.keyCode == 13) { // Create new section when press enter
-            number++;
-
-            console.log(number);
-            $("#textarea").val($(".ui-state-default").eq(mouse).text());
-            var paragraph1 = document.createElement("li");
-            paragraph1.className = "ui-state-default ";
-            paragraph1.onclick = getid;
-            var paragraph = document.createElement("p");
-            paragraph1.class = "typing";
-            paragraph1.id = number;
-            $("#sortable").append(paragraph1);
-            $(paragraph1).append(paragraph);
-            console.log($(".ui-state-default "))
-        }
-        if (e.keyCode == 46) {
-            if (mouse != null) {
-                $(".ui-state-default").eq(mouse).remove();
-                mouse = null;
-            }
-            else {
-                console.log(mouse);
-                console.log($(".ui-state-default").length);
-                $(".ui-state-default").eq($(".ui-state-default").length - 1).remove();
-            }
-        }
-        if (e.keyCode == 16) {
-            console.log($("#contents").html())
+    var values = /<script[^]*<\/script>/i;
+    $("textarea").keyup(function () {
+        var content = $(this).val();
+        if(content.match(values)){
+            $(this).val(content.replace(values, ""));
         }
     });
-    $(function () {
-        $("#sortable").sortable({
-            revert: true
-        });
-        $(".draggable").draggable({
-            connectToSortable: "#sortable",
-            revert: "invalid"
-        });
-        $("ul, li").disableSelection();
+    $("input").keyup(function () {
+        var content = $(this).val();
+        if(content.match(values)){
+            $(this).val(content.replace(values, ""));
+        }
     });
-
-
-</script>
-<script>
-    $("#addfriend").fadeIn("1", function () {
-        $(this).css("z-index", 0)
-    });
-    $("#unfriend").fadeOut("1", function () {
-        $(this).css("z-index", -1)
-    });
-
-
-    $("#unfriend").fadeIn("1", function () {
-        $(this).css("z-index", 0)
-    });
-    $("#addfriend").fadeOut("1", function () {
-        $(this).css("z-index", -1)
-    });
-
-    $("#addfriend").click(function () {
-        $.post("Friend", {username: "", friendname: "", friendprocess: "add"})
-            .done(function () {
-                $("#unfriend").fadeIn("1", function () {
-                    $(this).css("z-index", 0)
-                });
-                $("#addfriend").fadeOut("1", function () {
-                    $(this).css("z-index", -1)
-                });
-            })
-    });
-
-    $("#unfriend").click(function () {
-        $.post("Friend", {username: "", friendname: "", friendprocess: "unadd"})
-            .done(function () {
-                $("#addfriend").fadeIn("1", function () {
-                    $(this).css("z-index", 0)
-                });
-                $("#unfriend").fadeOut("1", function () {
-                    $(this).css("z-index", -1)
-                });
-            })
-    });
-
 </script>
 </html>

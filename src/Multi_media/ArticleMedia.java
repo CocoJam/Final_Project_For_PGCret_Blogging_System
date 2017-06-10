@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
+import static Connection.ConnectionToTheDataBase.cookieLogOut;
 
 /**
  * Created by ljam763 on 31/05/2017.
@@ -86,6 +87,7 @@ public class ArticleMedia extends Upload_files {
     //Post method to post a Youtube link. TODO this is stuffing everything up.
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        cookieLogOut(req,resp);
         String youtubeVideo = req.getParameter("youtube");
         HttpSession session = req.getSession();
         if (youtubeVideo.contains("/watch?v=")){

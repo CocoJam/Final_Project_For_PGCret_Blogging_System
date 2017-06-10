@@ -18,8 +18,18 @@
     </style>
 </head>
 <body>
-
-
+<script>
+    var ctx = "<%= request.getRequestURI() %>";
+    var date = new Date();
+    var currentTime = date.getTime();
+    console.log(currentTime);
+    ExpirationTime = currentTime + 1000*1800;
+    console.log(ExpirationTime);
+    date.setTime(ExpirationTime);
+    document.cookie = "pagemark="+ctx+";expires="+date.toGMTString()+";path=/";
+    console.log(date.toGMTString());
+    console.log(document.cookie);
+</script>
 <nav class="navbar navbar-info navbar-transparent navbar-fixed-top navbar-color-on-scroll">
 
     <!-- responsive container for div --><!-- do not remove -->
@@ -121,6 +131,7 @@
                                 </c:forEach>
                         </datalist>
                     </form>
+                    <input id="imageselect" type="number" min="1" max="5">
                 </li>
                 <%--Friend search bar here--%>
             </ul>
@@ -160,7 +171,12 @@
     //            })
     //        }
     //    )
-
+    $(document).ready(function () {
+        $("#imageselect").change(function () {
+            $('#custom-bg-user').css("background-image","url('../../assets/img/background/bg-0"+$("#imageselect").val()+".jpg')");
+            console.log(document.getElementById('custom-bg-user'));
+        });
+    });
 
 </script>
 </body>

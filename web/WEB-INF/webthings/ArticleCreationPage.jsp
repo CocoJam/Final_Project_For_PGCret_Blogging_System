@@ -448,7 +448,7 @@
                     }
                     console.log(msg);
                     var li = document.createElement("li");
-                    li.className = "ui-state draggable";
+                    li.className = "ui-state-default";
                     if (msg.endsWith(".flv") || msg.endsWith(".m4v") || msg.endsWith(".mp4") || msg.endsWith(".mpg") || msg.endsWith(".mpeg") || msg.endsWith(".wmv")) {
                         li.innerHTML = "<video width=\"400\" controls> <source src=\"" + msg + "\"></video>";
                     }

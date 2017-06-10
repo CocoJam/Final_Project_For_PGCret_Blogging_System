@@ -46,7 +46,7 @@ public class ArticlesDAO {
         return null;
     }
 
-    public Articles selectionArticles(int articlesID) {
+    public Articles selectionArticles(int articlesID) throws SQLException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, UserIDName, Category, Content, SpecificDateCreated FROM Articles WHERE ArticlesID = ?;")) {
                 System.out.println(statement);
@@ -63,6 +63,7 @@ public class ArticlesDAO {
         } catch (SQLException e) {
             System.out.println("Error. Article not found.");
             e.printStackTrace();
+            throw new SQLException();
         }
         return null;
     }
@@ -87,7 +88,7 @@ public class ArticlesDAO {
     }
 
     //updating existing article
-    public Articles updateArticles(String ArticleName, String categoryName, String content, int ArticleID) {
+    public Articles updateArticles(String ArticleName, String categoryName, String content, int ArticleID) throws SQLException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE Articles SET ArticlesName = ?, Category = ?, Content= ? WHERE ArticlesID = ?;")) {
                 System.out.println(statement);
@@ -104,7 +105,12 @@ public class ArticlesDAO {
             System.out.println("Error updating article.");
             e.printStackTrace();
         }
-        return selectionArticles(ArticleID);
+        try {
+            return selectionArticles(ArticleID);
+        } catch (SQLException e) {
+            System.out.println("ARticlesDAO Error");
+           throw new SQLException("updateArticles error");
+        }
     }
 
     private Articles makeArticle(ResultSet resultSet) throws SQLException {

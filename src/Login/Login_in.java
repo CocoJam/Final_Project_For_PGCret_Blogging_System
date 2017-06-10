@@ -14,9 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-
-import static Connection.ConnectionToTheDataBase.closingConnection;
-import static Connection.ConnectionToTheDataBase.conn;
+import static Connection.ConnectionToTheDataBase.*;
 
 
 /**
@@ -31,6 +29,7 @@ public class Login_in extends HttpServlet {
     //doPost checks in login is possible and if so redirects to Profile page
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        cookieLogOut(req,resp);
         HttpSession session = req.getSession();
         System.out.println("Processing login");
         username = req.getParameter("username");
@@ -49,7 +48,6 @@ public class Login_in extends HttpServlet {
                         req.getRequestDispatcher("/ProfilePage").forward(req, resp);
                         return;
                     }
-
                     //There is a major bug, even though there is someone logged in ppl can still bypass it because it does not check the login here.
                 } else {
                     System.out.println("Login");
@@ -95,7 +93,7 @@ public class Login_in extends HttpServlet {
             List<Friend> friendList = new FriendDAO().selectionListOfFriends(username);
             List<String> userList = new FriendDAO().GetAllPeopleUsername();
             session.setAttribute("firendlist", friendList);
-            session.setAttribute("userlist",userList);
+            session.setAttribute("userlist", userList);
             System.out.println("logged-in");
             System.out.println(session.getAttribute("username"));
             req.getRequestDispatcher("/ProfilePage").forward(req, resp); //TODO to take out.
@@ -120,18 +118,20 @@ public class Login_in extends HttpServlet {
             if (session.getAttribute("log") == null) {
                 req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                 return;
-            }
-            if ((boolean) session.getAttribute("log")) {
-                req.getRequestDispatcher("/ProfilePage").forward(req, resp);
-                return;
             } else {
-                if (registration.equals("Registration")) {
-
-                    session.setAttribute("Upload", "ArticlesUpload");
-                    req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+                if ((boolean) session.getAttribute("log")) {
+                    req.getRequestDispatcher("/ProfilePage").forward(req, resp);
                     return;
+                } else {
+                    if (registration.equals("Registration")) {
+                        session.setAttribute("Upload", "ArticlesUpload");
+                        req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+                        return;
+                    }
                 }
             }
         }
+        cookieTracker(req,resp);
+        return;
     }
 }

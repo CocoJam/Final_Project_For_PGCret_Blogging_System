@@ -22,7 +22,6 @@
 <body class="profile-page">
 
 <%--NAVBAR STARTS--%>
-
 <!-- !!! NAVIGATION BAR START !!! -->
 
 <%@ include file="../../component/NavBar-AfterLogin(Template).jsp" %>
@@ -345,7 +344,8 @@
 <%
         session.setAttribute("profileInfo", currentuser);
         session.setAttribute("showFriend", null);
-    }%>
-
+    }
+%>
 </body>
+
 </html>

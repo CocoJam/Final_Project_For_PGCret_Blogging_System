@@ -15,7 +15,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+
 import static Connection.ConnectionToTheDataBase.closingConnection;
+import static Connection.ConnectionToTheDataBase.cookieTracker;
 
 
 /**
@@ -41,24 +43,28 @@ public class Registration extends HttpServlet {
         //The following if and else does two different actions, depends on the different GET calls, determined by the log parameter.
 
         //This is a call from the Profile page, "changeuserinfo" button. This is to redirect user to update the userInfo
-        if (req.getParameter("log").equals("ChangeUserInformation")) {
+        if (req.getParameter("log") != null) {
+            if (req.getParameter("log").equals("ChangeUserInformation")) {
                 session.setAttribute("Upload", "ProfilePageUpload");
                 req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                 return;
             }
 
-        //  TODO check logic of returning boolean from selectionUsersCheck()
-        // This is related to the AJAX call in Registration.jsp
-            else if (req.getParameter("log").equals("RegistrationCheck")){
-               String usernameCheck = req.getParameter("usernameCheck");
+            //  TODO check logic of returning boolean from selectionUsersCheck()
+            // This is related to the AJAX call in Registration.jsp
+            else if (req.getParameter("log").equals("RegistrationCheck")) {
+                String usernameCheck = req.getParameter("usernameCheck");
                 System.out.println(usernameCheck);
                 LoginPassing loginPassing = new LoginPassing();
-                boolean asdna= loginPassing.selectionUsersCheck(usernameCheck);
-            System.out.println(asdna);
+                boolean asdna = loginPassing.selectionUsersCheck(usernameCheck);
+                System.out.println(asdna);
                 resp.getWriter().print(asdna);
-                closingConnection();
                 return;
             }
+        } else {
+            cookieTracker(req, resp);
+            return;
+        }
 
     }
 
@@ -102,7 +108,7 @@ public class Registration extends HttpServlet {
                     session.setAttribute("profileInfo", profilePage);
                     System.out.println(profilePage.getUsername());
                     session.setAttribute("username", profilePage.getUsername());
-                    session.setAttribute("log",true);
+                    session.setAttribute("log", true);
                     req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                 } catch (SQLException e1) {
                     //If SQL Exception thrown by profilePageDAO.CreateUsersProfile() (when username already exists), then this is caught here and the user is redirected to the registration page where they have to start again.
@@ -135,7 +141,7 @@ public class Registration extends HttpServlet {
         dateofbirth = req.getParameter("date");
 //        password = req.getParameter("password");
         profilePage.setProfilepic(req.getParameter("profilePicture"));
-        System.out.println("profile pic :" +req.getParameter("profilePicture"));
+        System.out.println("profile pic :" + req.getParameter("profilePicture"));
         sqlDateparsing();
         profilePage.setDate(sqlFormateDate);
     }

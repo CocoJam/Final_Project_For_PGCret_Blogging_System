@@ -1,5 +1,7 @@
 package Article;
 
+import com.sun.deploy.net.HttpResponse;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +11,8 @@ import java.io.IOException;
 import java.util.List;
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
+import static Connection.ConnectionToTheDataBase.cookieLogOut;
+import static Connection.ConnectionToTheDataBase.cookieTracker;
 
 /**
  * Created by ljam763 on 25/05/2017.
@@ -21,35 +25,26 @@ public class ArticlesIndexServlet extends HttpServlet {
     //Hyperlink from the Profilepage.jsp has parameter called ArticleList and the value of the parameter will return ALL or SELF.
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        cookieLogOut(req,resp);
         HttpSession session = req.getSession();
         username = (String) session.getAttribute("username");
         if (req.getParameter("articleList") != null) {
+            System.out.println("TESTA");
+            System.out.println("TESTB");
             session.setAttribute("ArticleListStatus", req.getParameter("articleList"));
-        }
-        ArticleListStatus = (String) session.getAttribute("ArticleListStatus");
-        switchbetweenAllOrSelf(req, session, username);
-        closingConnection();
-        System.out.println("TESTA");
-//        req.getRequestDispatcher("/Articles").include(req, resp);
-        System.out.println("TESTB");
-
-//        if (req.getParameter("profilePopulate") == null || !req.getParameter("profilePopulate").equals("yes")) {
-            //This is when the navbar click to article index (either self or all) is clicked
+            ArticleListStatus = (String) session.getAttribute("ArticleListStatus");
+            switchbetweenAllOrSelf(req, resp, session, username);
             req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp); //testing
-            System.out.println("TESTC");
             return;
-//        }
-
-//        else {
-//            //This is when the display button is clicked to populate the user's article list on the profile-page.
-//            req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").include(req, resp);
-//            System.out.println("TESTD");
-//            return;
-//        }
+        }
+        cookieTracker(req, resp);
+        closingConnection();
+        System.out.println("TESTC");
+        return;
     }
 
     //This: (1) determines whether to grab ALL or SELF (2) populate the list to be sent back
-    private void switchbetweenAllOrSelf(HttpServletRequest req, HttpSession session, String username) {
+    private void switchbetweenAllOrSelf(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String username) {
         System.out.println("Checking self or all");
         if (ArticleListStatus != null) {
 
@@ -72,6 +67,8 @@ public class ArticlesIndexServlet extends HttpServlet {
                 checkingForOwnership(username, indexList);
                 session.setAttribute("ArticleIndex", indexList);
             }
+        } else {
+            cookieTracker(req, resp);
         }
     }
 
@@ -90,6 +87,7 @@ public class ArticlesIndexServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        cookieLogOut(req,resp);
         doGet(req, resp);
     }
 }
