@@ -58,15 +58,7 @@ public class Upload_files extends HttpServlet {
         caption = (String) session.getAttribute("Upload");
         System.out.println(caption);
         System.out.println("What");
-        ServletContext servletContext = getServletContext();
-        filePath = servletContext.getRealPath("/Upload-photos");
-
-        File uploads = new File(filePath);
-        if (!uploads.exists()) {
-            System.out.println("upload-photos");
-            boolean made = uploads.mkdir();
-            System.out.println(made);
-        }
+        ServletContext servletContext = Making_Upload_File();
 
         filePath = servletContext.getRealPath("/Upload-photos") + "/";
         dir_name = (String) session.getAttribute("username");
@@ -147,6 +139,19 @@ public class Upload_files extends HttpServlet {
         }
     }
 
+    private ServletContext Making_Upload_File() {
+        ServletContext servletContext = getServletContext();
+        filePath = servletContext.getRealPath("/Upload-photos");
+
+        File uploads = new File(filePath);
+        if (!uploads.exists()) {
+            System.out.println("upload-photos");
+            boolean made = uploads.mkdir();
+            System.out.println(made);
+        }
+        return servletContext;
+    }
+
     //altering filepath to put into the photo folder.
     private void FormingPhotoFileAndPhoto() {
         filePath += "photo";
@@ -201,6 +206,7 @@ public class Upload_files extends HttpServlet {
             throws ServletException, java.io.IOException {
 
         HttpSession session = request.getSession();
+        Making_Upload_File();
         username = (String) session.getAttribute("username");
         String media = request.getParameter("media");
         allOrSelf(media, request);
@@ -211,6 +217,7 @@ public class Upload_files extends HttpServlet {
 
         System.out.println(filepaths.size() + " paths");
         //This is the recursions, finding all the directories. (START OF TRILOGY 1) TODO unify the 3 trilogies together.
+
         Set<String> list = findingDirectory(file, filepaths);
         Map<String, List<String>> mediaMapping = mapSetUp();
         assigningMultipleMediaIntoMap(list, mediaMapping);

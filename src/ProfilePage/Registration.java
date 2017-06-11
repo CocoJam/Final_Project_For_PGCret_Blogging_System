@@ -49,7 +49,6 @@ public class Registration extends HttpServlet {
                 req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                 return;
             }
-
             //  TODO check logic of returning boolean from selectionUsersCheck()
             // This is related to the AJAX call in Registration.jsp
             else if (req.getParameter("log").equals("RegistrationCheck")) {

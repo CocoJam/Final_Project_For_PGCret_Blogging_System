@@ -353,16 +353,16 @@
 
 <!-- More WYSIWYG JS -->
 <script>
-
+//    submit button on click to submit the form of the draggible content set
     function whenClickAdd() {
         $("#submitButton").click();
     }
 
-
+// The reset the Textarea to empty the wysiwys.
     function resetText() {
         $('.wysiwys').trumbowyg('empty');
     }
-
+// Adding the new section or submitting the edit line of the wysiwys into the selected section of the draggible.
     function addNewSection() {
         var content = $('.wysiwys').trumbowyg('html');
         if (mouse == -1) {
@@ -385,7 +385,7 @@
         }
     }
 
-    // Delete currently selected section
+    // Delete currently selected section or removing the last section if there are no section selected.
     function deleteSection() {
         if (mouse != -1) {
             mouse.remove();
@@ -396,7 +396,7 @@
             $(".ui-state-default").eq($(".ui-state-default").length - 1).remove();
         }
     }
-
+// Used to disattach a class from the li or the draggible to display to the user,
     function clearSection() {
         mouse = -1;
         clicked = false;
@@ -412,7 +412,7 @@
 <script>
     var mouse = -1;
     var clicked = false;
-    // Get ID of section we clicked on, grab the content, put back inside WYSIWYG
+    // Get the section we clicked on, grab the content, put back inside WYSIWYG, depending on the section is it selected or not.
     function selection() {
         console.log("clicked");
         if (!clicked) {
@@ -442,7 +442,7 @@
     //        $("#" + mouse).text(content);
     //    });
 
-
+    //classic jquery ui js for the draggible.
     $(function () {
 
         $(".ui-state-default ").each(function () {
@@ -463,7 +463,7 @@
 
 <!-- AJAX Upload -->
 <script>
-    // AJAX UPLOAD
+    // AJAX UPLOAD for the user which allow the media to be uploaded into the local files and also append the files inside the content display as a section which allow the draggible and deleting.
     $('#Upload')
         .submit(function (e) {
             $.ajax({
@@ -499,7 +499,7 @@
             e.preventDefault();
         });
 
-    // YOUTUBE AJAX
+    // YOUTUBE AJAX similarly as the media upload but just with the youtube that sets up an iframe for it.
     $('#Youtube')
         .submit(function (e) {
             $.ajax({
@@ -525,7 +525,7 @@
             e.preventDefault();
         });
 
-    // SUBMITTING
+    // SUBMITTING. This submition allow all the html within the content page to be submited into the database,which could be display as text within the html in to the Article page. Which also allow editting.
     $("#form").submit(function () {
         $("input:hidden").val($("#contents").html());
     });

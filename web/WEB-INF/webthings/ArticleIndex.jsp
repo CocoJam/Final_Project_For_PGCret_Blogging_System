@@ -114,7 +114,7 @@
                                                     </div>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <img src="Upload-photos/placeholder.gif" alt="Circle Image"
+                                                    <img src="assets/img/placeholder.gif" alt="Circle Image"
                                                          class="img-rounded img-responsive img-raised">
                                                 </c:otherwise>
                                             </c:choose>
@@ -254,12 +254,15 @@
 <script>
 
     $(function () {
+
+        <!-- Switch between the card mode or the list mode -->
         var cardOrList = false;
 
         $("#listarticle").fadeOut("fast", function () {
             $(this).css("z-index", -1);
         });
 
+        <!-- This is the toggle button for the change in between the list and card mode to switch the table out/in and the card out/in based on the state of the cardOrList var -->
         $("#listorcard").on("click", function () {
            if(cardOrList == false){
                $("#cardarticle").fadeOut("fast", function () {
@@ -283,6 +286,7 @@
            }
         });
 
+        <!-- Search bar function for searching article based on the title, creater's name and the category for both list and card form -->
         function searching(element, firstitem, seconditem, thriditem) {
             var value = $(".searchBar").val();
             $(element).each(function () {
@@ -302,15 +306,14 @@
                 }
             })
         }
-
-
+        <!-- Searching function from the list mode and card mode applying to one search bar, plus the searching will not affect the cards that is saved within the cart.-->
         $(".searchBar").bind('keyup', function () {
             searching(".tablecontentR",".tablearticlename",".tablearticleusername",".tablearticlecategory");
             searching(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)","h5",".username",".category");
         });
 
 
-
+        <!-- draggible jquery ui with majar alteration such as img to words and strings, the saving into the cart and other things. -->
         // There's the gallery and the trash
         var $gallery = $("#gallery"),
             $save = $("#save");
@@ -325,6 +328,7 @@
         });
 
         // Let the trash be droppable, accepting the gallery items
+        <!-- This applied a post request to ArticleCart servlet which is used to save the current article that has been click to cart into the servlet. When the cad is dragged to the cart -->
         $save.droppable({
             accept: "#gallery > li",
             classes: {
@@ -339,7 +343,7 @@
                 $.post("/ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
             }
         });
-
+        <!-- Same theory applies but to unadd or to disattatch the card from the cart session if dragged out of the cart -->
         // Let the gallery be droppable as well, accepting items from the trash
         $gallery.droppable({
             accept: "#save li",
@@ -394,6 +398,7 @@
         }
 
         // Image preview function, demonstrating the ui.dialog used as a modal window
+        <!-- This is the mini summary that pop up if the glass is clicked, as you would see some specific alteration is done to allow other things such as more than one html tag to be included. Due to how the ui is structured that a hack around is needed and done, or not several pop up will appear based on how many html tags is within. -->
         function viewLargerImage($link) {
 
             var hyper = $link.attr('href');
@@ -420,7 +425,7 @@
             }, 1);
         }
 
-
+        <!-- Ths detection of each card of which icon or <a> has been clicked, which lead to different effects, plus the followed post calls to the ARticleCart servlet. -->
         $("ul.gallery > li").on("click", function (event) {
             console.log($(this))
             var $item = $(this),
@@ -445,11 +450,11 @@
 
 //needed time delay to sort needed to wait for all animation to finish.
 
-
+        <!-- Card model sorting function  -->
         var things = [];
         var assemibled = false;
         var type = null;
-
+        <!-- The defaultsorting algorithm comparator, which allow the cards' children to be selected based on what type is given -->
         function defaultSort(elementX, elementY) {
             if (elementX.children().siblings(type).text().toLowerCase() < elementY.children().siblings(type).text().toLowerCase())
                 return -1;
@@ -457,7 +462,8 @@
                 return 1;
             return 0;
         }
-
+        <!-- Function that is called when assemible the cards into the cart without actually adding into the session, this is due to the ui constructed as normal z-index alteration can't be used to shift the position due to not enough time delay. Hence allowing the cards to be put within the cart and reapply to the external space in sorted order instead. (The function of the ui only applies when element exsist during the load of the doc.) -->
+        <!-- Adding all cards array which is used for defaultsorting.-->
         function attachment() {
             $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
                 things.push($(this));
@@ -466,20 +472,21 @@
                 deleteImage($(things[i]));
             }
         }
-
+        <!-- This is use to put back the cards for sorting within the external space, which also shift the first card out from the array making sure the array is empty. -->
         function display() {
             while (things.length > 0) {
                 recycleImage($(things[0]));
                 things.shift();
             }
         }
-
+        <!-- The assemble function -->
         $("#sort").on('click', function () {
             if (assemibled === false) {
                 attachment();
                 assemibled = true;
             }
         });
+        <!-- After assembled that allow the user to sort by title using the defaultsort and setting the type into the h5, which is the title -->
         $("#sorttitle").on('click', function () {
             type = "h5";
             if (assemibled === true) {
@@ -488,6 +495,7 @@
             }
             assemibled = false;
         });
+        <!-- After assembled that allow the user to sort by title using the defaultsort and setting the type into the catrgory class. -->
         $("#sortcategory").on('click', function () {
             type = ".category";
             if (assemibled === true) {
@@ -496,6 +504,7 @@
             }
             assemibled = false;
         });
+        <!-- After assembled that allow the user to sort by title using the defaultsort and setting the type into the date class. -->
         $("#sortdate").on('click', function () {
             type = ".date";
             if (assemibled === true) {
@@ -504,11 +513,14 @@
             }
             assemibled = false;
         });
+
+        <!-- The card displaying function, as the cartlist is return from the session, which is the servlet that is from the ArticleCart. This will return array list from the attribute that is called cartlist. Due to the nature of this that is passed in as a string in the fashion of array, hence substring and regex spliting is needed. -->
         var cartlist = '<%= session.getAttribute("cartlist") %>';
         var cartArray = cartlist.substring(1, cartlist.length - 1).split(",")
         console.log(cartlist);
         console.log(cartArray);
         $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
+            <!-- The reverse mathcing using the card's <a href> to match is there an exsisting string within the array that matches if so then run that card with the deleteImage function to move it to the cart at the doc ready for storage. The regex of "\\?" is used to escape the escape which in turns to escape the ? for accurate matching. -->
             var blah = ($(this).children().siblings(".articleid").attr('href').replace("?", "\\?"));
             var match = new RegExp(blah);
             console.log($(this).children().siblings(".articleid").attr('href'));

@@ -342,9 +342,11 @@
                                 alert("validations passed");
                                 return;
                             });
+                            <!-- Password Strength test based on the regex of the combination of the password val, as shown the Strong consist of at least 8 char and in combination of one of each kind. While the middle is 2 of each and the weakMiddle is 4 of each kind to match the given password strength. -->
                             var passwordStrengthStrong = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/i;
                             var passwordStrengthMiddle = /(?=.*[a-z]{2,})(?=.*[A-Z]{2,})(?=.*[0-9]{2,})(?=.*[!@#\$%\^&\*]{2,})(?=.{8,})/i;
                             var passwordStrengthWeakMiddle = /(?=.*[a-z]{4,})(?=.*[A-Z]{4,})(?=.*[0-9]{4,})(?=.*[!@#\$%\^&\*]{4,})(?=.{8,})/i;
+                            <!-- Using the bind of the input that to check the password val and changes the text within the response text to display to user the strength-->
                             $("#password").bind('input', function () {
                                 if ($("#password").val().match(passwordStrengthStrong)) {
                                     $("#reponseToPassword").text("Strong");
@@ -358,6 +360,7 @@
                                     $("#reponseToPassword").text("WeakMiddle");
                                     return console.log("weakMiddle")
                                 }
+                                <!-- Simplely using the length to test strength -->
                                 if ($("#password").val().length < 8 && $("#password").val().length >0) {
                                     $("#reponseToPassword").text("Weak");
                                     return console.log("weak")
@@ -366,13 +369,14 @@
                                     $("#reponseToPassword").text("Ok");
                                     return console.log("ok")
                                 }
+                                <!-- When nothing is there tell user there isnt anything -->
                                 if ($("#password").val().length == 0) {
                                     $("#reponseToPassword").text("Please enter a password");
                                     return console.log("ok")
                                 }
-                            })
+                            });
 
-
+                            <!-- Upload post ajax for  media, but this is confined into only the images only, which then append the image with the assosicated ratio button and br for selection.-->
                             $('#Upload')
                                 .submit(function (e) {
                                     $.ajax({
@@ -391,11 +395,13 @@
                                                 $(".content").eq(0).append(image);
                                                 $(".content").eq(0).append(breakline);
                                             }
+                                            <!-- if the meadia is successfully uploaded but it is not a picture or photo in the right formate, that the alert will pop and show -->
                                             else{
                                                 console.log("upload fail");
                                                 alert(msg);
                                             }
                                         },
+                                        <!-- Error when the error such as the file is not in any right formate or such that the size of the file is too big, then the this will alert the user. -->
                                         error: function (request, status, error) {
                                             console.log("upload fail");
                                             alert("Upload File Fail.");

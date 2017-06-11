@@ -53,12 +53,16 @@ public class CommentsServlet extends HttpServlet {
                     System.out.println(e);
                 }
                 //updating comments (using DAO)
+                System.out.println("editting the comment");
                 commentsDAO.editComments(comment, commentId);
                 comments = commentsDAO.selectionComment(commentId);
             }
             if (comments != null) {
+                System.out.println("Json comments");
                 JSONObject jsonObject = getJsonObject(comments);
+                System.out.println(jsonObject);
                 resp.getWriter().print(jsonObject);
+                return;
             }
             cookieTracker(req, resp);
         }

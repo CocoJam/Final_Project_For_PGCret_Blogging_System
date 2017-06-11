@@ -105,6 +105,7 @@
                                             <c:if test="${content.owner || articleContents.owner}">
                                                 <button id="${content.commentId}delete">Delete</button>
                                                 <script>
+                                                    <!-- ajax post request for the deleting of the comment -->
                                                     $("#${content.commentId}delete").click(function () {
                                                         $.post("/Deleting", {
                                                             "commentId": "${content.commentId}",
@@ -122,6 +123,7 @@
                                                 <input type="text" id="${content.commentId}text">
                                                 <button id="${content.commentId}edit">Edit</button>
                                                 <script>
+                                                    <!-- ajax post request for the editing of the comment and then changing the text within the associated position. -->
                                                     $("#${content.commentId}edit").click(function () {
                                                         $.ajax({
                                                             url: '/Comments',
@@ -151,6 +153,7 @@
 
                                     </c:forEach>
                                     <script>
+                                        <!-- Due to the database and the create and the editing page is constructed, that replace all or most of the html tags into the <p> tags -->
                                         $(".wrapper li").each(function () {
                                             $(this).replaceWith(function () {
                                                 return $('<p>', {
@@ -177,6 +180,7 @@
 <%@ include file="../../component/Footer(Template).html" %>
 <!-- FOOTER END -->
 <script>
+    //Adding comments by the ajax call with a post method, which allow the adding of the comment and then append
     $("#addComment").click(function () {
         $.ajax({
             url: '/Comments',
@@ -186,6 +190,7 @@
                 "comments": "Add a Comment"
             },
             success: function (msg) {
+                console.log("hello there comments");
                 var Data = JSON.parse(msg);
                 var contain = $("#containComments");
                 var div = document.createElement("div");
