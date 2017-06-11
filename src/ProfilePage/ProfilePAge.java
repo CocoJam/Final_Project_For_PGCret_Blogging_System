@@ -20,6 +20,7 @@ public class ProfilePAge {
     private boolean update;
     private String photoname;
     private String profilepic;
+    private String introduction;
 
     public String getPassword() {
         return password;
@@ -104,4 +105,11 @@ public class ProfilePAge {
     public ProfilePAge() {
     }
 
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
 }

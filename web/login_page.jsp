@@ -32,7 +32,7 @@
             <div class="row">
 
                 <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
-                    <div class="card card-signup">
+                    <div class="card card-signup" id="loginCard">
 
                         <!-- FORM ELEMENT START -->
                         <form class="form" method="post" action="/login">
@@ -112,5 +112,14 @@
 </div><!-- Wrapper end -->
 
 </body>
+
+<script>
+
+    $(document).ready(function () {
+        if (${loginFail}){
+            $("#loginCard").effect("shake");
+        }
+    })
+</script>
 
 </html>

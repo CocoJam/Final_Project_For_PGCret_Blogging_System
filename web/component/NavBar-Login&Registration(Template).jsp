@@ -54,7 +54,6 @@
                     </a>
                 </li>
 
-
                 <li>
                     <a href="login_page.jsp"><i class="material-icons">fingerprint</i>Sign In</a>
                 </li>

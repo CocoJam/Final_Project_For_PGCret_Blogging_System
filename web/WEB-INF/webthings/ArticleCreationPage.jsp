@@ -100,7 +100,7 @@
                                         </c:when>
 
                                         <c:otherwise>
-                                            <h1>ERROR</h1>
+                                            <h1></h1>
                                         </c:otherwise>
                                     </c:choose>
 
@@ -110,107 +110,138 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-                                <div class="form-group">
-                                <!-- Articles Form for submitting new/changes to database -->
-                                <form id="form" action="/Articles" method="post">
-                                    <%--Input for Article Name --%>
 
+
+                        </div>
+                        <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+                            <%--<div class="form-group">--%>
+                            <!-- Articles Form for submitting new/changes to database -->
+
+
+                            <form id="form" action="/Articles" method="post">
+                                <%--Input for Article Name --%>
+                                <div class="form-group label-floating">
                                     <label class="control-label" for="ArticleName">Article Name</label>
                                     <input name="ArticleName" class="form-control" type="text" id="ArticleName"
-                                           value="${articleContents.articlename}">
-                                    <%--Input for Article Category--%>
-                                    <label class="control-label" for="ArticleName">Category</label>
-                                    <input name="ArticleCategory" class="form-control" type="text" id="ArticleCategory">
-
-                                    <input type="hidden" name="ArticleContent">
-
-                                    <% if (session.getAttribute("articleContents") != null) {
-                                        System.out.println("EDIT");
-                                        out.println("<input type=\"submit\" name=\"add\" value=\"Editted\" style='visibility: hidden' id='submitButton'>");
-                                    } else {
-                                        out.println("<input type=\"submit\" name=\"add\" value=\"addingToDataBase\" style='visibility: hidden' id='submitButton'>");
-                                    }
-                                    %>
-                                </form>
+                                           value="${articleContents.articlename}" required/>
                                 </div>
 
-                                <form action="/Upload" method="post" id="Upload"
-                                      enctype="multipart/form-data">
-                                    <input type="file" name="file" size="50"/>
-                                    <input type="submit" name="Upload" value="ArticlesUpload"/>
-                                </form>
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Category</label>
+                                    <input name="ArticleCategory" class="form-control" type="text"
+                                           id="ArticleCategory" required/>
+                                </div>
 
-                                <form id="Youtube" action="/ArticleUpload" method="post">
-                                    <input id="youtubeurl" type="text" name="youtube">
-                                    <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">
-                                </form>
-                                <!-- WYSIWYG -->
-                                <!-- Editor Box -->
-                                <div class="wysiwys" placeholder="Enter your content here"></div>
+                                <input type="hidden" name="ArticleContent">
 
-                                <!-- Buttons -->
-                                <div class="row">
+                                <% if (session.getAttribute("articleContents") != null) {
+                                    System.out.println("EDIT");
+                                    out.println("<input type=\"submit\" name=\"add\" value=\"Editted\" style='visibility: hidden' id='submitButton'>");
+                                } else {
+                                    out.println("<input type=\"submit\" name=\"add\" value=\"addingToDataBase\" style='visibility: hidden' id='submitButton'>");
+                                }
+                                %>
+                            </form>
 
-                                    <!-- Make a new section, put current WYSIWYG content in -->
-                                    <div class="col-xs-4 col-sm-4 col-md-4">
-                                        <button class="btn btn-info btn-block" onclick="addNewSection()">Add Section</button>
-                                    </div>
+                            <!-- WYSIWYG -->
+                            <!-- Editor Box -->
+                            <div class="wysiwys" placeholder="Enter your content here"></div>
 
-                                    <!-- Delete currently selected section -->
-                                    <div class="col-xs-4 col-sm-4 col-md-4">
-                                        <button class="btn btn-danger btn-block" onclick="deleteSection()">Delete Section</button>
-                                    </div>
+                            <!-- Buttons -->
+                            <div class="row">
 
-                                    <!-- Clear all content inside WYSIWYG editor -->
-                                    <div class="col-xs-4 col-sm-4 col-md-4">
-                                        <button class="btn btn-warning btn-block" onclick="resetText()">Reset</button>
-                                    </div>
+                                <!-- Make a new section, put current WYSIWYG content in -->
+                                <div class="col-xs-4 col-sm-4 col-md-4">
+                                    <button class="btn btn-info btn-block" onclick="addNewSection()"><i
+                                            class="material-icons">done</i>Add
+                                    </button>
+                                </div>
+
+                                <!-- Delete currently selected section -->
+                                <div class="col-xs-4 col-sm-4 col-md-4">
+                                    <button class="btn btn-info btn-block" onclick="deleteSection()"><i
+                                            class="material-icons">delete</i>
+                                        Delete
+                                    </button>
+                                </div>
+
+                                <!-- Clear all content inside WYSIWYG editor -->
+                                <div class="col-xs-4 col-sm-4 col-md-4">
+                                    <button class="btn btn-info btn-block" onclick="resetText()"><i
+                                            class="material-icons">sync</i>
+                                        Reset
+                                    </button>
+                                </div>
+
+                            </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                                    <h3>Upload a video</h3>
+                                    <form action="/Upload" method="post" id="Upload"
+                                          enctype="multipart/form-data">
+                                        <input type="file" name="file" size="50" class="btn btn-white"/>
+                                        <input type="submit" class="btn btn-primary" name="Upload" value="ArticlesUpload"/>
+                                    </form>
 
                                 </div>
 
-                                    <!-- Space for holding content to be uploaded to DB -->
-                                    <!-- DRAGGABLE SECTIONS -->
-                                    <h2>Preview Your Content</h2>
-                                    <div id="contents">
-                                        <c:choose>
-                                            <c:when test="${not empty articleContents}">
-                                                ${articleContents.content}
-                                            </c:when>
-                                            <c:otherwise>
-                                                <!-- creates new section boxes -->
-                                                <ul>
-                                                    <li class="ui-state draggable"></li>
-                                                </ul>
-
-                                                <!-- place where you drag stuff into for sorting their order -->
-                                                <ul id="sortable">
-                                                </ul>
-                                            </c:otherwise>
-                                        </c:choose>
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <h3>Youtube video</h3>
+                                    <div class="form-group">
+                                        <form id="Youtube" action="/ArticleUpload" method="post">
+                                            <input id="youtubeurl" type="text" name="youtube" class="form-control">
+                                            <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit" class="btn btn-danger">
+                                        </form>
                                     </div>
+                                </div>
 
-                                    <!-- Media upload - TODO integrate with the uploader inside the WYSIWYG Editor -->
 
-                                    <!-- Youtube upload -->
-                                    <%--<form id="Youtube" action="/ArticleUpload" method="post">--%>
-                                        <%--<input id="youtubeurl" type="text" name="youtube">--%>
-                                        <%--<input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">--%>
-                                    <%--</form>--%>
 
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <button id="formsubmit" class="btn btn-success btn-block" onclick="whenClickAdd()">Submit</button>
-                                        </div>
-                                    </div>
 
+                            <!-- Space for holding content to be uploaded to DB -->
+                            <!-- DRAGGABLE SECTIONS -->
+                            <h2>Preview Your Content</h2>
+                            <div id="contents">
+                                <c:choose>
+                                    <c:when test="${not empty articleContents}">
+                                        ${articleContents.content}
+                                    </c:when>
+                                    <c:otherwise>
+                                        <!-- creates new section boxes -->
+                                        <ul>
+                                            <li class="ui-state draggable"></li>
+                                        </ul>
+
+                                        <!-- place where you drag stuff into for sorting their order -->
+                                        <ul id="sortable">
+                                        </ul>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+
+                            <!-- Media upload - TODO integrate with the uploader inside the WYSIWYG Editor -->
+
+                            <!-- Youtube upload -->
+                            <%--<form id="Youtube" action="/ArticleUpload" method="post">--%>
+                            <%--<input id="youtubeurl" type="text" name="youtube">--%>
+                            <%--<input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">--%>
+                            <%--</form>--%>
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <button id="formsubmit" class="btn btn-success btn-block"
+                                            onclick="whenClickAdd()">Submit
+                                    </button>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 </div>
 
 </body>
@@ -297,7 +328,7 @@
         btnsDef: {
             // Customizables dropdowns
             Multimedia: {
-                dropdown: ['insertImage','insertAudio', 'noembed'],
+                dropdown: ['insertImage', 'insertAudio', 'noembed'],
                 ico: 'upload'
             }
         },
@@ -324,7 +355,7 @@
 <script>
 
     function whenClickAdd() {
-            $("#submitButton").click();
+        $("#submitButton").click();
     }
 
 

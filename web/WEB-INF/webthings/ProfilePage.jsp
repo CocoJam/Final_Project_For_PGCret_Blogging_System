@@ -92,6 +92,11 @@
                         <!-- Profile bio text -->
                         <div class="description text-center col-lg-offset-5 col-md-offset-5 col-sm-offset-5">
 
+                            <%--Introduction "blurb'--%>
+                            <div>
+                                ${profileInfo.introduction}
+                            </div>
+
                             <table class="table borderless" align="center">
                                 <tr>
                                     <th>Specs</th>
@@ -138,55 +143,94 @@
                             <%--<input type="submit" name="profilePopulate" value="yes" id="helloWorld"/>--%>
                             <%--</form>--%>
 
+                            <button id="showArticleList">Show article list</button>
+
+                            <div id="ArticleTable"></div>
+
                             <table class="table table-striped table-hover table-responsive">
-                                <tr>
-                                    <th>
-                                        Article Numbers
-                                    </th>
-                                    <th>
-                                        Article Names
-                                    </th>
-                                    <th>
-                                        Date Created
-                                    </th>
-                                    <%--Scenario 1: ALL articles are requested--%>
-                                    <c:if test="${articleList.equals('all')}">
-                                        <th>
-                                            Article Author
-                                        </th>
-                                    </c:if>
+                                <%----%>
+                                <%--<tr>--%>
+                                    <%--&lt;%&ndash;<th>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;Article Numbers&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;</th>&ndash;%&gt;--%>
+                                    <%--<th>--%>
+                                        <%--Article Names--%>
+                                    <%--</th>--%>
+                                    <%--<th>--%>
+                                        <%--Article Category--%>
+                                    <%--</th>--%>
+                                    <%--<th>--%>
+                                        <%--Date Created--%>
+                                    <%--</th>--%>
+                                    <%--&lt;%&ndash;&lt;%&ndash;Scenario 1: ALL articles are requested&ndash;%&gt;&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;<c:if test="${articleList.equals('all')}">&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;<th>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;Article Author&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;</th>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;</c:if>&ndash;%&gt;--%>
 
-                                    <th>
-                                        Article Category
-                                    </th>
 
-                                </tr>
-                                <%--Looping through the Article Index (list of articles in the ArticleIndex Servlet) and populates a row per article--%>
-                                <c:forEach items="${IndexOfInterest}" var="index">
-                                    <tr>
-                                        <td>${index.articleid}</td>
-                                        <td>
-                                            <a href="/Articles?acticleId=${index.articleid}">${index.articlename}</a>
-                                        </td>
-                                        <td>${index.datecreated}</td>
+                                <%--</tr>--%>
+                                <%--&lt;%&ndash;Looping through the Article Index (list of articles in the ArticleIndex Servlet) and populates a row per article&ndash;%&gt;--%>
+                                <%--<c:forEach items="${IndexOfInterest}" var="index">--%>
+                                    <%--<tr>--%>
+                                            <%--&lt;%&ndash;<td>${index.articleid}</td>&ndash;%&gt;--%>
+                                        <%--<td>--%>
+                                            <%--<a href="/Articles?acticleId=${index.articleid}">${index.articlename}</a>--%>
+                                        <%--</td>--%>
 
-                                        <c:if test="${articleList.equals('all')}">
-                                            <td>
-                                                    ${index.username}
-                                            </td>
-                                        </c:if>
-                                        <td>
-                                                ${index.category}
-                                        </td>
+                                        <%--<td>--%>
+                                                <%--${index.category}--%>
+                                        <%--</td>--%>
 
-                                    </tr>
-                                </c:forEach>
+                                        <%--<td>${index.datecreated}</td>--%>
 
+
+                                            <%--&lt;%&ndash;<c:if test="${articleList.equals('all')}">&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<td>&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;${index.username}&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;</td>&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;</c:if>&ndash;%&gt;--%>
+                                    <%--</tr>--%>
+                                <%--</c:forEach>--%>
                             </table>
-
                             <%--end testing--%>
 
+                            <script>
 
+                                var clickStatus = true;
+
+                                $("#showArticleList").click(function(){
+
+
+
+                                    if (clickStatus) {
+                                        $.ajax({
+                                            url: '/ProfilePage',
+                                            type: 'Post',
+                                            data: {
+                                                "clickedShowList": "clickedShowList",
+                                                "username": "<%= session.getAttribute("username")%>"
+                                            },
+                                            success: function (msg) {
+                                                console.log(msg);
+
+                                                $("#ArticleTable").html(msg);
+
+                                            }
+                                        });
+
+                                        $("#showArticleList").html("Hide article list");
+                                        clickStatus = !clickStatus;
+                                    } else {
+                                        $("#ArticleTable").html("");
+                                        $("#showArticleList").html("Show article list");
+                                        clickStatus = !clickStatus;
+                                    }
+
+
+                                });
+                            </script>
                         </div>
 
                         <%--<!-- Second profile row -->--%>

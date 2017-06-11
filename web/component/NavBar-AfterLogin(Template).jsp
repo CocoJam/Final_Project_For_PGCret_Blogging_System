@@ -12,7 +12,7 @@
     NOTE. if you enable this the toggle menu function WILL NOT WORK--%>
     <%--<%@include file="Header(styling Template).html"%>--%>
     <style>
-        input {
+        .searchBar {
             color: black !important;
         }
     </style>
@@ -48,6 +48,19 @@
             <!-- Navbar name of our website, displays on left -->
             <a href="ProfilePage" class="navbar-brand clickOnce"><i class="material-icons">apps</i>
                 Slash N</a>
+
+            <%--Search bar here--%>
+            <%--<li>--%>
+            <form action="/ProfilePage" method="get">
+                <input list="usernames" name="accessFriend" class="form-control" placeholder="Search People" style="color: white" id="NameBarForm">
+                <datalist id="usernames">
+                    <c:forEach items="${userlist}" var="names">
+                    <option value="${names}">
+                        </c:forEach>
+                </datalist>
+            </form>
+            <%--</li>--%>
+            <%--Search bar here--%>
         </div>
 
         <!-- Navbar elements which display on right -->
@@ -57,7 +70,6 @@
             <!-- Nav bar right side icons -->
             <!-- Use on all other pages except login/register -->
             <ul class="nav navbar-nav navbar-right">
-
 
                 <li>
                     <a href="ProfilePage" class="clickOnce"><c:choose>
@@ -141,29 +153,49 @@
                                 class="material-icons">create</i>Edit
                             Profile</a></li>
                         <li class="divider"></li>
+                        <li class="dropdown-header" id="bgImgStatus">Background </li>
+                        <li><a href="#" id="leftButton"><i
+                                class="material-icons">keyboard_arrow_left</i>Previous</a>
+                            <a href="#" id="rightButton"><i
+                                    class="material-icons">keyboard_arrow_right</i>Next</a>
+                        </li>
+                        <li class="divider"></li>
                         <li><a href="logout?submit=Logout" class="clickOnce">Sign Out</a></li>
                     </ul>
                 </li>
-                <%--Friend search bar here--%>
-                <li>
-                    <form id="NameBar" action="/ProfilePage" method="get">
-                        <input list="usernames" name="accessFriend">
-                        <datalist id="usernames">
-                            <c:forEach items="${userlist}" var="names">
-                            <option value="${names}">
-                                </c:forEach>
-                        </datalist>
-                    </form>
-                    <input id="imageselect" type="number" min="1" max="5">
-                </li>
-                <%--Friend search bar here--%>
             </ul>
 
         </div>
     </div>
 </nav>
 <!-- !!! NAVIGATION BAR END !!! -->
+
 <script>
+    var imageValue = 1;
+
+    $(document).ready(function(){
+        $("#bgImgStatus").text("Background " + imageValue + "/5");
+    })
+
+    $("#leftButton").click(function(){
+        if (imageValue > 1) {
+            imageValue = imageValue - 1;
+//            $("#imageselect").val(imageValue);
+            $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + imageValue + ".jpg')");
+            $("#bgImgStatus").text("Background " + imageValue + "/5");
+        }
+    });
+
+    $("#rightButton").click(function(){
+
+        if (imageValue < 5){
+            imageValue = imageValue + 1;
+//            $("#imageselect").val(imageValue);
+            $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + imageValue + ".jpg')");
+            $("#bgImgStatus").text("Background " + imageValue + "/5");
+        }
+    });
+
     $("[name='accessFriend']").on('keyup', function (e) {
         if (e.keyCode == 13) {
             return $("#NameBar").submit;
@@ -196,7 +228,7 @@
     //    )
     $(document).ready(function () {
         $("#imageselect").change(function () {
-            $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + $("#imageselect").val() + ".jpg')");
+            $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + imageValue + ".jpg')");
             console.log(document.getElementById('custom-bg-user'));
         });
     });

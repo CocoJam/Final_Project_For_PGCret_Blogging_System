@@ -88,9 +88,11 @@ public class Login_in extends HttpServlet {
             session.setAttribute("password", password);
             session.setAttribute("articleList", "self");
             session.setAttribute("log", true); //TODO refactoring for login status.
-            List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
-            session.setAttribute("IndexOfInterest", indexList);
-            System.out.println(indexList);
+
+//            List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
+//            session.setAttribute("IndexOfInterest", indexList);
+//            System.out.println(indexList);
+
             List<Friend> friendList = new FriendDAO().selectionListOfFriends(username);
             List<String> userList = new FriendDAO().GetAllPeopleUsername();
             session.setAttribute("firendlist", friendList);
@@ -102,6 +104,7 @@ public class Login_in extends HttpServlet {
         } else {
             session.setAttribute("log", false); //TODO refactoring for login status.
             System.out.println("logged-in rejected");
+            req.setAttribute("loginFail", true); //attribute to indicate to login_page jsp to shake if rejected onload
             req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
             return false;
         }
