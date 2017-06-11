@@ -65,7 +65,6 @@ public class Registration extends HttpServlet {
             cookieTracker(req, resp);
             return;
         }
-
     }
 
     //The doPOST method receives information from the form within the registration page via the POST method.
@@ -140,6 +139,7 @@ public class Registration extends HttpServlet {
         profilePage.setEmail(req.getParameter("email"));
         dateofbirth = req.getParameter("date");
 //        password = req.getParameter("password");
+        profilePage.setIntroduction(req.getParameter("Introduction"));
         profilePage.setProfilepic(req.getParameter("profilePicture"));
         System.out.println("profile pic :" + req.getParameter("profilePicture"));
         sqlDateparsing();

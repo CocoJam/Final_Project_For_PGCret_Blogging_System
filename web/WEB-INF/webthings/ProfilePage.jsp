@@ -92,6 +92,11 @@
                         <!-- Profile bio text -->
                         <div class="description text-center col-lg-offset-5 col-md-offset-5 col-sm-offset-5">
 
+                            <%--Introduction "blurb'--%>
+                            <div>
+                                ${profileInfo.introduction}
+                            </div>
+
                             <table class="table borderless" align="center">
                                 <tr>
                                     <th>Specs</th>

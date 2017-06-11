@@ -116,7 +116,7 @@
 										</span>
                                     <input type="text" id="username" name="username" placeholder="Username"
                                            class="form-control"
-                                           value="${profileInfo.username}">
+                                           value="${profileInfo.username}" required>
                                 </div>
                                 <!-- Text input box end -->
 
@@ -168,7 +168,7 @@
 										</span>
                                     <input type="password" id="password" name="password" placeholder="Password"
                                            class="form-control"
-                                           value="${password}"/>
+                                           value="${password}" required/>
                                 </div>
                                 <p style="text-align: center">
                                     Password Strength: <span id="reponseToPassword"></span>
@@ -246,16 +246,26 @@
 											<i class="material-icons">chat</i>
 										</span>
                                     <textarea form="form" id="Introduction" name="Introduction" placeholder="Let your classmates know a little bit about yourself"
-                                           class="form-control"
-                                              value="${profileInfo.introduction}"></textarea>
+                                           class="form-control">${profileInfo.introduction}</textarea>
                                 </div>
 
                                 <%--Viewing list of users photos--%>
                                 <%--2nd part: uses the above set to display the images in the set, by going through the list of photoname strings, and then accessing by pathing in the photo by the username folder--%>
+                                <c:set var="photoname" value="${profileInfo.profilepic}"/>
+
                                 <% if (username != null) {
+
                                     for (String listofphoto : listofphotos) {
                                         System.out.println(listofphoto);
-                                        out.println(" <input type=\"radio\" name=\"profilePicture\" value=\"" + listofphoto + "\"> <img  src=\"Upload-photos/" + username + "/photo/" + listofphoto + "\" height='20%'><br>");
+                                        System.out.println((String)pageContext.getAttribute("photoname"));
+
+                                        String checkedOrNot = "";
+                                        if (listofphoto.equals((String)pageContext.getAttribute("photoname"))){
+                                            checkedOrNot = "checked";
+                                        }
+
+                                        out.println(" <input type=\"radio\" name=\"profilePicture\" value=\"" + listofphoto + "\"" + checkedOrNot + "> <img  src=\"Upload-photos/" + username + "/photo/" + listofphoto + "\" height='20%'><br>");
+
                                     }
                                 }
                                 %>

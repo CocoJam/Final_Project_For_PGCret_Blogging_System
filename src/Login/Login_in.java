@@ -104,6 +104,7 @@ public class Login_in extends HttpServlet {
         } else {
             session.setAttribute("log", false); //TODO refactoring for login status.
             System.out.println("logged-in rejected");
+            req.setAttribute("loginFail", true); //attribute to indicate to login_page jsp to shake if rejected onload
             req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
             return false;
         }

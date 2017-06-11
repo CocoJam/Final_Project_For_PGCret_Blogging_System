@@ -74,7 +74,6 @@ public class ProfilePageServlet extends HttpServlet {
                 message += "</table>";
 
 //            JSONObject jsonObject = getJsonListObjects(indexList);
-
                 resp.getWriter().print(message);
                 return;
             }
