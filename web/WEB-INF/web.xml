@@ -109,4 +109,13 @@
         <url-pattern>/Friend</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ArticleCartServlet</servlet-name>
+        <servlet-class>Article.ArticleCartServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ArticleCartServlet</servlet-name>
+        <url-pattern>/ArticleCart</url-pattern>
+    </servlet-mapping>
 </web-app>

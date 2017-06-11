@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: ljam763
   Date: 25/05/2017
@@ -135,6 +135,11 @@
                             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
                                 <label for="searchBar">Search: </label>
                                 <input type="text" id="searchBar">
+                                <label for="sort">Sort</label>
+                                <button id="sort">Assemble</button>
+                                <button id="sorttitle">By title</button>
+                                <button id="sortcategory">By category</button>
+                                <button id="sortdate">By date</button>
                                 <div class="ui-widget ui-helper-clearfix">
                                     <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
                                         <c:forEach items="${ArticleIndex}" var="index">
@@ -145,7 +150,7 @@
                                                     <a href=ProfilePage?accessFriend=${index.username}
                                                        class="username">${index.username}</a>
                                                 </c:if></h5>
-
+                                                <p class="articlename" hidden>${index.articlename}</p>
                                                 <c:choose>
                                                     <c:when test="${not empty index.firstimage}">
                                                         <img src="${index.firstimage}"
@@ -159,18 +164,20 @@
                                                 <div hidden>${index.content}</div>
                                                 <a href="/Articles?acticleId=${index.articleid}"
                                                    title="View larger image"
-                                                   class="ui-icon ui-icon-zoomin">View larger</a>
+                                                   class="ui-icon ui-icon-zoomin articleid">View larger</a>
                                                 <a href="link/to/trash/script/when/we/have/js/off"
                                                    title="Delete this image" class="ui-icon ui-icon-plusthick">Delete
                                                     image</a>
 
                                                 <p class="category">${index.category}</p>
+                                                <p hidden class="date">${index.datecreated}</p>
+                                                <p hidden class="id">${index.articleid}</p>
                                             </li>
                                         </c:forEach>
                                     </ul>
                                     <div id="save" class="ui-widget-content ui-state-default">
                                         <h4 class="ui-widget-header"><span
-                                                class="ui-icon ui-icon-plusthick">Save</span> Save</h4>
+                                                class="ui-icon ui-icon-plusthick">Save</span> Cart</h4>
                                     </div>
                                 </div>
                             </div>
@@ -235,6 +242,11 @@
             },
             drop: function (event, ui) {
                 deleteImage(ui.draggable);
+                console.log($(this))
+                console.log(ui.draggable.eq(0))
+                var hyper = ui.draggable.eq(0).children().siblings("a").attr('href');
+                var title = ui.draggable.eq(0).children().siblings(".articlename").text();
+                $.post("/ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
             }
         });
 
@@ -246,6 +258,9 @@
             },
             drop: function (event, ui) {
                 recycleImage(ui.draggable);
+                var hyper = ui.draggable.eq(0).children().siblings("a").attr('href');
+                var title = ui.draggable.eq(0).children().siblings(".articlename").text();
+                $.post("/ArticleCart", {cartunadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
             }
         });
 
@@ -307,7 +322,6 @@
             }
             var linking = $("<a href=\"" + hyper + "\">");
             setTimeout(function () {
-
                 img.dialog({
                     width: 400,
                     height: 200,
@@ -318,60 +332,116 @@
 
 
         $("ul.gallery > li").on("click", function (event) {
+            console.log($(this))
             var $item = $(this),
                 $target = $(event.target);
+            var hyper = $target.siblings("a").attr('href');
+            var title = $target.siblings(".articlename").text();
+            console.log(title);
+            console.log(hyper);
             if ($target.is("a.ui-icon-plusthick")) {
                 deleteImage($item);
+                $.post("/ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
             } else if ($target.is("a.ui-icon-zoomin")) {
                 viewLargerImage($target);
             } else if ($target.is("a.ui-icon-refresh")) {
                 recycleImage($item);
+                $.post("/ArticleCart", {cartunadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
             } else if ($target.is(".username")) {
                 return $target.attr('href');
             }
-
             return false;
         });
+
+//needed time delay to sort needed to wait for all animation to finish.
+
+
         var things = [];
+        var assemibled = false;
+        var type = null;
 
         function defaultSort(elementX, elementY) {
-            if (elementX.children().siblings("h5").text().toLowerCase() < elementY.children().siblings("h5").text().toLowerCase())
+            if (elementX.children().siblings(type).text().toLowerCase() < elementY.children().siblings(type).text().toLowerCase())
                 return -1;
-            if (elementX.children().siblings("h5").text().toLowerCase() > elementY.children().siblings("h5").text().toLowerCase())
+            if (elementX.children().siblings(type).text().toLowerCase() > elementY.children().siblings(type).text().toLowerCase())
                 return 1;
             return 0;
         }
 
-//needed time delay to sort needed to wait for all animation to finish.
-        $("#searchBar").bind('keyup', function (e) {
-            if (e.keyCode == 13) {
-                jQuery.when(attachment()).done(function () {
-                    things.sort(defaultSort);
-                }).done(function () {
-                    display();
-                })
-            }
-            console.log(things);
-        })
-        ;
         function attachment() {
             $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
                 things.push($(this));
             });
             for (var i = 0; i < things.length; i++) {
                 deleteImage($(things[i]));
-                console.log("delete")
             }
         }
+
         function display() {
             while (things.length > 0) {
-                console.log("redepoly");
                 recycleImage($(things[0]));
                 things.shift();
             }
         }
+
+        $("#sort").on('click', function () {
+            if (assemibled === false) {
+                attachment();
+                assemibled = true;
+            }
+        });
+        $("#sorttitle").on('click', function () {
+            type = "h5";
+            if (assemibled === true) {
+                things.sort(defaultSort);
+                display();
+            }
+            assemibled = false;
+        });
+        $("#sortcategory").on('click', function () {
+            type = ".category";
+            if (assemibled === true) {
+                things.sort(defaultSort);
+                display();
+            }
+            assemibled = false;
+        });
+        $("#sortdate").on('click', function () {
+            type = ".date";
+            if (assemibled === true) {
+                things.sort(defaultSort);
+                display();
+            }
+            assemibled = false;
+        });
+        var cartlist = '<%= session.getAttribute("cartlist") %>';
+        var cartArray = cartlist.substring(1, cartlist.length-1).split(",")
+        console.log(cartlist)
+        console.log(cartArray);
+        $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
+            var blah = ($(this).children().siblings(".articleid").attr('href').replace("?","\\?"));
+            var match = new RegExp(blah);
+            console.log($(this).children().siblings(".articleid").attr('href'));
+            console.log(match)
+            console.log("yes?")
+            for (var i = 0; i< cartArray.length; i++){
+                console.log(cartArray[i]);
+                if (cartArray[i].match(match)){
+                    console.log("matched?")
+                    deleteImage($(this));
+                    break;
+                }
+                else{
+                    console.log("nope")
+                }
+            }
+        });
+
     });
 
+
+
 </script>
+
 </body>
 </html>

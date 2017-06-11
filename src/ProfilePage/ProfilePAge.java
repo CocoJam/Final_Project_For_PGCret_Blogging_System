@@ -39,14 +39,6 @@ public class ProfilePAge {
         this.profilepic = profilepic;
     }
 
-    public String getPhotoname() {
-        return photoname;
-    }
-
-    public void setPhotoname(String photoname) {
-        this.photoname = photoname;
-    }
-
     public void setDate(java.sql.Date date) {
         this.date = date;
     }
