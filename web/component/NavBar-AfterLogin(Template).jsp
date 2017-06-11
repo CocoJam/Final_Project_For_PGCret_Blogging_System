@@ -23,10 +23,10 @@
     var date = new Date();
     var currentTime = date.getTime();
     console.log(currentTime);
-    ExpirationTime = currentTime + 1000*1800;
+    ExpirationTime = currentTime + 1000 * 1800;
     console.log(ExpirationTime);
     date.setTime(ExpirationTime);
-    document.cookie = "pagemark="+ctx+";expires="+date.toGMTString()+";path=/";
+    document.cookie = "pagemark=" + ctx + ";expires=" + date.toGMTString() + ";path=/";
     console.log(date.toGMTString());
     console.log(document.cookie);
 </script>
@@ -71,6 +71,28 @@
                     </c:choose>${profileInfo.username}</a>
                 </li>
 
+                <c:choose>
+                    <c:when test="${not empty cartlist}">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="material-icons">library_books</i>Carted Articles
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="dropdown-header">Carted</li>
+                                <c:forEach var="carted" items="${cartlist}">
+                                    <li>
+                                            ${carted}
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+
+                    </c:otherwise>
+                </c:choose>
+
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="material-icons">library_books</i>Articles
@@ -86,7 +108,8 @@
                             Articles</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="Articles?add=addNewArticle" class="clickOnce"><i class="material-icons">note_add</i>New
+                        <li><a href="Articles?add=addNewArticle" class="clickOnce"><i
+                                class="material-icons">note_add</i>New
                             Article</a>
                         </li>
                     </ul>
@@ -160,9 +183,9 @@
         }
     });
 
-//    $('.clickOnce').click(function (e) {
-//        e.preventDefault();
-//    });
+    //    $('.clickOnce').click(function (e) {
+    //        e.preventDefault();
+    //    });
 
     //    $(document).ready(
     //        function clickOnce() {
@@ -173,7 +196,7 @@
     //    )
     $(document).ready(function () {
         $("#imageselect").change(function () {
-            $('#custom-bg-user').css("background-image","url('../../assets/img/background/bg-0"+$("#imageselect").val()+".jpg')");
+            $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + $("#imageselect").val() + ".jpg')");
             console.log(document.getElementById('custom-bg-user'));
         });
     });

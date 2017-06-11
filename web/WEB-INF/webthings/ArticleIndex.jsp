@@ -415,32 +415,29 @@
             assemibled = false;
         });
         var cartlist = '<%= session.getAttribute("cartlist") %>';
-        var cartArray = cartlist.substring(1, cartlist.length-1).split(",")
-        console.log(cartlist)
+        var cartArray = cartlist.substring(1, cartlist.length - 1).split(",")
+        console.log(cartlist);
         console.log(cartArray);
         $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
-            var blah = ($(this).children().siblings(".articleid").attr('href').replace("?","\\?"));
+            var blah = ($(this).children().siblings(".articleid").attr('href').replace("?", "\\?"));
             var match = new RegExp(blah);
             console.log($(this).children().siblings(".articleid").attr('href'));
             console.log(match)
             console.log("yes?")
-            for (var i = 0; i< cartArray.length; i++){
+            for (var i = 0; i < cartArray.length; i++) {
                 console.log(cartArray[i]);
-                if (cartArray[i].match(match)){
+                if (cartArray[i].match(match)) {
                     console.log("matched?")
                     deleteImage($(this));
                     break;
                 }
-                else{
+                else {
                     console.log("nope")
                 }
             }
         });
 
     });
-
-
-
 </script>
 
 </body>
