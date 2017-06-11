@@ -201,8 +201,6 @@
                 var category = $(this).children().siblings(".category").text().trim();
                 var matching = new RegExp(value, "gi");
                 if (title.match(matching) || username.match(matching) || (category.match(matching) && category.length > 0)) {
-                    console.log("hello")
-                    console.log(category);
                     $(this).fadeIn("fast", function () {
                         $(this).css("z-index", 0)
                     })
@@ -256,7 +254,6 @@
         var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>";
 
         function deleteImage($item) {
-            console.log("put into save")
             $item.fadeOut(function () {
                 var $list = $("ul", $save).length ?
                     $("ul", $save) :
@@ -276,7 +273,6 @@
         var trash_icon = "<a href='link/to/trash/script/when/we/have/js/off' title='Delete this image' class='ui-icon ui-icon-plusthick'>Delete image</a>";
 
         function recycleImage($item) {
-            console.log("recycle to gallery")
             $item.fadeOut(function () {
                 $item
                     .find("a.ui-icon-refresh")
@@ -302,23 +298,16 @@
             var username = null;
             username = $link.siblings(".username").html();
 
-            console.log(content);
-            console.log(image);
-            console.log("123");
-            console.log($link.parent().html());
-            console.log($link.siblings("div").html());
             var img = $("<p>" + content + "</p>");
             if (image != undefined) {
                 img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<br/>" + "<img src=\'" + image + "\'width=\"96\" height=\"72\">" + "<p>" + content + "</p>");
             }
             else {
-                console.log("no photo")
                 img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<p>" + content + "</p>");
             }
             var linking = $("<a href=\"" + hyper + "\">");
             setTimeout(function () {
 
-                console.log("Time out");
                 img.dialog({
                     width: 400,
                     height: 200,
@@ -331,7 +320,6 @@
         $("ul.gallery > li").on("click", function (event) {
             var $item = $(this),
                 $target = $(event.target);
-
             if ($target.is("a.ui-icon-plusthick")) {
                 deleteImage($item);
             } else if ($target.is("a.ui-icon-zoomin")) {
@@ -339,16 +327,50 @@
             } else if ($target.is("a.ui-icon-refresh")) {
                 recycleImage($item);
             } else if ($target.is(".username")) {
-                console.log($target);
-                console.log($target.attr("href"));
                 return $target.attr('href');
             }
 
             return false;
         });
+        var things = [];
 
+        function defaultSort(elementX, elementY) {
+            if (elementX.children().siblings("h5").text().toLowerCase() < elementY.children().siblings("h5").text().toLowerCase())
+                return -1;
+            if (elementX.children().siblings("h5").text().toLowerCase() > elementY.children().siblings("h5").text().toLowerCase())
+                return 1;
+            return 0;
+        }
+
+//needed time delay to sort needed to wait for all animation to finish.
+        $("#searchBar").bind('keyup', function (e) {
+            if (e.keyCode == 13) {
+                jQuery.when(attachment()).done(function () {
+                    things.sort(defaultSort);
+                }).done(function () {
+                    display();
+                })
+            }
+            console.log(things);
+        })
+        ;
+        function attachment() {
+            $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
+                things.push($(this));
+            });
+            for (var i = 0; i < things.length; i++) {
+                deleteImage($(things[i]));
+                console.log("delete")
+            }
+        }
+        function display() {
+            while (things.length > 0) {
+                console.log("redepoly");
+                recycleImage($(things[0]));
+                things.shift();
+            }
+        }
     });
-
 
 </script>
 </body>
