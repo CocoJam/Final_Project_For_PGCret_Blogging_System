@@ -129,12 +129,13 @@
 
                             </div>
                         </div>
-
-
+                        <button id="listorcard">To list</button>
+                        <label>Search: </label>
+                        <input type="text" class="searchBar">
+                        <!-- This is the card based article index-->
                         <div class="row">
-                            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-                                <label for="searchBar">Search: </label>
-                                <input type="text" id="searchBar">
+                            <div id="cardarticle"
+                                 class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
                                 <label for="sort">Sort</label>
                                 <button id="sort">Assemble</button>
                                 <button id="sorttitle">By title</button>
@@ -158,7 +159,8 @@
                                                              width="96" height="72">
                                                     </c:when>
                                                     <c:otherwise>
-
+                                                        <img src="assets/img/img6.jpg" alt="Circle Image"
+                                                             width="96" height="72">
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <div hidden>${index.content}</div>
@@ -182,8 +184,59 @@
                                 </div>
                             </div>
 
-                        </div>
+                            <!-- The card based article index end here-->
 
+                            <!-- The list based article index start here-->
+                            <div id="listarticle"
+                                 class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+                                <table class="table table-striped table-hover table-responsive">
+                                    <tr>
+                                        <th>
+                                            Article Numbers
+                                        </th>
+                                        <th>
+                                            Article Names
+                                        </th>
+                                        <th>
+                                            Date Created
+                                        </th>
+                                        <%--Scenario 1: ALL articles are requested--%>
+                                        <c:if test="${articleList.equals('all')}">
+                                            <th>
+                                                Article Author
+                                            </th>
+                                        </c:if>
+
+                                        <th>
+                                            Article Category
+                                        </th>
+
+                                    </tr>
+                                    <%--Looping through the Article Index (list of articles in the ArticleIndex Servlet) and populates a row per article--%>
+                                    <c:forEach items="${ArticleIndex}" var="index">
+                                        <tr class="tablecontentR">
+                                            <td class="tablearticleid">${index.articleid}</td>
+                                            <td class="tablearticlename">
+                                                <a href="/Articles?acticleId=${index.articleid}">${index.articlename}</a>
+                                            </td>
+                                            <td class="tablearticledate">${index.datecreated}</td>
+
+                                            <c:if test="${articleList.equals('all')}">
+                                                <td class="tablearticleusername">
+                                                        ${index.username}
+                                                </td>
+                                            </c:if>
+                                            <td class="tablearticlecategory">
+                                                    ${index.category}
+                                            </td>
+
+                                        </tr>
+                                    </c:forEach>
+
+                                </table>
+                            </div>
+                            <!-- The list based article index end here-->
+                        </div>
 
                     </div>
                 </div>
@@ -199,13 +252,43 @@
 <%@ include file="../../component/Footer(Template).html" %>
 <!-- FOOTER END -->
 <script>
+
     $(function () {
-        $("#searchBar").bind('keyup', function () {
-            var value = $(this).val();
-            $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
-                var title = $(this).children().siblings("h5").text();
-                var username = $(this).children().siblings(".username").text();
-                var category = $(this).children().siblings(".category").text().trim();
+        var cardOrList = false;
+
+        $("#listarticle").fadeOut("fast", function () {
+            $(this).css("z-index", -1);
+        });
+
+        $("#listorcard").on("click", function () {
+           if(cardOrList == false){
+               $("#cardarticle").fadeOut("fast", function () {
+                   $(this).css("z-index", -1);
+               });
+               $("#listarticle").fadeIn("fast", function () {
+                   $(this).css("z-index", 0);
+               });
+               cardOrList = true;
+               $("#listorcard").html("To card");
+           }
+           else {
+               $("#cardarticle").fadeIn("fast", function () {
+                   $(this).css("z-index", 0);
+               });
+               $("#listarticle").fadeOut("fast", function () {
+                   $(this).css("z-index", -1);
+               });
+               cardOrList = false;
+               $("#listorcard").html("To list");
+           }
+        });
+
+        function searching(element, firstitem, seconditem, thriditem) {
+            var value = $(".searchBar").val();
+            $(element).each(function () {
+                var title = $(this).children().siblings(firstitem).text();
+                var username = $(this).children().siblings(seconditem).text();
+                var category = $(this).children().siblings(thriditem).text().trim();
                 var matching = new RegExp(value, "gi");
                 if (title.match(matching) || username.match(matching) || (category.match(matching) && category.length > 0)) {
                     $(this).fadeIn("fast", function () {
@@ -218,7 +301,14 @@
                     })
                 }
             })
+        }
+
+
+        $(".searchBar").bind('keyup', function () {
+            searching(".tablecontentR",".tablearticlename",".tablearticleusername",".tablearticlecategory");
+            searching(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)","h5",".username",".category");
         });
+
 
 
         // There's the gallery and the trash
