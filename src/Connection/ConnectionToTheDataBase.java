@@ -78,6 +78,8 @@ public class ConnectionToTheDataBase {
         }
     }
 
+
+    //The cookieTracker is used to track the cookie named pagemark on everypage, which is user to check if this method is called that to check the cookie with the value with the current page address. Hence the user is bounce back to the present page if called.
     public static void cookieTracker(HttpServletRequest req, HttpServletResponse resp) {
         Cookie[] cookies = req.getCookies();
         for (Cookie cookie : cookies) {
@@ -94,6 +96,7 @@ public class ConnectionToTheDataBase {
         return;
     }
 
+    //This is the method to allow the cookie pagemark to have a timeout function,since the cookie given contains a max time out time. By traveling across servlet, that this cookie is checked for the time out.
     public static void cookieLogOut(HttpServletRequest req, HttpServletResponse resp) {
         Cookie[] cookies = req.getCookies();
         for (Cookie cookie : cookies) {

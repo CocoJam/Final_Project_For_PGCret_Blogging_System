@@ -41,7 +41,6 @@ public class CommentsServlet extends HttpServlet {
         if (commentStatus != null) {
             //Scenario 1: This is to add a new comment
             if (commentStatus.equals("Add a Comment")) {
-                System.out.println("ADd a comments");
                 commentsDAO.AddingCommentsToDataBase(articleID, username, comment);
                 comments = commentsDAO.selectionLastComment();
             }
@@ -53,12 +52,10 @@ public class CommentsServlet extends HttpServlet {
                     System.out.println(e);
                 }
                 //updating comments (using DAO)
-                System.out.println("editting the comment");
                 commentsDAO.editComments(comment, commentId);
                 comments = commentsDAO.selectionComment(commentId);
             }
             if (comments != null) {
-                System.out.println("Json comments");
                 JSONObject jsonObject = getJsonObject(comments);
                 System.out.println(jsonObject);
                 resp.getWriter().print(jsonObject);
@@ -71,13 +68,13 @@ public class CommentsServlet extends HttpServlet {
         if (listOfComments != null) {
             checkingForOwner();
             session.setAttribute("commentlist", listOfComments);
-            closingConnection();
         }
         req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
         return;
 
     }
 
+    //JsonObject setup for writing ajax comments
     private JSONObject getJsonObject(Comments comments) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("CommentId", comments.getCommentId());
@@ -99,6 +96,7 @@ public class CommentsServlet extends HttpServlet {
         }
     }
 
+    //Setup for the comments based on the attribute of the session and the given content.
     private void commentSetUp(HttpServletRequest req, HttpSession session) {
         username = (String) session.getAttribute("username");
         comment = req.getParameter("commentcontent");

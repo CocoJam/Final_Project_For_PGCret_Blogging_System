@@ -17,7 +17,7 @@ public class Articles {
     private boolean owner= false;
     private String category = null;
     private String firstimage = null;
-
+    //Normal getters and setters
     public String getFirstimage() {
         return firstimage;
     }
@@ -84,17 +84,16 @@ public class Articles {
 
     public Articles() {
     }
-
+    //This method helps cleaning the lines for the content of the article, which is greatly inference by the text editor.
     public String cuttingLines (String thing){
         return thing.replace("\\n","").replace("\"","").replace("+","").replaceAll("<[^>]*>","").trim();
     }
-
+    //This method is using regex to find the first image within the article, which ignores the other.
     public String FirstImg (String thing){
         String ptr= "img alt=\"\" src\\s*=\\s*([\"'])?([^\"']*)";
         Pattern p = Pattern.compile(ptr);
         Matcher m = p.matcher(thing);
         if (m.find()) {
-
             return m.group(2);
         }
         return null;

@@ -30,6 +30,7 @@ public class DeletingServlet extends HttpServlet {
     private DeleteDAO deleteDAO;
     private LoginPassing loginPassing;
 
+    //The dopost method is used to stop user to use non-conventional way to delete content or accounts.
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         cookieLogOut(req,resp);
@@ -37,19 +38,18 @@ public class DeletingServlet extends HttpServlet {
         deleteDAO = new DeleteDAO();
         HttpSession session = req.getSession();
         setupForUsernameAndPasswordCheck(req, session);
-        System.out.println(username);
-        System.out.println(password);
-        System.out.println(sessionUsername);
-        System.out.println(sessionpassword);
         if (req.getParameter("log") != null) {
+            //Deleting this current Profile
             if (req.getParameter("log").equals("DeletingProfile")) {
                 tryingTodeleteWholeProfile(req, resp, session);
                 closingConnection();
                 return;
+                //Deleting this current Article
             } else if (req.getParameter("log").equals("DeleteArticle")) {
                 tryingTodeleteWholeArticle(req, resp);
                 closingConnection();
                 return;
+                //Deleting this comment.
             } else if (req.getParameter("log").equals("DeleteComment")) {
                 System.out.println("converting id of article to int");
                 System.out.println(req.getParameter("commentId"));
@@ -61,23 +61,26 @@ public class DeletingServlet extends HttpServlet {
                 tryingTodeleteAComment(req, resp, session);
                 closingConnection();
                 return;
+                //Deleting the Media.
             } else if (req.getParameter("log").equals("DeleteMedia")){
                 tryingToDeleteSpeificMedia(req, resp);
+                //Deleting youtube.
             } else if (req.getParameter("log").equals("DeleteYoutube")){
-                TryingTodeleteAYoutubeVideo(req, resp);
+//                TryingTodeleteAYoutubeVideo(req, resp);
             }
         }
         cookieTracker(req,resp);
         return;
     }
 
-    private void TryingTodeleteAYoutubeVideo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String youtubeURL = req.getParameter("media");
-        System.out.println(youtubeURL);
-        deleteDAO.dropSpeificYoutube(youtubeURL);
-        closingConnection();
-        req.getRequestDispatcher("/Articles").forward(req, resp);
-    }
+
+//    private void TryingTodeleteAYoutubeVideo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        String youtubeURL = req.getParameter("media");
+//        System.out.println(youtubeURL);
+//        deleteDAO.dropSpeificYoutube(youtubeURL);
+//        closingConnection();
+//        req.getRequestDispatcher("/Articles").forward(req, resp);
+//    }
 
     private void tryingToDeleteSpeificMedia(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
