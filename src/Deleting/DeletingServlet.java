@@ -82,6 +82,7 @@ public class DeletingServlet extends HttpServlet {
 //        req.getRequestDispatcher("/Articles").forward(req, resp);
 //    }
 
+    //Used to delete a specific media based on the file path of it.
     private void tryingToDeleteSpeificMedia(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
         String filePath = servletContext.getRealPath(req.getParameter("media"));
@@ -91,6 +92,7 @@ public class DeletingServlet extends HttpServlet {
         req.getRequestDispatcher("/ArticleUpload").forward(req, resp);
     }
 
+    //deleting the whole article
     private void tryingTodeleteWholeArticle(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         setupForUsernameAndPasswordCheck(req, session);
@@ -98,16 +100,15 @@ public class DeletingServlet extends HttpServlet {
         if (article.getUsername().equals(sessionUsername)) {
             System.out.println("dropping this article");
             deleteDAO.dropSpeificArticle(article.getArticleid());
-            closingConnection();
         }
-        req.getRequestDispatcher("/ArticlesIndex").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+//        req.getRequestDispatcher("/ArticlesIndex").forward(req, resp);
         return;
     }
 
     private void tryingTodeleteWholeProfile(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException, IOException {
         if (usernameAndPasswordCheckForDelete()) {
             deleteDAO.dropAllByUsername(username);
-            closingConnection();
             req.getRequestDispatcher("/logout").forward(req, resp);
             return;
         } else {
