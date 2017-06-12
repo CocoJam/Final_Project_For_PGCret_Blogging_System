@@ -29,11 +29,13 @@
 <!-- !!! NAVIGATION BAR END !!! -->
 
 
-<%----%>
+<%-- Switching the profilepage between the user and the friends one that they are veiwing using the session and swtich the session attribute withe the showFriend--%>
 <% ProfilePAge currentuser = null;
+    boolean friendsprofile = false;
     if (session.getAttribute("showFriend") != null) {
         currentuser = (ProfilePAge) session.getAttribute("profileInfo");
         session.setAttribute("profileInfo", session.getAttribute("showFriend"));
+        friendsprofile = true;
     }%>
 
 <!-- !!! MAIN CONTENT START !!! -->
@@ -65,6 +67,7 @@
                                                  class="img-rounded img-responsive img-raised">
                                         </c:otherwise>
                                     </c:choose>
+                                        <!-- loading the friendlist from the session, which allow the user to veiw is that person a friend of the user and display the button of friend and unfriend depending-->
                                     <% boolean friended = false;
                                         List<Friend> friendList;
                                         if (session.getAttribute("firendlist") != null) {
@@ -76,8 +79,11 @@
                                             }
                                         }
                                         if (session.getAttribute("showFriend") != null) {
-                                            out.println(" <button id=\"addfriend\">Add</button>");
-                                            out.println(" <button id=\"unfriend\">Unfriend</button>");
+                                            //Check are u the user or the other people's profile.
+                                            if (friendsprofile) {
+                                                out.println(" <button id=\"addfriend\">Add</button>");
+                                                out.println(" <button id=\"unfriend\">Unfriend</button>");
+                                            }
                                         }%>
                                 </div>
                                 <div class="name" id="custom-profile-name">
@@ -136,72 +142,20 @@
 
                             </table>
 
-                            <%--Form to request for users articles to populate--%>
-
-                            <%--<form action="/ArticlesIndex" method="post" >--%>
-                            <%--<input type="hidden" name="articleList" value="self"/>--%>
-                            <%--<input type="submit" name="profilePopulate" value="yes" id="helloWorld"/>--%>
-                            <%--</form>--%>
 
                             <button id="showArticleList">Show article list</button>
 
                             <div id="ArticleTable"></div>
 
                             <table class="table table-striped table-hover table-responsive">
-                                <%----%>
-                                <%--<tr>--%>
-                                    <%--&lt;%&ndash;<th>&ndash;%&gt;--%>
-                                    <%--&lt;%&ndash;Article Numbers&ndash;%&gt;--%>
-                                    <%--&lt;%&ndash;</th>&ndash;%&gt;--%>
-                                    <%--<th>--%>
-                                        <%--Article Names--%>
-                                    <%--</th>--%>
-                                    <%--<th>--%>
-                                        <%--Article Category--%>
-                                    <%--</th>--%>
-                                    <%--<th>--%>
-                                        <%--Date Created--%>
-                                    <%--</th>--%>
-                                    <%--&lt;%&ndash;&lt;%&ndash;Scenario 1: ALL articles are requested&ndash;%&gt;&ndash;%&gt;--%>
-                                    <%--&lt;%&ndash;<c:if test="${articleList.equals('all')}">&ndash;%&gt;--%>
-                                    <%--&lt;%&ndash;<th>&ndash;%&gt;--%>
-                                    <%--&lt;%&ndash;Article Author&ndash;%&gt;--%>
-                                    <%--&lt;%&ndash;</th>&ndash;%&gt;--%>
-                                    <%--&lt;%&ndash;</c:if>&ndash;%&gt;--%>
-
-
-                                <%--</tr>--%>
-                                <%--&lt;%&ndash;Looping through the Article Index (list of articles in the ArticleIndex Servlet) and populates a row per article&ndash;%&gt;--%>
-                                <%--<c:forEach items="${IndexOfInterest}" var="index">--%>
-                                    <%--<tr>--%>
-                                            <%--&lt;%&ndash;<td>${index.articleid}</td>&ndash;%&gt;--%>
-                                        <%--<td>--%>
-                                            <%--<a href="/Articles?acticleId=${index.articleid}">${index.articlename}</a>--%>
-                                        <%--</td>--%>
-
-                                        <%--<td>--%>
-                                                <%--${index.category}--%>
-                                        <%--</td>--%>
-
-                                        <%--<td>${index.datecreated}</td>--%>
-
-
-                                            <%--&lt;%&ndash;<c:if test="${articleList.equals('all')}">&ndash;%&gt;--%>
-                                            <%--&lt;%&ndash;<td>&ndash;%&gt;--%>
-                                            <%--&lt;%&ndash;${index.username}&ndash;%&gt;--%>
-                                            <%--&lt;%&ndash;</td>&ndash;%&gt;--%>
-                                            <%--&lt;%&ndash;</c:if>&ndash;%&gt;--%>
-                                    <%--</tr>--%>
-                                <%--</c:forEach>--%>
                             </table>
                             <%--end testing--%>
 
                             <script>
-
+                                // An ajax call of post to get the article list which is then append and display within the given table
                                 var clickStatus = true;
 
-                                $("#showArticleList").click(function(){
-
+                                $("#showArticleList").click(function () {
 
 
                                     if (clickStatus) {
@@ -219,7 +173,7 @@
 
                                             }
                                         });
-
+                                        //Toggle between the hide of the list and the showing of the list based on the button
                                         $("#showArticleList").html("Hide article list");
                                         clickStatus = !clickStatus;
                                     } else {
@@ -233,49 +187,6 @@
                             </script>
                         </div>
 
-                        <%--<!-- Second profile row -->--%>
-                        <%--<div class="row">--%>
-                        <%--<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">--%>
-                        <%--<div class="profile-tabs">--%>
-                        <%--<!-- MORE CONTENT GOES HERE IF NEEDED -->--%>
-                        <%--Welcome to your page, please navigate by using the features below.--%>
-
-                        <%--&lt;%&ndash;The following are GET methods into either your article index or ALL article index&ndash;%&gt;--%>
-                        <%--<h4>Articles</h4>--%>
-                        <%--<a href="/ArticlesIndex?articleList=self">To my articles index</a>--%>
-                        <%--<br>--%>
-                        <%--<a href="/ArticlesIndex?articleList=all">To all articles index</a>--%>
-
-                        <%--&lt;%&ndash;These links goes either to users own media, or all media (both accessed by GET method) goes to /Upload servlet&ndash;%&gt;--%>
-                        <%--<a href="Upload?media=self">To self media</a>--%>
-                        <%--<br>--%>
-                        <%--<a href="Upload?media=all">To all media</a>--%>
-
-                        <%--&lt;%&ndash;This goes to LogOut servlet, session invalidated&ndash;%&gt;--%>
-                        <%--<form action="/logout" method="get">--%>
-                        <%--<input type="submit" value="Logout">--%>
-                        <%--</form>--%>
-
-                        <%--&lt;%&ndash;This goes to changeUserInformation in GET method, see Registration serlvet&ndash;%&gt;--%>
-                        <%--<form action="/Registration" method="get">--%>
-                        <%--<input type="submit" name="log" value="ChangeUserInformation">--%>
-                        <%--</form>--%>
-
-                        <%--&lt;%&ndash;This deletes the whole profile and corresponding database entries (incl youtube links, comments, ) by POST method&ndash;%&gt;--%>
-                        <%--&lt;%&ndash;TODO not being able to drop folders&ndash;%&gt;--%>
-                        <%--<form action="/Deleting" method="post">--%>
-                        <%--<label for="username">Username:</label>--%>
-                        <%--<input type="text" id="username" name="username">--%>
-                        <%--<label for="password">Password:</label>--%>
-                        <%--<input type="password" id="password" name="password">--%>
-                        <%--<input type="submit" name="log" value="DeletingProfile">--%>
-                        <%--</form>--%>
-
-                        <%----%>
-                        <%--</div>--%>
-                        <%--</div>--%>
-                        <%--<!--End Profile Tabs-->--%>
-                        <%--</div>--%>
                     </div>
 
                 </div>
@@ -291,10 +202,10 @@
 <!-- FOOTER END -->
 
 
-<%
+<%   //if The user is within their own profile this script will not appear, so the following function will  not be apply to the jsp.
     if (session.getAttribute("showFriend") != null) { %>
 <script>
-
+    //The switching of the button of adding friend and unfriending the person depending the orginal state of is this person friended.
     <% if (!friended){ %>
     $("#addfriend").fadeIn("1", function () {
         $(this).css("z-index", 0)
@@ -310,6 +221,7 @@
         $(this).css("z-index", -1)
     });
     <% } %>
+    //Depending the button of the clicked, which speific ajax call of post will be sent, which allow the friend servlet to be adding the friend bi-directional to the database.
     $("#addfriend").click(function () {
         $("#unfriend").fadeIn("1", function () {
             $(this).css("z-index", 0)

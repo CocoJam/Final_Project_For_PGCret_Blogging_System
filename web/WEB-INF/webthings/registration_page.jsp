@@ -388,23 +388,23 @@
                                         success: function (msg) {
                                             console.log(msg);
                                             if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
-                                                var ratioButton = "<input type=\"radio\" name= \"profilePicture\" value=\""+msg.replace("Upload-photos\\"+ ${username}+"\\photo\\","")+"\">";
+                                                var ratioButton = "<input type=\"radio\" name= \"profilePicture\" value=\""+msg.replace("Upload-photos\\${username}\\photo\\","")+"\">";
                                                 var image = "<img src=\"" + msg + "\"height=\"20%\">";
                                                 var breakline = "<br>";
                                                 $(".content").eq(0).append(ratioButton);
                                                 $(".content").eq(0).append(image);
                                                 $(".content").eq(0).append(breakline);
                                             }
-                                            <!-- if the meadia is successfully uploaded but it is not a picture or photo in the right formate, that the alert will pop and show -->
+                                            <!-- if the media is successfully uploaded but it is not a picture or photo in the right formate, that the alert will pop and show -->
                                             else{
                                                 console.log("upload fail");
-                                                alert(msg);
+                                                alert(msg.replace("Upload-photos\\${username}\\photo\\","") + " failed to upload due to format not supplied");
                                             }
                                         },
                                         <!-- Error when the error such as the file is not in any right formate or such that the size of the file is too big, then the this will alert the user. -->
                                         error: function (request, status, error) {
                                             console.log("upload fail");
-                                            alert("Upload File Fail.");
+                                            alert("Upload File Is Too Big.");
                                         }
                                     });
                                     e.preventDefault();

@@ -72,13 +72,6 @@
                         <div class="row">
                             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
 
-                                <%--if (s.endsWith(".flv") || s.endsWith(".m4v") || s.endsWith(".mp4") || s.endsWith(".mpg") || s.endsWith(".mpeg") || s.endsWith(".wmv")) {--%>
-                                <%--map.get("video").add(s);--%>
-                                <%--} else if (s.endsWith(".mp3")) {--%>
-                                <%--map.get("audio").add(s);--%>
-                                <%--} else if (s.endsWith(".jpg") || s.endsWith(".png")) {--%>
-                                <%--map.get("photo").add(s);--%>
-                                <%--}--%>
 
                                 <%--Triology Part 3.5 TODO display this in tables--%>
 
