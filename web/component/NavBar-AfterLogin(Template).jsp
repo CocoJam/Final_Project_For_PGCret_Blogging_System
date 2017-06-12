@@ -12,8 +12,15 @@
     NOTE. if you enable this the toggle menu function WILL NOT WORK--%>
     <%--<%@include file="Header(styling Template).html"%>--%>
     <style>
-        .searchBar {
-            color: black !important;
+        /*.searchBar {*/
+            /*color: black !important;*/
+        /*}*/
+
+        /*input.searchBar::-webkit-input-placeholder { !* Chrome/Opera/Safari *!*/
+            /*color: pink;*/
+        /*}*/
+        input.searchBar::-webkit-calendar-picker-indicator {
+            display: none;
         }
     </style>
 </head>
@@ -30,6 +37,7 @@
     console.log(date.toGMTString());
     console.log(document.cookie);
 </script>
+
 <nav class="navbar navbar-info navbar-transparent navbar-fixed-top navbar-color-on-scroll">
 
     <!-- responsive container for div --><!-- do not remove -->
@@ -37,6 +45,10 @@
 
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
+
+            <%--Div to load up loader--%>
+            <div id='loaderID'></div>
+                <%--Div loader ending--%>
 
             <!-- Navbar toggle which display when on mobile device -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#expand-navbar-icons">
@@ -52,7 +64,9 @@
             <%--Search bar here--%>
             <%--<li>--%>
             <form action="/ProfilePage" method="get">
-                <input list="usernames" name="accessFriend" class="form-control" placeholder="Search People" style="color: white" id="NameBarForm">
+                <input list="usernames" name="accessFriend" class="form-control searchBar" placeholder="Search People"
+                       style="color: white" id="NameBarForm" list="usernames">
+
                 <datalist id="usernames">
                     <c:forEach items="${userlist}" var="names">
                     <option value="${names}">
@@ -74,8 +88,19 @@
                 <li>
                     <a href="ProfilePage" class="clickOnce"><c:choose>
                         <c:when test="${profileInfo.profilepic != null}">
-                            <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                 height='20'>
+                            <c:choose>
+                                <%--If this is a default profile image get the image from default photo directory--%>
+                                <c:when test='${profileInfo.profilepic.startsWith("dEfAuLt")}'>
+                                    <img src="defaultImg/${profileInfo.profilepic}"
+                                         height="20">
+                                </c:when>
+
+                                <%--Otherwise get the photo from the users photo page--%>
+                                <c:otherwise>
+                                    <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
+                                         height="20">
+                                </c:otherwise>
+                            </c:choose>
                         </c:when>
                         <c:otherwise>
                             <i class="material-icons">portrait</i>
@@ -87,7 +112,7 @@
                     <c:when test="${not empty cartlist}">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="material-icons">library_books</i>Carted Articles
+                                <i class="material-icons"></i>Cart
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
@@ -107,12 +132,12 @@
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="material-icons">library_books</i>Articles
+                        <i class="material-icons"></i>Articles
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">Article dropdown</li>
-                        <li><a href="ArticlesIndex?articleList=self" class="clickOnce"><i class="material-icons">insert_drive_file</i>My
+                        <li><a href="ArticlesIndex?articleList=self" class="clickOnce"><i class="material-icons">library_books</i>My
                             Articles</a>
                         </li>
                         <li class="divider"></li>
@@ -129,12 +154,12 @@
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="material-icons">photo_library</i>Media
+                        <i class="material-icons"></i>Media
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">Media dropdown</li>
-                        <li><a href="Upload?media=self" class="clickOnce"><i class="material-icons">pages</i>My
+                        <li><a href="Upload?media=self" class="clickOnce"><i class="material-icons">photo_library</i>My
                             Media</a></li>
                         <li class="divider"></li>
                         <li><a href="Upload?media=all" class="clickOnce"><i class="material-icons">collections</i>All
@@ -153,7 +178,7 @@
                                 class="material-icons">create</i>Edit
                             Profile</a></li>
                         <li class="divider"></li>
-                        <li class="dropdown-header" id="bgImgStatus">Background </li>
+                        <li class="dropdown-header" id="bgImgStatus">Background</li>
                         <li><a href="#" id="leftButton"><i
                                 class="material-icons">keyboard_arrow_left</i>Previous</a>
                             <a href="#" id="rightButton"><i
@@ -173,11 +198,11 @@
 <script>
     var imageValue = 1;
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         $("#bgImgStatus").text("Background " + imageValue + "/5");
     })
 
-    $("#leftButton").click(function(){
+    $("#leftButton").click(function () {
         if (imageValue > 1) {
             imageValue = imageValue - 1;
 //            $("#imageselect").val(imageValue);
@@ -186,9 +211,9 @@
         }
     });
 
-    $("#rightButton").click(function(){
+    $("#rightButton").click(function () {
 
-        if (imageValue < 5){
+        if (imageValue < 5) {
             imageValue = imageValue + 1;
 //            $("#imageselect").val(imageValue);
             $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + imageValue + ".jpg')");
@@ -206,26 +231,16 @@
 <%--This script limits clicking of the button to one click--%>
 <script>
 
-    var clicked = false;
-    $(".clickOnce").on("click", function (e) {
-        if (clicked === false) {
-            clicked = true;
-        } else {
-            e.preventDefault();
-        }
-    });
-
-    //    $('.clickOnce').click(function (e) {
-    //        e.preventDefault();
+    <%--Function to prevent user spamming the button.--%>
+    //    var clicked = false;
+    //    $(".clickOnce").on("click", function (e) {
+    //        if (clicked === false) {
+    //            clicked = true;
+    //        } else {
+    //            e.preventDefault();
+    //        }
     //    });
 
-    //    $(document).ready(
-    //        function clickOnce() {
-    //            $(".clickOnce").on("click", function () {
-    //                $(this).off('click');
-    //            })
-    //        }
-    //    )
     $(document).ready(function () {
         $("#imageselect").change(function () {
             $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + imageValue + ".jpg')");

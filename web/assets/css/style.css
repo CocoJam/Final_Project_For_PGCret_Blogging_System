@@ -93,3 +93,15 @@ a, a:hover, a:focus {
 /*#NameBarForm {*/
     /*margin-bottom: %;*/
 /*}*/
+
+#loaderID {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.5,0.5);
+    width: 498px;
+    height: 632px;
+    z-index: 9999;
+    visibility: hidden;
+    background: url(/gploader.gif) center no-repeat;
+}

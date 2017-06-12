@@ -28,7 +28,7 @@
                     <div class="card card-signup" id="loginCard">
 
                         <!-- FORM ELEMENT START -->
-                        <form class="form" method="post" action="/login">
+                        <form class="form" method="post" action="/login" id="loginForm">
 
                             <!-- Form heading -->
                             <div class="header header-info text-center">
@@ -66,18 +66,18 @@
                             <div class="footer text-center" class="form">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <input type="submit" value="login" name="login"
-                                           class="btn btn-block btn-success btn-lg">
+                                           class="btn btn-block btn-success btn-lg clickOnce">
                                 </div>
 
                             </div>
                         </form>
                         <div class="footer text-center">
 
-                            Click <a href="/login?Registration=Registration" style="color: green">Register</a> to signup now
+                            Click <a href="/login?Registration=Registration" style="color: green" class="clickOnce">Register</a>
+                            to signup now
                             <br><br>
 
                         </div>
-
 
                     </div>
                 </div>
@@ -98,8 +98,10 @@
 <script>
 
     $(document).ready(function () {
-        if (${loginFail}){
-            $("#loginCard").effect("shake");
+
+        if (${loginFail == true}){
+                $("#loginCard").effect("shake");
+
         }
     })
 </script>

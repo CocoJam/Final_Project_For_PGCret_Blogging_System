@@ -13,12 +13,6 @@
 
     <%@include file="../../component/Header(styling Template).html" %>
 
-    <!-- jQUERY & jQUERY UI -->
-    <%--the following jquery code has been omitted as it conflicts with the other existing jquery version.--%>
-    <%--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
     <!-- Load WYSIWYG STYLE -->
     <link rel="stylesheet" href="../../Trumbowyg/dist/ui/trumbowyg.min.css">
     <link rel="stylesheet" href="../../Trumbowyg/dist/plugins/colors/ui/trumbowyg.colors.min.css">
@@ -84,9 +78,22 @@
                                         <c:when test="${articleList.equals('self')}">
                                             <c:choose>
                                                 <c:when test="${profileInfo.profilepic != null}">
-                                                    <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                         alt="Profile Picture"
-                                                         class="img-rounded img-responsive img-raised">
+                                                    <c:choose>
+                                                        <%--If this is a default profile image get the image from default photo directory--%>
+                                                        <c:when test='${profileInfo.profilepic.startsWith("dEfAuLt")}'>
+                                                            <img src="defaultImg/${profileInfo.profilepic}"
+                                                                 alt="Circle Image"
+                                                                 class="img-rounded img-responsive img-raised">
+                                                        </c:when>
+
+                                                        <%--Otherwise get the photo from the users photo page--%>
+
+                                                        <c:otherwise>
+                                                            <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
+                                                                 alt="Circle Image" class="img-rounded img-responsive img-raised">
+                                                        </c:otherwise>
+                                                    </c:choose>
+
                                                     <div class="name" id="custom-profile-name">
                                                         <h3 class="title">${profileInfo.name}'s Article</h3>
                                                     </div>

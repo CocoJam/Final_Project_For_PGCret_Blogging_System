@@ -44,9 +44,20 @@
                                         <c:when test="${AllOrSelf.equals('self')}">
                                             <c:choose>
                                                 <c:when test="${profileInfo.profilepic != null}">
-                                                    <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                         alt="Circle Image"
-                                                         class="img-rounded img-responsive img-raised">
+                                                    <c:choose>
+                                                        <%--If this is a default profile image get the image from default photo directory--%>
+                                                        <c:when test='${profileInfo.profilepic.startsWith("dEfAuLt")}'>
+                                                            <img src="defaultImg/${profileInfo.profilepic}"
+                                                                 alt="Circle Image"
+                                                                 class="img-rounded img-responsive img-raised">
+                                                        </c:when>
+
+                                                        <%--Otherwise get the photo from the users photo page--%>
+                                                        <c:otherwise>
+                                                            <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
+                                                                 alt="Circle Image" class="img-rounded img-responsive img-raised">
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                     <div class="name" id="custom-profile-name">
                                                         <h3 class="title">${profileInfo.name}'s Media Gallery</h3>
                                                     </div>
@@ -75,32 +86,75 @@
 
                                 <%--Triology Part 3.5 TODO display this in tables--%>
 
-                                <c:forEach var="mediagroups" items="${mediaOutPut}">
-                                    <c:if test="${mediagroups.key.equals(\"photo\")}">
-                                        <c:forEach var="media" items="${mediagroups.value}">
-                                            <img src="${media}" height='30%'>
-                                        </c:forEach>
-                                    </c:if>
-                                    <c:if test="${mediagroups.key.equals(\"audio\")}">
-                                        <c:forEach var="media" items="${mediagroups.value}">
-                                            <audio controls>
-                                                <source src="${media}" type="audio/ogg">
-                                            </audio>
-                                        </c:forEach>
-                                    </c:if>
-                                    <c:if test="${mediagroups.key.equals(\"video\")}">
-                                        <c:forEach var="media" items="${mediagroups.value}">
-                                            <video width="400" controls>
-                                                <source src="${media}" height='30%'>
-                                            </video>
-                                        </c:forEach>
-                                    </c:if>
-                                </c:forEach>
+                                <table class="table table-striped table-hover table-responsive">
 
+                                    <tr>
+                                        <th>Media Item</th>
+                                    </tr>
 
-                                <audio controls>
-                                    <source src="" type="audio/ogg">
-                                </audio>
+                                    <c:forEach var="mediagroups" items="${mediaOutPut}">
+                                        <c:if test="${mediagroups.key.equals(\"photo\")}">
+                                            <c:forEach var="media" items="${mediagroups.value}">
+
+                                                <tr>
+                                                    <td>
+                                                        <img src="${media}" height='30%'>
+                                                    </td>
+                                                </tr>
+
+                                            </c:forEach>
+                                        </c:if>
+                                        <c:if test="${mediagroups.key.equals(\"audio\")}">
+                                            <c:forEach var="media" items="${mediagroups.value}">
+
+                                                <tr>
+                                                    <td>
+                                                        <audio controls>
+                                                            <source src="${media}" type="audio/ogg">
+                                                        </audio>
+                                                    </td>
+                                                </tr>
+
+                                            </c:forEach>
+                                        </c:if>
+                                        <c:if test="${mediagroups.key.equals(\"video\")}">
+                                            <c:forEach var="media" items="${mediagroups.value}">
+                                                <tr>
+                                                    <td>
+                                                        <video width="400" controls>
+                                                            <source src="${media}" height='30%'>
+                                                        </video>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </c:if>
+                                    </c:forEach>
+
+                                </table>
+
+                                    <%--Duplicate of the media content for us to populate in the --%>
+                                    <%--<c:forEach var="mediagroups" items="${mediaOutPut}">--%>
+                                        <%--<c:if test="${mediagroups.key.equals(\"photo\")}">--%>
+                                            <%--<c:forEach var="media" items="${mediagroups.value}">--%>
+                                                <%--<img src="${media}" height='30%'>--%>
+                                            <%--</c:forEach>--%>
+                                        <%--</c:if>--%>
+                                        <%--<c:if test="${mediagroups.key.equals(\"audio\")}">--%>
+                                            <%--<c:forEach var="media" items="${mediagroups.value}">--%>
+                                                <%--<audio controls>--%>
+                                                    <%--<source src="${media}" type="audio/ogg">--%>
+                                                <%--</audio>--%>
+                                            <%--</c:forEach>--%>
+                                        <%--</c:if>--%>
+                                        <%--<c:if test="${mediagroups.key.equals(\"video\")}">--%>
+                                            <%--<c:forEach var="media" items="${mediagroups.value}">--%>
+                                                <%--<video width="400" controls>--%>
+                                                    <%--<source src="${media}" height='30%'>--%>
+                                                <%--</video>--%>
+                                            <%--</c:forEach>--%>
+                                        <%--</c:if>--%>
+                                    <%--</c:forEach>--%>
+
 
                             </div>
                         </div>
