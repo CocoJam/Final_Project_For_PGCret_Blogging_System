@@ -101,7 +101,6 @@
                                 </c:otherwise>
                             </c:choose>
 
-
                             <!-- TODO use JSTL to change this text dynamically based on login status -->
 
                             <!-- TODO change this text when user is logged in to: "Please update your details" -->

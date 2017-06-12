@@ -37,6 +37,7 @@
     console.log(date.toGMTString());
     console.log(document.cookie);
 </script>
+
 <nav class="navbar navbar-info navbar-transparent navbar-fixed-top navbar-color-on-scroll">
 
     <!-- responsive container for div --><!-- do not remove -->
@@ -44,6 +45,10 @@
 
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
+
+            <%--Div to load up loader--%>
+            <div id='loaderID'></div>
+                <%--Div loader ending--%>
 
             <!-- Navbar toggle which display when on mobile device -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#expand-navbar-icons">

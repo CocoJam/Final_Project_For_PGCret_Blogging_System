@@ -43,9 +43,15 @@
 
 <script>
 
-//    custom made Javascript function which ensures protection against button spamming by the user (This is essential as too many spam clicks will lead to a 500 error page). This function ensures that only the first click will be processed until the page has finished loading.
+//This loads up the loader onclick of any loading buttons with the class "clickOnce".
+    $(document).ready(function () {
+        $(".clickOnce").click(function(){
+            $("#loaderID").css("visibility", "visible");
+        });
+    });
 
-    $(document).ready(function(){
+    //    custom made Javascript function which ensures protection against button spamming by the user (This is essential as too many spam clicks will lead to a 500 error page). This function ensures that only the first click will be processed until the page has finished loading.
+    $(document).ready(function () {
         var clicked = false;
         $(".clickOnce").on("click", function (e) {
             if (clicked === false) {

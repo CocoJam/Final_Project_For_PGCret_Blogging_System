@@ -24,6 +24,10 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
 
+            <%--Div to load up loader--%>
+            <div id='loaderID'></div>
+            <%--Div loader ending--%>
+
             <!-- Navbar toggle which display when on mobile device -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#expand-navbar-icons">
                 <span class="sr-only">Toggle navigation</span>
