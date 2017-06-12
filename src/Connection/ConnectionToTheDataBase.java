@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by ljam763 on 24/05/2017.
@@ -114,4 +116,10 @@ public class ConnectionToTheDataBase {
         }
     }
 
+    public static String checkForXSS (String word){
+        String ptr= "img alt=\"\" src\\s*=\\s*([\"'])?([^\"']*)";
+        Pattern p = Pattern.compile(ptr);
+        Matcher m = p.matcher(word);
+        return "";
+    }
 }

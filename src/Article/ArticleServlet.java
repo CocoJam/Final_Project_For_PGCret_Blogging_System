@@ -195,8 +195,8 @@ public class ArticleServlet extends HttpServlet {
 
     private void gettingContentFromJsp(HttpServletRequest req) {
         ArticleName = req.getParameter("ArticleName");
-        ArticleContent = req.getParameter("ArticleContent");
-        articleCategory = req.getParameter("ArticleCategory");
+        ArticleContent = req.getParameter("ArticleContent").replaceAll("<(/?script[^>]*)>", "");
+        articleCategory = req.getParameter("ArticleCategory").replaceAll("<(/?script[^>]*)>", "");
     }
 
     private void doPostEnteringEditArticle(HttpSession session) {

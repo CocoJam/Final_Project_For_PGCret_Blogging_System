@@ -235,6 +235,7 @@
         });
     }
 
+    <!-- This function is to like or unlike someone. -->
     function likeadd(e) {
         $.ajax({
             url: '/Articles',

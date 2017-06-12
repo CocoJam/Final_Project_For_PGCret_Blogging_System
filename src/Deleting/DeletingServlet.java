@@ -105,7 +105,7 @@ public class DeletingServlet extends HttpServlet {
 //        req.getRequestDispatcher("/ArticlesIndex").forward(req, resp);
         return;
     }
-
+//Deleting the whole profile.
     private void tryingTodeleteWholeProfile(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException, IOException {
         if (usernameAndPasswordCheckForDelete()) {
             deleteDAO.dropAllByUsername(username);
@@ -116,7 +116,7 @@ public class DeletingServlet extends HttpServlet {
             return;
         }
     }
-
+//Deleting a speific comment given by the comment id.
     private void tryingTodeleteAComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException, IOException {
         deleteDAO.dropSpeificComment(commentId);
         closingConnection();
@@ -124,11 +124,11 @@ public class DeletingServlet extends HttpServlet {
         req.getRequestDispatcher("/Articles").forward(req, resp);
         return;
     }
-
+// Password and username check of deleting profile.
     private boolean usernameAndPasswordCheckForDelete() {
         return username.equals(sessionUsername) && password.equals(sessionpassword) && loginPassing.selectionUsersNames(username, password);
     }
-
+// setup for overall delete function when user is deleting their profile.
     private void setupForUsernameAndPasswordCheck(HttpServletRequest req, HttpSession session) {
         username = req.getParameter("username");
         password = req.getParameter("password");

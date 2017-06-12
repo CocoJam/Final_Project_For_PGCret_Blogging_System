@@ -39,13 +39,4 @@ public class Media {
         return name.substring(youtubeurl.indexOf("https"),youtubeurl.indexOf("\" frameborder"));
     }
 
-
-    public static void main(String[] args) {
-        Random rand = new Random();
-        int random_integer = rand.nextInt(255-1) + 1;
-        int random_integer2 = rand.nextInt(255-1) + 1;
-        System.out.println(random_integer);
-        System.out.println(random_integer2);
-    }
-
 }

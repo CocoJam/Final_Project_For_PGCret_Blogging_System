@@ -102,7 +102,7 @@ public class CommentsServlet extends HttpServlet {
     //Setup for the comments based on the attribute of the session and the given content.
     private void commentSetUp(HttpServletRequest req, HttpSession session) {
         username = (String) session.getAttribute("username");
-        comment = req.getParameter("commentcontent");
+        comment = req.getParameter("commentcontent").replaceAll("<(/?script[^>]*)>", "");
         articleID = (int) session.getAttribute("articleID");
     }
 

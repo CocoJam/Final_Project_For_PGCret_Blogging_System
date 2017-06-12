@@ -61,13 +61,8 @@ public class Login_in extends HttpServlet {
             }
         }
         //TODO check hashing algorithm, need to check if it works.
-
-//        uncomment to check the hashing function
-//        Login.Passwords_Checker passwords_checker = new Login.Passwords_Checker();
-//        String hashedPassword = passwords_checker.hashing(password, 5 , 500);
-//        loginPassing.selectionUsersNames(username,hashedPassword);
+        //If the password is not null or empty then the password is check by the loginlogic. Or not bounce back to login page.
         if (!password.trim().equals("") && !password.trim().isEmpty() && password.trim() != null) {
-            System.out.println("hashing");
             loginLogic(req, resp, session, loginPassing);
         } else {
             session.setAttribute("log", false); //TODO refactoring for login status.
@@ -84,24 +79,22 @@ public class Login_in extends HttpServlet {
     // TODO just refactor this out for convenience
     public boolean loginLogic(HttpServletRequest req, HttpServletResponse resp, HttpSession session, LoginPassing loginPassing) throws ServletException, IOException {
         if (loginPassing.selectionUsersNames(username, password)) {
+            //Login in logic passed through sql selection query.
             session.setAttribute("username", username);
             session.setAttribute("password", password);
             session.setAttribute("articleList", "self");
             session.setAttribute("log", true); //TODO refactoring for login status.
-
-//            List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
-//            session.setAttribute("IndexOfInterest", indexList);
-//            System.out.println(indexList);
-
+            //Getting friendlist and the username list for the search bar of firent
             List<Friend> friendList = new FriendDAO().selectionListOfFriends(username);
             List<String> userList = new FriendDAO().GetAllPeopleUsername();
             session.setAttribute("firendlist", friendList);
-            session.setAttribute("userlist",userList);
+            session.setAttribute("userlist", userList);
             System.out.println("logged-in");
             System.out.println(session.getAttribute("username"));
             req.getRequestDispatcher("/ProfilePage").forward(req, resp); //TODO to take out.
             return true;
         } else {
+            //Login in logic fail.
             session.setAttribute("log", false); //TODO refactoring for login status.
             System.out.println("logged-in rejected");
             req.setAttribute("loginFail", true); //attribute to indicate to login_page jsp to shake if rejected onload
@@ -123,19 +116,21 @@ public class Login_in extends HttpServlet {
                 req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                 return;
             }
+            //If the user is logined in already the user will be transfer back to his own profilepage.
             if ((boolean) session.getAttribute("log")) {
                 req.getRequestDispatcher("/ProfilePage").forward(req, resp);
                 return;
             } else {
+                //If user is not login then it will bring them to the registration page.
                 if (registration.equals("Registration")) {
                     session.setAttribute("Upload", "ArticlesUpload");
                     req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                     return;
                 }
             }
-        }
-        else {
-            cookieTracker(req,resp);
+        } else {
+            //Anything else bounce!
+            cookieTracker(req, resp);
         }
     }
 }
