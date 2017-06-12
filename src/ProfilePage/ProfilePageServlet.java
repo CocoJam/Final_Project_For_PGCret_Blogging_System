@@ -4,6 +4,7 @@ import Article.ArticleListObjectDAO;
 import Article.Articles;
 import Friend.Friend;
 import Friend.FriendDAO;
+import com.sun.net.httpserver.HttpsServer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -43,7 +44,7 @@ public class ProfilePageServlet extends HttpServlet {
                 List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
                 String message = "<table class=\"table table-striped table-hover table-responsive\" id=\"ArticleTable\"><tr><th>Article Names</th><th>Article Category</th><th>Date Created</th></tr>";
                 for (Articles articles : indexList) {
-                    message += "<tr><td><a href=\"/Articles?acticleId="+articles.getArticleid()+"\">"+articles.getArticlename()+"</a></td><td>"+articles.getCategory()+"</td><td>"+articles.getDatecreated()+"</td></tr>";
+                    message += "<tr><td><a href=\"/Articles?acticleId=" + articles.getArticleid() + "\">" + articles.getArticlename() + "</a></td><td>" + articles.getCategory() + "</td><td>" + articles.getDatecreated() + "</td></tr>";
                 }
                 message += "</table>";
 //            JSONObject jsonObject = getJsonListObjects(indexList);
@@ -68,20 +69,16 @@ public class ProfilePageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("accessFriend") == null) {
-            System.out.println("sdgfdrjgkldjglkdfjglkdfjglkdfjglkdfjglkdjlgdfj");
             doPost(req, resp);
             cookieLogOut(req, resp);
-            System.out.println("in pp doget");
-//            if (req.getParameter("accessFriend") == null) {
-//                System.out.println("accessFirend == null");
-//                doPost(req, resp);
-//                return;
-            }
-            else {
+        } else {
+            HttpSession session = req.getSession();
+            if (req.getParameter("accessFriend").equals((String) session.getAttribute("username"))) {
+                req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+                return;
+            } else {
                 ProfilePAge profilePAge = profilePageDAO.getUsersProfile(req.getParameter("accessFriend"));
-                System.out.println(profilePAge + " is there anyone here?");
                 if (profilePAge != null) {
-                    HttpSession session = req.getSession();
                     List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(req.getParameter("accessFriend"));
                     List<Friend> friendList = new FriendDAO().selectionListOfFriends(req.getParameter("accessFriend"));
                     session.setAttribute("accessFriendfirendlist", friendList);
@@ -92,6 +89,7 @@ public class ProfilePageServlet extends HttpServlet {
                 }
                 req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                 return;
+            }
         }
     }
 }

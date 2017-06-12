@@ -114,10 +114,7 @@
 
                         </div>
                         <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-                            <%--<div class="form-group">--%>
                             <!-- Articles Form for submitting new/changes to database -->
-
-
                             <form id="form" action="/Articles" method="post">
                                 <%--Input for Article Name --%>
                                 <div class="form-group label-floating">
@@ -174,9 +171,9 @@
                                 </div>
 
                             </div>
-
+                                <!-- Media upload -->
                                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                                    <h3>Upload a video</h3>
+                                    <h3>Upload Something</h3>
                                     <form action="/Upload" method="post" id="Upload"
                                           enctype="multipart/form-data">
                                         <input type="file" name="file" size="50" class="btn btn-white"/>
@@ -184,7 +181,7 @@
                                     </form>
 
                                 </div>
-
+                                <!-- Youtube upload -->
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <h3>Youtube video</h3>
                                     <div class="form-group">
@@ -194,9 +191,6 @@
                                         </form>
                                     </div>
                                 </div>
-
-
-
 
                             <!-- Space for holding content to be uploaded to DB -->
                             <!-- DRAGGABLE SECTIONS -->
@@ -220,12 +214,6 @@
                             </div>
 
                             <!-- Media upload - TODO integrate with the uploader inside the WYSIWYG Editor -->
-
-                            <!-- Youtube upload -->
-                            <%--<form id="Youtube" action="/ArticleUpload" method="post">--%>
-                            <%--<input id="youtubeurl" type="text" name="youtube">--%>
-                            <%--<input type="submit" name="youtubeVideoSubmition" value="youtubesubmit">--%>
-                            <%--</form>--%>
 
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
@@ -430,17 +418,6 @@
         }
     }
     ;
-
-    // Typing and populating the section with content from the WYSIWYG
-    // If mouse is null, won't do anything
-    // Binds all input from keystroke inside textarea, runs function - display what's inside textarea in console.log, assign the id to a section inside the contents div
-
-    //    $('.wysiwys').bind('input', function () {
-    //        var content = $('.wysiwys').trumbowyg('html');
-    //        console.log(content);
-    //        $("#textarea").text(content);
-    //        $("#" + mouse).text(content);
-    //    });
 
     //classic jquery ui js for the draggible.
     $(function () {
