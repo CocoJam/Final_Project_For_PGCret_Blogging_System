@@ -15,6 +15,10 @@
         .searchBar {
             color: black !important;
         }
+
+        input::-webkit-calendar-picker-indicator {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -52,7 +56,8 @@
             <%--Search bar here--%>
             <%--<li>--%>
             <form action="/ProfilePage" method="get">
-                <input list="usernames" name="accessFriend" class="form-control" placeholder="Search People" style="color: white" id="NameBarForm">
+                <input list="usernames" name="accessFriend" class="form-control" placeholder="Search People"
+                       style="color: white" id="NameBarForm" list="usernames">
                 <datalist id="usernames">
                     <c:forEach items="${userlist}" var="names">
                     <option value="${names}">
@@ -153,7 +158,7 @@
                                 class="material-icons">create</i>Edit
                             Profile</a></li>
                         <li class="divider"></li>
-                        <li class="dropdown-header" id="bgImgStatus">Background </li>
+                        <li class="dropdown-header" id="bgImgStatus">Background</li>
                         <li><a href="#" id="leftButton"><i
                                 class="material-icons">keyboard_arrow_left</i>Previous</a>
                             <a href="#" id="rightButton"><i
@@ -173,11 +178,11 @@
 <script>
     var imageValue = 1;
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         $("#bgImgStatus").text("Background " + imageValue + "/5");
     })
 
-    $("#leftButton").click(function(){
+    $("#leftButton").click(function () {
         if (imageValue > 1) {
             imageValue = imageValue - 1;
 //            $("#imageselect").val(imageValue);
@@ -186,9 +191,9 @@
         }
     });
 
-    $("#rightButton").click(function(){
+    $("#rightButton").click(function () {
 
-        if (imageValue < 5){
+        if (imageValue < 5) {
             imageValue = imageValue + 1;
 //            $("#imageselect").val(imageValue);
             $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + imageValue + ".jpg')");
@@ -206,26 +211,16 @@
 <%--This script limits clicking of the button to one click--%>
 <script>
 
-    var clicked = false;
-    $(".clickOnce").on("click", function (e) {
-        if (clicked === false) {
-            clicked = true;
-        } else {
-            e.preventDefault();
-        }
-    });
-
-    //    $('.clickOnce').click(function (e) {
-    //        e.preventDefault();
+    <%--Function to prevent user spamming the button.--%>
+    //    var clicked = false;
+    //    $(".clickOnce").on("click", function (e) {
+    //        if (clicked === false) {
+    //            clicked = true;
+    //        } else {
+    //            e.preventDefault();
+    //        }
     //    });
 
-    //    $(document).ready(
-    //        function clickOnce() {
-    //            $(".clickOnce").on("click", function () {
-    //                $(this).off('click');
-    //            })
-    //        }
-    //    )
     $(document).ready(function () {
         $("#imageselect").change(function () {
             $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + imageValue + ".jpg')");
