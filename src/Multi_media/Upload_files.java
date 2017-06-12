@@ -118,11 +118,8 @@ public class Upload_files extends HttpServlet {
                     }
                     fileNameEditting(); //this slims down the filenname before it is written
                     fi.write(file);
-                    if (caption.equals("ArticlesUpload") || caption.equals("addNewArticle")) {
-                        resp.getWriter().print(filePath(file));
-                    } else {
-                        resp.getWriter().print(filePath(file));
-                    }
+                    System.out.println("Something is writeen");
+                    resp.getWriter().print(filePath(file));
                     return;
                 } else {
                     System.out.println("somthing else is throwing here");

@@ -41,38 +41,11 @@ public class ProfilePageServlet extends HttpServlet {
 
             if (req.getParameter("clickedShowList").equals("clickedShowList")) {
                 List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
-                String message = "<table class=\"table table-striped table-hover table-responsive\" id=\"ArticleTable\">\n" +
-                        "                                <tr>\n" +
-                        "                                    <th>\n" +
-                        "                                        Article Names\n" +
-                        "                                    </th>\n" +
-                        "                                    <th>\n" +
-                        "                                        Article Category\n" +
-                        "                                    </th>\n" +
-                        "                                    <th>\n" +
-                        "                                        Date Created\n" +
-                        "                                    </th>\n" +
-                        "\n" +
-                        "\n" +
-                        "                                </tr>\n";
+                String message = "<table class=\"table table-striped table-hover table-responsive\" id=\"ArticleTable\"><tr><th>Article Names</th><th>Article Category</th><th>Date Created</th></tr>";
                 for (Articles articles : indexList) {
-                    message +=
-                            "<tr>\n" +
-                                    "                                        <td>\n" +
-                                    "                                            <a href=\"/Articles?acticleId=" + articles.getArticleid() + "\">" + articles.getArticlename() + "</a>\n" +
-                                    "                                        </td>\n" +
-                                    "\n" +
-                                    "                                        <td>\n" +
-                                    articles.getCategory() +
-                                    "                                        </td>\n" +
-                                    "\n" +
-                                    "                                        <td>" + articles.getDatecreated() + "</td>\n" +
-                                    "\n" +
-                                    "\n" +
-                                    "                                    </tr>\n";
+                    message += "<tr><td><a href=\"/Articles?acticleId="+articles.getArticleid()+"\">"+articles.getArticlename()+"</a></td><td>"+articles.getCategory()+"</td><td>"+articles.getDatecreated()+"</td></tr>";
                 }
                 message += "</table>";
-
 //            JSONObject jsonObject = getJsonListObjects(indexList);
                 resp.getWriter().print(message);
                 return;

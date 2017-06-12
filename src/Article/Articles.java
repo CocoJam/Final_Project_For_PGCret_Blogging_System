@@ -102,9 +102,7 @@ public class Articles {
 
     public static void main(String[] args) {
         Articles articles= new Articles();
-        String thing =("http://localhost:8181/WEB-INF/webthings/ProfilePage.jsp");
-        String results = thing.replaceAll("http://[^/]*","");
-        System.out.println(results);
+        String thing =( "");
     }
 
 
