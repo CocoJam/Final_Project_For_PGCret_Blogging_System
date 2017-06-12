@@ -85,7 +85,17 @@
                                 <div>${articleContents.content}</div>
                                 <p>${articleContents.username}</p>
                                 <p>${articleContents.datecreated}</p>
-                                <button onclick="likeadd($(this))" id="${articleContents.articleid}">${articleContents.likeNumber}</button>
+                                <c:choose>
+                                    <c:when test="${articleContents.liked}">
+                                        <button onclick="likeadd($(this))" id="${articleContents.articleid}">Unlike
+                                        </button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button onclick="likeadd($(this))" id="${articleContents.articleid}">Like
+                                        </button>
+                                    </c:otherwise>
+                                </c:choose>
+                                <p id="likenumber">${articleContents.likeNumber}</p>
                                 <h1>${articleContents.liked}</h1>
                                 <c:if test="${articleContents.owner}">
                                     <p>${articleContents.owner}</p>
@@ -225,18 +235,23 @@
         });
     }
 
-    function likeadd(e){
+    function likeadd(e) {
         $.ajax({
             url: '/Articles',
             type: 'Post',
             data: {
                 "like": "like",
-                "likepeople": $(".currentuser").html() ,
+                "likepeople": $(".currentuser").html(),
                 "articleIdnumber": e.attr("id")
             },
             success: function (msg) {
-               console.log(msg);
-                e.html(msg);
+                if (msg > $("#likenumber").html()) {
+                    e.html("Unlike");
+                }
+                else {
+                    e.html("Like");
+                }
+                $("#likenumber").html(msg);
             },
             error: function (request, status, error) {
                 console.log("upload fail");
