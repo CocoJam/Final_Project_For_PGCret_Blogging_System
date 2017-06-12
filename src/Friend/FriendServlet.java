@@ -37,10 +37,10 @@ public class FriendServlet extends HttpServlet {
             return;
         }
         System.out.println("ajax came here");
-//        List<Friend> friendList =friendDAO.selectionListOfFriends(username);
-//        session.setAttribute("firendlist", friendList);
-//        System.out.println(friendList);
-//        req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+        List<Friend> friendList =friendDAO.selectionListOfFriends(username);
+        session.setAttribute("firendlist", friendList);
+        System.out.println(friendList);
+        req.getRequestDispatcher("/ProfilePage").forward(req, resp);
         return;
     }
 }

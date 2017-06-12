@@ -1,9 +1,11 @@
 package Friend;
 
+import java.io.Serializable;
+
 /**
  * Created by ljam763 on 8/06/2017.
  */
-public class Friend {
+public class Friend implements Serializable {
     public String getUsername() {
         return username;
     }

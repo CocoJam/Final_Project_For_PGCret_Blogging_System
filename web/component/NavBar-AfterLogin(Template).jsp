@@ -12,11 +12,14 @@
     NOTE. if you enable this the toggle menu function WILL NOT WORK--%>
     <%--<%@include file="Header(styling Template).html"%>--%>
     <style>
-        .searchBar {
-            color: black !important;
-        }
+        /*.searchBar {*/
+            /*color: black !important;*/
+        /*}*/
 
-        input::-webkit-calendar-picker-indicator {
+        /*input.searchBar::-webkit-input-placeholder { !* Chrome/Opera/Safari *!*/
+            /*color: pink;*/
+        /*}*/
+        input.searchBar::-webkit-calendar-picker-indicator {
             display: none;
         }
     </style>
@@ -56,7 +59,7 @@
             <%--Search bar here--%>
             <%--<li>--%>
             <form action="/ProfilePage" method="get">
-                <input list="usernames" name="accessFriend" class="form-control" placeholder="Search People"
+                <input list="usernames" name="accessFriend" class="form-control searchBar" placeholder="Search People"
                        style="color: white" id="NameBarForm" list="usernames">
                 <datalist id="usernames">
                     <c:forEach items="${userlist}" var="names">

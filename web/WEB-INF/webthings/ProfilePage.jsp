@@ -67,24 +67,28 @@
                                                  class="img-rounded img-responsive img-raised">
                                         </c:otherwise>
                                     </c:choose>
-                                        <!-- loading the friendlist from the session, which allow the user to veiw is that person a friend of the user and display the button of friend and unfriend depending-->
+                                    <!-- loading the friendlist from the session, which allow the user to veiw is that person a friend of the user and display the button of friend and unfriend depending-->
                                     <% boolean friended = false;
-                                        List<Friend> friendList;
+                                        List<Friend> friendList = null;
                                         if (session.getAttribute("firendlist") != null) {
                                             System.out.println("yes this is friend");
                                             friendList = (ArrayList<Friend>) session.getAttribute("firendlist");
-                                            if (friendList.contains(((ProfilePAge) session.getAttribute("profileInfo")).getUsername())) {
-                                                System.out.println("yes it is one of your friend");
-                                                friended = true;
+
+                                            for (Friend friend : friendList) {
+                                                if (friend.getFriendusername().equals(((ProfilePAge) session.getAttribute("profileInfo")).getUsername())){
+                                                    System.out.println("yes it is one of your friend");
+                                                    friended = true;
+                                                }
                                             }
                                         }
                                         if (session.getAttribute("showFriend") != null) {
                                             //Check are u the user or the other people's profile.
                                             if (friendsprofile) {
-                                                out.println(" <button id=\"addfriend\">Add</button>");
-                                                out.println(" <button id=\"unfriend\">Unfriend</button>");
+                                                out.println("<button id=\"addfriend\">Add</button>");
+                                                out.println("<button id=\"unfriend\">Unfriend</button>");
                                             }
-                                        }%>
+                                        }
+                                    %>
                                 </div>
                                 <div class="name" id="custom-profile-name">
                                     <h3 class="title">Hello ${profileInfo.name}</h3>
@@ -138,9 +142,29 @@
                                         <fmt:formatDate value="${profileInfo.date}" pattern="dd MMMM YYYY"/>
                                     </td>
                                 </tr>
-
-
                             </table>
+
+                            <% if (!friendsprofile) { %>
+
+                            <c:if test="${firendlist != null}">
+                                <table class="table table-striped table-hover table-responsive">
+                                    <tr>
+                                        <th>Friend List</th>
+                                    </tr>
+
+                                    <c:forEach var="friend" items="${firendlist}">
+                                        <c:if test="${friend.friendusername != null}">
+                                            <tr>
+                                                <td><a href=ProfilePage?accessFriend=${friend.friendusername}
+                                                       class="username">${friend.friendusername}</a></td>
+                                            </tr>
+                                        </c:if>
+                                    </c:forEach>
+                                </table>
+                            </c:if>
+
+                            <% }
+                            %>
 
 
                             <button id="showArticleList">Show article list</button>
@@ -202,10 +226,22 @@
 <!-- FOOTER END -->
 
 
-<%   //if The user is within their own profile this script will not appear, so the following function will  not be apply to the jsp.
+<% //if The user is within their own profile this script will not appear, so the following function will  not be apply to the jsp.
     if (session.getAttribute("showFriend") != null) { %>
 <script>
     //The switching of the button of adding friend and unfriending the person depending the orginal state of is this person friended.
+
+    <%--$(document).ready(function (){--%>
+        <%--<% if (friended){--%>
+            <%--%>--%>
+        <%----%>
+        <%----%>
+        <%----%>
+           <%--<% --%>
+        <%--}--%>
+        <%--%>--%>
+    <%--})--%>
+
     <% if (!friended){ %>
     $("#addfriend").fadeIn("1", function () {
         $(this).css("z-index", 0)
