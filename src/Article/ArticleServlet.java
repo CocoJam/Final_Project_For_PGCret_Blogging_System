@@ -41,7 +41,7 @@ public class ArticleServlet extends HttpServlet {
     //Grab everything that is related to the article, set sessions with the article content and comments list (AND ownership) and dispatch to comments servlet to get the comments.
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        cookieLogOut(req,resp);
+        cookieLogOut(req, resp);
 //        This is when the create new article button is clicked on the navbar it forwards to the relevant Post method.
         System.out.println("Creating new article from Navbar");
         if (req.getParameter("add") != null) {
@@ -54,10 +54,10 @@ public class ArticleServlet extends HttpServlet {
         try {
             ArticleID = getArticleBasedOnId(req);
         } catch (NumberFormatException e) {
-            cookieTracker(req,resp);
+            cookieTracker(req, resp);
             return;
         } catch (SQLException e) {
-            cookieTracker(req,resp);
+            cookieTracker(req, resp);
             return;
         }
         //This is viewing the Article
@@ -73,12 +73,12 @@ public class ArticleServlet extends HttpServlet {
             session.setAttribute("articleContents", article);
             listOfComments = gettingTheListOfComments(ArticleID);
             session.setAttribute("commentlist", listOfComments);
-
             //Dispatching the article and comments.
+            System.out.println("selected articles");
             req.getRequestDispatcher("/Comments").include(req, resp);
             return;
         }
-        cookieTracker(req,resp);
+        cookieTracker(req, resp);
         return;
     }
 
@@ -87,6 +87,8 @@ public class ArticleServlet extends HttpServlet {
         ArticleID = Integer.parseInt(req.getParameter("acticleId"));
         System.out.println(ArticleID + "articleid");
         article = articlesDAO.selectionArticles(ArticleID);
+        article.setLikeNumber(articlesDAO.NumberLike(article.getArticleid()));
+        article.setLiked(articlesDAO.Liked((String) session.getAttribute("username"),article.getArticleid()));
         return ArticleID;
     }
 
@@ -95,7 +97,7 @@ public class ArticleServlet extends HttpServlet {
             doPost(req, resp);
             return;
         } else {
-            cookieTracker(req,resp);
+            cookieTracker(req, resp);
             return;
         }
     }
@@ -104,7 +106,7 @@ public class ArticleServlet extends HttpServlet {
     //doPost gets POST request to add or edit article depends on where the button was pushed (dependent on the parameter value).
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        cookieLogOut(req,resp);
+        cookieLogOut(req, resp);
         articlesDAO = new ArticlesDAO();
         String addingArticles = req.getParameter("add");
         HttpSession session = req.getSession();
@@ -151,6 +153,32 @@ public class ArticleServlet extends HttpServlet {
                 return;
             }
         }
+        if (req.getParameter("like") != null) {
+            System.out.println("here is like");
+            if (req.getParameter("like").equals("like")) {
+                if (req.getParameter("articleIdnumber") != null && req.getParameter("likepeople") != null) {
+                    System.out.println(req.getParameter("likepeople"));
+                    System.out.println(req.getParameter("articleIdnumber"));
+                    System.out.println(Integer.parseInt(req.getParameter("articleIdnumber")));
+                   boolean like = articlesDAO.updateLike((String) session.getAttribute("username"), Integer.parseInt(req.getParameter("articleIdnumber")));
+                   if (!like){
+                       System.out.println("delete like");
+                       articlesDAO.deleteLike((String) session.getAttribute("username"), Integer.parseInt(req.getParameter("articleIdnumber")));
+                   }
+                    System.out.println(articlesDAO.NumberLike(Integer.parseInt(req.getParameter("articleIdnumber"))));
+                    resp.getWriter().print(articlesDAO.NumberLike(Integer.parseInt(req.getParameter("articleIdnumber"))));
+                   return;
+                }
+            }
+//            else if (req.getParameter("like").equals("unlike")) {
+//                if (req.getParameter("likenumber") != null && Integer.parseInt(req.getParameter("likenumber")) > 0 && req.getParameter("articleIdnumber") != null) {
+//                    System.out.println(Integer.parseInt(req.getParameter("likenumber") + 1));
+//                    System.out.println(Integer.parseInt(req.getParameter("articleIdnumber")));
+//                    articlesDAO.updateLike((String) session.getAttribute("username"), Integer.parseInt(req.getParameter("articleIdnumber")));
+//                    resp.getWriter().print(Integer.parseInt(req.getParameter("likenumber") )-1);
+//                }
+//            }
+        }
         doGet(req, resp);
         return;
     }
@@ -186,6 +214,6 @@ public class ArticleServlet extends HttpServlet {
     }
 
     public void checkingForOwnershipArticle(String username, Articles article) {
-        articleSetOwnership(username,article);
+        articleSetOwnership(username, article);
     }
 }

@@ -19,7 +19,7 @@ public class ArticlesDAO {
     private String Content = null;
     private Date DateCreated = null;
     private String categoryName = null;
-
+    private int likes = 0;
 
     public ArticlesDAO() {
         super();
@@ -113,6 +113,74 @@ public class ArticlesDAO {
         }
     }
 
+    public boolean deleteLike(String username,int ArticleID) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("DELETE FROM likes WHERE username=? AND ArticlesID=?;")) {
+                statement.setString(1, username);
+                statement.setInt(2, ArticleID);
+                statement.executeUpdate();
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error Like.");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateLike(String username,int ArticleID) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO likes (username, ArticlesID) VALUES( ? ,?);")) {
+                statement.setString(1, username);
+                statement.setInt(2, ArticleID);
+                statement.executeUpdate();
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error Like.");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public int NumberLike(int ArticleID) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT count(username) FROM likes WHERE ArticlesID = ?;")) {
+                statement.setInt(1, ArticleID);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        System.out.println(resultSet.getInt(1));
+                        return resultSet.getInt(1);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error Like.");
+            e.printStackTrace();
+            return 0;
+        }
+        return 0;
+    }
+
+    public boolean Liked(String username,int ArticleID) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT username, ArticlesID FROM likes WHERE username= ? AND ArticlesID = ?;")) {
+                statement.setString(1, username);
+                statement.setInt(2, ArticleID);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        return true;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error Like.");
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+
     private Articles makeArticle(ResultSet resultSet) throws SQLException {
         Articles articles = new Articles();
         ArticleID = resultSet.getInt(1);
@@ -121,7 +189,6 @@ public class ArticlesDAO {
         categoryName = resultSet.getString(4);
         Content = resultSet.getString(5);
         Date DateCreated = resultSet.getTimestamp(6);
-
         ArticlesSetStatments(articles, DateCreated);
         closingConnection();
         return articles;
@@ -134,5 +201,6 @@ public class ArticlesDAO {
         articles.setContent(Content);
         articles.setDatecreated(dateCreated);
         articles.setUsername(username);
+        articles.setLikeNumber(likes);
     }
 }

@@ -64,14 +64,15 @@ public class CommentsServlet extends HttpServlet {
             cookieTracker(req, resp);
         }
         //Grabbing list again since it is fully updated.
+        System.out.println("selected article comments   ");
         listOfComments = commentsDAO.selectionComments(articleID);
         if (listOfComments != null) {
             checkingForOwner();
             session.setAttribute("commentlist", listOfComments);
         }
+        System.out.println("dispatcher");
         req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
         return;
-
     }
 
     //JsonObject setup for writing ajax comments
@@ -89,8 +90,10 @@ public class CommentsServlet extends HttpServlet {
     private void checkingForOwner() {
         for (Comments userComments : listOfComments) {
             if (userComments.getUsername().equals(username)) {
+                System.out.println("yes");
                 userComments.setOwner(true);
             } else {
+                System.out.println("no");
                 userComments.setOwner(false);
             }
         }

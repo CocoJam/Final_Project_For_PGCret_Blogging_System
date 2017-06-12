@@ -17,6 +17,29 @@ public class Articles {
     private boolean owner= false;
     private String category = null;
     private String firstimage = null;
+    private int likeNumber = 0;
+    private boolean liked =false;
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
+
+
+
+
+    public int getLikeNumber() {
+        return likeNumber;
+    }
+
+    public void setLikeNumber(int likeNumber) {
+        this.likeNumber = likeNumber;
+    }
+
+
     //Normal getters and setters
     public String getFirstimage() {
         return firstimage;
@@ -98,11 +121,5 @@ public class Articles {
         }
         return null;
     }
-
-    public static void main(String[] args) {
-        Articles articles= new Articles();
-        String thing =( "");
-    }
-
 
 }
