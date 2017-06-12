@@ -86,7 +86,7 @@
 
                                 <%--Triology Part 3.5 TODO display this in tables--%>
 
-                                <table class="table table-striped table-hover table-responsive">
+                                <table class="table table-striped table-hover table-responsive" >
 
                                     <tr>
                                         <th>Media Item</th>
