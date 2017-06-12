@@ -71,7 +71,8 @@
 
                                                 <c:otherwise>
                                                     <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                         alt="Circle Image" class="img-rounded img-responsive img-raised">
+                                                         alt="Circle Image"
+                                                         class="img-rounded img-responsive img-raised">
                                                 </c:otherwise>
                                             </c:choose>
 
@@ -114,115 +115,118 @@
                             </div>
                         </div>
 
-                        <!-- Profile bio text -->
-                        <div class="description text-center col-lg-offset-5 col-md-offset-5 col-sm-offset-5">
+                        <%--Introduction "blurb'--%>
+                        <div class="description text-center">
+                            <p>${profileInfo.introduction}</p>
+                        </div>
 
-                            <%--Introduction "blurb'--%>
-                            <div>
-                                ${profileInfo.introduction}
+                        <div class="row">
+                            <!-- Profile bio text -->
+                            <div class="description text-center col-lg-offset-5 col-md-offset-5 col-sm-offset-5">
+
+                                <table class="table borderless" align="center">
+                                    <tr>
+                                        <th>Specs</th>
+                                        <th>Your details</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Username:</td>
+                                        <td>${profileInfo.username}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fullname:</td>
+                                        <td>${profileInfo.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email:</td>
+                                        <td>${profileInfo.email}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address:</td>
+                                        <td>${profileInfo.address}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Education:</td>
+                                        <td>${profileInfo.education}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ethnicity:</td>
+                                        <td>${profileInfo.ethnicity}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date of Birth:</td>
+                                        <td>
+                                            <fmt:formatDate value="${profileInfo.date}" pattern="dd MMMM YYYY"/>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <% if (!friendsprofile) { %>
+
+                                <c:if test="${firendlist != null}">
+                                    <table class="table table-striped table-hover table-responsive">
+                                        <tr>
+                                            <th>Friend List</th>
+                                        </tr>
+
+                                        <c:forEach var="friend" items="${firendlist}">
+                                            <c:if test="${friend.friendusername != null}">
+                                                <tr>
+                                                    <td><a href=ProfilePage?accessFriend=${friend.friendusername}
+                                                           class="username">${friend.friendusername}</a></td>
+                                                </tr>
+                                            </c:if>
+                                        </c:forEach>
+                                    </table>
+                                </c:if>
+
+                                <% }
+                                %>
+
+                                <button id="showArticleList">Show article list</button>
+
+                                <div id="ArticleTable"></div>
+
+                                <table class="table table-striped table-hover table-responsive">
+                                </table>
+                                <%--end testing--%>
+
+                                <script>
+                                    // An ajax call of post to get the article list which is then append and display within the given table
+                                    var clickStatus = true;
+
+                                    $("#showArticleList").click(function () {
+
+
+                                        if (clickStatus) {
+                                            $.ajax({
+                                                url: '/ProfilePage',
+                                                type: 'Post',
+                                                data: {
+                                                    "clickedShowList": "clickedShowList",
+                                                    "username": "<%= session.getAttribute("username")%>"
+                                                },
+                                                success: function (msg) {
+                                                    console.log(msg);
+
+                                                    $("#ArticleTable").html(msg);
+
+                                                }
+                                            });
+                                            //Toggle between the hide of the list and the showing of the list based on the button
+                                            $("#showArticleList").html("Hide article list");
+                                            clickStatus = !clickStatus;
+                                        } else {
+                                            $("#ArticleTable").html("");
+                                            $("#showArticleList").html("Show article list");
+                                            clickStatus = !clickStatus;
+                                        }
+
+
+                                    });
+                                </script>
                             </div>
 
-                            <table class="table borderless" align="center">
-                                <tr>
-                                    <th>Specs</th>
-                                    <th>Your details</th>
-                                </tr>
-                                <tr>
-                                    <td>Username:</td>
-                                    <td>${profileInfo.username}</td>
-                                </tr>
-                                <tr>
-                                    <td>Fullname:</td>
-                                    <td>${profileInfo.name}</td>
-                                </tr>
-                                <tr>
-                                    <td>Email:</td>
-                                    <td>${profileInfo.email}</td>
-                                </tr>
-                                <tr>
-                                    <td>Address:</td>
-                                    <td>${profileInfo.address}</td>
-                                </tr>
-                                <tr>
-                                    <td>Education:</td>
-                                    <td>${profileInfo.education}</td>
-                                </tr>
-                                <tr>
-                                    <td>Ethnicity:</td>
-                                    <td>${profileInfo.ethnicity}</td>
-                                </tr>
-                                <tr>
-                                    <td>Date of Birth:</td>
-                                    <td>
-                                        <fmt:formatDate value="${profileInfo.date}" pattern="dd MMMM YYYY"/>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <% if (!friendsprofile) { %>
-
-                            <c:if test="${firendlist != null}">
-                                <table class="table table-striped table-hover table-responsive">
-                                    <tr>
-                                        <th>Friend List</th>
-                                    </tr>
-
-                                    <c:forEach var="friend" items="${firendlist}">
-                                        <c:if test="${friend.friendusername != null}">
-                                            <tr>
-                                                <td><a href=ProfilePage?accessFriend=${friend.friendusername}
-                                                       class="username">${friend.friendusername}</a></td>
-                                            </tr>
-                                        </c:if>
-                                    </c:forEach>
-                                </table>
-                            </c:if>
-
-                            <% }
-                            %>
-
-                            <button id="showArticleList">Show article list</button>
-
-                            <div id="ArticleTable"></div>
-
-                            <table class="table table-striped table-hover table-responsive">
-                            </table>
-                            <%--end testing--%>
-
-                            <script>
-                                // An ajax call of post to get the article list which is then append and display within the given table
-                                var clickStatus = true;
-
-                                $("#showArticleList").click(function () {
-
-
-                                    if (clickStatus) {
-                                        $.ajax({
-                                            url: '/ProfilePage',
-                                            type: 'Post',
-                                            data: {
-                                                "clickedShowList": "clickedShowList",
-                                                "username": "<%= session.getAttribute("username")%>"
-                                            },
-                                            success: function (msg) {
-                                                console.log(msg);
-
-                                                $("#ArticleTable").html(msg);
-
-                                            }
-                                        });
-                                        //Toggle between the hide of the list and the showing of the list based on the button
-                                        $("#showArticleList").html("Hide article list");
-                                        clickStatus = !clickStatus;
-                                    } else {
-                                        $("#ArticleTable").html("");
-                                        $("#showArticleList").html("Show article list");
-                                        clickStatus = !clickStatus;
-                                    }
-
-
-                                });
-                            </script>
                         </div>
 
                     </div>
