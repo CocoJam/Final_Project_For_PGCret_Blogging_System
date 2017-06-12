@@ -61,6 +61,7 @@
             <form action="/ProfilePage" method="get">
                 <input list="usernames" name="accessFriend" class="form-control searchBar" placeholder="Search People"
                        style="color: white" id="NameBarForm" list="usernames">
+
                 <datalist id="usernames">
                     <c:forEach items="${userlist}" var="names">
                     <option value="${names}">
@@ -82,8 +83,19 @@
                 <li>
                     <a href="ProfilePage" class="clickOnce"><c:choose>
                         <c:when test="${profileInfo.profilepic != null}">
-                            <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                 height='20'>
+                            <c:choose>
+                                <%--If this is a default profile image get the image from default photo directory--%>
+                                <c:when test='${profileInfo.profilepic.startsWith("dEfAuLt")}'>
+                                    <img src="defaultImg/${profileInfo.profilepic}"
+                                         height="20">
+                                </c:when>
+
+                                <%--Otherwise get the photo from the users photo page--%>
+                                <c:otherwise>
+                                    <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
+                                         height="20">
+                                </c:otherwise>
+                            </c:choose>
                         </c:when>
                         <c:otherwise>
                             <i class="material-icons">portrait</i>
@@ -95,7 +107,7 @@
                     <c:when test="${not empty cartlist}">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="material-icons">library_books</i>Carted Articles
+                                <i class="material-icons"></i>Cart
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
@@ -115,12 +127,12 @@
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="material-icons">library_books</i>Articles
+                        <i class="material-icons"></i>Articles
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">Article dropdown</li>
-                        <li><a href="ArticlesIndex?articleList=self" class="clickOnce"><i class="material-icons">insert_drive_file</i>My
+                        <li><a href="ArticlesIndex?articleList=self" class="clickOnce"><i class="material-icons">library_books</i>My
                             Articles</a>
                         </li>
                         <li class="divider"></li>
@@ -137,12 +149,12 @@
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="material-icons">photo_library</i>Media
+                        <i class="material-icons"></i>Media
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">Media dropdown</li>
-                        <li><a href="Upload?media=self" class="clickOnce"><i class="material-icons">pages</i>My
+                        <li><a href="Upload?media=self" class="clickOnce"><i class="material-icons">photo_library</i>My
                             Media</a></li>
                         <li class="divider"></li>
                         <li><a href="Upload?media=all" class="clickOnce"><i class="material-icons">collections</i>All

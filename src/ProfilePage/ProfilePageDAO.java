@@ -61,12 +61,12 @@ public class ProfilePageDAO extends LoginPassing {
         ProfilePageGetters(profilePAge);
         saltAndIteration();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth, Introduction, Password, salt, iteration) VALUES( ?, ? ,?,?,?,?,?,?,?,?,?);")) {
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth, Introduction, profilePicture, Password, salt, iteration) VALUES( ?, ? ,?,?,?,?,?,?,?,?,?,?);")) {
                 System.out.println(statement);
                 statement.setString(1, usernames);
                 sqlSetStatment(pass.hashing(password, salt, iterations), statement);
-                statement.setInt(10, salt);
-                statement.setInt(11, iterations);
+                statement.setInt(11, salt);
+                statement.setInt(12, iterations);
                 statement.executeUpdate();
                 System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
@@ -150,7 +150,8 @@ public class ProfilePageDAO extends LoginPassing {
         statement.setString(6, ethnicity);
         statement.setDate(7, date);
         statement.setString(8, introduction);
-        statement.setString(9, password);
+        statement.setString(9, profilePicture);
+        statement.setString(10, password);
     }
 
     //Setting the javabean instance variables for ProfilePage

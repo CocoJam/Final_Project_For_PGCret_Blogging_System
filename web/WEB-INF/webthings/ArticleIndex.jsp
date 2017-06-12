@@ -103,9 +103,20 @@
                                         <c:when test="${articleList.equals('self')}">
                                             <c:choose>
                                                 <c:when test="${profileInfo.profilepic != null}">
-                                                    <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                         alt="Circle Image"
-                                                         class="img-rounded img-responsive img-raised">
+                                                    <c:choose>
+                                                        <%--If this is a default profile image get the image from default photo directory--%>
+                                                        <c:when test='${profileInfo.profilepic.startsWith("dEfAuLt")}'>
+                                                            <img src="defaultImg/${profileInfo.profilepic}"
+                                                                 alt="Circle Image"
+                                                                 class="img-rounded img-responsive img-raised">
+                                                        </c:when>
+
+                                                        <%--Otherwise get the photo from the users photo page--%>
+                                                        <c:otherwise>
+                                                            <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
+                                                                 alt="Circle Image" class="img-rounded img-responsive img-raised">
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                     <div class="name" id="custom-profile-name">
                                                         <h3 class="title">${profileInfo.name}'s Articles list</h3>
                                                     </div>

@@ -58,8 +58,23 @@
 
                                     <c:choose>
                                         <c:when test="${profileInfo.profilepic != null}">
-                                            <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                 alt="Circle Image" class="img-rounded img-responsive img-raised">
+
+                                            <c:choose>
+                                                <%--If this is a default profile image get the image from default photo directory--%>
+                                                <c:when test='${profileInfo.profilepic.startsWith("dEfAuLt")}'>
+                                                    <img src="defaultImg/${profileInfo.profilepic}"
+                                                         alt="Circle Image"
+                                                         class="img-rounded img-responsive img-raised">
+                                                </c:when>
+
+                                                <%--Otherwise get the photo from the users photo page--%>
+
+                                                <c:otherwise>
+                                                    <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
+                                                         alt="Circle Image" class="img-rounded img-responsive img-raised">
+                                                </c:otherwise>
+                                            </c:choose>
+
                                         </c:when>
 
                                         <c:otherwise>
@@ -75,7 +90,7 @@
                                             friendList = (ArrayList<Friend>) session.getAttribute("firendlist");
 
                                             for (Friend friend : friendList) {
-                                                if (friend.getFriendusername().equals(((ProfilePAge) session.getAttribute("profileInfo")).getUsername())){
+                                                if (friend.getFriendusername().equals(((ProfilePAge) session.getAttribute("profileInfo")).getUsername())) {
                                                     System.out.println("yes it is one of your friend");
                                                     friended = true;
                                                 }
@@ -166,7 +181,6 @@
                             <% }
                             %>
 
-
                             <button id="showArticleList">Show article list</button>
 
                             <div id="ArticleTable"></div>
@@ -232,14 +246,14 @@
     //The switching of the button of adding friend and unfriending the person depending the orginal state of is this person friended.
 
     <%--$(document).ready(function (){--%>
-        <%--<% if (friended){--%>
-            <%--%>--%>
-        <%----%>
-        <%----%>
-        <%----%>
-           <%--<% --%>
-        <%--}--%>
-        <%--%>--%>
+    <%--<% if (friended){--%>
+    <%--%>--%>
+    <%----%>
+    <%----%>
+    <%----%>
+    <%--<% --%>
+    <%--}--%>
+    <%--%>--%>
     <%--})--%>
 
     <% if (!friended){ %>
