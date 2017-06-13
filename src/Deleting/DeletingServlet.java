@@ -30,6 +30,7 @@ public class DeletingServlet extends HttpServlet {
     private DeleteDAO deleteDAO;
     private LoginPassing loginPassing;
 
+    //The dopost method is used to stop user to use non-conventional way to delete content or accounts.
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         cookieLogOut(req,resp);
@@ -37,19 +38,18 @@ public class DeletingServlet extends HttpServlet {
         deleteDAO = new DeleteDAO();
         HttpSession session = req.getSession();
         setupForUsernameAndPasswordCheck(req, session);
-        System.out.println(username);
-        System.out.println(password);
-        System.out.println(sessionUsername);
-        System.out.println(sessionpassword);
         if (req.getParameter("log") != null) {
+            //Deleting this current Profile
             if (req.getParameter("log").equals("DeletingProfile")) {
                 tryingTodeleteWholeProfile(req, resp, session);
                 closingConnection();
                 return;
+                //Deleting this current Article
             } else if (req.getParameter("log").equals("DeleteArticle")) {
                 tryingTodeleteWholeArticle(req, resp);
                 closingConnection();
                 return;
+                //Deleting this comment.
             } else if (req.getParameter("log").equals("DeleteComment")) {
                 System.out.println("converting id of article to int");
                 System.out.println(req.getParameter("commentId"));
@@ -61,24 +61,28 @@ public class DeletingServlet extends HttpServlet {
                 tryingTodeleteAComment(req, resp, session);
                 closingConnection();
                 return;
+                //Deleting the Media.
             } else if (req.getParameter("log").equals("DeleteMedia")){
                 tryingToDeleteSpeificMedia(req, resp);
+                //Deleting youtube.
             } else if (req.getParameter("log").equals("DeleteYoutube")){
-                TryingTodeleteAYoutubeVideo(req, resp);
+//                TryingTodeleteAYoutubeVideo(req, resp);
             }
         }
         cookieTracker(req,resp);
         return;
     }
 
-    private void TryingTodeleteAYoutubeVideo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String youtubeURL = req.getParameter("media");
-        System.out.println(youtubeURL);
-        deleteDAO.dropSpeificYoutube(youtubeURL);
-        closingConnection();
-        req.getRequestDispatcher("/Articles").forward(req, resp);
-    }
 
+//    private void TryingTodeleteAYoutubeVideo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        String youtubeURL = req.getParameter("media");
+//        System.out.println(youtubeURL);
+//        deleteDAO.dropSpeificYoutube(youtubeURL);
+//        closingConnection();
+//        req.getRequestDispatcher("/Articles").forward(req, resp);
+//    }
+
+    //Used to delete a specific media based on the file path of it.
     private void tryingToDeleteSpeificMedia(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
         String filePath = servletContext.getRealPath(req.getParameter("media"));
@@ -88,6 +92,7 @@ public class DeletingServlet extends HttpServlet {
         req.getRequestDispatcher("/ArticleUpload").forward(req, resp);
     }
 
+    //deleting the whole article
     private void tryingTodeleteWholeArticle(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         setupForUsernameAndPasswordCheck(req, session);
@@ -95,16 +100,15 @@ public class DeletingServlet extends HttpServlet {
         if (article.getUsername().equals(sessionUsername)) {
             System.out.println("dropping this article");
             deleteDAO.dropSpeificArticle(article.getArticleid());
-            closingConnection();
         }
-        req.getRequestDispatcher("/ArticlesIndex").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+//        req.getRequestDispatcher("/ArticlesIndex").forward(req, resp);
         return;
     }
-
+//Deleting the whole profile.
     private void tryingTodeleteWholeProfile(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException, IOException {
         if (usernameAndPasswordCheckForDelete()) {
             deleteDAO.dropAllByUsername(username);
-            closingConnection();
             req.getRequestDispatcher("/logout").forward(req, resp);
             return;
         } else {
@@ -112,7 +116,7 @@ public class DeletingServlet extends HttpServlet {
             return;
         }
     }
-
+//Deleting a speific comment given by the comment id.
     private void tryingTodeleteAComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException, IOException {
         deleteDAO.dropSpeificComment(commentId);
         closingConnection();
@@ -120,11 +124,11 @@ public class DeletingServlet extends HttpServlet {
         req.getRequestDispatcher("/Articles").forward(req, resp);
         return;
     }
-
+// Password and username check of deleting profile.
     private boolean usernameAndPasswordCheckForDelete() {
         return username.equals(sessionUsername) && password.equals(sessionpassword) && loginPassing.selectionUsersNames(username, password);
     }
-
+// setup for overall delete function when user is deleting their profile.
     private void setupForUsernameAndPasswordCheck(HttpServletRequest req, HttpSession session) {
         username = req.getParameter("username");
         password = req.getParameter("password");

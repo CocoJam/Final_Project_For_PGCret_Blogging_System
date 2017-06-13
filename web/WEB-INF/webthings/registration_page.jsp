@@ -283,15 +283,6 @@
                                 %>
                                 <!-- Text input box end -->
 
-                                <!--If you want to add a checkbox to this form, uncomment this code:-->
-                                <%--Optional checkbox with terms and conditions--%>
-                                <%--<div class="checkbox">--%>
-                                <%--<label>--%>
-                                <%--<input type="checkbox"  name="optionsCheckboxes" checked>--%>
-                                <%--I agree with the terms & conditions--%>
-                                <%--</label>--%>
-                                <%--</div>--%>
-
                             </div>
 
                             <!-- BUTTONS -->
@@ -304,12 +295,12 @@
                                     <c:choose>
                                         <%--Scenario 1: when already logged in see ChangeUserInformation--%>
                                         <c:when test="${log}">
-                                            <input type="submit" name="log" value="ChangeUserInformation"
+                                            <input type="submit" name="log" value="Update Profile"
                                                    class="btn btn-block btn-danger btn-lg">
                                         </c:when>
                                         <%--Scenario 2: when NOT logged in then just see Registration--%>
                                         <c:otherwise>
-                                            <input type="submit" name="log" value="Registration"
+                                            <input type="submit" name="log" value="Register"
                                                    class="btn btn-block btn-success btn-lg">
                                         </c:otherwise>
                                     </c:choose>
@@ -335,7 +326,7 @@
                             <%--submit button for loading images--%>
                             <div class="footer text-center">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <input type="submit" name="Upload" value="ProfileUpload"
+                                    <input type="submit" name="Upload" value="Upload Image"
                                            class="btn btn-block btn-success btn-lg"/>
                                 </div>
                             </div>

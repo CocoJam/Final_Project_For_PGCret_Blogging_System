@@ -184,7 +184,7 @@
                                     <form action="/Upload" method="post" id="Upload"
                                           enctype="multipart/form-data">
                                         <input type="file" name="file" size="50" class="btn btn-white"/>
-                                        <input type="submit" class="btn btn-primary" name="Upload" value="ArticlesUpload"/>
+                                        <input type="submit" class="btn btn-primary" name="Upload" value="Upload"/>
                                     </form>
 
                                 </div>
@@ -193,8 +193,8 @@
                                     <h3>Embed Youtube</h3>
                                     <div class="form-group">
                                         <form id="Youtube" action="/ArticleUpload" method="post">
-                                            <input id="youtubeurl" type="text" name="youtube" class="form-control" placeholder="Paste your Youtube link and click the button below to embed in your article">
-                                            <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit" class="btn btn-danger">
+                                            <input id="youtubeurl" type="text" name="youtube" class="form-control">
+                                            <input type="submit" name="youtubeVideoSubmition" value="youtube" class="btn btn-danger">
                                         </form>
                                     </div>
                                 </div>
@@ -494,7 +494,7 @@
             $.ajax({
                 url: '/ArticleUpload',
                 type: 'POST',
-                data: {"youtube": $("#youtubeurl").val()},
+                data: {"youtubeurl": $("#youtubeurl").val()},
                 success: function (msg) {
                     if (msg == "") {
                         alert("This upload is invaild.");

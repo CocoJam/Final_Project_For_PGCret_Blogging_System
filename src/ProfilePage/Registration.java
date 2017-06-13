@@ -44,7 +44,7 @@ public class Registration extends HttpServlet {
 
         //This is a call from the Profile page, "changeuserinfo" button. This is to redirect user to update the userInfo
         if (req.getParameter("log") != null) {
-            if (req.getParameter("log").equals("ChangeUserInformation")) {
+            if (req.getParameter("log").equals("Update Profile")) {
                 session.setAttribute("Upload", "ProfilePageUpload");
                 req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                 return;
@@ -75,19 +75,12 @@ public class Registration extends HttpServlet {
         // profileSetUp is used to simplify the logic here. All the setters of the profilepage Object is done within this method (see profileSetUp()).
         profileSetUp(req);
 
-//        updataTables.updateUsersProfile(username,password);
-        //        uncomment to check the hashing function
-//        Login.Passwords_Checker passwords_checker = new Login.Passwords_Checker();
-//        String hashedPassword = passwords_checker.hashing(password, 5 , 500);
-
         profilePageDAO = new ProfilePageDAO();
         if (req.getParameter("log") != null) {
             System.out.println("Regs");
             //TODO refactor to switch statement if possible.
-
-            //
             // Scenario 1: The below is an editing scenario.
-            if (req.getParameter("log").equals("ChangeUserInformation")) {
+            if (req.getParameter("log").equals("Update Profile")) {
                 System.out.println("Trying for info update");
                 profilePage = profilePageDAO.updateUsersProfile((String) session.getAttribute("username"), password, profilePage, req.getParameter("password"));
                 System.out.println("info updated");
@@ -101,6 +94,7 @@ public class Registration extends HttpServlet {
             else {
                 try {
                     System.out.println("Create");
+                    session.setAttribute("password",req.getParameter("password"));
                     profilePageDAO.createUsersProfile(profilePage, req.getParameter("password"));
                     profilePage = profilePageDAO.getUsersProfile(profilePage.getUsername());
                     session.setAttribute("profileInfo", profilePage);
@@ -116,15 +110,6 @@ public class Registration extends HttpServlet {
                 }
             }
         }
-//TODO cleanup of following required: This code is previous implementation which is not required anymore, check before deleting
-//        profilePage = profilePageDAO.getUsersProfile(profilePage.getUsername());
-//        session.setAttribute("profileInfo", profilePage);
-//        System.out.println(profilePage.getUsername());
-//        session.setAttribute("username", profilePage.getUsername());
-//        session.setAttribute("password", password);
-//        closingConnection();
-//        req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
-//        return;
     }
 
     //This is the setup of the profile page whether for logged in or new registration users. Takes parameters from the form and sets them to the JAVABEAN Object instance variables.
@@ -138,7 +123,7 @@ public class Registration extends HttpServlet {
         profilePage.setEmail(req.getParameter("email"));
         dateofbirth = req.getParameter("date");
 //        password = req.getParameter("password");
-        profilePage.setIntroduction(req.getParameter("Introduction"));
+        profilePage.setIntroduction(req.getParameter("Introduction").replaceAll("<(/?script[^>]*)>", ""));
         profilePage.setProfilepic(req.getParameter("profilePicture"));
         System.out.println("profile pic :" + req.getParameter("profilePicture"));
         sqlDateparsing();

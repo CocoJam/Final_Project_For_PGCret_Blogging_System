@@ -1,10 +1,10 @@
-DROP TABLE IF EXISTS Comments;
+DROP TABLE IF EXISTS Comments2;
 DROP TABLE IF EXISTS Articles;
-DROP TABLE IF EXISTS UsersNames;
-Drop TABLE If EXISTS youtube;
+DROP TABLE IF EXISTS UsersNames2;
 Drop TABLE If EXISTS Friendlist;
+Drop TABLE If EXISTS likes;
 
-CREATE TABLE IF NOT EXISTS UsersNames(
+CREATE TABLE IF NOT EXISTS UsersNames2(
   Username VARCHAR(64) not NULL ,
   Password VARCHAR(100) not NULL,
   Name VARCHAR(64) ,
@@ -13,9 +13,13 @@ CREATE TABLE IF NOT EXISTS UsersNames(
   Education VARCHAR(200),
   Ethnicity VARCHAR(200),
   DateOfBirth DATE ,
+  profilePicture VARCHAR (64),
+  salt INT ,
+  iteration INT ,
+  Introduction text,
   PRIMARY KEY ( Username)
 );
-
+ALTER TABLE <UsersNames2> CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_cs;
 
 CREATE TABLE IF NOT EXISTS Articles(
   ArticlesID int not NULL AUTO_INCREMENT,
@@ -47,7 +51,17 @@ FOREIGN KEY (username) REFERENCES UsersNames (Username),
 FOREIGN KEY (friendusername) REFERENCES UsersNames (Username)
 );
 
+CREATE TABLE if not EXISTS likes(
+username VARCHAR (64) not NULL ,
+ArticlesID int not NULL,
+FOREIGN KEY (username) REFERENCES UsersNames (Username),
+FOREIGN KEY (ArticlesID) REFERENCES Articles (ArticlesID),
+ CONSTRAINT likedarticle UNIQUE (username,ArticlesID)
+);
+
+ALTER TABLE Articles DROP COLUMN likes
+
 ALTER TABLE table_name
-ADD column_name datatype;
+MODIFY COLUMN column_name datatype;
 
 

@@ -229,7 +229,7 @@ public class Upload_files extends HttpServlet {
                 map.get("video").add(s);
             } else if (s.endsWith(".mp3")) {
                 map.get("audio").add(s);
-            } else if (s.endsWith(".jpg") || s.endsWith(".png")) {
+            } else if (s.endsWith(".jpg") || s.endsWith(".png") || s.endsWith(".gif") || s.endsWith(".jpeg") || s.endsWith(".svg")) {
                 map.get("photo").add(s);
             }
         }

@@ -17,13 +17,6 @@
 
 <!-- !!! MAIN CONTENT START !!! -->
 
-<%--<%    String username = (String) session.getAttribute("username");--%>
-<%--if ( username != null){--%>
-<%--out.println("<p>"+ username + " has been Logged Out</p>");--%>
-<%--session.setAttribute("username",null);--%>
-<%--}--%>
-<%--%>--%>
-
 
 <div class="wrapper">
     <div class="header header-filter" id="custom-bg-container"><!-- background div -->
@@ -68,7 +61,6 @@
                                 </div>
                             </div>
 
-                            <!-- BUTTONS -->
 
                             <%--This button is to submit the above form to sign in--%>
                             <div class="footer text-center" class="form">
@@ -77,24 +69,14 @@
                                            class="btn btn-block btn-success btn-lg clickOnce">
                                 </div>
 
-                                <%--<div class="col-xs-6 col-sm-6 col-md-6"><a href="/Registration"--%>
-                                <%--class="btn btn-block btn-danger btn-lg">Register</a>--%>
-                                <%--</div>--%>
                             </div>
                         </form>
-                        <%--Notes for Nicole. This button is to goto the registration page, since this does not submit the details in the above form it is not possible to include as part of the above form as this will cause only one action. Thus a separate registration form is required. Please see corresponding POST and GET methods inside of the registration and login servlets--%>
                         <div class="footer text-center">
 
                             <a href="/login?Registration=Registration" style="color: deepskyblue" class="clickOnce">Register</a>
                             now to join our community!
                             <br><br>
 
-                            <%--<form action="/login" method="get">--%>
-                            <%--<div class="col-xs-12 col-sm-12 col-md-12">--%>
-                            <%--<input type="submit" value="Registration" name="Registration"--%>
-                            <%--class="btn btn-block btn-danger btn-lg">--%>
-                            <%--</div>--%>
-                            <%--</form>--%>
                         </div>
 
                     </div>

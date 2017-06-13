@@ -39,7 +39,6 @@ public class ProfilePageDAO extends LoginPassing {
         ProfilePAge profilePAge = null;
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT Username, Name, Email, Address, Education, Ethnicity, DateOfBirth, Introduction, profilePicture FROM UsersNames WHERE Username = ?;")) {
-                System.out.println(statement);
                 statement.setString(1, username);
                 System.out.println(statement);
                 try (ResultSet resultSet = statement.executeQuery()) {
@@ -90,12 +89,6 @@ public class ProfilePageDAO extends LoginPassing {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?, Introduction=?, Password=?, profilePicture=?, salt=?, iteration=?  WHERE  Username = ?;")) {
                 statement.setString(1, username);
                 sqlSetStatment(password, statement);
-                System.out.println(newPassword);
-                System.out.println(password);
-                System.out.println(salt);
-                System.out.println(iterations);
-                System.out.println(oldSalt);
-                System.out.println(oldIterations);
                 System.out.println(pass.hashing(newPassword, salt, iterations));
 //                System.out.println(pass.hashing(password, oldSalt, oldIterations));
                 statement.setString(9, pass.hashing(newPassword, salt, iterations));

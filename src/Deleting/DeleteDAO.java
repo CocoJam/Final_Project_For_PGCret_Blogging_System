@@ -32,6 +32,7 @@ public class DeleteDAO {
         }
     }
 
+
     public void dropSpeificArticle(int ArticlesID) {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try {

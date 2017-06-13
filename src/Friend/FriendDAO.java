@@ -15,7 +15,7 @@ import java.util.List;
  * Created by ljam763 on 8/06/2017.
  */
 public class FriendDAO {
-
+    //Selecting list of friends, based the username to populate a list of <friend>
     public List<Friend> selectionListOfFriends(String username) {
         List<Friend> ListOfFriends = new ArrayList<>();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
@@ -43,7 +43,7 @@ public class FriendDAO {
         return ListOfFriends;
     }
 
-
+    //To check and also add a friend.
     public boolean AddFriends(String username, String friendusername) {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Friendlist (username, friendusername) VALUES(?,?);")) {
@@ -58,7 +58,7 @@ public class FriendDAO {
         }
     }
 
-
+    //Deleting friend from the database.
     public boolean DeleteFriends(String username, String friendusername) {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Friendlist WHERE username = ? AND friendusername = ?;")) {
@@ -73,6 +73,7 @@ public class FriendDAO {
         }
     }
 
+    //Getting all Usernames into a String list
     public List<String> GetAllPeopleUsername() {
         List<String> usernamelist = new ArrayList<>();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
@@ -93,6 +94,7 @@ public class FriendDAO {
         System.out.println(usernamelist.size());
         return usernamelist;
     }
+
 
     private void friendUpdateOrDelete(String username, String friendusername, PreparedStatement statement) throws SQLException {
         statement.setString(1, username);

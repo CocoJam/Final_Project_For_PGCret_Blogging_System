@@ -5,9 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>jQuery UI Droppable - Simple photo manager</title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
     <style>
         #gallery {
             float: left;
@@ -21,7 +25,8 @@
 
         .gallery li {
             float: left;
-            width: 96px;
+            height: 200px;
+            width: 120px;
             padding: 0.4em;
             margin: 0 0.4em 0.4em 0;
             text-align: center;
@@ -45,166 +50,99 @@
             cursor: move;
         }
 
-        #save {
+        #trash {
             float: right;
             width: 32%;
             min-height: 18em;
             padding: 1%;
         }
 
-        #save h4 {
+        #trash h4 {
             line-height: 16px;
             margin: 0 0 0.4em;
         }
 
-        #save h4 .ui-icon {
+        #trash h4 .ui-icon {
             float: left;
         }
 
-        #save .gallery h5 {
+        #trash .gallery h5 {
             display: none;
         }
+        p.card-text{
+            height: 45px;
+            overflow: hidden;
+        }
+        h4.card-title{
+            margin-bottom: 0px;
+        }
     </style>
-
-
 </head>
 <body>
 
 <div class="ui-widget ui-helper-clearfix">
 
-    <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix ui-droppable">
-        <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-            <h5 class="ui-widget-header">High Tatras</h5>\ <p class="made">blah</p>
-            <!--<img src="images/high_tatras_min.jpg" alt="The peaks of High Tatras" width="150" height="150">-->
-            <a href="images/high_tatras.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-            <a href="link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete
-                image</a>
-        </li>
-
-
-        <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-            <h5 class="ui-widget-header">aaaaaa</h5>
-            <p class="made">blah</p>
-            <p>hello</p>
-            <img src="images/high_tatras4_min.jpg" alt="On top of Kozi kopka" width="96" height="72">
-            <p>there</p>
-            <a href="images/high_tatras4.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-            <a href="link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete
-                image</a>
-        </li>
-        <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-            <h5 class="ui-widget-header">cccccbbbbbbb</h5>
-            <p class="made">blah</p>
-            <!--<img src="images/high_tatras_min.jpg" alt="The peaks of High Tatras" width="150" height="150">-->
-            <a href="images/high_tatras.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-            <a href="link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete
-                image</a>
-        </li>
-        <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-            <h5 class="ui-widget-header">aaaacasdasccsdasdccc</h5>
-            <p class="made">blah</p>
+    <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+        <!--<li class="ui-widget-content ui-corner-tr">-->
+            <!--<h5 class="ui-widget-header">High Tatras</h5>-->
+            <!--<img src="images/high_tatras_min.jpg" alt="The peaks of High Tatras" width="96" height="72">-->
+            <!--<a href="images/high_tatras.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>-->
+            <!--<a href="link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete-->
+                <!--image</a>-->
+        <!--</li>-->
+        <!--<li class="ui-widget-content ui-corner-tr">-->
+            <!--<h5 class="ui-widget-header">High Tatras 2</h5>-->
             <!--<img src="images/high_tatras2_min.jpg" alt="The chalet at the Green mountain lake" width="96" height="72">-->
-            <a href="images/high_tatras2.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-            <a href="link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete
-                image</a>
-        </li>
-        <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-            <h5 class="ui-widget-header">ffffff</h5>
-            <p class="made">ggggg</p>
+            <!--<a href="images/high_tatras2.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>-->
+            <!--<a href="link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete-->
+                <!--image</a>-->
+        <!--</li>-->
+        <!--<li class="ui-widget-content ui-corner-tr ">-->
+            <!--<h5 class="ui-widget-header">High Tatras 3</h5>-->
             <!--<img src="images/high_tatras3_min.jpg" alt="Planning the ascent" width="96" height="72">-->
-            <a href="images/high_tatras3.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-            <a href="link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete
-                image</a>
-        </li>
-        <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-            <h5 class="ui-widget-header">ccceeeeeee</h5>
-            <p class="made">asdasdasd</p>
-            <!--<img src="images/high_tatras4_min.jpg" alt="On top of Kozi kopka" width="96" height="72">-->
-            <a href="images/high_tatras4.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-            <a href="link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete
-                image</a>
+            <!--<a href="images/high_tatras3.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>-->
+            <!--<a href="link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete-->
+                <!--image</a>-->
+        <!--</li>-->
+        <li class="ui-widget-content ui-corner-tr">
+            <div>
+                <img class="card-img-top" src="../pokemonloader4.gif" alt="Card image cap" style="width: 80%">
+                <div class="card-block">
+                    <h4 class="card-title" style="margin-bottom: 0">Card title</h4>
+                    <p class="card-text" >Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="images/high_tatras3.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View
+                        larger</a>
+                    <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+                    <a href="link/to/trash/script/when/we/have/js/off" title="Delete this image"
+                       class="ui-icon ui-icon-trash">Delete image</a>
+                </div>
+            </div>
         </li>
     </ul>
 
-    <div id="save" class="ui-widget-content ui-state-default ui-droppable">
-        <ul class="gallery ui-helper-reset">
-        </ul>
+    <div id="trash" class="ui-widget-content ui-state-default">
+        <h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash">Trash</span> Trash</h4>
     </div>
-    <textarea id="textarea"></textarea>
-
-
+    <!--<div  style="width: 20rem;">-->
+    <!--<img class="card-img-top" src="../pokemonloader4.gif" alt="Card image cap" style="width: 100%">-->
+    <!--<div class="card-block" >-->
+    <!--<h4 class="card-title">Card title</h4>-->
+    <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+    <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+    <!--</div>-->
+    <!--</div>-->
 </div>
 
+
+</body>
+
+
 <script>
-
-    //    $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
-    //        things.push($(this));
-    //        console.log(things);
-    //    });
-    var things = [];
-    function defaultSort(elementX, elementY) {
-        if (elementX.children().siblings("h5").text() < elementY.children().siblings("h5").text())
-            return -1;
-        if (elementX.children().siblings("h5").text() > elementY.children().siblings("h5").text())
-            return 1;
-        return 0;
-    }
-
-
-    //    mixture.sort(defaultSort);
-    //    $("#textarea").bind('keyup', function () {
-    ////        for (var i = 0; i < things.length; i++) {
-    ////            console.log("out");
-    ////            things[i].fadeOut("fast");
-    ////            things[i].promise().done(function () {
-    ////                console.log("out z");
-    ////                $(things[i]).css("z-index", -1);
-    ////            })
-    ////        }
-    //       console.log(things);
-    //        var thins2 = things.sort(defaultSort).slice(0);
-    //        console.log("done out")
-    //        var thins2 = things.sort(defaultSort);
-    //        console.log(thins2);
-    ////        for (var i = 0; i < thins2.length; i++) {
-    ////            console.log("in");
-    ////            thins2[i].fadeIn("slow");
-    ////            thins2[i].promise().done(function () {
-    ////                console.log("in z");
-    ////                $(thins2[i]).css("z-index", 0);
-    ////            })
-    ////        }
-    //        console.log("done in")
-    //    });
-    function faddingout(int) {
-        for (var i = 0; i < int.length; i++) {
-            console.log("out");
-            int[i].fadeOut("fast");
-            int[i].promise().done(function () {
-                console.log("out z");
-                $(int[i]).css("z-index", -1);
-            })
-        }
-        return;
-    }
-
-    function faddingin(int) {
-        for (var i = 0; i < int.length; i++) {
-            console.log("out");
-            int[i].fadeIn("fast");
-            int[i].promise().done(function () {
-                console.log("in z");
-                $(int[i]).css("z-index", 0);
-            })
-        }
-
-        return;
-    }
     $(function () {
 
         // There's the gallery and the trash
         var $gallery = $("#gallery"),
-            $save = $("#save");
+            $trash = $("#trash");
 
         // Let the gallery items be draggable
         $("li", $gallery).draggable({
@@ -216,7 +154,7 @@
         });
 
         // Let the trash be droppable, accepting the gallery items
-        $save.droppable({
+        $trash.droppable({
             accept: "#gallery > li",
             classes: {
                 "ui-droppable-active": "ui-state-highlight"
@@ -228,7 +166,7 @@
 
         // Let the gallery be droppable as well, accepting items from the trash
         $gallery.droppable({
-            accept: "#save li",
+            accept: "#trash li",
             classes: {
                 "ui-droppable-active": "custom-state-active"
             },
@@ -239,20 +177,26 @@
 
         // Image deletion function
         var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>";
-
+        var storageText = null;
         function deleteImage($item) {
-            console.log("put into save")
             $item.fadeOut(function () {
-                var $list = $("ul", $save).length ?
-                    $("ul", $save) :
-                    $("<ul class='gallery ui-helper-reset'/>").appendTo($save);
+                var $list = $("ul", $trash).length ?
+                    $("ul", $trash) :
+                    $("<ul class='gallery ui-helper-reset'/>").appendTo($trash);
 
                 $item.find("a.ui-icon-trash").remove();
                 $item.append(recycle_icon).appendTo($list).fadeIn(function () {
                     $item
-                        .animate({width: "48px"})
-                        .find("img")
-                        .animate({height: "36px"});
+
+                        .animate({height: "100px"})
+                        .animate({width: "60px"});
+                    console.log($item.find($(".card-text")));
+                    storageText = $item.find($(".card-text")).html();
+                    console.log(storageText);
+                    $item.find($(".card-text")).css("height", "0px");
+                    $item.find($(".card-text")).html("")
+                    console.log( $item.find($(".card-text")).html());
+
                 });
             });
         }
@@ -261,16 +205,17 @@
         var trash_icon = "<a href='link/to/trash/script/when/we/have/js/off' title='Delete this image' class='ui-icon ui-icon-trash'>Delete image</a>";
 
         function recycleImage($item) {
-            console.log("recycle to gallery")
             $item.fadeOut(function () {
+                $item.find($(".card-text")).html(storageText);
+                $item.find($(".card-text")).css("height", "45px");
                 $item
                     .find("a.ui-icon-refresh")
                     .remove()
                     .end()
-                    .css("width", "96px")
+                    .css("height", "200px")
+                    .css("width", "120px")
                     .append(trash_icon)
                     .find("img")
-                    .css("height", "72px")
                     .end()
                     .appendTo($gallery)
                     .fadeIn();
@@ -279,11 +224,10 @@
 
         // Image preview function, demonstrating the ui.dialog used as a modal window
         function viewLargerImage($link) {
-            console.log("veiw large");
             var src = $link.attr("href"),
                 title = $link.siblings("img").attr("alt"),
                 $modal = $("img[src$='" + src + "']");
-            console.log($link.siblings(""))
+
             if ($modal.length) {
                 $modal.dialog("open");
             } else {
@@ -303,56 +247,17 @@
         $("ul.gallery > li").on("click", function (event) {
             var $item = $(this),
                 $target = $(event.target);
-            console.log($target);
-            console.log("Check current location");
+
             if ($target.is("a.ui-icon-trash")) {
-                console.log("1");
                 deleteImage($item);
             } else if ($target.is("a.ui-icon-zoomin")) {
-                console.log("2");
                 viewLargerImage($target);
             } else if ($target.is("a.ui-icon-refresh")) {
-                console.log("3");
                 recycleImage($item);
             }
 
             return false;
         });
-        $("#textarea").bind('keyup', function (e) {
-            if (e.keyCode == 13) {
-            $("ul.gallery > li").each(function () {
-                things.push($(this));
-                $(this).fadeOut("fast", function () {
-                    $(this).css("z-index", -1);
-                })
-                things.sort(defaultSort);
-                console.log(things);
-                deleteImage($(this));
-            });
-            }
-            if (e.keyCode == 8){
-                things.sort(defaultSort);
-                console.log(things)
-                for (var i = 0; i < things.length; i++) {
-                    $(things[i]).fadeIn("fast",function () {
-                        $(this).css("z-index",0);
-                    });
-                    recycleImage($(things[i]));
-                }
-            }
-        });
-//        $("#textarea").bind('keyup', function () {
-//            console.log(things);
-//            things.sort(defaultSort);
-//            for (var i = 0; i < things.length; i++) {
-//                recycleImage($(things[i]));
-//            }
-//        });
-
-    })
-
-
+    });
 </script>
-
-</body>
 </html>
