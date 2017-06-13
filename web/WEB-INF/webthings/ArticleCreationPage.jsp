@@ -180,7 +180,7 @@
                             </div>
                                 <!-- Media upload -->
                                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                                    <h3>Upload Something</h3>
+                                    <h3>Upload Media</h3>
                                     <form action="/Upload" method="post" id="Upload"
                                           enctype="multipart/form-data">
                                         <input type="file" name="file" size="50" class="btn btn-white"/>
@@ -190,10 +190,10 @@
                                 </div>
                                 <!-- Youtube upload -->
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <h3>Youtube video</h3>
+                                    <h3>Embed Youtube</h3>
                                     <div class="form-group">
                                         <form id="Youtube" action="/ArticleUpload" method="post">
-                                            <input id="youtubeurl" type="text" name="youtube" class="form-control">
+                                            <input id="youtubeurl" type="text" name="youtube" class="form-control" placeholder="Paste your Youtube link and click the button below to embed in your article">
                                             <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit" class="btn btn-danger">
                                         </form>
                                     </div>
@@ -310,7 +310,12 @@
         insertImage: 'Insert Image',
         upload: "Upload Image",
         insertAudio: "Insert Audio",
-        noembed: "Embed Media"
+        noembed: "Embed Media",
+
+        preformatted: "Code (Preformatted Text)",
+
+        foreColor: "Text Color",
+        backColor: "Background Color"
     };
 
     $('.wysiwys').trumbowyg({

@@ -85,8 +85,8 @@
                         <%--Notes for Nicole. This button is to goto the registration page, since this does not submit the details in the above form it is not possible to include as part of the above form as this will cause only one action. Thus a separate registration form is required. Please see corresponding POST and GET methods inside of the registration and login servlets--%>
                         <div class="footer text-center">
 
-                            Click <a href="/login?Registration=Registration" style="color: green" class="clickOnce">Register</a>
-                            to signup now
+                            <a href="/login?Registration=Registration" style="color: deepskyblue" class="clickOnce">Register</a>
+                            now to join our community!
                             <br><br>
 
                             <%--<form action="/login" method="get">--%>

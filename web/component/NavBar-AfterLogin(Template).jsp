@@ -38,7 +38,7 @@
     console.log(document.cookie);
 </script>
 
-<nav class="navbar navbar-info navbar-transparent navbar-fixed-top navbar-color-on-scroll">
+<nav class="navbar navbar-fixed-top navbar-inverse navbar-transparent navbar-color-on-scroll">
 
     <!-- responsive container for div --><!-- do not remove -->
     <div class="container">
@@ -97,11 +97,11 @@
                     <c:when test="${not empty cartlist}">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="material-icons"></i>Cart
+                                <i class="material-icons"></i>Stash
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li class="dropdown-header">Carted</li>
+                                <li class="dropdown-header">Saved articles</li>
                                 <c:forEach var="carted" items="${cartlist}">
                                     <li>
                                             ${carted}
@@ -147,7 +147,7 @@
                         <li><a href="Upload?media=self" class="clickOnce"><i class="material-icons">photo_library</i> My
                             Media</a></li>
                         <%--<li class="divider"></li>--%>
-                        <li><a href="Upload?media=all" class="clickOnce"><i class="material-icons">collections</i> All
+                        <li><a href="Upload?media=all" class="clickOnce"><i class="material-icons">view_carousel</i> All
                             Media</a></li>
                     </ul>
                 </li>
@@ -170,7 +170,7 @@
                                     class="material-icons">keyboard_arrow_right</i>Next</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="logout?submit=Logout" class="clickOnce"> Sign Out</a></li>
+                        <li><a href="logout?submit=Logout" class="clickOnce"><i class="material-icons">exit_to_app</i> Sign Out</a></li>
                     </ul>
                 </li>
 
