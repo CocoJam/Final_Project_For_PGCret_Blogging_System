@@ -473,6 +473,10 @@
                     else if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
                         li.innerHTML = "<img src=\"" + msg + "\">";
                     }
+                    else {
+                        alert("Upload file is not supported.");
+                        return;
+                    }
                     $("#sortable").append(li);
                 },
                 error: function (request, status, error) {
