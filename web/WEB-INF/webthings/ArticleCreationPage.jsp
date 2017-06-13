@@ -193,7 +193,7 @@
                                     <h3>Embed Youtube</h3>
                                     <div class="form-group">
                                         <form id="Youtube" action="/ArticleUpload" method="post">
-                                            <input id="youtubeurl" type="text" name="youtube" class="form-control">
+                                            <input id="youtubeurl" type="text" name="youtube" class="form-control" placeholder="Paste your Youtube link and click the button below to embed in your article">
                                             <input type="submit" name="youtubeVideoSubmition" value="youtube" class="btn btn-danger">
                                         </form>
                                     </div>
