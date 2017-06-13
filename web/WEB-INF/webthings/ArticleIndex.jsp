@@ -639,7 +639,9 @@
 
             }
         });
-
+        $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").click(function () {
+            $(this).effect("shake");
+        })
     });
 </script>
 
