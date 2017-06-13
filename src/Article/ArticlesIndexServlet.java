@@ -29,8 +29,6 @@ public class ArticlesIndexServlet extends HttpServlet {
         HttpSession session = req.getSession();
         username = (String) session.getAttribute("username");
         if (req.getParameter("articleList") != null) {
-            System.out.println("TESTA");
-            System.out.println("TESTB");
             session.setAttribute("ArticleListStatus", req.getParameter("articleList"));
             ArticleListStatus = (String) session.getAttribute("ArticleListStatus");
             switchbetweenAllOrSelf(req, resp, session, username);
@@ -38,8 +36,6 @@ public class ArticlesIndexServlet extends HttpServlet {
             return;
         }
         cookieTracker(req, resp);
-        closingConnection();
-        System.out.println("TESTC");
         return;
     }
 
@@ -47,21 +43,13 @@ public class ArticlesIndexServlet extends HttpServlet {
     private void switchbetweenAllOrSelf(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String username) {
         System.out.println("Checking self or all");
         if (ArticleListStatus != null) {
-
             if (ArticleListStatus.equals("self")) {
                 System.out.println("self");
                 session.setAttribute("articleList", "self");
                 indexList = new ArticleListObjectDAO().selectionArticlesList(username);
-
-                //testing forloop below
-                for (Articles articles : indexList) {
-                    System.out.println("CATEGORY !!!" + articles.getCategory());
-                }
                 checkingForOwnership(username, indexList);
                 session.setAttribute("ArticleIndex", indexList);
-
             } else if (ArticleListStatus.equals("all")) {
-                System.out.println("all");
                 session.setAttribute("articleList", "all");
                 indexList = new ArticleListObjectDAO().selectionAllArticlesList();
                 checkingForOwnership(username, indexList);
@@ -75,13 +63,17 @@ public class ArticlesIndexServlet extends HttpServlet {
     //Using session username to check if the accessor is the owner, set Article .setOwner
     public static void checkingForOwnership(String username, List<Articles> indexList) {
         for (Articles articles : indexList) {
-            if (articles.getUsername().equals(username)) {
-                System.out.println("yes");
-                articles.setOwner(true);
-            } else {
-                System.out.println("No");
-                articles.setOwner(false);
-            }
+            articleSetOwnership(username, articles);
+        }
+    }
+
+    public static void articleSetOwnership(String username, Articles articles) {
+        if (articles.getUsername().equals(username)) {
+            System.out.println("yes");
+            articles.setOwner(true);
+        } else {
+            System.out.println("No");
+            articles.setOwner(false);
         }
     }
 

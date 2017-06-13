@@ -21,10 +21,8 @@ public class CommentsDAO {
         Comments comment = null;
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM Comments WHERE CommentID = ?;")) {
-                System.out.println(statement);
                 statement.setInt(1, CommentID);
                 comment = makeComment( statement);
-                System.out.println(statement);
             }
             System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
@@ -39,10 +37,8 @@ public class CommentsDAO {
         List<Comments> listOfComments = new ArrayList<>();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT CommentID, ArticlesID, CommenterName, Comments, CommentTime FROM Comments WHERE ArticlesID = ?;")) {
-                System.out.println(statement);
                 statement.setInt(1, articlesID);
                 makeComment(listOfComments, statement);
-                System.out.println(statement);
             }
             System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
@@ -56,10 +52,8 @@ public class CommentsDAO {
         List<Comments> listOfComments = new ArrayList<>();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM Comments WHERE CommenterName = ?;")) {
-                System.out.println(statement);
                 statement.setString(1, CommenterName);
                 makeComment(listOfComments, statement);
-                System.out.println(statement);
             }
             System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
@@ -80,7 +74,6 @@ public class CommentsDAO {
                 Date CommentTime = resultSet.getTimestamp(5);
                 commentsSetStatments(comments, CommentID, ArticleID, CommentName, Comment, CommentTime);
                 listOfComments.add(comments);
-                System.out.println(listOfComments.size());
             }
         } catch (SQLException e) {
             System.out.println("Error creating database connection.");
@@ -119,11 +112,9 @@ public class CommentsDAO {
     public void AddingCommentsToDataBase(int ArticlesID, String CommenterName, String Comments) {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Comments (ArticlesID, CommenterName, Comments) VALUES(?,?,?);")) {
-                System.out.println(statement);
                 statement.setInt(1, ArticlesID);
                 statement.setString(2, CommenterName);
                 statement.setString(3, Comments);
-                System.out.println(statement);
                 statement.executeUpdate();
                 System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
@@ -137,12 +128,9 @@ public class CommentsDAO {
     public void editComments(String Comment, int CommentId) {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE Comments SET Comments = ? WHERE CommentID = ?;")) {
-                System.out.println(statement);
                 statement.setString(1, Comment);
                 statement.setInt(2, CommentId);
-                System.out.println(statement);
                 statement.executeUpdate();
-                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
             System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
@@ -157,7 +145,6 @@ public class CommentsDAO {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Comments ORDER BY CommentID DESC Limit 1;")) {
                 comments = makeComment(statement);
             }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
             System.out.println("Error. Comment not found");
             e.printStackTrace();

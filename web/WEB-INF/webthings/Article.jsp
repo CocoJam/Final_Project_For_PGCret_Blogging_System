@@ -42,7 +42,7 @@
                             <div class="profile">
                                 <div class="avatar">
                                     <%--<img src="" alt="Circle Image" class="img-rounded img-responsive img-raised">--%>
-
+                                    <p hidden class="currentuser">${profileInfo.username}</p>
                                     <c:choose>
                                         <c:when test="${articleList.equals('self')}">
                                             <c:choose>
@@ -96,8 +96,18 @@
                                 <div>${articleContents.content}</div>
                                 <p>${articleContents.username}</p>
                                 <p>${articleContents.datecreated}</p>
-
-
+                                <c:choose>
+                                    <c:when test="${articleContents.liked}">
+                                        <button onclick="likeadd($(this))" id="${articleContents.articleid}">Unlike
+                                        </button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button onclick="likeadd($(this))" id="${articleContents.articleid}">Like
+                                        </button>
+                                    </c:otherwise>
+                                </c:choose>
+                                <p id="likenumber">${articleContents.likeNumber}</p>
+                                <h1>${articleContents.liked}</h1>
                                 <c:if test="${articleContents.owner}">
                                     <p>${articleContents.owner}</p>
                                     <form action="/Articles" method="post">
@@ -109,70 +119,26 @@
                                 </c:if>
                                 <div id="containComments">
                                     <c:forEach items="${commentlist}" var="content">
-                                        <div id="${content.commentId}">
-                                            <p id="${content.commentId}username">${content.username}</p>
-                                            <p id="${content.commentId}content">${content.content}</p>
-                                            <p id="${content.commentId}commentedTime">${content.commentedTime}</p>
+                                        <div id="${content.commentId}" class="commentid">
+                                            <p id="${content.commentId}username"
+                                               class="username">${content.username}</p>
+                                            <p id="${content.commentId}content" class="content">${content.content}</p>
+                                            <p id="${content.commentId}commentedTime"
+                                               class="commentedTime">${content.commentedTime}</p>
                                             <c:if test="${content.owner || articleContents.owner}">
-                                                <button id="${content.commentId}delete">Delete</button>
-                                                <script>
-                                                    <!-- ajax post request for the deleting of the comment -->
-                                                    $("#${content.commentId}delete").click(function () {
-                                                        $.post("/Deleting", {
-                                                            "commentId": "${content.commentId}",
-                                                            "log": "DeleteComment"
-                                                        })
-                                                            .done(function (data) {
-                                                                $("#${content.commentId}").remove();
-                                                                $(this).remove();
-                                                                console.log("hello");
-                                                            });
-                                                    });
-                                                </script>
+                                                <button id="${content.commentId}delete"
+                                                        onclick="deleteComment($(this))">Delete
+                                                </button>
                                             </c:if>
                                             <c:if test="${content.owner}">
-                                                <input type="text" id="${content.commentId}text">
-                                                <button id="${content.commentId}edit">Edit</button>
-                                                <script>
-                                                    <!-- ajax post request for the editing of the comment and then changing the text within the associated position. -->
-                                                    $("#${content.commentId}edit").click(function () {
-                                                        $.ajax({
-                                                            url: '/Comments',
-                                                            type: 'Post',
-                                                            data: {
-                                                                "commentId": "${content.commentId}",
-                                                                "commentcontent": $("#${content.commentId}text").val(),
-                                                                "comments": "EditComment"
-                                                            },
-                                                            success: function (msg) {
-                                                                console.log(msg);
-                                                                var Data = JSON.parse(msg);
-                                                                var p1 = $("#${content.commentId}username");
-                                                                p1.html(Data.Username);
-                                                                var p2 =$("#${content.commentId}content");
-                                                                p2.html(Data.Content);
-                                                                var p3 = $("#${content.commentId}commentedTime");
-                                                                p3.html(Data.CommentedTime);
-                                                            }
-                                                        });
-                                                    });
-                                                </script>
+                                                <input type="text" id="${content.commentId}text" class="change">
+                                                <button id="${content.commentId}edit" onclick="editComment($(this))">
+                                                    Edit
+                                                </button>
                                             </c:if>
                                         </div>
-
-                                        <%--needed to display the delete button when load, so needed to go through the commentsServlet first--%>
-
                                     </c:forEach>
-                                    <script>
-                                        <!-- Due to the database and the create and the editing page is constructed, that replace all or most of the html tags into the <p> tags -->
-                                        $(".wrapper li").each(function () {
-                                            $(this).replaceWith(function () {
-                                                return $('<p>', {
-                                                    html: this.innerHTML
-                                                });
-                                            });
-                                        });
-                                    </script>
+
                                 </div>
                                 <label for="comments">Comments: </label>
                                 <br>
@@ -190,6 +156,8 @@
 <!-- FOOTER START -->
 <%@ include file="../../component/Footer(Template).html" %>
 <!-- FOOTER END -->
+
+</body>
 <script>
     //Adding comments by the ajax call with a post method, which allow the adding of the comment and then append
     $("#addComment").click(function () {
@@ -208,22 +176,109 @@
                 div.id = Data.CommentId;
                 var p1 = document.createElement("p");
                 p1.innerHTML = Data.Username;
+                p1.id = Data.CommentId + "username";
+                p1.className = "username";
                 var p2 = document.createElement("p");
                 p2.innerHTML = Data.Content;
+                p2.id = Data.CommentId + "content";
+                p2.className = "content";
                 var p3 = document.createElement("p");
                 p3.innerHTML = Data.CommentedTime;
-                var input = "<button id=\"" + (Data.CommentIDdelete) + "delete\">Delete</button>" +
-                    "<input type=\"text\" id=\"" + (Data.CommentIDdelete) + "text\">" +
-                    "<button id=\"" + (Data.CommentIDdelete) + "edit\">Edit</button>";
+                p3.id = Data.CommentId + "commentedTime";
+                p3.className = "commentedTime";
+                var deletebutton = document.createElement("button");
+                deletebutton.id = Data.CommentId + "delete";
+                deletebutton.className = "delete";
+                deletebutton.innerHTML = "Delete";
+                deletebutton.setAttribute("onclick", "deleteComment($(this))");
+                var editinput = document.createElement("input");
+                editinput.type = "text";
+                editinput.id = Data.CommentId + "text";
+                editinput.className = "change";
+                var editbutton = document.createElement("button");
+                editbutton.id = Data.CommentId + "edit";
+                editbutton.className = "edit";
+                editbutton.innerHTML = "Edit";
+                editbutton.setAttribute("onclick", "editComment($(this))");
                 div.append(p1);
                 div.append(p2);
                 div.append(p3);
+                div.append(deletebutton);
+                div.append(editinput);
+                div.append(editbutton);
                 contain.append(div);
-                contain.append(input)
             }
         });
     })
-</script>
 
-</body>
+    <!-- ajax post request for the deleting of the comment -->
+    function deleteComment(e) {
+        $.post("/Deleting", {
+            "commentId": e.parent().attr("id"),
+            "log": "DeleteComment"
+        })
+            .done(function (data) {
+                $(e.parent()).remove();
+                console.log("hello");
+            });
+
+    }
+    <!-- ajax post request for the editing of the comment and then changing the text within the associated position. -->
+    function editComment(e) {
+        $.ajax({
+            url: '/Comments',
+            type: 'Post',
+            data: {
+                "commentId": e.parent().attr("id"),
+                "commentcontent": e.parent().find(".change").val(),
+                "comments": "EditComment"
+            },
+            success: function (msg) {
+                console.log(msg);
+                var Data = JSON.parse(msg);
+                var p1 = e.parent().find(".username");
+                p1.html(Data.Username);
+                var p2 = e.parent().find(".content");
+                p2.html(Data.Content);
+                var p3 = e.parent().find(".commentedTime");
+                p3.html(Data.CommentedTime);
+            }
+        });
+    }
+
+    <!-- This function is to like or unlike someone. -->
+    function likeadd(e) {
+        $.ajax({
+            url: '/Articles',
+            type: 'Post',
+            data: {
+                "like": "like",
+                "likepeople": $(".currentuser").html(),
+                "articleIdnumber": e.attr("id")
+            },
+            success: function (msg) {
+                if (msg > $("#likenumber").html()) {
+                    e.html("Unlike");
+                }
+                else {
+                    e.html("Like");
+                }
+                $("#likenumber").html(msg);
+            },
+            error: function (request, status, error) {
+                console.log("upload fail");
+                alert("Upload File Fail.");
+            }
+        });
+    }
+    <!-- Due to the database and the create and the editing page is constructed, that replace all or most of the html tags into the <p> tags -->
+    $(".wrapper li").each(function () {
+        console.log("hello there")
+        $(this).replaceWith(function () {
+            return $('<p>', {
+                html: this.innerHTML
+            });
+        });
+    });
+</script>
 </html>

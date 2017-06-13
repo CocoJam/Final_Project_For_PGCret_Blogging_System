@@ -283,15 +283,6 @@
                                 %>
                                 <!-- Text input box end -->
 
-                                <!--If you want to add a checkbox to this form, uncomment this code:-->
-                                <%--Optional checkbox with terms and conditions--%>
-                                <%--<div class="checkbox">--%>
-                                <%--<label>--%>
-                                <%--<input type="checkbox"  name="optionsCheckboxes" checked>--%>
-                                <%--I agree with the terms & conditions--%>
-                                <%--</label>--%>
-                                <%--</div>--%>
-
                             </div>
 
                             <!-- BUTTONS -->
