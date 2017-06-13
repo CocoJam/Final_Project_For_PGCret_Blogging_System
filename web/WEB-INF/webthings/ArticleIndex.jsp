@@ -141,7 +141,7 @@
                         </div>
                         <button id="listorcard">To list</button>
                         <label>Search: </label>
-                        <input type="text" class="searchBar">
+                        <input type="text" id="searchBar">
                         <!-- This is the card based article index-->
                         <div class="row">
                             <div id="cardarticle"
@@ -279,9 +279,6 @@
                                 <table class="table table-striped table-hover table-responsive">
                                     <tr>
                                         <th>
-                                            Article Numbers
-                                        </th>
-                                        <th>
                                             Article Names
                                         </th>
                                         <th>
@@ -302,7 +299,7 @@
                                     <%--Looping through the Article Index (list of articles in the ArticleIndex Servlet) and populates a row per article--%>
                                     <c:forEach items="${ArticleIndex}" var="index">
                                         <tr class="tablecontentR">
-                                            <td class="tablearticleid">${index.articleid}</td>
+                                            <td class="tablearticleid" hidden>${index.articleid}</td>
                                             <td class="tablearticlename">
                                                 <a href="/Articles?acticleId=${index.articleid}">${index.articlename}</a>
                                             </td>
@@ -375,10 +372,10 @@
 
         <!-- Search bar function for searching article based on the title, creater's name and the category for both list and card form -->
         function searching(element, firstitem, seconditem, thriditem) {
-            var value = $(".searchBar").val();
+            var value = $("#searchBar").val();
             $(element).each(function () {
-                var title = $(this).children().siblings(firstitem).text();
-                var username = $(this).children().siblings(seconditem).text();
+                var title = $(this).children().siblings(firstitem).text().trim();
+                var username = $(this).children().siblings(seconditem).text().trim();
                 var category = $(this).children().siblings(thriditem).text().trim();
                 var matching = new RegExp(value, "gi");
                 if (title.match(matching) || username.match(matching) || (category.match(matching) && category.length > 0)) {
@@ -395,9 +392,9 @@
         }
 
         <!-- Searching function from the list mode and card mode applying to one search bar, plus the searching will not affect the cards that is saved within the cart.-->
-        $(".searchBar").bind('keyup', function () {
+        $("#searchBar").bind('keyup', function () {
             searching(".tablecontentR", ".tablearticlename", ".tablearticleusername", ".tablearticlecategory");
-            searching(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)", "h5", ".username", ".category");
+            searching(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)", "h4", ".username", ".category");
         });
 
 
@@ -424,8 +421,6 @@
             },
             drop: function (event, ui) {
                 deleteImage(ui.draggable);
-                console.log($(this))
-                console.log(ui.draggable.eq(0))
                 var hyper = ui.draggable.eq(0).children().siblings("a").attr('href');
                 var title = ui.draggable.eq(0).children().siblings(".articlename").text();
                 $.post("/ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
@@ -536,13 +531,12 @@
 
         <!-- Ths detection of each card of which icon or <a> has been clicked, which lead to different effects, plus the followed post calls to the ARticleCart servlet. -->
         $("ul.gallery > li").on("click", function (event) {
-            console.log($(this))
+
             var $item = $(this),
                 $target = $(event.target);
             var hyper = $target.siblings("a").attr('href');
             var title = $target.siblings(".articlename").text();
-            console.log(title);
-            console.log(hyper);
+
             if ($target.is("a.ui-icon-plusthick")) {
                 deleteImage($item);
                 $.post("/ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
@@ -565,8 +559,7 @@
         var type = null;
         <!-- The defaultsorting algorithm comparator, which allow the cards' children to be selected based on what type is given -->
         function defaultSort(elementX, elementY) {
-            console.log(elementX.children());
-            console.log(elementX.children().children())
+
             if (elementX.children().siblings(type).text().toLowerCase() < elementY.children().siblings(type).text().toLowerCase())
                 return -1;
             if (elementX.children().siblings(type).text().toLowerCase() > elementY.children().siblings(type).text().toLowerCase())
@@ -630,23 +623,20 @@
 
         <!-- The card displaying function, as the cartlist is return from the session, which is the servlet that is from the ArticleCart. This will return array list from the attribute that is called cartlist. Due to the nature of this that is passed in as a string in the fashion of array, hence substring and regex spliting is needed. -->
         var cartlist = '<%= session.getAttribute("cartlist") %>';
-        var cartArray = cartlist.substring(1, cartlist.length - 1).split(",")
-        console.log(cartlist);
-        console.log(cartArray);
+        var cartArray = cartlist.substring(1, cartlist.length - 1).split(",");
+
         $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
             <!-- The reverse mathcing using the card's <a href> to match is there an exsisting string within the array that matches if so then run that card with the deleteImage function to move it to the cart at the doc ready for storage. The regex of "\\?" is used to escape the escape which in turns to escape the ? for accurate matching. -->
             var blah = ($(this).children().siblings(".articleid").attr('href').replace("?", "\\?"));
             var match = new RegExp(blah);
             for (var i = 0; i < cartArray.length; i++) {
-                console.log(cartArray[i]);
+
                 if (cartArray[i].match(match)) {
-                    console.log("matched?")
+
                     deleteImage($(this));
                     break;
                 }
-                else {
-                    console.log("nope")
-                }
+
             }
         });
 
