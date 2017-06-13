@@ -61,6 +61,7 @@
                                 </div>
                             </div>
 
+                            <!-- BUTTONS -->
 
                             <%--This button is to submit the above form to sign in--%>
                             <div class="footer text-center" class="form">
