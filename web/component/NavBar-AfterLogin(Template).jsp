@@ -190,7 +190,7 @@
                     <form id="searchform" action="/ProfilePage" method="get" class="navbar-form" role="search">
                         <div class="input-group" style="top:0.2em;">
                             <input list="usernames" name="accessFriend" class="form-control searchBar" placeholder="Search People"
-                                   id="NameBarForm" list="usernames">
+                                   id="NameBarForm" list="usernames" style="width:150px;">
                             <button type="submit" class="btn btn-round btn-just-icon btn-simple" style="color:white"><i class="material-icons">search</i></button>
                             <datalist id="usernames">
                                 <c:forEach items="${userlist}" var="names">
