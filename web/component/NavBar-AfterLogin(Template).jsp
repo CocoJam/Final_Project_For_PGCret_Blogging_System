@@ -13,11 +13,11 @@
     <%--<%@include file="Header(styling Template).html"%>--%>
     <style>
         /*.searchBar {*/
-            /*color: black !important;*/
+        /*color: black !important;*/
         /*}*/
 
         /*input.searchBar::-webkit-input-placeholder { !* Chrome/Opera/Safari *!*/
-            /*color: pink;*/
+        /*color: pink;*/
         /*}*/
         input.searchBar::-webkit-calendar-picker-indicator {
             display: none;
@@ -25,7 +25,13 @@
     </style>
 </head>
 <body>
+<% System.out.println(response.getHeaderNames());%>
+<% response.addHeader("Cache-Control", "max-age=0,no-cache,no-store,must-revalidate");
+    response.addHeader("Pragma", "no-cache");
+    response.addHeader("Expires", "Tue, 01 Jan 1970 00:00:00 GMT");
+    System.out.println(response.getHeaderNames());%>
 <script>
+
     var ctx = "<%= request.getRequestURI() %>";
     var date = new Date();
     var currentTime = date.getTime();
@@ -48,7 +54,7 @@
 
             <%--Div to load up loader--%>
             <div id='loaderID'></div>
-                <%--Div loader ending--%>
+            <%--Div loader ending--%>
 
             <!-- Navbar toggle which display when on mobile device -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#expand-navbar-icons">
