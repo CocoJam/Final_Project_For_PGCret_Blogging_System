@@ -121,17 +121,17 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li class="dropdown-header">Article dropdown</li>
-                        <li><a href="ArticlesIndex?articleList=self" class="clickOnce"><i class="material-icons">library_books</i>My
+                        <%--<li class="dropdown-header">Article dropdown</li>--%>
+                        <li><a href="ArticlesIndex?articleList=self" class="clickOnce"><i class="material-icons">library_books</i> My
                             Articles</a>
                         </li>
-                        <li class="divider"></li>
-                        <li><a href="ArticlesIndex?articleList=all" class="clickOnce"><i class="material-icons">library_books</i>All
+                        <%--<li class="divider"></li>--%>
+                        <li><a href="ArticlesIndex?articleList=all" class="clickOnce"><i class="material-icons">dashboard</i> All
                             Articles</a>
                         </li>
-                        <li class="divider"></li>
+                        <%--<li class="divider"></li>--%>
                         <li><a href="Articles?add=addNewArticle" class="clickOnce"><i
-                                class="material-icons">note_add</i>New
+                                class="material-icons">note_add</i> New
                             Article</a>
                         </li>
                     </ul>
@@ -143,11 +143,11 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li class="dropdown-header">Media dropdown</li>
-                        <li><a href="Upload?media=self" class="clickOnce"><i class="material-icons">photo_library</i>My
+                        <%--<li class="dropdown-header">Media dropdown</li>--%>
+                        <li><a href="Upload?media=self" class="clickOnce"><i class="material-icons">photo_library</i> My
                             Media</a></li>
-                        <li class="divider"></li>
-                        <li><a href="Upload?media=all" class="clickOnce"><i class="material-icons">collections</i>All
+                        <%--<li class="divider"></li>--%>
+                        <li><a href="Upload?media=all" class="clickOnce"><i class="material-icons">collections</i> All
                             Media</a></li>
                     </ul>
                 </li>
@@ -158,9 +158,9 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li class="dropdown-header">Options</li>
+                        <%--<li class="dropdown-header">Options</li>--%>
                         <li><a href="Registration?log=ChangeUserInformation" class="clickOnce"><i
-                                class="material-icons">create</i>Edit
+                                class="material-icons">create</i> Edit
                             Profile</a></li>
                         <li class="divider"></li>
                         <li class="dropdown-header" id="bgImgStatus">Background</li>
@@ -170,7 +170,7 @@
                                     class="material-icons">keyboard_arrow_right</i>Next</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="logout?submit=Logout" class="clickOnce">Sign Out</a></li>
+                        <li><a href="logout?submit=Logout" class="clickOnce"> Sign Out</a></li>
                     </ul>
                 </li>
 
