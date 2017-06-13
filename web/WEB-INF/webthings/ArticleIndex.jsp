@@ -25,8 +25,8 @@
 
         .gallery li {
             float: left;
-            width: 120px !important;
-            height: 200px !important;
+            width: 120px;
+            height: 200px;
             padding: 0.4em;
             margin: 0 0.4em 0.4em 0;
             text-align: center;
@@ -69,8 +69,9 @@
         #save .gallery h5 {
             display: none;
         }
-    </style>
 
+
+    </style>
 </head>
 <body class="profile-page">
 
@@ -114,7 +115,8 @@
                                                         <%--Otherwise get the photo from the users photo page--%>
                                                         <c:otherwise>
                                                             <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                                 alt="Circle Image" class="img-rounded img-responsive img-raised">
+                                                                 alt="Circle Image"
+                                                                 class="img-rounded img-responsive img-raised">
                                                         </c:otherwise>
                                                     </c:choose>
                                                     <div class="name" id="custom-profile-name">
@@ -150,39 +152,116 @@
                                 <button id="sortcategory">By category</button>
                                 <button id="sortdate">By date</button>
                                 <div class="ui-widget ui-helper-clearfix">
-                                    <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+                                    <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix"
+                                        style="margin-top: 0px;">
                                         <c:forEach items="${ArticleIndex}" var="index">
 
+                                            <%--<li class="ui-widget-content ui-corner-tr">--%>
+                                            <%--<div>--%>
+                                            <%--<c:choose>--%>
+                                            <%--<c:when test="${not empty index.firstimage}">--%>
+                                            <%--<img class="card-img-top" src="${index.firstimage}"--%>
+                                            <%--alt="${index.articlename}"--%>
+                                            <%--style="width: 80%; height: 50%">--%>
+                                            <%--</c:when>--%>
+                                            <%--<c:otherwise>--%>
+                                            <%--<img class="card-img-top" src="assets/img/img6.jpg" alt="Circle Image"--%>
+                                            <%--style="width: 80%; height: 50%">--%>
+                                            <%--</c:otherwise>--%>
+                                            <%--</c:choose>--%>
+                                            <%--<p class="card-block">--%>
+                                            <%--<h4 class="ui-widget-header cart-title" style="margin-bottom: 0">${index.articlename}</h4>--%>
+                                            <%--<p class="card-text">${index.content}</p>--%>
+
+                                            <%--<a href="/Articles?acticleId=${index.articleid}"--%>
+                                            <%--title="View larger image"--%>
+                                            <%--class="ui-icon ui-icon-zoomin articleid">View larger</a>--%>
+                                            <%--<a href="link/to/trash/script/when/we/have/js/off"--%>
+                                            <%--title="Delete this image" class="ui-icon ui-icon-plusthick">Delete--%>
+                                            <%--image</a>--%>
+                                            <%--<p class="category">${index.category}</p>--%>
+                                            <%--<p hidden class="date">${index.datecreated}</p>--%>
+                                            <%--<p hidden class="id">${index.articleid}</p>--%>
+                                            <%--</div>--%>
+                                            <%--</div>--%>
+                                            <%--</li>--%>
+
+
                                             <li class="ui-widget-content ui-corner-tr">
-                                                <h5 class="ui-widget-header">${index.articlename}<br><c:if
-                                                        test="${articleList.equals('all')}">
-                                                    <a href=ProfilePage?accessFriend=${index.username}
-                                                       class="username">${index.username}</a>
-                                                </c:if></h5>
+
+                                                    <%--<c:if test="${articleList.equals('all')}">--%>
+                                                    <%--<a href=ProfilePage?accessFriend=${index.username}--%>
+                                                    <%--class="username">${index.username}</a>--%>
+                                                    <%--</c:if>--%>
                                                 <p class="articlename" hidden>${index.articlename}</p>
                                                 <c:choose>
                                                     <c:when test="${not empty index.firstimage}">
-                                                        <img src="${index.firstimage}"
+                                                        <img class="card-img-top" src="${index.firstimage}"
                                                              alt="${index.articlename}"
-                                                             width="96" height="72">
+                                                             width="96" height="72" style="margin-bottom: 5">
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <img src="assets/img/img6.jpg" alt="Circle Image"
-                                                             width="96" height="72">
+                                                        <img class="card-img-top" src="../../pokemonloader4.gif"
+                                                             alt="Circle Image"
+                                                             width="96" height="72" style="margin-bottom: 5">
                                                     </c:otherwise>
                                                 </c:choose>
-                                                <div hidden>${index.content}</div>
+                                                <h4 class="card-title articlename"
+                                                    style="overflow: hidden; width: 100%; height: 10%">${index.articlename}</h4>
+
+                                                <div class="card-text"
+                                                     style="overflow: hidden; width: 100%; height: 30%">${index.content}
+                                                    <div class="Articlecategory"
+                                                         style="overflow: hidden; width: 80%; height: 30%; align-content: center;">${index.category}</div>
+                                                </div>
+                                                    <%--<p class="category" style="overflow: hidden; width: 80%; height: 10%">${index.category}</p>--%>
+
                                                 <a href="/Articles?acticleId=${index.articleid}"
                                                    title="View larger image"
                                                    class="ui-icon ui-icon-zoomin articleid">View larger</a>
+
                                                 <a href="link/to/trash/script/when/we/have/js/off"
                                                    title="Delete this image" class="ui-icon ui-icon-plusthick">Delete
                                                     image</a>
 
-                                                <p class="category">${index.category}</p>
                                                 <p hidden class="date">${index.datecreated}</p>
                                                 <p hidden class="id">${index.articleid}</p>
                                             </li>
+
+
+                                            <%--<div>--%>
+                                            <%--&lt;%&ndash;<img class="card-img-top" src="../pokemonloader4.gif" alt="Card image cap" style="width: 80%">&ndash;%&gt;--%>
+                                            <%--<c:choose>--%>
+                                            <%--<c:when test="${not empty index.firstimage}">--%>
+                                            <%--<img src="${index.firstimage}"--%>
+                                            <%--alt="${index.articlename}"--%>
+                                            <%--style="width: 80%">--%>
+                                            <%--</c:when>--%>
+                                            <%--<c:otherwise>--%>
+                                            <%--<img src="assets/img/img6.jpg" alt="Circle Image"--%>
+                                            <%--style="width: 80%">--%>
+                                            <%--</c:otherwise>--%>
+                                            <%--</c:choose>--%>
+                                            <%--<div class="card-block">--%>
+                                            <%--<h5 class="ui-widget-header card-title" style="margin-bottom: 0">${index.articlename}</h5>--%>
+
+                                            <%--<p class="card-text" style="overflow: hidden">${index.content}</p>--%>
+                                            <%--<a href="images/high_tatras3.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View--%>
+                                            <%--larger</a>--%>
+                                            <%--<!--<a href="#" class="btn btn-primary">Go somewhere</a>-->--%>
+                                            <%--<a href="/Articles?acticleId=${index.articleid}"--%>
+                                            <%--title="View larger image"--%>
+                                            <%--class="ui-icon ui-icon-zoomin articleid">View larger</a>--%>
+                                            <%--<a href="link/to/trash/script/when/we/have/js/off"--%>
+                                            <%--title="Delete this image" class="ui-icon ui-icon-plusthick">Delete--%>
+                                            <%--image</a>--%>
+                                            <%--<p class=" articlename" hidden>${index.articlename}</p>--%>
+                                            <%--<p hidden class="date">${index.datecreated}</p>--%>
+                                            <%--<p hidden class="id">${index.articleid}</p>--%>
+                                            <%--</div>--%>
+                                            <%--</div>--%>
+
+
                                         </c:forEach>
                                     </ul>
                                     <div id="save" class="ui-widget-content ui-state-default">
@@ -272,26 +351,26 @@
 
         <!-- This is the toggle button for the change in between the list and card mode to switch the table out/in and the card out/in based on the state of the cardOrList var -->
         $("#listorcard").on("click", function () {
-           if(cardOrList == false){
-               $("#cardarticle").fadeOut("fast", function () {
-                   $(this).css("z-index", -1);
-               });
-               $("#listarticle").fadeIn("fast", function () {
-                   $(this).css("z-index", 0);
-               });
-               cardOrList = true;
-               $("#listorcard").html("To card");
-           }
-           else {
-               $("#cardarticle").fadeIn("fast", function () {
-                   $(this).css("z-index", 0);
-               });
-               $("#listarticle").fadeOut("fast", function () {
-                   $(this).css("z-index", -1);
-               });
-               cardOrList = false;
-               $("#listorcard").html("To list");
-           }
+            if (cardOrList == false) {
+                $("#cardarticle").fadeOut("fast", function () {
+                    $(this).css("z-index", -1);
+                });
+                $("#listarticle").fadeIn("fast", function () {
+                    $(this).css("z-index", 0);
+                });
+                cardOrList = true;
+                $("#listorcard").html("To card");
+            }
+            else {
+                $("#cardarticle").fadeIn("fast", function () {
+                    $(this).css("z-index", 0);
+                });
+                $("#listarticle").fadeOut("fast", function () {
+                    $(this).css("z-index", -1);
+                });
+                cardOrList = false;
+                $("#listorcard").html("To list");
+            }
         });
 
         <!-- Search bar function for searching article based on the title, creater's name and the category for both list and card form -->
@@ -314,10 +393,11 @@
                 }
             })
         }
+
         <!-- Searching function from the list mode and card mode applying to one search bar, plus the searching will not affect the cards that is saved within the cart.-->
         $(".searchBar").bind('keyup', function () {
-            searching(".tablecontentR",".tablearticlename",".tablearticleusername",".tablearticlecategory");
-            searching(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)","h5",".username",".category");
+            searching(".tablecontentR", ".tablearticlename", ".tablearticleusername", ".tablearticlecategory");
+            searching(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)", "h5", ".username", ".category");
         });
 
 
@@ -379,9 +459,14 @@
                 $item.find("a.ui-icon-plusthick").remove();
                 $item.append(recycle_icon).appendTo($list).fadeIn(function () {
                     $item
-                        .animate({width: "48px"})
-                        .find("img")
-                        .animate({height: "36px"});
+
+                        .animate({height: "100px"})
+                        .animate({width: "80px"});
+                    $item.find($("img")).css("height", "50%");
+                    $item.find(".Articlecategory").css("height", "0");
+                    storageText = $item.find($(".card-text")).html();
+                    $item.find($(".card-text")).css("height", "0px");
+                    $item.find($(".articlename")).css("height", "20%");
                 });
             });
         }
@@ -391,14 +476,30 @@
 
         function recycleImage($item) {
             $item.fadeOut(function () {
+//                $item
+//                    .find("a.ui-icon-refresh")
+//                    .remove()
+//                    .end()
+//                    .css("width", "96px")
+//                    .append(trash_icon)
+//                    .find("img")
+//                    .css("height", "72px")
+//                    .end()
+//                    .appendTo($gallery)
+//                    .fadeIn();
+                $item.find($(".card-text")).css("height", "30%");
+                $item.find($("img")).css("height", "72");
+                $item.find($("img")).css("weight", "96");
+                $item.find(".Articlecategory").css("height", "10%");
+                $item.find($(".articlename")).css("height", "10%");
                 $item
                     .find("a.ui-icon-refresh")
                     .remove()
                     .end()
-                    .css("width", "96px")
+                    .css("height", "200px")
+                    .css("width", "120px")
                     .append(trash_icon)
                     .find("img")
-                    .css("height", "72px")
                     .end()
                     .appendTo($gallery)
                     .fadeIn();
@@ -411,12 +512,12 @@
 
             var hyper = $link.attr('href');
             var image = $link.siblings("img").attr('src');
-            var title = $link.siblings("h5").html();
-            var content = $link.siblings("div").html().substr(0, 20);
+            var title = $link.siblings("h4").html();
+            var content = $link.siblings(".card-text").html();
             var username = null;
             username = $link.siblings(".username").html();
 
-            var img = $("<p>" + content + "</p>");
+            var img = $("<p></p>");
             if (image != undefined) {
                 img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<br/>" + "<img src=\'" + image + "\'width=\"96\" height=\"72\">" + "<p>" + content + "</p>");
             }
@@ -464,12 +565,15 @@
         var type = null;
         <!-- The defaultsorting algorithm comparator, which allow the cards' children to be selected based on what type is given -->
         function defaultSort(elementX, elementY) {
+            console.log(elementX.children());
+            console.log(elementX.children().children())
             if (elementX.children().siblings(type).text().toLowerCase() < elementY.children().siblings(type).text().toLowerCase())
                 return -1;
             if (elementX.children().siblings(type).text().toLowerCase() > elementY.children().siblings(type).text().toLowerCase())
                 return 1;
             return 0;
         }
+
         <!-- Function that is called when assemible the cards into the cart without actually adding into the session, this is due to the ui constructed as normal z-index alteration can't be used to shift the position due to not enough time delay. Hence allowing the cards to be put within the cart and reapply to the external space in sorted order instead. (The function of the ui only applies when element exsist during the load of the doc.) -->
         <!-- Adding all cards array which is used for defaultsorting.-->
         function attachment() {
@@ -480,6 +584,7 @@
                 deleteImage($(things[i]));
             }
         }
+
         <!-- This is use to put back the cards for sorting within the external space, which also shift the first card out from the array making sure the array is empty. -->
         function display() {
             while (things.length > 0) {
@@ -487,6 +592,7 @@
                 things.shift();
             }
         }
+
         <!-- The assemble function -->
         $("#sort").on('click', function () {
             if (assemibled === false) {
@@ -496,7 +602,7 @@
         });
         <!-- After assembled that allow the user to sort by title using the defaultsort and setting the type into the h5, which is the title -->
         $("#sorttitle").on('click', function () {
-            type = "h5";
+            type = ".articlename";
             if (assemibled === true) {
                 things.sort(defaultSort);
                 display();
@@ -505,7 +611,7 @@
         });
         <!-- After assembled that allow the user to sort by title using the defaultsort and setting the type into the catrgory class. -->
         $("#sortcategory").on('click', function () {
-            type = ".category";
+            type = ".Articlecategory";
             if (assemibled === true) {
                 things.sort(defaultSort);
                 display();
@@ -531,9 +637,6 @@
             <!-- The reverse mathcing using the card's <a href> to match is there an exsisting string within the array that matches if so then run that card with the deleteImage function to move it to the cart at the doc ready for storage. The regex of "\\?" is used to escape the escape which in turns to escape the ? for accurate matching. -->
             var blah = ($(this).children().siblings(".articleid").attr('href').replace("?", "\\?"));
             var match = new RegExp(blah);
-            console.log($(this).children().siblings(".articleid").attr('href'));
-            console.log(match)
-            console.log("yes?")
             for (var i = 0; i < cartArray.length; i++) {
                 console.log(cartArray[i]);
                 if (cartArray[i].match(match)) {
