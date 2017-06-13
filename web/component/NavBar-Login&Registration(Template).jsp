@@ -52,7 +52,7 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li>
-                    <a href="/login?Registration=Registration" target="_self">
+                    <a href="/login?Registration=Register" target="_self">
                         <i class="material-icons">create</i>
                         Register
                     </a>

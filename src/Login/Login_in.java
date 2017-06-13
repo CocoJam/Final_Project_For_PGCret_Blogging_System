@@ -124,7 +124,7 @@ public class Login_in extends HttpServlet {
                 return;
             } else {
                 //If user is not login then it will bring them to the registration page.
-                if (registration.equals("Registration")) {
+                if (registration.equals("Register")) {
                     session.setAttribute("Upload", "ArticlesUpload");
                     req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                     return;

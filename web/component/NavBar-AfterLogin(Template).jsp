@@ -180,7 +180,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">Options</li>
-                        <li><a href="Registration?log=ChangeUserInformation" class="clickOnce"><i
+                        <li><a href="Registration?log=Update Profile" class="clickOnce"><i
                                 class="material-icons">create</i>Edit
                             Profile</a></li>
                         <li class="divider"></li>

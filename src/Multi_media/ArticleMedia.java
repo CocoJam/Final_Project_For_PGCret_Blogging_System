@@ -11,6 +11,7 @@ import java.util.*;
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
 import static Connection.ConnectionToTheDataBase.cookieLogOut;
+import static Connection.ConnectionToTheDataBase.cookieTracker;
 
 /**
  * Created by ljam763 on 31/05/2017.
@@ -33,15 +34,17 @@ public class ArticleMedia extends Upload_files {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         cookieLogOut(req,resp);
-        String youtubeVideo = req.getParameter("youtube");
+        String youtubeurl = req.getParameter("youtubeurl");
+        System.out.println(youtubeurl);
         HttpSession session = req.getSession();
-        if (youtubeVideo.contains("/watch?v=")){
-            youtubeVideo= youtubeVideo.replace("/watch?v=", "/embed/").replace("http(s)?:","");
+        if  (youtubeurl != null && youtubeurl.startsWith("https://www.youtube.com/")){
+        if (youtubeurl.contains("/watch?v=")){
+            youtubeurl= youtubeurl.replace("/watch?v=", "/embed/").replace("http(s)?:","");
         }
         System.out.println("Adding youtube");
-        String youtubevideo= "<div class=\"embed-responsive embed-responsive-4by3\"><iframe class=\"embed-responsive-item\" src=\""+youtubeVideo+"\"></iframe></div>";
-
-//        String youtube = "<iframe width=\"854\" height=\"480\" src=\"" + youtubeVideo + "\" frameborder=\"0\" allowfullscreen></iframe>";
+        String youtubevideo= "<div class=\"embed-responsive embed-responsive-4by3\"><iframe class=\"embed-responsive-item\" src=\""+youtubeurl+"\"></iframe></div>";
         resp.getWriter().print(youtubevideo);
+        }
+        return;
     }
 }
