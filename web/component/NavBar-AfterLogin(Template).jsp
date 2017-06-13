@@ -180,10 +180,12 @@
             <%--Search bar here--%>
             <ul class="nav navbar-nav navbar-left">
                 <li>
-                    <form action="/ProfilePage" method="get" class="navbar-form" role="search">
-                        <div class="input-group">
+                    <%--<button type="button" class="btn btn-round btn-just-icon btn-simple" style="color:white" data-toggle="collapse" data-target="#searchform"><i class="material-icons">code</i></button>--%>
+                    <form id="searchform" action="/ProfilePage" method="get" class="navbar-form" role="search">
+                        <div class="input-group" style="top:0.2em;">
                             <input list="usernames" name="accessFriend" class="form-control searchBar" placeholder="Search People"
-                                   style="top:0.5em;" id="NameBarForm" list="usernames">
+                                   id="NameBarForm" list="usernames">
+                            <button type="submit" class="btn btn-round btn-just-icon btn-simple" style="color:white"><i class="material-icons">search</i></button>
                             <datalist id="usernames">
                                 <c:forEach items="${userlist}" var="names">
                                 <option value="${names}">
