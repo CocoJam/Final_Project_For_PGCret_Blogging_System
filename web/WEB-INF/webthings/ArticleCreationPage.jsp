@@ -133,7 +133,7 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label">Category</label>
                                     <input name="ArticleCategory" class="form-control" type="text"
-                                           id="ArticleCategory" required/>
+                                           id="ArticleCategory" value="${articleContents.category}" required/>
                                 </div>
 
                                 <input type="hidden" name="ArticleContent">
