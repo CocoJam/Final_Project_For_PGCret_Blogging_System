@@ -222,7 +222,7 @@
 
                             <!-- Media upload - TODO integrate with the uploader inside the WYSIWYG Editor -->
 
-                            <div class="row">
+                            <div class="row" style="margin-bottom: 2em;">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <button id="formsubmit" class="btn btn-success btn-block"
                                             onclick="whenClickAdd()">Submit
@@ -237,7 +237,10 @@
         </div>
     </div>
 </div>
-</div>
+
+<!-- FOOTER START -->
+<%@ include file="../../component/Footer(Template).html" %>
+<!-- FOOTER END -->
 
 </body>
 
