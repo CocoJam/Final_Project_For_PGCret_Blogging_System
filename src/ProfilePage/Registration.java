@@ -44,7 +44,7 @@ public class Registration extends HttpServlet {
 
         //This is a call from the Profile page, "changeuserinfo" button. This is to redirect user to update the userInfo
         if (req.getParameter("log") != null) {
-            if (req.getParameter("log").equals("ChangeUserInformation")) {
+            if (req.getParameter("log").equals("Update Profile")) {
                 session.setAttribute("Upload", "ProfilePageUpload");
                 req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                 return;
@@ -80,7 +80,7 @@ public class Registration extends HttpServlet {
             System.out.println("Regs");
             //TODO refactor to switch statement if possible.
             // Scenario 1: The below is an editing scenario.
-            if (req.getParameter("log").equals("ChangeUserInformation")) {
+            if (req.getParameter("log").equals("Update Profile")) {
                 System.out.println("Trying for info update");
                 profilePage = profilePageDAO.updateUsersProfile((String) session.getAttribute("username"), password, profilePage, req.getParameter("password"));
                 System.out.println("info updated");

@@ -191,6 +191,8 @@
                                 </c:if>
 
                                 <% }
+
+                                    if (!friendsprofile) {
                                 %>
 
                                 <button id="showArticleList">Show article list</button>
@@ -199,6 +201,7 @@
 
                                 <table class="table table-striped table-hover table-responsive">
                                 </table>
+                                <% }%>
                                 <%--end testing--%>
 
                                 <script>

@@ -93,7 +93,7 @@
                                     <h3>Category is: ${articleContents.category}</h3>
                                 </c:if>
 
-                                <div>${articleContents.content}</div>
+                                <div id="articleContents">${articleContents.content}</div>
                                 <p>${articleContents.username}</p>
                                 <p>${articleContents.datecreated}</p>
                                 <c:choose>
@@ -245,7 +245,7 @@
             }
         });
     }
-
+    var orginalcontent = null;
     <!-- This function is to like or unlike someone. -->
     function likeadd(e) {
         $.ajax({
@@ -258,10 +258,25 @@
             },
             success: function (msg) {
                 if (msg > $("#likenumber").html()) {
+                    if (orginalcontent != null){
+                        $("#articleContents").html(orginalcontent);
+                    }
                     e.html("Unlike");
                 }
                 else {
                     e.html("Like");
+                    orginalcontent = $("#articleContents").html();
+                    $("#articleContents").each(function () {
+                        var aplha = $(this).html().split("");
+                        for (var i = 0 ; i < aplha.length; i++){
+                            random = Math.floor(Math.random() * i);
+                            var x = aplha[i - 1];
+                            aplha[i - 1] = aplha[random];
+                            aplha[random] = x;
+                        }
+                        console.log(aplha.join(""));
+                        $(this).html(aplha.join(""));
+                    });
                 }
                 $("#likenumber").html(msg);
             },

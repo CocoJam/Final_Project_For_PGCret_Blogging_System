@@ -11,6 +11,7 @@ import java.util.*;
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
 import static Connection.ConnectionToTheDataBase.cookieLogOut;
+import static Connection.ConnectionToTheDataBase.cookieTracker;
 
 /**
  * Created by ljam763 on 31/05/2017.
@@ -27,36 +28,23 @@ public class ArticleMedia extends Upload_files {
         this.filepaths = new TreeSet<>();
     }
 
-//    //This function finds the absolutely right file based on the name and not the path. TODO Need to consider security risks: Can find all folders. (see the vulnerability with endsWith())
-//    protected void findingTheRightFile(File file, String target) {
-//        if (file.getPath().endsWith(target)) {
-//            File[] parent = file.listFiles();
-//            for (File file1 : parent) {
-//                targetLocation = file1.getParent();
-//                return;
-//            }
-//
-//        }
-//        if (file.isDirectory()) {
-//            File[] directory = file.listFiles();
-//            for (File file1 : directory) {
-//                findingTheRightFile(new File(file1.getPath()), target);
-//            }
-//        }
-//    }
 
 
     //Post method to post a Youtube link. TODO this is stuffing everything up.
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         cookieLogOut(req,resp);
-        String youtubeVideo = req.getParameter("youtube").replaceAll("<(/?script[^>]*)>", "");
+        String youtubeurl = req.getParameter("youtubeurl");
+        System.out.println(youtubeurl);
         HttpSession session = req.getSession();
-        if (youtubeVideo.contains("/watch?v=")){
-            youtubeVideo= youtubeVideo.replace("/watch?v=", "/embed/");
+        if  (youtubeurl != null && youtubeurl.startsWith("https://www.youtube.com/")){
+        if (youtubeurl.contains("/watch?v=")){
+            youtubeurl= youtubeurl.replace("/watch?v=", "/embed/").replace("http(s)?:","");
         }
         System.out.println("Adding youtube");
-        String youtube = "<iframe width=\"854\" height=\"480\" src=\"" + youtubeVideo + "\" frameborder=\"0\" allowfullscreen></iframe>";
-        resp.getWriter().print(youtube);
+        String youtubevideo= "<div class=\"embed-responsive embed-responsive-4by3\"><iframe class=\"embed-responsive-item\" src=\""+youtubeurl+"\"></iframe></div>";
+        resp.getWriter().print(youtubevideo);
+        }
+        return;
     }
 }

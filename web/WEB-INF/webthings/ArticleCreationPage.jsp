@@ -184,7 +184,7 @@
                                     <form action="/Upload" method="post" id="Upload"
                                           enctype="multipart/form-data">
                                         <input type="file" name="file" size="50" class="btn btn-white"/>
-                                        <input type="submit" class="btn btn-primary" name="Upload" value="ArticlesUpload"/>
+                                        <input type="submit" class="btn btn-primary" name="Upload" value="Upload"/>
                                     </form>
 
                                 </div>
@@ -194,7 +194,7 @@
                                     <div class="form-group">
                                         <form id="Youtube" action="/ArticleUpload" method="post">
                                             <input id="youtubeurl" type="text" name="youtube" class="form-control">
-                                            <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit" class="btn btn-danger">
+                                            <input type="submit" name="youtubeVideoSubmition" value="youtube" class="btn btn-danger">
                                         </form>
                                     </div>
                                 </div>
@@ -473,6 +473,10 @@
                     else if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
                         li.innerHTML = "<img src=\"" + msg + "\">";
                     }
+                    else {
+                        alert("Upload file is not supported.");
+                        return;
+                    }
                     $("#sortable").append(li);
                 },
                 error: function (request, status, error) {
@@ -489,7 +493,7 @@
             $.ajax({
                 url: '/ArticleUpload',
                 type: 'POST',
-                data: {"youtube": $("#youtubeurl").val()},
+                data: {"youtubeurl": $("#youtubeurl").val()},
                 success: function (msg) {
                     if (msg == "") {
                         alert("This upload is invaild.");
