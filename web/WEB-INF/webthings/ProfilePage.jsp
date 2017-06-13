@@ -61,7 +61,7 @@
 
                                             <c:choose>
                                                 <%--If this is a default profile image get the image from default photo directory--%>
-                                                <c:when test='${profileInfo.profilepic.startsWith("dEfAuLt")}'>
+                                                <c:when test='${profileInfo.profilepic.startsWith("defaultslashn")}'>
                                                     <img src="defaultImg/${profileInfo.profilepic}"
                                                          alt="Circle Image"
                                                          class="img-rounded img-responsive img-raised">
@@ -117,7 +117,17 @@
 
                         <%--Introduction "blurb'--%>
                         <div class="description text-center">
-                            <p>${profileInfo.introduction}</p>
+
+                            <c:choose>
+                                <c:when test="${not empty profileInfo.introduction}">
+                                    <p>${profileInfo.introduction}</p>
+                                </c:when>
+                                <c:otherwise>
+                                    <p>Welcome to ${profileInfo.name}'s page! Feel free to look around and view the articles!</p>
+                                </c:otherwise>
+                            </c:choose>
+
+
                         </div>
 
                         <div class="row">

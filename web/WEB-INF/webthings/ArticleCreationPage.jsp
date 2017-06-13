@@ -80,7 +80,7 @@
                                                 <c:when test="${profileInfo.profilepic != null}">
                                                     <c:choose>
                                                         <%--If this is a default profile image get the image from default photo directory--%>
-                                                        <c:when test='${profileInfo.profilepic.startsWith("dEfAuLt")}'>
+                                                        <c:when test='${profileInfo.profilepic.startsWith("defaultslashn")}'>
                                                             <img src="defaultImg/${profileInfo.profilepic}"
                                                                  alt="Circle Image"
                                                                  class="img-rounded img-responsive img-raised">
