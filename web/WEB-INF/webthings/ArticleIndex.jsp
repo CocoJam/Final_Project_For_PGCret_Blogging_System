@@ -190,8 +190,7 @@
                                             <li class="ui-widget-content ui-corner-tr">
 
                                                     <%--<c:if test="${articleList.equals('all')}">--%>
-                                                    <%--<a href=ProfilePage?accessFriend=${index.username}--%>
-                                                    <%--class="username">${index.username}</a>--%>
+
                                                     <%--</c:if>--%>
                                                 <p class="articlename" hidden>${index.articlename}</p>
                                                 <c:choose>
@@ -226,6 +225,7 @@
 
                                                 <p hidden class="date">${index.datecreated}</p>
                                                 <p hidden class="id">${index.articleid}</p>
+                                                <a href=ProfilePage?accessFriend=${index.username} class="username" hidden>${index.username}</a>
                                             </li>
 
 
@@ -509,12 +509,13 @@
             var image = $link.siblings("img").attr('src');
             var title = $link.siblings("h4").html();
             var content = $link.siblings(".card-text").html();
-            var username = null;
-            username = $link.siblings(".username").html();
+            var username =$link.siblings(".username").html();
+            var usernameAddress = $link.siblings(".username").attr("href");
 
-            var img = $("<p></p>");
+            var img = $("<p style='text-align:center'></p>");
+            "ProfilePage?accessFriend=111"
             if (image != undefined) {
-                img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<br/>" + "<img src=\'" + image + "\'width=\"96\" height=\"72\">" + "<p>" + content + "</p>");
+                img.html("<a href=\"" + hyper + "\">" + title + "</a>"+"<br/>" +"<a href=\"" + usernameAddress + "\">" + username + "</a>"+ "<br/>" + "<img src=\'" + image + "\'width=\"96\" height=\"72\">" + "<p>" + content + "</p>");
             }
             else {
                 img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<p>" + content + "</p>");
@@ -523,7 +524,7 @@
             setTimeout(function () {
                 img.dialog({
                     width: 400,
-                    height: 200,
+                    height: 400,
                     modal: true
                 });
             }, 1);
