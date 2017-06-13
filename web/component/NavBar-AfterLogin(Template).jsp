@@ -60,28 +60,13 @@
             <!-- Navbar name of our website, displays on left -->
             <a href="ProfilePage" class="navbar-brand clickOnce"><i class="material-icons">apps</i>
                 Slash N</a>
-
-            <%--Search bar here--%>
-            <%--<li>--%>
-            <form action="/ProfilePage" method="get">
-                <input list="usernames" name="accessFriend" class="form-control searchBar" placeholder="Search People"
-                       style="color: white" id="NameBarForm" list="usernames">
-
-                <datalist id="usernames">
-                    <c:forEach items="${userlist}" var="names">
-                    <option value="${names}">
-                        </c:forEach>
-                </datalist>
-            </form>
-            <%--</li>--%>
-            <%--Search bar here--%>
         </div>
 
         <!-- Navbar elements which display on right -->
         <!-- Container for elements to hide on mobile -->
         <div class="collapse navbar-collapse" id="expand-navbar-icons">
 
-            <!-- Nav bar right side icons -->
+            <!-- Nav bar right side links start -->
             <!-- Use on all other pages except login/register -->
             <ul class="nav navbar-nav navbar-right">
 
@@ -188,7 +173,27 @@
                         <li><a href="logout?submit=Logout" class="clickOnce">Sign Out</a></li>
                     </ul>
                 </li>
+
             </ul>
+            <%--Navbar right links end--%>
+
+            <%--Search bar here--%>
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <form action="/ProfilePage" method="get" class="navbar-form" role="search">
+                        <div class="input-group">
+                            <input list="usernames" name="accessFriend" class="form-control searchBar" placeholder="Search People"
+                                   style="top:0.5em;" id="NameBarForm" list="usernames">
+                            <datalist id="usernames">
+                                <c:forEach items="${userlist}" var="names">
+                                <option value="${names}">
+                                    </c:forEach>
+                            </datalist>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+            <%--Search bar here--%>
 
         </div>
     </div>
