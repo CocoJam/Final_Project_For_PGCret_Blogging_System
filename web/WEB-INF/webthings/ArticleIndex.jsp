@@ -517,7 +517,7 @@
             var img = $("<p style='text-align:center'></p>");
             "ProfilePage?accessFriend=111"
             if (image != undefined) {
-                img.html("<a href=\"" + hyper + "\">"+"<h1>" + title +"</h1>" +"</a>" + "<br/>" + "<a href=\"" + usernameAddress + "\">" +"<h2>"+ username+"</h2>" + "</a>" + "<br/>" + "<h3><strong>Written on:</strong>"+ date +"</h3>" + "<img src=\'" + image + "\'width=\"50%\">" + "<p>" + content + "</p>");
+                img.html("<a href=\"" + hyper + "\">"+"<h1>" + title +"<h1>" +"</a>" + "<br/>" + "<a href=\"" + usernameAddress + "\">" +"<h2>"+ username+"</h2>" + "</a>" + "<br/>" + "<h3><strong>Written on:</strong>"+ date +"</h3>" + "<img src=\'" + image + "\'width=\"50%\">" + "<p>" + content + "</p>");
             }
             else {
                 img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<p>" + content + "</p>");
