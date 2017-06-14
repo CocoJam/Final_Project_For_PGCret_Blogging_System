@@ -84,16 +84,29 @@
                                         <c:when test="${articleList.equals('self')}">
                                             <c:choose>
                                                 <c:when test="${profileInfo.profilepic != null}">
-                                                    <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                         alt="Profile Picture"
-                                                         class="img-rounded img-responsive img-raised">
+                                                    <c:choose>
+                                                        <%--If this is a default profile image get the image from default photo directory--%>
+                                                        <c:when test='${profileInfo.profilepic.startsWith("default")}'>
+                                                            <img src="defaultImg/${profileInfo.profilepic}"
+                                                                 alt="Avatar"
+                                                                 class="img-rounded img-responsive img-raised">
+                                                        </c:when>
+
+                                                        <%--Otherwise get the photo from the users photo page--%>
+
+                                                        <c:otherwise>
+                                                            <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
+                                                                 alt="Avatar" class="img-rounded img-responsive img-raised">
+                                                        </c:otherwise>
+                                                    </c:choose>
+
                                                     <div class="name" id="custom-profile-name">
                                                         <h3 class="title">${profileInfo.name}'s Article</h3>
                                                     </div>
                                                 </c:when>
 
                                                 <c:otherwise>
-                                                    <img src="Upload-photos/placeholder.gif" alt="Circle Image"
+                                                    <img src="Upload-photos/placeholder.gif" alt="Avatar"
                                                          class="img-rounded img-responsive img-raised">
                                                 </c:otherwise>
                                             </c:choose>
@@ -126,7 +139,20 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label">Category</label>
                                     <input name="ArticleCategory" class="form-control" type="text"
-                                           id="ArticleCategory" required/>
+                                           id="ArticleCategory" value="${articleContents.category}" list="ArticleCategoryList" required/>
+
+                                    <datalist id="ArticleCategoryList">
+                                        <option value="Programming"></option>
+                                        <option value="Java"></option>
+                                        <option value="Web Technologies"></option>
+                                        <option value="CSS"></option>
+                                        <option value="Javascript"></option>
+                                        <option value="jQuery"></option>
+                                        <option value="Personal"></option>
+                                        <option value="Opinion"></option>
+                                        <option value="Random"></option>
+                                    </datalist>
+
                                 </div>
 
                                 <input type="hidden" name="ArticleContent">
@@ -173,21 +199,21 @@
                             </div>
                                 <!-- Media upload -->
                                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                                    <h3>Upload Something</h3>
+                                    <h3>Upload Media</h3>
                                     <form action="/Upload" method="post" id="Upload"
                                           enctype="multipart/form-data">
                                         <input type="file" name="file" size="50" class="btn btn-white"/>
-                                        <input type="submit" class="btn btn-primary" name="Upload" value="ArticlesUpload"/>
+                                        <input type="submit" class="btn btn-primary" name="Upload" value="Upload"/>
                                     </form>
 
                                 </div>
                                 <!-- Youtube upload -->
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <h3>Youtube video</h3>
+                                    <h3>Embed Youtube</h3>
                                     <div class="form-group">
                                         <form id="Youtube" action="/ArticleUpload" method="post">
-                                            <input id="youtubeurl" type="text" name="youtube" class="form-control">
-                                            <input type="submit" name="youtubeVideoSubmition" value="youtubesubmit" class="btn btn-danger">
+                                            <input id="youtubeurl" type="text" name="youtube" class="form-control" placeholder="Paste your Youtube link and click button below to add">
+                                            <input type="submit" name="youtubeVideoSubmition" value="youtube" class="btn btn-danger">
                                         </form>
                                     </div>
                                 </div>
@@ -213,8 +239,6 @@
                                 </c:choose>
                             </div>
 
-                            <!-- Media upload - TODO integrate with the uploader inside the WYSIWYG Editor -->
-
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <button id="formsubmit" class="btn btn-success btn-block"
@@ -223,6 +247,9 @@
                                 </div>
                             </div>
 
+                            <!-- Empty div for adding some space at the bottom of the container -->
+                            <div class="row" style="margin-bottom:2em;"></div>
+
                         </div>
                     </div>
                 </div>
@@ -230,7 +257,10 @@
         </div>
     </div>
 </div>
-</div>
+
+<!-- FOOTER START -->
+<%@ include file="../../component/Footer(Template).html" %>
+<!-- FOOTER END -->
 
 </body>
 
@@ -303,7 +333,12 @@
         insertImage: 'Insert Image',
         upload: "Upload Image",
         insertAudio: "Insert Audio",
-        noembed: "Embed Media"
+        noembed: "Embed Media",
+
+        preformatted: "Code (Preformatted Text)",
+
+        foreColor: "Text Color",
+        backColor: "Background Color"
     };
 
     $('.wysiwys').trumbowyg({
@@ -482,7 +517,7 @@
             $.ajax({
                 url: '/ArticleUpload',
                 type: 'POST',
-                data: {"youtube": $("#youtubeurl").val()},
+                data: {"youtubeurl": $("#youtubeurl").val()},
                 success: function (msg) {
                     if (msg == "") {
                         alert("This upload is invaild.");
