@@ -158,16 +158,16 @@
                                                    class="content">${content.content}</p>
                                                 <p id="${content.commentId}commentedTime"
                                                    class="commentedTime">${content.commentedTime}</p>
-                                                <c:if test="${content.owner || articleContents.owner}">
-                                                    <button id="${content.commentId}delete"
-                                                            onclick="deleteComment($(this))">Delete
-                                                    </button>
-                                                </c:if>
                                                 <c:if test="${content.owner}">
                                                     <input type="text" id="${content.commentId}text" class="change">
                                                     <button class="btn btn-round btn-info" id="${content.commentId}edit"
                                                             onclick="editComment($(this))"><i class="material-icons">create</i>
                                                         Edit
+                                                    </button>
+                                                </c:if>
+                                                <c:if test="${content.owner || articleContents.owner}">
+                                                    <button class="btn btn-round btn-info" id="${content.commentId}delete"
+                                                            onclick="deleteComment($(this))">Delete
                                                     </button>
                                                 </c:if>
                                             </div>
