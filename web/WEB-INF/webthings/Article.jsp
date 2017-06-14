@@ -151,40 +151,57 @@
                                 </div>
                                 <!-- Article Content end -->
 
-                                <!-- Article commenting section -->
+                                <!-- Article comments section -->
+                                <h2 style="margin-left: -1em;"><small>Comments</small></h2>
+
                                 <div class="row">
                                     <div id="containComments">
                                         <c:forEach items="${commentlist}" var="content">
+                                            <div class="row">
                                             <div id="${content.commentId}" class="commentid">
-                                                <p id="${content.commentId}username"
-                                                   class="username">${content.username}</p>
+
+                                                <!-- Display comment -->
+                                                <small><p id="${content.commentId}username"
+                                                          class="username"><strong>Posted by:</strong>
+                                                    <a href="ProfilePage?accessFriend=${content.username}">
+                                                            ${content.username}</a> on
+                                                        <%--</p>--%>
+                                                        <%--<p id="${content.commentId}commentedTime"--%>
+                                                        <%--class="commentedTime"><strong>Posted on:</strong>--%>
+                                                        ${content.commentedTime}</p>
+                                                </small>
+
+                                                <blockquote>
                                                 <p id="${content.commentId}content"
-                                                   class="content">${content.content}</p>
-                                                <p id="${content.commentId}commentedTime"
-                                                   class="commentedTime">${content.commentedTime}</p>
+                                                          class="content">${content.content}</p>
+                                                </blockquote>
+                                                <!-- Display comment end -->
+
+                                                <!-- Edit and Delete Commment buttons -->
                                                 <c:if test="${content.owner}">
                                                     <input type="text" id="${content.commentId}text" class="change">
-                                                    <button class="btn btn-round btn-info" id="${content.commentId}edit"
-                                                            onclick="editComment($(this))"><i class="material-icons">create</i>
-                                                        Edit
+                                                    <button class="btn btn-round btn-info btn-sm" id="${content.commentId}edit"
+                                                            onclick="editComment($(this))"><i class="material-icons">create</i> Edit
                                                     </button>
                                                 </c:if>
                                                 <c:if test="${content.owner || articleContents.owner}">
-                                                    <button class="btn btn-round btn-info" id="${content.commentId}delete"
-                                                            onclick="deleteComment($(this))">Delete
+                                                    <button class="btn btn-round btn-info btn-sm" id="${content.commentId}delete"
+                                                            onclick="deleteComment($(this))"><i class="material-icons">delete_forever</i> Delete
                                                     </button>
                                                 </c:if>
+                                                <!-- Edit and Delete Commment buttons end -->
+
+                                            </div>
                                             </div>
                                         </c:forEach>
                                     </div>
                                 </div>
-                                <!-- Article commenting section -->
+                                <!-- Article comments section -->
 
                                 <!-- Comments Box -->
                                 <div class="row">
-                                    <h2><small>Add a comment:</small></h2>
-                                    <div class="row"><textarea class="form-control" placeholder="Enter your comments here" rows="5" id="comments"
-                                                               name="commentcontent"></textarea></div>
+                                    <h3 style="margin-left: -0.5em;"><small>Add a comment:</small></h3>
+                                    <div class="row"><textarea class="form-control" placeholder="Enter your comments here" rows="5" id="comments" name="commentcontent"></textarea></div>
                                     <div class="row">
                                         <button class="btn btn-round btn-info" id="addComment"><i
                                                 class="material-icons">message</i> Add Comment
@@ -240,8 +257,8 @@
                 p3.className = "commentedTime";
                 var deletebutton = document.createElement("button");
                 deletebutton.id = Data.CommentId + "delete";
-                deletebutton.className = "delete btn btn-round btn-info";
-                deletebutton.innerHTML = "Delete";
+                deletebutton.className = "delete btn btn-round btn-info btn-sm";
+                deletebutton.innerHTML = "<i class='material-icons'>delete_forever</i> Delete";
                 deletebutton.setAttribute("onclick", "deleteComment($(this))");
                 var editinput = document.createElement("input");
                 editinput.type = "text";
@@ -249,8 +266,8 @@
                 editinput.className = "change";
                 var editbutton = document.createElement("button");
                 editbutton.id = Data.CommentId + "edit";
-                editbutton.className = "edit btn btn-round btn-info";
-                editbutton.innerHTML = "Edit";
+                editbutton.className = "edit btn btn-round btn-info btn-sm";
+                editbutton.innerHTML = "<i class='material-icons'>create</i> Edit";
                 editbutton.setAttribute("onclick", "editComment($(this))");
                 div.append(p1);
                 div.append(p2);
