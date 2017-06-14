@@ -142,15 +142,15 @@
                         <button id="listorcard">To list</button>
                         <label>Search: </label>
                         <input type="text" id="searchBar">
+                        <button id="sorttitle">By title</button>
+                        <button id="sortcategory">By category</button>
+                        <button id="sortdate">By date</button>
                         <!-- This is the card based article index-->
                         <div class="row">
                             <div id="cardarticle"
                                  class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
                                 <label for="sort">Sort</label>
                                 <button id="sort">Assemble</button>
-                                <button id="sorttitle">By title</button>
-                                <button id="sortcategory">By category</button>
-                                <button id="sortdate">By date</button>
                                 <div class="ui-widget ui-helper-clearfix">
                                     <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix"
                                         style="margin-top: 0px;">
@@ -225,7 +225,8 @@
 
                                                 <p hidden class="date">${index.datecreated}</p>
                                                 <p hidden class="id">${index.articleid}</p>
-                                                <a href=ProfilePage?accessFriend=${index.username} class="username" hidden>${index.username}</a>
+                                                <a href=ProfilePage?accessFriend=${index.username} class="username"
+                                                   hidden>${index.username}</a>
                                             </li>
 
 
@@ -509,13 +510,13 @@
             var image = $link.siblings("img").attr('src');
             var title = $link.siblings("h4").html();
             var content = $link.siblings(".card-text").html();
-            var username =$link.siblings(".username").html();
+            var username = $link.siblings(".username").html();
             var usernameAddress = $link.siblings(".username").attr("href");
 
             var img = $("<p style='text-align:center'></p>");
             "ProfilePage?accessFriend=111"
             if (image != undefined) {
-                img.html("<a href=\"" + hyper + "\">" + title + "</a>"+"<br/>" +"<a href=\"" + usernameAddress + "\">" + username + "</a>"+ "<br/>" + "<img src=\'" + image + "\'width=\"96\" height=\"72\">" + "<p>" + content + "</p>");
+                img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<br/>" + "<a href=\"" + usernameAddress + "\">" + username + "</a>" + "<br/>" + "<img src=\'" + image + "\'width=\"96\" height=\"72\">" + "<p>" + content + "</p>");
             }
             else {
                 img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<p>" + content + "</p>");
@@ -595,32 +596,115 @@
             }
         });
         <!-- After assembled that allow the user to sort by title using the defaultsort and setting the type into the h5, which is the title -->
+        var title = true;
         $("#sorttitle").on('click', function () {
-            type = ".articlename";
-            if (assemibled === true) {
-                things.sort(defaultSort);
-                display();
+            if (!cardOrList) {
+                type = ".articlename";
+                if (assemibled === true) {
+                    if (title) {
+                        things.sort(defaultSort);
+                    }
+                    else {
+                        things.sort(-defaultSort);
+                    }
+                    title = !title
+                    display();
+                }
+                assemibled = false;
             }
-            assemibled = false;
+            else {
+                sortingTables(".tablearticlename", title);
+                title = !title;
+            }
         });
         <!-- After assembled that allow the user to sort by title using the defaultsort and setting the type into the catrgory class. -->
+        var category = true;
         $("#sortcategory").on('click', function () {
-            type = ".Articlecategory";
-            if (assemibled === true) {
-                things.sort(defaultSort);
-                display();
+            if (!cardOrList) {
+                type = ".Articlecategory";
+                if (assemibled === true) {
+                    if (title) {
+                        things.sort(defaultSort);
+                    }
+                    else {
+                        things.sort(-defaultSort);
+                    }
+                    category = !category
+                    display();
+                }
+                assemibled = false;
             }
-            assemibled = false;
+            else {
+                sortingTables(".tablearticlecategory", category);
+                category = !category;
+            }
         });
         <!-- After assembled that allow the user to sort by title using the defaultsort and setting the type into the date class. -->
+        var date = true;
         $("#sortdate").on('click', function () {
-            type = ".date";
-            if (assemibled === true) {
-                things.sort(defaultSort);
-                display();
+            if (!cardOrList) {
+                type = ".date";
+                if (assemibled === true) {
+                    if (title) {
+                        things.sort(defaultSort);
+                    }
+                    else {
+                        things.sort(-defaultSort);
+                    }
+                    date = !date
+                    display();
+                }
+                assemibled = false;
             }
-            assemibled = false;
+            else {
+                sortingTables(".tablearticledate", date);
+                date = !date
+            }
         });
+
+        <!-- The toggle that is used to sort the tables -->
+        function sortingTables(type, boolean) {
+            var things = [];
+            $(type).each(function () {
+                things.push($(this));
+            });
+            if (boolean == true) {
+                things.sort(tableSort);
+            }
+            else {
+                things.sort(-tableSort);
+            }
+            console.log(things);
+            var a = 0;
+            for (var i = 0; i < things.length; i++) {
+                $(things[i]).parent().fadeOut("slow", function () {
+                    a++;
+                    $(this).remove();
+                    if (a == things.length) {
+                        runningsort();
+                    }
+                })
+            }
+            function runningsort() {
+                for (var i = 0; i < things.length; i++) {
+                    var list = $(type).parent().eq(i).html();
+                    $(things[i]).parent();
+                    $("table").append($(things[i]).parent());
+                    $(things[i]).parent().fadeIn("slow", function () {
+                        $(this).css("z-index", 0);
+                    })
+                }
+            }
+        }
+
+
+        function tableSort(elementX, elementY) {
+            if (elementX.html().trim().toLowerCase() < elementY.html().trim().toLowerCase())
+                return -1;
+            if (elementX.html().trim().toLowerCase() > elementY.html().trim().toLowerCase())
+                return 1;
+            return 0;
+        }
 
         <!-- The card displaying function, as the cartlist is return from the session, which is the servlet that is from the ArticleCart. This will return array list from the attribute that is called cartlist. Due to the nature of this that is passed in as a string in the fashion of array, hence substring and regex spliting is needed. -->
         var cartlist = '<%= session.getAttribute("cartlist") %>';
