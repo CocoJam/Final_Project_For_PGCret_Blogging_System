@@ -12,13 +12,7 @@
     <title>Article</title>
 
     <%@include file="../../component/Header(styling Template).html" %>
-    <link rel="stylesheet" href="../../assets/css/button-flat.css">
-
-    <!-- jQUERY & jQUERY UI -->
-    <%--the following jquery code has been omitted as it conflicts with the other existing jquery version.--%>
-    <%--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="../../assets/css/button-flat.css"><!-- Flat button -->
 
     <!-- Load WYSIWYG STYLE -->
     <link rel="stylesheet" href="../../Trumbowyg/dist/ui/trumbowyg.min.css">
