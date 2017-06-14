@@ -111,6 +111,7 @@
                                 <c:if test="${articleContents.owner}">
                                     <p>${articleContents.owner}</p>
                                     <form action="/Articles" method="post">
+                                        <input type="hidden" name="articleidnumber" value="${articleContents.articleid}">
                                         <input type="submit" name="add" value="EditArticle">
                                     </form>
                                     <form action="/Deleting" method="post">
