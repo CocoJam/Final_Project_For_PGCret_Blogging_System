@@ -79,7 +79,7 @@
                                         </c:when>
 
                                         <c:otherwise>
-                                            <img src="Upload-photos/placeholder.gif" alt="Circle Image"
+                                            <img src="assets/img/placeholder.gif" alt="Circle Image"
                                                  class="img-rounded img-responsive img-raised">
                                         </c:otherwise>
                                     </c:choose>

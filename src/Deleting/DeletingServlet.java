@@ -40,12 +40,13 @@ public class DeletingServlet extends HttpServlet {
         setupForUsernameAndPasswordCheck(req, session);
         if (req.getParameter("log") != null) {
             //Deleting this current Profile
-            if (req.getParameter("log").equals("DeletingProfile")) {
+            if (req.getParameter("log").equals("Deleting Profile")) {
                 tryingTodeleteWholeProfile(req, resp, session);
                 closingConnection();
                 return;
                 //Deleting this current Article
             } else if (req.getParameter("log").equals("DeleteArticle")) {
+                System.out.println("deleting article");
                 tryingTodeleteWholeArticle(req, resp);
                 closingConnection();
                 return;
@@ -99,7 +100,7 @@ public class DeletingServlet extends HttpServlet {
         article = (Articles) session.getAttribute("articleContents");
         if (article.getUsername().equals(sessionUsername)) {
             System.out.println("dropping this article");
-            deleteDAO.dropSpeificArticle(article.getArticleid());
+            deleteDAO.dropSpecificArticlesAll(article.getArticleid());
         }
         req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
 //        req.getRequestDispatcher("/ArticlesIndex").forward(req, resp);
@@ -121,7 +122,7 @@ public class DeletingServlet extends HttpServlet {
         deleteDAO.dropSpeificComment(commentId);
         closingConnection();
         System.out.println("trying to delete the comment");
-        req.getRequestDispatcher("/Articles").forward(req, resp);
+//        req.getRequestDispatcher("/Articles").forward(req, resp);
         return;
     }
 // Password and username check of deleting profile.
