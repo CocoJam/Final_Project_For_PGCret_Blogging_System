@@ -97,7 +97,8 @@
 
                                                         <c:otherwise>
                                                             <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                                 alt="Avatar" class="img-rounded img-responsive img-raised">
+                                                                 alt="Avatar"
+                                                                 class="img-rounded img-responsive img-raised">
                                                         </c:otherwise>
                                                     </c:choose>
 
@@ -140,7 +141,8 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label">Category</label>
                                     <input name="ArticleCategory" class="form-control" type="text"
-                                           id="ArticleCategory" value="${articleContents.category}" list="ArticleCategoryList" required/>
+                                           id="ArticleCategory" value="${articleContents.category}"
+                                           list="ArticleCategoryList" required/>
 
                                     <datalist id="ArticleCategoryList">
                                         <option value="Programming"></option>
@@ -180,57 +182,61 @@
                             <div class="row text-center">
                                 <div class="btn-group-justified">
 
-                                <!-- Make a new section, put current WYSIWYG content in -->
-                                <div class="col-xs-4 col-sm-4 col-md-4">
-                                    <button class="btn btn-block btn-flat" onclick="addNewSection()"><i
-                                            class="material-icons">done</i>
-                                        <span class="hidden-xs">Add</span>
-                                    </button>
-                                </div>
+                                    <!-- Make a new section, put current WYSIWYG content in -->
+                                    <div class="col-xs-4 col-sm-4 col-md-4">
+                                        <button class="btn btn-block btn-flat" onclick="addNewSection()"><i
+                                                class="material-icons">done</i>
+                                            <span class="hidden-xs">Add</span>
+                                        </button>
+                                    </div>
 
-                                <!-- Delete currently selected section -->
-                                <div class="col-xs-4 col-sm-4 col-md-4">
-                                    <button class="btn btn-block btn-flat" onclick="deleteSection()"><i
-                                            class="material-icons">delete</i>
-                                        <span class="hidden-xs">Delete</span>
-                                    </button>
-                                </div>
+                                    <!-- Delete currently selected section -->
+                                    <div class="col-xs-4 col-sm-4 col-md-4">
+                                        <button class="btn btn-block btn-flat" onclick="deleteSection()"><i
+                                                class="material-icons">delete</i>
+                                            <span class="hidden-xs">Delete</span>
+                                        </button>
+                                    </div>
 
-                                <!-- Clear all content inside WYSIWYG editor -->
-                                <div class="col-xs-4 col-sm-4 col-md-4">
-                                    <button class="btn btn-block btn-flat" onclick="resetText()"><i
-                                            class="material-icons">sync</i>
-                                        <span class="hidden-xs">Reset</span>
-                                    </button>
-                                </div>
+                                    <!-- Clear all content inside WYSIWYG editor -->
+                                    <div class="col-xs-4 col-sm-4 col-md-4">
+                                        <button class="btn btn-block btn-flat" onclick="resetText()"><i
+                                                class="material-icons">sync</i>
+                                            <span class="hidden-xs">Reset</span>
+                                        </button>
+                                    </div>
 
                                 </div>
                             </div>
 
+                            <div class="row">
                                 <!-- Media upload -->
-                                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
                                     <h3>Upload Media</h3>
                                     <form action="/Upload" method="post" id="Upload"
                                           enctype="multipart/form-data">
                                         <input type="file" name="file" size="50" class="btn btn-white"/>
-                                        <input type="submit" class="btn btn-flat btn-primary" name="Upload" value="Upload"/>
+                                        <input type="submit" class="btn btn-flat btn-primary" name="Upload"
+                                               value="Upload"/>
                                     </form>
+                                </div>
 
-                                </div>
                                 <!-- Youtube upload -->
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8">
                                     <h3>Embed Youtube</h3>
-                                    <div class="form-group">
-                                        <form id="Youtube" action="/ArticleUpload" method="post">
-                                            <input id="youtubeurl" type="text" name="youtube" class="form-control" placeholder="Paste your Youtube link and click button below to add">
-                                            <input type="submit" name="youtubeVideoSubmition" value="youtube" class="btn btn-flat btn-danger">
-                                        </form>
-                                    </div>
+                                    <form id="Youtube" action="/ArticleUpload" method="post">
+                                        <input id="youtubeurl" type="text" name="youtube" class="form-control"
+                                               placeholder="Paste your Youtube link and click button below to add"
+                                               style="margin-top:-1em;">
+                                        <input type="submit" name="youtubeVideoSubmition" value="youtube"
+                                               class="btn btn-flat btn-danger">
+                                    </form>
                                 </div>
+                            </div>
 
                             <!-- Space for holding content to be uploaded to DB -->
                             <!-- DRAGGABLE SECTIONS -->
-                            <h2>Preview Your Content</h2>
+                            <div class="row text-center"><h2>Preview Your Content</h2></div>
                             <div id="contents">
                                 <c:choose>
                                     <c:when test="${not empty articleContents}">
@@ -386,16 +392,16 @@
 
 <!-- More WYSIWYG JS -->
 <script>
-//    submit button on click to submit the form of the draggible content set
+    //    submit button on click to submit the form of the draggible content set
     function whenClickAdd() {
         $("#submitButton").click();
     }
 
-// The reset the Textarea to empty the wysiwys.
+    // The reset the Textarea to empty the wysiwys.
     function resetText() {
         $('.wysiwys').trumbowyg('empty');
     }
-// Adding the new section or submitting the edit line of the wysiwys into the selected section of the draggible.
+    // Adding the new section or submitting the edit line of the wysiwys into the selected section of the draggible.
     function addNewSection() {
         var content = $('.wysiwys').trumbowyg('html');
         if (mouse == -1) {
@@ -429,7 +435,7 @@
             $(".ui-state-default").eq($(".ui-state-default").length - 1).remove();
         }
     }
-// Used to disattach a class from the li or the draggible to display to the user,
+    // Used to disattach a class from the li or the draggible to display to the user,
     function clearSection() {
         mouse = -1;
         clicked = false;
