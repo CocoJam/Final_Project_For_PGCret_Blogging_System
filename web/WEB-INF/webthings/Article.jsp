@@ -175,7 +175,7 @@
 
                                 <!-- Comments Box -->
                                 <div class="row">
-                                    <label for="comments">Comments: </label>
+                                    <label for="comments">Add a comment: </label>
                                     <br>
                                     <textarea rows="4" cols="50" id="comments" name="commentcontent"></textarea>
                                     <button id="addComment">Add Comment</button>
@@ -340,9 +340,12 @@
 
     <!-- Making all images img-responsive -->
     $(document).ready(function () {
-        var allImages = $('img');
-        console.log(allImages);
-        allImages.addClass('img-responsive');
+        $("#articleContents img").each(function () {
+            $(this).addClass('img-responsive');
+        })
+        /* Alternative version below: this will grab all the img on page */
+//        var allImages = $('img');
+//        allImages.addClass('img-responsive');
     });
 
 </script>
