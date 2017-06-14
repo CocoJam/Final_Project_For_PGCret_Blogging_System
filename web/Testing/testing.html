@@ -6,68 +6,155 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
 </head>
 <body>
 
 
+<table class="table table-striped table-hover table-responsive">
+    <tr>
+        <th>
+            Article Names
+        </th>
+        <th>
+            Date Created
+        </th>
+        <%--Scenario 1: ALL articles are requested--%>
+        <th>
+            Article Author
+        </th>
+        <th>
+            Article Category
+        </th>
 
-<!-- Modal -->
+    </tr>
 
-<!-- Small modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Small modal</button>
+    <tr class="tablecontentR">
+        <td class="tablearticleid" hidden>a</td>
+        <td class="tablearticlename">
+            b
+        </td>
+        <td class="tablearticledate">c</td>
 
-<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
-        <div class="modal-content">
-asdasdasd
-        </div>
-    <div class="modal-dialog modal-sm">
-    </div>
-</div>
+        <td class="tablearticleusername">
+            d
+        </td>
+
+        <td class="tablearticlecategory">
+            e
+        </td>
+    </tr>
+    <tr class="tablecontentR">
+        <td class="tablearticleid" hidden>b</td>
+        <td class="tablearticlename">
+            c
+        </td>
+        <td class="tablearticledate">d</td>
+
+
+        <td class="tablearticleusername">
+            e
+        </td>
+
+        <td class="tablearticlecategory">
+            a
+        </td>
+    </tr>
+    <tr class="tablecontentR">
+        <td class="tablearticleid" hidden>c</td>
+        <td class="tablearticlename">
+            d
+        </td>
+        <td class="tablearticledate">e</td>
+
+
+        <td class="tablearticleusername">
+            a
+        </td>
+
+        <td class="tablearticlecategory">
+            b
+        </td>
+    </tr>
+    <tr class="tablecontentR">
+        <td class="tablearticleid" hidden>d</td>
+        <td class="tablearticlename">
+            a
+        </td>
+        <td class="tablearticledate">a</td>
+
+
+        <td class="tablearticleusername">
+            b
+        </td>
+
+        <td class="tablearticlecategory">
+            c
+        </td>
+    </tr>
+
+
+</table>
 </body>
 
 <script>
+    var things = [];
+    $(".tablearticlecategory").each(function () {
+        things.push($(this));
+    })
 
-    $("p").each(function () {
-        var aplha = $(this).html().split("");
-        for (var i = 0 ; i < aplha.length; i++){
-                j = Math.floor(Math.random() * i);
-                var x = aplha[i - 1];
-            aplha[i - 1] = aplha[j];
-            aplha[j] = x;
+    console.log(things);
+    function defaultSort(elementX, elementY) {
+        if (elementX.html().trim().toLowerCase() < elementY.html().trim().toLowerCase())
+            return -1;
+        if (elementX.html().trim().toLowerCase() > elementY.html().trim().toLowerCase())
+            return 1;
+        return 0;
+    }
+    //
+    things.sort(defaultSort);
+    console.log(things);
+    var a = 0;
+    for (var i = 0; i < things.length; i++) {
+        $(things[i]).parent().fadeOut("slow", function () {
+            a++;
+            $(this).remove();
+            if (a == things.length) {
+                runningsort();
             }
-            console.log(aplha.join(""));
-        $(this).html(aplha.join(""));
-        });
+        })
+    }
+    function runningsort() {
+        for (var i = 0; i < things.length; i++) {
+            var list = $(".tablearticlecategory").parent().eq(i).html();
+            console.log(list)
+           $(things[i]).parent();
+            $("table").append($(things[i]).parent());
+            $(things[i]).parent().fadeIn("slow", function () {
+                $(this).css("z-index", 0);
+            })
+        }
+    }
 
-//   for (var i = 0 ; i < p.length; i++){
-//       var a = [];
-//       var aplha = $(p[i]).html().split("");
-//       for (var b = 0 ; b< aplha.length; b=b+2){
-//           a.push($(aplha[b]).selector);
-//       }
-//       console.log(a);
-//       for (i = a.length; i; i--) {
-//           j = Math.floor(Math.random() * i);
-//           var x = a[i - 1];
-//           a[i - 1] = a[j];
-//           a[j] = x;
-//       }
-//
-//   }
-//   for (var b = 0 ; b< aplha.length; b++){
-//       if (!a.has($(aplha[b]).selector))
-//       {
-//           a.add($(aplha[b]).selector);
-//
-//       }
-//   }
+    //    for (var i = 0; i <things.length;i++){
+    ////        $(things[i]).addEventListener("animationend");
+    //        $(things[i]).on("myFadeOutEvent",function () {
+    //            $(this).fadeIn("slow",function () {
+    //                $(this).css("z-index", 0);
+    //            })
+    //
+    //        })
+    //    }
 </script>
 </html>
