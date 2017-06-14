@@ -236,7 +236,7 @@
                 p3.className = "commentedTime";
                 var deletebutton = document.createElement("button");
                 deletebutton.id = Data.CommentId + "delete";
-                deletebutton.className = "delete";
+                deletebutton.className = "delete btn btn-round btn-info";
                 deletebutton.innerHTML = "Delete";
                 deletebutton.setAttribute("onclick", "deleteComment($(this))");
                 var editinput = document.createElement("input");
@@ -245,15 +245,15 @@
                 editinput.className = "change";
                 var editbutton = document.createElement("button");
                 editbutton.id = Data.CommentId + "edit";
-                editbutton.className = "edit";
+                editbutton.className = "edit btn btn-round btn-info";
                 editbutton.innerHTML = "Edit";
                 editbutton.setAttribute("onclick", "editComment($(this))");
                 div.append(p1);
                 div.append(p2);
                 div.append(p3);
-                div.append(deletebutton);
                 div.append(editinput);
                 div.append(editbutton);
+                div.append(deletebutton);
                 contain.append(div);
             }
         });
