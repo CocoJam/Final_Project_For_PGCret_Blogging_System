@@ -44,7 +44,7 @@
                                     <%--<img src="" alt="Circle Image" class="img-rounded img-responsive img-raised">--%>
                                     <p hidden class="currentuser">${profileInfo.username}</p>
                                     <c:choose>
-                                        <c:when test="${articleList.equals('self')}">
+                                        <c:when test="${articleContents.username == profileInfo.username}">
                                             <c:choose>
                                                 <c:when test="${profileInfo.profilepic != null}">
 
@@ -59,7 +59,8 @@
                                                         <%--Otherwise get the photo from the users photo page--%>
                                                         <c:otherwise>
                                                             <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                                 alt="Circle Image" class="img-rounded img-responsive img-raised">
+                                                                 alt="Circle Image"
+                                                                 class="img-rounded img-responsive img-raised">
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </c:when>
@@ -111,7 +112,8 @@
                                 <c:if test="${articleContents.owner}">
                                     <p>${articleContents.owner}</p>
                                     <form action="/Articles" method="post">
-                                        <input type="hidden" name="articleidnumber" value="${articleContents.articleid}">
+                                        <input type="hidden" name="articleidnumber"
+                                               value="${articleContents.articleid}">
                                         <input type="submit" name="add" value="EditArticle">
                                     </form>
                                     <form action="/Deleting" method="post">
@@ -259,7 +261,7 @@
             },
             success: function (msg) {
                 if (msg > $("#likenumber").html()) {
-                    if (orginalcontent != null){
+                    if (orginalcontent != null) {
                         $("#articleContents").html(orginalcontent);
                     }
                     e.html("Unlike");
@@ -269,7 +271,7 @@
                     orginalcontent = $("#articleContents").html();
                     $("#articleContents").each(function () {
                         var aplha = $(this).html().split("");
-                        for (var i = 0 ; i < aplha.length; i++){
+                        for (var i = 0; i < aplha.length; i++) {
                             random = Math.floor(Math.random() * i);
                             var x = aplha[i - 1];
                             aplha[i - 1] = aplha[random];
