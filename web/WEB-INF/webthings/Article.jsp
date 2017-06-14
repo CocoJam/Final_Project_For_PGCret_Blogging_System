@@ -125,27 +125,31 @@
                                 </div>
                                 <!-- Like function -->
 
+                                <!-- Edit / Delete article if user is owner -->
+                                <div class="row text-center">
+                                    <c:if test="${articleContents.owner}">
+                                        <%--<!-- DEBUG --><h1>IS CURRENT USER THE OWNER? ${articleContents.owner}</h1>--%>
+                                        <div class="btn-group btn-group-sm">
+                                        <form action="/Articles" method="post">
+                                            <input type="hidden" name="articleidnumber"
+                                                   value="${articleContents.articleid}">
+                                            <%--<input class="btn btn-round btn-info" type="submit" name="add" value="EditArticle">--%>
+                                            <button class="btn btn-round btn-primary" type="submit" name="add" value="EditArticle"><i class="material-icons">create</i> Edit Article</button>
+                                        </form>
+                                        <form action="/Deleting" method="post">
+                                            <%--<input class="btn btn-round btn-info" type="submit" name="log" value="DeleteArticle">--%>
+                                            <button class="btn btn-round btn-danger" type="submit" name="log" value="DeleteArticle"><i class="material-icons">delete_forever</i> Delete Article</button>
+                                        </form>
+                                        </div>
+                                    </c:if>
+                                </div>
+                                <!-- Edit / Delete section end -->
+
                                 <!-- Article Content start -->
                                 <div class="row">
                                     <div id="articleContents">${articleContents.content}</div>
                                 </div>
                                 <!-- Article Content end -->
-
-                                <!-- Edit / Delete article if user is owner -->
-                                <div class="row">
-                                    <c:if test="${articleContents.owner}">
-                                        <%--<!-- DEBUG --><h1>IS CURRENT USER THE OWNER? ${articleContents.owner}</h1>--%>
-                                        <form action="/Articles" method="post">
-                                            <input type="hidden" name="articleidnumber"
-                                                   value="${articleContents.articleid}">
-                                            <input type="submit" name="add" value="EditArticle">
-                                        </form>
-                                        <form action="/Deleting" method="post">
-                                            <input type="submit" name="log" value="DeleteArticle">
-                                        </form>
-                                    </c:if>
-                                </div>
-                                <!-- Edit / Delete section end -->
 
                                 <!-- Article commenting section -->
                                 <div class="row">
@@ -178,12 +182,12 @@
 
                                 <!-- Comments Box -->
                                 <div class="row">
-                                    <h1><label for="comments">Add a comment: </label></h1>
+                                    <h2><small>Add a comment:</small></h2>
                                     <div class="row"><textarea class="form-control" placeholder="Enter your comments here" rows="5" id="comments"
                                                                name="commentcontent"></textarea></div>
                                     <div class="row">
                                         <button class="btn btn-round btn-info" id="addComment"><i
-                                                class="material-icons">create</i> Add Comment
+                                                class="material-icons">message</i> Add Comment
                                         </button>
                                     </div>
                                 </div>
