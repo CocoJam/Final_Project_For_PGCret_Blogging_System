@@ -39,6 +39,7 @@ public class ProfilePageServlet extends HttpServlet {
 
         if (req.getParameter("clickedShowList") != null) {
             if (req.getParameter("clickedShowList").equals("clickedShowList")) {
+                username = req.getParameter("username");
                 List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
                 String message = "<table class=\"table table-striped table-hover table-responsive\" id=\"ArticleTable\"><tr><th>Article Names</th><th>Article Category</th><th>Date Created</th></tr>";
                 for (Articles articles : indexList) {

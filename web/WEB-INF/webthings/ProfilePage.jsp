@@ -107,7 +107,12 @@
                                     %>
                                 </div>
                                 <div class="name" id="custom-profile-name">
-                                    <h3 class="title">Hello ${profileInfo.name}</h3>
+                                    <h3 class="title">
+                                    <% if (!friendsprofile){ %>
+                                        Welcome back
+                                    <% } %>
+                                        ${profileInfo.name}</h3>
+                                    </h3>
                                 </div>
                                 <div class="name" id="custom-profile-subtitle">
                                     <h6>${profileInfo.education}</h6>
@@ -192,7 +197,7 @@
 
                                 <% }
 
-                                    if (!friendsprofile) {
+//                                    if (!friendsprofile) {
                                 %>
 
                                 <button id="showArticleList">Show article list</button>
@@ -201,15 +206,21 @@
 
                                 <table class="table table-striped table-hover table-responsive">
                                 </table>
-                                <% }%>
+                                <%--<% }%>--%>
                                 <%--end testing--%>
 
                                 <script>
                                     // An ajax call of post to get the article list which is then append and display within the given table
                                     var clickStatus = true;
 
-                                    $("#showArticleList").click(function () {
+                                    <%--var articleUsername = "";--%>
+                                    <%----%>
+                                    <%--if (<%= friendsprofile%>){--%>
+                                        <%--articleUsername = <%=fri%>--%>
+                                    <%--}--%>
 
+
+                                    $("#showArticleList").click(function () {
 
                                         if (clickStatus) {
                                             $.ajax({
@@ -217,7 +228,7 @@
                                                 type: 'Post',
                                                 data: {
                                                     "clickedShowList": "clickedShowList",
-                                                    "username": "<%= session.getAttribute("username")%>"
+                                                    "username": "${profileInfo.username}"
                                                 },
                                                 success: function (msg) {
                                                     console.log(msg);

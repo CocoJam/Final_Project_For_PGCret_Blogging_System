@@ -111,34 +111,90 @@ a, a:hover, a:focus {
     background-color: #293A46;
 }
 
-#carouselMediaPage {
+#carouselMediaPage, #audioGallery, #videoGallery {
+    display: block;
     width: 80%;
-
     background: transparent;
     left: 50%;
+    top: 50%;
     transform: translate(-50%);
 }
 
-#carouselMediaPage img, #carouselMediaPage audio, #carouselMediaPage video {
+#carouselMediaPage img, video {
     height: 400px;
-    width: 400px;
+    width: 80%;
     object-fit: contain;
 }
 
-#carouselMediaPage video {
-    height: 240px;
-    width: 426px;
+#audioGallery {
+    height: 400px;
+    width: 80%;
     object-fit: contain;
 }
+
+audio {
+    height: 50px;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+    object-fit: contain;
+}
+
+#audioWave, #defaultAudioWave {
+    position: static;
+    width: 60%;
+    height: 50%;
+    object-fit: contain;
+}
+
+/*video {*/
+    /*height: 240px;*/
+    /*width: 426px;*/
+    /*object-fit: contain;*/
+/*}*/
 
 
 .centering {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: auto;
-    margin-bottom: auto;
 }
+
+.nav-pills.nav-pills-slashn > li.active > a, .nav-pills.nav-pills-info > li.active > a:focus, .nav-pills.nav-pills-info > li.active > a:hover {
+    background-color: #293A46;
+    box-shadow: 0 16px 26px -10px rgba(41, 58, 70, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(41, 58, 70, 0.2);
+}
+
+
+#audioGallery .carouselSlashControl-left {
+    position: absolute;
+    left: 0%;
+    top: 45%;
+}
+
+#audioGallery .carouselSlashControl-right {
+    position: absolute;
+    right: 0%;
+    top: 45%;
+}
+
+#videoGallery .carouselSlashControl-left {
+    position: absolute;
+    left: 10%;
+    top: 45%;
+}
+
+#videoGallery .carouselSlashControl-right {
+    position: absolute;
+    right: 10%;
+    top: 45%;
+}
+
+/*.nav-pills-slashn > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {*/
+    /*background-color: black;*/
+    /*color: #FFFFFF;*/
+    /*box-shadow: 0 16px 26px -10px rgba(156, 39, 176, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(156, 39, 176, 0.2);*/
+
 
 /*class="img-responsive"*/
 

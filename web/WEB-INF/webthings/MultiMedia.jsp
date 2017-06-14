@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <title>Title</title>
@@ -75,150 +76,267 @@
                                             <h3>EVERYONE'S GALLERY</h3>
                                         </c:otherwise>
                                     </c:choose>
-
                                 </div>
-
                             </div>
                         </div>
-                    </div>
+                        <%--Row ends--%>
 
-                    <div class="container">
+                        <%--<div class="description text-center">--%>
+                        <%--<p>Welcome to the Media Gallery page.</p>--%>
+                        <%--</div>--%>
+
+                        <%--Content Row--%>
 
                         <div class="row">
-                            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+                            <div class="col-md-6 col-md-offset-3">
+                                <div class="profile-tabs">
+                                    <div class="nav-align-center">
+                                        <ul class="nav nav-pills nav-pills-slashn" role="tablist">
+                                            <li class="active">
+                                                <a href="#photoStudio" role="tab" data-toggle="tab">
+                                                    <i class="material-icons">photo_album</i>
+                                                    Images
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#audioStudio" role="tab" data-toggle="tab">
+                                                    <i class="material-icons">audiotrack</i>
+                                                    Audio
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#videoStudio" role="tab" data-toggle="tab">
+                                                    <i class="material-icons">video_library</i>
+                                                    Video
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <br><br>
+
+                                        <%--Three tab option--%>
+
+                                        <div class="tab-content gallery">
+                                            <c:forEach var="mediagroups" items="${mediaOutPut}">
 
 
-                                <%--Triology Part 3.5 TODO display this in tables--%>
+                                                <c:if test="${mediagroups.key.equals(\"photo\")}">
 
-                                <%--<table class="table table-striped table-hover table-responsive">--%>
+                                                    <%--TAB 1: Image gallery--%>
+                                                    <div class="tab-pane active" id="photoStudio">
+                                                        <div class="row">
+                                                                <%--Carousel for Photos--%>
+                                                                <%--Carousel view images--%>
+                                                                <%--<div class="card card-raised card-carousel">--%>
 
-                                <%--<tr>--%>
-                                <%--<th>Media Item</th>--%>
-                                <%--</tr>--%>
+                                                            <div id="carouselMediaPage"
+                                                                 class="carousel slide card card-raised card-carousel"
+                                                                 data-ride="carousel">
 
-                                <%--<c:forEach var="mediagroups" items="${mediaOutPut}">--%>
-                                <%--<c:if test="${mediagroups.key.equals(\"photo\")}">--%>
-                                <%--<c:forEach var="media" items="${mediagroups.value}">--%>
+                                                                <div class="carousel slide" data-ride="carousel">
 
-                                <%--<tr>--%>
-                                <%--<td>--%>
-                                <%--<img src="${media}" width='300px'>--%>
-                                <%--</td>--%>
-                                <%--</tr>--%>
+                                                                    <!-- Indicators -->
+                                                                    <ol class="carousel-indicators">
+                                                                        <li data-target="#carouselMediaPage"
+                                                                            data-slide-to="0"
+                                                                            class="active"></li>
+                                                                        <li data-target="#carouselMediaPage"
+                                                                            data-slide-to="1"></li>
+                                                                        <li data-target="#carouselMediaPage"
+                                                                            data-slide-to="2"></li>
+                                                                    </ol>
 
-                                <%--</c:forEach>--%>
-                                <%--</c:if>--%>
-                                <%--<c:if test="${mediagroups.key.equals(\"audio\")}">--%>
-                                <%--<c:forEach var="media" items="${mediagroups.value}">--%>
+                                                                    <!-- Wrapper for slides -->
+                                                                    <div class="carousel-inner">
+                                                                            <%--TODO need to replace this with proper welcome to media gallery--%>
+                                                                        <div class="item active">
+                                                                            <img src="/defaultImg/defaultslashn1.png"
+                                                                                 class="center-block">
+                                                                        </div>
 
-                                <%--<tr>--%>
-                                <%--<td>--%>
-                                <%--<audio controls>--%>
-                                <%--<source src="${media}" type="audio/ogg">--%>
-                                <%--</audio>--%>
-                                <%--</td>--%>
-                                <%--</tr>--%>
+                                                                            <%--Duplicate of the media content for us to populate in the --%>
 
-                                <%--</c:forEach>--%>
-                                <%--</c:if>--%>
-                                <%--<c:if test="${mediagroups.key.equals(\"video\")}">--%>
-                                <%--<c:forEach var="media" items="${mediagroups.value}">--%>
-                                <%--<tr>--%>
-                                <%--<td>--%>
-                                <%--<video width="400" controls>--%>
-                                <%--<source src="${media}" height='30%'>--%>
-                                <%--</video>--%>
-                                <%--</td>--%>
-                                <%--</tr>--%>
-                                <%--</c:forEach>--%>
-                                <%--</c:if>--%>
-                                <%--</c:forEach>--%>
+                                                                        <c:forEach var="media"
+                                                                                   items="${mediagroups.value}">
+                                                                            <div class="item">
+                                                                                <img src="${media}"
+                                                                                     class="center-block">
+                                                                            </div>
+                                                                        </c:forEach>
 
-                                <%--</table>--%>
+                                                                    </div>
+                                                                        <%--</div>--%>
 
-
-                                <c:forEach var="mediagroups" items="${mediaOutPut}">
-
-                                    <c:if test="${mediagroups.key.equals(\"photo\")}">
-
-                                        <%--Carousel for Photos--%>
-                                        <%--Carousel view images--%>
-                                        <%--<div class="card card-raised card-carousel">--%>
-
-                                        <div id="carouselMediaPage" class="carousel slide card card-raised card-carouse"
-                                             data-ride="carousel">
-
-                                            <div class="carousel slide" data-ride="carousel">
-
-                                                <!-- Indicators -->
-                                                <ol class="carousel-indicators">
-                                                    <li data-target="#carouselMediaPage" data-slide-to="0"
-                                                        class="active"></li>
-                                                    <li data-target="#carouselMediaPage" data-slide-to="1"></li>
-                                                    <li data-target="#carouselMediaPage" data-slide-to="2"></li>
-                                                </ol>
-
-                                                <!-- Wrapper for slides -->
-                                                <div class="carousel-inner">
-                                                        <%--TODO need to replace this with proper welcome to media gallery--%>
-                                                    <div class="item active">
-                                                        <img src="/defaultImg/defaultslashn1.png" class="center-block">
-                                                    </div>
-
-                                                        <%--Duplicate of the media content for us to populate in the --%>
-
-                                                    <c:forEach var="media" items="${mediagroups.value}">
-                                                        <div class="item">
-                                                            <img src="${media}" class="center-block">
+                                                                    <!-- Controls -->
+                                                                    <a class="left carousel-control"
+                                                                       href="#carouselMediaPage"
+                                                                       data-slide="prev">
+                                                                        <i class="material-icons">arrow_back</i>
+                                                                    </a>
+                                                                    <a class="right carousel-control"
+                                                                       href="#carouselMediaPage"
+                                                                       data-slide="next">
+                                                                        <i class="material-icons">arrow_forward</i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                                <%--Carousel ends--%>
                                                         </div>
-                                                    </c:forEach>
+                                                    </div>
+                                                    <%--END: TAB1--%>
 
-                                                </div>
-                                                    <%--</div>--%>
+                                                </c:if>
 
-                                                <!-- Controls -->
-                                                <a class="left carousel-control" href="#carouselMediaPage"
-                                                   data-slide="prev">
-                                                    <i class="material-icons">arrow_back</i>
-                                                </a>
-                                                <a class="right carousel-control" href="#carouselMediaPage"
-                                                   data-slide="next">
-                                                    <i class="material-icons">arrow_forward</i>
-                                                </a>
-                                            </div>
 
+                                                <c:if test="${mediagroups.key.equals(\"audio\")}">
+
+                                                    <%--TAB 2: AUDIO Gallery--%>
+                                                    <div class="tab-pane text-center" id="audioStudio">
+                                                        <div class="row">
+
+                                                            <div id="audioGallery"
+                                                                 class="carousel slide card card-raised card-carousel"
+                                                                 data-ride="carousel">
+
+                                                                <div class="carousel slide" data-ride="carousel">
+
+                                                                        <%--<!-- Indicators -->--%>
+                                                                        <%--<ol class="carousel-indicators">--%>
+                                                                        <%--<li data-target="#audioGallery"--%>
+                                                                        <%--data-slide-to="0"--%>
+                                                                        <%--class="active"></li>--%>
+                                                                        <%--<li data-target="#audioGallery"--%>
+                                                                        <%--data-slide-to="1"></li>--%>
+                                                                        <%--<li data-target="#audioGallery"--%>
+                                                                        <%--data-slide-to="2"></li>--%>
+                                                                        <%--</ol>--%>
+
+                                                                    <!-- Wrapper for slides -->
+                                                                    <div class="carousel-inner">
+                                                                        <div class="item active">
+                                                                            <img src="../../assets/img/audio_wave.png" id="defaultAudioWave" class="center-block">
+                                                                            <audio controls>
+                                                                                    <%--<p>Audio filename: opening mp3</p>--%>
+                                                                                <source src="/defaultImg/opening.mp3"
+                                                                                        type="audio/ogg">
+                                                                            </audio>
+                                                                        </div>
+
+                                                                        <c:forEach var="media"
+                                                                                   items="${mediagroups.value}">
+
+                                                                            <div class="item">
+                                                                                <img src="../../assets/img/audio_wave.png" id="audioWave" class="center-block">
+                                                                                <audio controls class="center-block">
+                                                                                    <source src="${media}"
+                                                                                            type="audio/ogg">
+                                                                                </audio>
+                                                                                <p>Audio filename: ${media}</p>
+                                                                            </div>
+                                                                        </c:forEach>
+                                                                    </div>
+
+
+
+                                                                </div>
+
+                                                                <!-- Audio Controls -->
+                                                                <a class="carouselSlashControl-left"
+                                                                   href="#audioGallery"
+                                                                   data-slide="prev"><img
+                                                                        src="../../assets/img/black-navigate-left.png">
+                                                                </a>
+                                                                <a class="carouselSlashControl-right"
+                                                                   href="#audioGallery"
+                                                                   data-slide="next">
+                                                                    <img src="../../assets/img/black-navigate-right.png">
+                                                                </a>
+
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                    <%--END: TAB 2--%>
+                                                </c:if>
+
+                                                <c:if test="${mediagroups.key.equals(\"video\")}">
+
+                                                    <%--TAB 3: VIDEO Gallery--%>
+                                                    <div class="tab-pane text-center" id="videoStudio">
+                                                        <div class="row">
+
+                                                            <div id="videoGallery"
+                                                                 class="carousel slide card card-raised card-carousel"
+                                                                 data-ride="carousel">
+
+                                                                <div class="carousel slide" data-ride="carousel">
+
+                                                                        <%--<!-- Indicators -->--%>
+                                                                        <%--<ol class="carousel-indicators">--%>
+                                                                        <%--<li data-target="#videoGallery"--%>
+                                                                        <%--data-slide-to="0"--%>
+                                                                        <%--class="active"></li>--%>
+                                                                        <%--<li data-target="#videoGallery"--%>
+                                                                        <%--data-slide-to="1"></li>--%>
+                                                                        <%--<li data-target="#videoGallery"--%>
+                                                                        <%--data-slide-to="2"></li>--%>
+                                                                        <%--</ol>--%>
+
+                                                                    <!-- Wrapper for slides -->
+                                                                    <div class="carousel-inner">
+                                                                            <%--TODO need to replace this with proper welcome to media gallery--%>
+                                                                        <div class="item active">
+                                                                            <video controls class="center-block">
+                                                                                <source src="/defaultImg/pokemon.mp4">
+                                                                            </video>
+                                                                        </div>
+
+                                                                        <c:forEach var="media"
+                                                                                   items="${mediagroups.value}">
+                                                                            <div class="item">
+                                                                                <video controls
+                                                                                       class="center-block">
+                                                                                    <source src="${media}">
+                                                                                </video>
+                                                                            </div>
+                                                                        </c:forEach>
+
+                                                                    </div>
+
+                                                                    <!-- Controls -->
+
+                                                                    <div class="carouselSlash">
+                                                                        <a class="carouselSlashControl-left"
+                                                                           href="#videoGallery"
+                                                                           data-slide="prev"><img
+                                                                                src="../../assets/img/white-navigate-left.png">
+                                                                        </a>
+                                                                        <a class="carouselSlashControl-right"
+                                                                           href="#videoGallery"
+                                                                           data-slide="next">
+                                                                            <img src="../../assets/img/white-navigate-right.png">
+                                                                        </a>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <%--END: TAB 3--%>
+                                                </c:if>
+
+                                            </c:forEach>
                                         </div>
-                                        <%--Carousel ends--%>
+                                        <%--End of three tab option--%>
 
-                                    </c:if>
-
-                                    <%--Carousel for photos end--%>
-                                    <c:if test="${mediagroups.key.equals(\"audio\")}">
-                                        <c:forEach var="media" items="${mediagroups.value}">
-
-                                            <div class="card card-raised card-carouse">
-                                                <audio controls class="center-block">
-                                                    <source src="${media}" type="audio/ogg">
-                                                </audio>
-                                            </div>
-                                        </c:forEach>
-                                    </c:if>
-                                    <c:if test="${mediagroups.key.equals(\"video\")}">
-                                        <c:forEach var="media" items="${mediagroups.value}">
-                                            <div class="card card-raised card-carouse">
-                                                <video controls class="center-block">
-                                                    <source src="${media}">
-                                                </video>
-                                            </div>
-                                        </c:forEach>
-                                    </c:if>
-
-                                </c:forEach>
-
-
+                                    </div>
+                                </div>
+                                <!-- End Profile Tabs -->
                             </div>
                         </div>
 
+                        <%--Content Row ends--%>
 
                     </div>
                 </div>
