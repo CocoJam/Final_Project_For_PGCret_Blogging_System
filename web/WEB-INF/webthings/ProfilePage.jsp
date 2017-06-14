@@ -107,7 +107,7 @@
                                     %>
                                 </div>
                                 <div class="name" id="custom-profile-name">
-                                    <h3 class="title">Hello ${profileInfo.name}</h3>
+                                    <h3 class="title">${profileInfo.name}</h3>
                                 </div>
                                 <div class="name" id="custom-profile-subtitle">
                                     <h6>${profileInfo.education}</h6>
@@ -183,7 +183,7 @@
                                 <% }
                                 %>
 
-                                <button id="showArticleList">Show article list</button>
+                                <button id="showArticleList" class="btn btn-info btn-round">Show Articles List</button>
 
                                 <div id="ArticleTable"></div>
 
@@ -214,11 +214,11 @@
                                                 }
                                             });
                                             //Toggle between the hide of the list and the showing of the list based on the button
-                                            $("#showArticleList").html("Hide article list");
+                                            $("#showArticleList").html("Hide Articles List");
                                             clickStatus = !clickStatus;
                                         } else {
                                             $("#ArticleTable").html("");
-                                            $("#showArticleList").html("Show article list");
+                                            $("#showArticleList").html("Show Articles List");
                                             clickStatus = !clickStatus;
                                         }
 

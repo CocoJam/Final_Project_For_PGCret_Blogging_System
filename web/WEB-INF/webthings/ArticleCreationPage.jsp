@@ -12,6 +12,7 @@
     <title>Article</title>
 
     <%@include file="../../component/Header(styling Template).html" %>
+    <link rel="stylesheet" href="../../assets/css/button-flat.css">
 
     <!-- jQUERY & jQUERY UI -->
     <%--the following jquery code has been omitted as it conflicts with the other existing jquery version.--%>
@@ -148,6 +149,11 @@
                                         <option value="CSS"></option>
                                         <option value="Javascript"></option>
                                         <option value="jQuery"></option>
+                                        <option value="Technology"></option>
+                                        <option value="Design"></option>
+                                        <option value="UI"></option>
+                                        <option value="UX"></option>
+                                        <option value="Startup"></option>
                                         <option value="Personal"></option>
                                         <option value="Opinion"></option>
                                         <option value="Random"></option>
@@ -171,39 +177,43 @@
                             <div class="wysiwys" placeholder="Enter your content here"></div>
 
                             <!-- Buttons -->
-                            <div class="row">
+                            <div class="row text-center">
+                                <div class="btn-group-justified">
 
                                 <!-- Make a new section, put current WYSIWYG content in -->
                                 <div class="col-xs-4 col-sm-4 col-md-4">
-                                    <button class="btn btn-info btn-block" onclick="addNewSection()"><i
-                                            class="material-icons">done</i>Add
+                                    <button class="btn btn-block btn-flat" onclick="addNewSection()"><i
+                                            class="material-icons">done</i>
+                                        <span class="hidden-xs">Add</span>
                                     </button>
                                 </div>
 
                                 <!-- Delete currently selected section -->
                                 <div class="col-xs-4 col-sm-4 col-md-4">
-                                    <button class="btn btn-info btn-block" onclick="deleteSection()"><i
+                                    <button class="btn btn-block btn-flat" onclick="deleteSection()"><i
                                             class="material-icons">delete</i>
-                                        Delete
+                                        <span class="hidden-xs">Delete</span>
                                     </button>
                                 </div>
 
                                 <!-- Clear all content inside WYSIWYG editor -->
                                 <div class="col-xs-4 col-sm-4 col-md-4">
-                                    <button class="btn btn-info btn-block" onclick="resetText()"><i
+                                    <button class="btn btn-block btn-flat" onclick="resetText()"><i
                                             class="material-icons">sync</i>
-                                        Reset
+                                        <span class="hidden-xs">Reset</span>
                                     </button>
                                 </div>
 
+                                </div>
                             </div>
+
                                 <!-- Media upload -->
                                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                                     <h3>Upload Media</h3>
                                     <form action="/Upload" method="post" id="Upload"
                                           enctype="multipart/form-data">
                                         <input type="file" name="file" size="50" class="btn btn-white"/>
-                                        <input type="submit" class="btn btn-primary" name="Upload" value="Upload"/>
+                                        <input type="submit" class="btn btn-flat btn-primary" name="Upload" value="Upload"/>
                                     </form>
 
                                 </div>
@@ -213,7 +223,7 @@
                                     <div class="form-group">
                                         <form id="Youtube" action="/ArticleUpload" method="post">
                                             <input id="youtubeurl" type="text" name="youtube" class="form-control" placeholder="Paste your Youtube link and click button below to add">
-                                            <input type="submit" name="youtubeVideoSubmition" value="youtube" class="btn btn-danger">
+                                            <input type="submit" name="youtubeVideoSubmition" value="youtube" class="btn btn-flat btn-danger">
                                         </form>
                                     </div>
                                 </div>

@@ -66,19 +66,6 @@
             <!-- Navbar name of our website, displays on left -->
             <a href="ProfilePage" class="navbar-brand clickOnce"><i class="material-icons">apps</i>
                 Slash N</a>
-
-            <%--Search bar here--%>
-            <%--<li>--%>
-            <form action="/ProfilePage" method="get">
-                <input list="usernames" name="accessFriend" class="form-control" placeholder="Search People" style="color: white" id="NameBarForm">
-                <datalist id="usernames">
-                    <c:forEach items="${userlist}" var="names">
-                    <option value="${names}">
-                        </c:forEach>
-                </datalist>
-            </form>
-            <%--</li>--%>
-            <%--Search bar here--%>
         </div>
 
         <!-- Navbar elements which display on right -->

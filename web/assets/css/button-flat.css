@@ -1,0 +1,129 @@
+.btn-flat,
+.navbar .navbar-nav > li > a.btn-flat {
+    border-radius: 20px;
+    box-sizing: border-box;
+    border-width: 2px;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 7px 18px;
+    border-color: #66615B;
+    color: #66615B;
+    -webkit-transition: all 150ms linear;
+    -moz-transition: all 150ms linear;
+    -o-transition: all 150ms linear;
+    -ms-transition: all 150ms linear;
+    transition: all 150ms linear;
+}
+.btn-flat:hover, .btn-flat:focus, .btn-flat:active, .btn-flat.active, .open > .btn-flat.dropdown-toggle,
+.navbar .navbar-nav > li > a.btn-flat:hover,
+.navbar .navbar-nav > li > a.btn-flat:focus,
+.navbar .navbar-nav > li > a.btn-flat:active,
+.navbar .navbar-nav > li > a.btn-flat.active, .open >
+.navbar .navbar-nav > li > a.btn-flat.dropdown-toggle {
+    background-color: #66615B;
+    color: rgba(255, 255, 255, 0.7);
+    border-color: #66615B;
+}
+.btn-flat:hover .caret, .btn-flat:focus .caret, .btn-flat:active .caret, .btn-flat.active .caret, .open > .btn-flat.dropdown-toggle .caret,
+.navbar .navbar-nav > li > a.btn-flat:hover .caret,
+.navbar .navbar-nav > li > a.btn-flat:focus .caret,
+.navbar .navbar-nav > li > a.btn-flat:active .caret,
+.navbar .navbar-nav > li > a.btn-flat.active .caret, .open >
+.navbar .navbar-nav > li > a.btn-flat.dropdown-toggle .caret {
+    border-top-color: rgba(255, 255, 255, 0.7);
+}
+.btn-flat.disabled, .btn-flat.disabled:hover, .btn-flat.disabled:focus, .btn-flat.disabled.focus, .btn-flat.disabled:active, .btn-flat.disabled.active, .btn-flat:disabled, .btn-flat:disabled:hover, .btn-flat:disabled:focus, .btn-flat:disabled.focus, .btn-flat:disabled:active, .btn-flat:disabled.active, .btn-flat[disabled], .btn-flat[disabled]:hover, .btn-flat[disabled]:focus, .btn-flat[disabled].focus, .btn-flat[disabled]:active, .btn-flat[disabled].active, fieldset[disabled] .btn-flat, fieldset[disabled] .btn-flat:hover, fieldset[disabled] .btn-flat:focus, fieldset[disabled] .btn-flat.focus, fieldset[disabled] .btn-flat:active, fieldset[disabled] .btn-flat.active,
+.navbar .navbar-nav > li > a.btn-flat.disabled,
+.navbar .navbar-nav > li > a.btn-flat.disabled:hover,
+.navbar .navbar-nav > li > a.btn-flat.disabled:focus,
+.navbar .navbar-nav > li > a.btn-flat.disabled.focus,
+.navbar .navbar-nav > li > a.btn-flat.disabled:active,
+.navbar .navbar-nav > li > a.btn-flat.disabled.active,
+.navbar .navbar-nav > li > a.btn-flat:disabled,
+.navbar .navbar-nav > li > a.btn-flat:disabled:hover,
+.navbar .navbar-nav > li > a.btn-flat:disabled:focus,
+.navbar .navbar-nav > li > a.btn-flat:disabled.focus,
+.navbar .navbar-nav > li > a.btn-flat:disabled:active,
+.navbar .navbar-nav > li > a.btn-flat:disabled.active,
+.navbar .navbar-nav > li > a.btn-flat[disabled],
+.navbar .navbar-nav > li > a.btn-flat[disabled]:hover,
+.navbar .navbar-nav > li > a.btn-flat[disabled]:focus,
+.navbar .navbar-nav > li > a.btn-flat[disabled].focus,
+.navbar .navbar-nav > li > a.btn-flat[disabled]:active,
+.navbar .navbar-nav > li > a.btn-flat[disabled].active, fieldset[disabled]
+.navbar .navbar-nav > li > a.btn-flat, fieldset[disabled]
+.navbar .navbar-nav > li > a.btn-flat:hover, fieldset[disabled]
+.navbar .navbar-nav > li > a.btn-flat:focus, fieldset[disabled]
+.navbar .navbar-nav > li > a.btn-flat.focus, fieldset[disabled]
+.navbar .navbar-nav > li > a.btn-flat:active, fieldset[disabled]
+.navbar .navbar-nav > li > a.btn-flat.active {
+    background-color: transparent;
+    border-color: #66615B;
+}
+.btn-flat.btn-fill,
+.navbar .navbar-nav > li > a.btn-flat.btn-fill {
+    color: #FFFFFF;
+    background-color: #66615B;
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+.btn-flat.btn-fill:hover, .btn-flat.btn-fill:focus, .btn-flat.btn-fill:active, .btn-flat.btn-fill.active, .open > .btn-flat.btn-fill.dropdown-toggle,
+.navbar .navbar-nav > li > a.btn-flat.btn-fill:hover,
+.navbar .navbar-nav > li > a.btn-flat.btn-fill:focus,
+.navbar .navbar-nav > li > a.btn-flat.btn-fill:active,
+.navbar .navbar-nav > li > a.btn-flat.btn-fill.active, .open >
+.navbar .navbar-nav > li > a.btn-flat.btn-fill.dropdown-toggle {
+    background-color: #403D39;
+    color: #FFFFFF;
+    border-color: #403D39;
+}
+.btn-flat.btn-fill .caret,
+.navbar .navbar-nav > li > a.btn-flat.btn-fill .caret {
+    border-top-color: #FFFFFF;
+}
+.btn-flat.btn-simple:hover, .btn-flat.btn-simple:focus, .btn-flat.btn-simple:active, .btn-flat.btn-simple.active, .open > .btn-flat.btn-simple.dropdown-toggle,
+.navbar .navbar-nav > li > a.btn-flat.btn-simple:hover,
+.navbar .navbar-nav > li > a.btn-flat.btn-simple:focus,
+.navbar .navbar-nav > li > a.btn-flat.btn-simple:active,
+.navbar .navbar-nav > li > a.btn-flat.btn-simple.active, .open >
+.navbar .navbar-nav > li > a.btn-flat.btn-simple.dropdown-toggle {
+    background-color: transparent;
+    color: #403D39;
+}
+.btn-flat.btn-simple .caret,
+.navbar .navbar-nav > li > a.btn-flat.btn-simple .caret {
+    border-top-color: #FFFFFF;
+}
+.btn-flat .caret,
+.navbar .navbar-nav > li > a.btn-flat .caret {
+    border-top-color: #66615B;
+}
+.btn-flat:hover, .btn-flat:focus,
+.navbar .navbar-nav > li > a.btn-flat:hover,
+.navbar .navbar-nav > li > a.btn-flat:focus {
+    outline: 0 !important;
+}
+.btn-flat:active, .btn-flat.active, .open > .btn-flat.dropdown-toggle,
+.navbar .navbar-nav > li > a.btn-flat:active,
+.navbar .navbar-nav > li > a.btn-flat.active, .open >
+.navbar .navbar-nav > li > a.btn-flat.dropdown-toggle {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: 0 !important;
+}
+.btn-flat.btn-icon,
+.navbar .navbar-nav > li > a.btn-flat.btn-icon {
+    padding: 7px;
+}
+.btn-flat i,
+.navbar .navbar-nav > li > a.btn-flat i {
+    margin-right: 5px;
+}
+
+.btn-group .btn-flat + .btn-flat,
+.btn-group .btn-flat + .btn-group,
+.btn-group .btn-group + .btn-flat,
+.btn-group .btn-group + .btn-group {
+    margin-left: -2px;
+}
