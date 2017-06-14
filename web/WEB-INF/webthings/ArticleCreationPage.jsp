@@ -284,7 +284,6 @@
 <script src="../../Trumbowyg/dist/trumbowyg.min.js"></script>
 <script src="../../Trumbowyg/dist/plugins/preformatted/trumbowyg.preformatted.min.js"></script>
 <script src="../../Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
-<script src="../../Trumbowyg/dist/plugins/upload/trumbowyg.upload.js"></script>
 <script src="../../Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
 <script src="../../Trumbowyg/dist/plugins/noembed/trumbowyg.noembed.js"></script>
 
@@ -293,7 +292,7 @@
 <script>
 
     jQuery.trumbowyg.langs.en = {
-        _dir: "ltr", // This line is optionnal, but usefull to override the `dir` option
+        _dir: "ltr", // This line is optional, but useful to override the `dir` option
 
         viewHTML: 'View HTML',
 
@@ -361,7 +360,7 @@
         // Settings
         semantic: true,
         autogrow: true,
-        resetCss: true,
+        resetCss: false,
 
         // Buttons
         btnsDef: {
