@@ -44,7 +44,7 @@
                                     <%--<img src="" alt="Circle Image" class="img-rounded img-responsive img-raised">--%>
                                     <p hidden class="currentuser">${profileInfo.username}</p>
                                     <c:choose>
-                                        <c:when test="${articleList.equals('self')}">
+                                        <c:when test="${profileInfo.username == articleContents.username}">
                                             <c:choose>
                                                 <c:when test="${profileInfo.profilepic != null}">
 
@@ -76,7 +76,9 @@
                                         </c:when>
 
                                         <c:otherwise>
-                                            <h3>${articleContents.username}</h3>
+                                            <h3 class="title"><strong>Written by: </strong><a
+                                                    href="ProfilePage?accessFriend=${articleContents.username}">${articleContents.username}</a>
+                                            </h3>
                                         </c:otherwise>
                                     </c:choose>
 
@@ -89,8 +91,6 @@
                             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
 
                                 <!-- Article Headings start -->
-
-                                <!-- Article Title -->
                                 <div class="row text-center">
                                     <h1>${articleContents.articlename}</h1>
                                 </div>
@@ -101,8 +101,29 @@
                                         <h5><strong>Category:</strong> ${articleContents.category}</h5>
                                     </c:if>
                                 </div>
-
                                 <!-- Article Headings start -->
+
+                                <!-- Like function -->
+                                <div class="row text-center">
+                                    <h1 id="likenumber">${articleContents.likeNumber}</h1>
+                                    <%--<!-- DEBUG --><h1>LIKED ARTICLE? ${articleContents.liked}</h1>--%>
+
+                                    <c:choose>
+                                        <c:when test="${articleContents.liked}">
+                                            <button class="btn btn-round btn-danger" onclick="likeadd($(this))"
+                                                    id="${articleContents.articleid}"><i
+                                                    class="material-icons">cancel</i> Unlike
+                                            </button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button class="btn btn-round btn-success" onclick="likeadd($(this))"
+                                                    id="${articleContents.articleid}"><i
+                                                    class="material-icons">favorite</i> Like
+                                            </button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <!-- Like function -->
 
                                 <!-- Article Content start -->
                                 <div class="row">
@@ -110,28 +131,10 @@
                                 </div>
                                 <!-- Article Content end -->
 
-
-                                <!-- Like function -->
-                                <div class="row">
-                                    <c:choose>
-                                        <c:when test="${articleContents.liked}">
-                                            <button onclick="likeadd($(this))" id="${articleContents.articleid}">Unlike
-                                            </button>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <button onclick="likeadd($(this))" id="${articleContents.articleid}">Like
-                                            </button>
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <p id="likenumber">${articleContents.likeNumber}</p>
-                                    <h1>${articleContents.liked}</h1>
-                                </div>
-                                <!-- Like function -->
-
                                 <!-- Edit / Delete article if user is owner -->
                                 <div class="row">
                                     <c:if test="${articleContents.owner}">
-                                        <p>${articleContents.owner}</p>
+                                        <%--<!-- DEBUG --><h1>IS CURRENT USER THE OWNER? ${articleContents.owner}</h1>--%>
                                         <form action="/Articles" method="post">
                                             <input type="hidden" name="articleidnumber"
                                                    value="${articleContents.articleid}">
@@ -162,8 +165,8 @@
                                                 </c:if>
                                                 <c:if test="${content.owner}">
                                                     <input type="text" id="${content.commentId}text" class="change">
-                                                    <button id="${content.commentId}edit"
-                                                            onclick="editComment($(this))">
+                                                    <button class="btn btn-round btn-info" id="${content.commentId}edit"
+                                                            onclick="editComment($(this))"><i class="material-icons">create</i>
                                                         Edit
                                                     </button>
                                                 </c:if>
@@ -175,10 +178,14 @@
 
                                 <!-- Comments Box -->
                                 <div class="row">
-                                    <label for="comments">Add a comment: </label>
-                                    <br>
-                                    <textarea rows="4" cols="50" id="comments" name="commentcontent"></textarea>
-                                    <button id="addComment">Add Comment</button>
+                                    <h1><label for="comments">Add a comment: </label></h1>
+                                    <div class="row"><textarea class="form-control" placeholder="Enter your comments here" rows="5" id="comments"
+                                                               name="commentcontent"></textarea></div>
+                                    <div class="row">
+                                        <button class="btn btn-round btn-info" id="addComment"><i
+                                                class="material-icons">create</i> Add Comment
+                                        </button>
+                                    </div>
                                 </div>
                                 <!-- Comments Box End -->
 
@@ -302,10 +309,15 @@
                     if (orginalcontent != null) {
                         $("#articleContents").html(orginalcontent);
                     }
-                    e.html("Unlike");
+                    e.html("<i class='material-icons'>cancel</i> Unlike");
+                    e.addClass("btn-danger");
+                    e.removeClass("btn-success");
                 }
                 else {
-                    e.html("Like");
+                    e.html("<i class='material-icons'>favorite</i> Like");
+                    e.addClass("btn-success");
+                    e.removeClass("btn-danger");
+
                     orginalcontent = $("#articleContents").html();
                     $("#articleContents").each(function () {
                         var aplha = $(this).html().split("");

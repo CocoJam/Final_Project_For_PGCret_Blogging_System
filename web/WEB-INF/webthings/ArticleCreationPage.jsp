@@ -554,6 +554,16 @@
     $("#form").submit(function () {
         $("input:hidden").val($("#contents").html());
     });
+
+    <!-- Making all images img-responsive -->
+    $(document).ready(function () {
+        $("#contents img").each(function () {
+            $(this).addClass('img-responsive');
+        })
+        /* Alternative version below: this will grab all the img on page */
+//        var allImages = $('img');
+//        allImages.addClass('img-responsive');
+    });
 </script>
 
 </html>
