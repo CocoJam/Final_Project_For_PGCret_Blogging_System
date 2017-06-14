@@ -348,19 +348,19 @@
                             <div class="modal fade" id="myModal" role="dialog">
                                 <div class="modal-dialog modal-sm">
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <%--<h4 class="modal-title">Modal Header</h4>--%>
-                                        </div>
+                                        <%--<div class="modal-header">--%>
+                                            <%--<button type="button" class="close" data-dismiss="modal">&times;</button>--%>
+                                            <%--&lt;%&ndash;<h4 class="modal-title">Modal Header</h4>&ndash;%&gt;--%>
+                                        <%--</div>--%>
                                         <div class="modal-body">
-                                            <div class="card card-signup" id="loginCard">
+                                            <div class="card card-signup" id="loginCard" style="margin: 0px">
 
                                                 <!-- FORM ELEMENT START -->
                                                 <form class="form" method="post" action="/Deleting" id="loginForm">
 
                                                     <!-- Form heading -->
                                                     <div class="header header-info text-center">
-                                                        <h4>Leaving to Slash N</h4>
+                                                        <h4>Leaving Slash N</h4>
                                                     </div>
 
                                                     <!-- Form subtext -->
