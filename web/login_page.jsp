@@ -65,6 +65,7 @@
                                 </div>
                             </div>
 
+                            <!-- BUTTONS -->
 
                             <%--This button is to submit the above form to sign in--%>
                             <div class="footer text-center" class="form">
@@ -78,7 +79,7 @@
                         <div class="footer text-center">
 
                             Click <a href="/login?Registration=Register" style="color: green" class="clickOnce">Register</a>
-                            to signup now
+                            to to join our community!
                             <br><br>
 
                         </div>

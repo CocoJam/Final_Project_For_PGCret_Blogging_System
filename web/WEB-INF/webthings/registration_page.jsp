@@ -19,11 +19,13 @@
     <title>Login Page</title>
 
     <%@include file="../../component/Header(styling Template).html" %>
-<style>
-    .modal-backdrop {
-        z-index: -1;
-    }
-</style>
+
+    <style>
+        .modal-backdrop {
+            z-index: -1;
+        }
+    </style>
+
 </head>
 <body class="signup-page">
 
@@ -263,8 +265,8 @@
                                     //                                        Printing default photos
                                     for (int i = 1; i <= 3; i++) {
                                         checkedOrNot = "";
-                                        String defaultPhoto = "dEfAuLt" + i + ".png";
-                                        if (defaultPhoto.equals((String) pageContext.getAttribute("photoname"))) {
+                                        String defaultPhoto = "default" + i + ".png";
+                                        if (defaultPhoto.equals((String)pageContext.getAttribute("photoname"))) {
                                             checkedOrNot = "checked";
                                         }
                                         out.println(" <input type=\"radio\" name=\"profilePicture\" value=\"" + defaultPhoto + "\"" + checkedOrNot + "> <img src=\"defaultImg/" + defaultPhoto + "\" height='20%'><br>");
@@ -290,8 +292,6 @@
                             </div>
 
                             <!-- BUTTONS -->
-
-
 
                             <!-- TODO use JSTL to dynamically update the buttons based on login status -->
                             <div class="footer text-center">
@@ -334,9 +334,11 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <input type="submit" name="Upload" value="Upload Image"
                                            class="btn btn-block btn-success btn-lg"/>
-                                </div>
+                                </div>&nbsp;
                             </div>
                         </form>
+
+                        <!-- Delete profile start -->
 
                         <div class="container">
                             <!-- Trigger the modal with a button -->
@@ -387,7 +389,6 @@
                                                         </div>
                                                     </div>
 
-
                                                     <%--This button is to submit the above form to sign in--%>
                                                     <div class="footer text-center" class="form">
                                                         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -407,6 +408,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Delete profile end -->
 
                         <% } %>
 
