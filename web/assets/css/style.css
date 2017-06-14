@@ -10,15 +10,18 @@
     color: #000000;
 }
 
-/* CUSTOM BACKGROUND - LOGIN PAGE */
+/* CUSTOM BACKGROUND - LOGIN & PROFILE PAGE */
 #custom-bg-container {
-    background-image: url('/assets/img/background/bg-04.jpg');
+    background-image: url('/assets/img/background/bg-06.jpg');
     background-size: cover;
     background-position: top center;
 }
 
+/* CUSTOM BACKGROUND - AFTER LOGIN */
 #custom-bg-user {
-    background-image: url('/assets/img/background/bg-02.jpg');
+    background-image: url('/assets/img/background/bg-01.jpg');
+    background-size: cover;
+    background-position: center center;
 }
 
 /* OVERRIDE DEFAULT FORM FOCUS COLORS */

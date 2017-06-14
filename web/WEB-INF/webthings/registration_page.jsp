@@ -259,7 +259,7 @@
                                     //                                        Printing default photos
                                     for (int i = 1; i <= 3; i++){
                                         checkedOrNot = "";
-                                        String defaultPhoto = "dEfAuLt" + i + ".png";
+                                        String defaultPhoto = "default" + i + ".png";
                                         if (defaultPhoto.equals((String)pageContext.getAttribute("photoname"))) {
                                             checkedOrNot = "checked";
                                         }

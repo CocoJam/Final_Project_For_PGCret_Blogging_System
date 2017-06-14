@@ -61,9 +61,9 @@
 
                                             <c:choose>
                                                 <%--If this is a default profile image get the image from default photo directory--%>
-                                                <c:when test='${profileInfo.profilepic.startsWith("dEfAuLt")}'>
+                                                <c:when test='${profileInfo.profilepic.startsWith("default")}'>
                                                     <img src="defaultImg/${profileInfo.profilepic}"
-                                                         alt="Circle Image"
+                                                         alt="Avatar"
                                                          class="img-rounded img-responsive img-raised">
                                                 </c:when>
 
@@ -71,7 +71,7 @@
 
                                                 <c:otherwise>
                                                     <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                         alt="Circle Image"
+                                                         alt="Avatar"
                                                          class="img-rounded img-responsive img-raised">
                                                 </c:otherwise>
                                             </c:choose>
@@ -79,7 +79,7 @@
                                         </c:when>
 
                                         <c:otherwise>
-                                            <img src="Upload-photos/placeholder.gif" alt="Circle Image"
+                                            <img src="Upload-photos/placeholder.gif" alt="Avatar"
                                                  class="img-rounded img-responsive img-raised">
                                         </c:otherwise>
                                     </c:choose>
@@ -100,8 +100,8 @@
                                         if (session.getAttribute("showFriend") != null) {
                                             //Check are u the user or the other people's profile.
                                             if (friendsprofile) {
-                                                out.println("<button id=\"addfriend\">Add</button>");
-                                                out.println("<button id=\"unfriend\">Unfriend</button>");
+                                                out.println("<button class=\"btn btn-success btn-round\" id=\"addfriend\"><i class=\"material-icons\">add_circle</i>Add</button>");
+                                                out.println("<button class=\"btn btn-danger btn-round\" id=\"unfriend\"><i class=\"material-icons\">remove_circle</i>Unfriend</button>");
                                             }
                                         }
                                     %>

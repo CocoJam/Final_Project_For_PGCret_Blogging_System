@@ -52,20 +52,20 @@
                                                         <%--If this is a default profile image get the image from default photo directory--%>
                                                         <c:when test='${profileInfo.profilepic.startsWith("dEfAuLt")}'>
                                                             <img src="defaultImg/${profileInfo.profilepic}"
-                                                                 alt="Circle Image"
+                                                                 alt="Avatar"
                                                                  class="img-rounded img-responsive img-raised">
                                                         </c:when>
 
                                                         <%--Otherwise get the photo from the users photo page--%>
                                                         <c:otherwise>
                                                             <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                                 alt="Circle Image" class="img-rounded img-responsive img-raised">
+                                                                 alt="Avatar" class="img-rounded img-responsive img-raised">
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </c:when>
 
                                                 <c:otherwise>
-                                                    <img src="Upload-photos/placeholder.gif" alt="Circle Image"
+                                                    <img src="../placeholder.gif" alt="Avatar"
                                                          class="img-rounded img-responsive img-raised">
                                                 </c:otherwise>
                                             </c:choose>
@@ -140,11 +140,16 @@
                                     </c:forEach>
 
                                 </div>
+
                                 <label for="comments">Comments: </label>
                                 <br>
                                 <textarea rows="4" cols="50" id="comments" name="commentcontent"></textarea>
                                 <button id="addComment">Add Comment</button>
                             </div>
+
+                            <!-- Empty div for adding some space at the bottom of the container -->
+                            <div class="row" style="margin-bottom:2em;"></div>
+
                         </div>
                     </div>
                 </div>

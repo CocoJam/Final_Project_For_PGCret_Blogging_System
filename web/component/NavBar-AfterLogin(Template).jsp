@@ -213,7 +213,7 @@
 
     $(document).ready(function () {
         $("#bgImgStatus").text("Background " + imageValue + "/5");
-    })
+    });
 
     $("#leftButton").click(function () {
         if (imageValue > 1) {

@@ -133,7 +133,20 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label">Category</label>
                                     <input name="ArticleCategory" class="form-control" type="text"
-                                           id="ArticleCategory" value="${articleContents.category}" required/>
+                                           id="ArticleCategory" value="${articleContents.category}" list="ArticleCategoryList" required/>
+
+                                    <datalist id="ArticleCategoryList">
+                                        <option value="Programming"></option>
+                                        <option value="Java"></option>
+                                        <option value="Web Technologies"></option>
+                                        <option value="CSS"></option>
+                                        <option value="Javascript"></option>
+                                        <option value="jQuery"></option>
+                                        <option value="Personal"></option>
+                                        <option value="Opinion"></option>
+                                        <option value="Random"></option>
+                                    </datalist>
+
                                 </div>
 
                                 <input type="hidden" name="ArticleContent">
@@ -193,7 +206,7 @@
                                     <h3>Embed Youtube</h3>
                                     <div class="form-group">
                                         <form id="Youtube" action="/ArticleUpload" method="post">
-                                            <input id="youtubeurl" type="text" name="youtube" class="form-control" placeholder="Paste your Youtube link and click the button below to embed in your article">
+                                            <input id="youtubeurl" type="text" name="youtube" class="form-control" placeholder="Paste your Youtube link and click button below to add">
                                             <input type="submit" name="youtubeVideoSubmition" value="youtube" class="btn btn-danger">
                                         </form>
                                     </div>
@@ -220,15 +233,16 @@
                                 </c:choose>
                             </div>
 
-                            <!-- Media upload - TODO integrate with the uploader inside the WYSIWYG Editor -->
-
-                            <div class="row" style="margin-bottom: 2em;">
+                            <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <button id="formsubmit" class="btn btn-success btn-block"
                                             onclick="whenClickAdd()">Submit
                                     </button>
                                 </div>
                             </div>
+
+                            <!-- Empty div for adding some space at the bottom of the container -->
+                            <div class="row" style="margin-bottom:2em;"></div>
 
                         </div>
                     </div>
