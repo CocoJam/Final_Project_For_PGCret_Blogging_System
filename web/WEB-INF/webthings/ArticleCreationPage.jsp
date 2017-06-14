@@ -90,7 +90,8 @@
 
                                                         <c:otherwise>
                                                             <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                                 alt="Circle Image" class="img-rounded img-responsive img-raised">
+                                                                 alt="Circle Image"
+                                                                 class="img-rounded img-responsive img-raised">
                                                         </c:otherwise>
                                                     </c:choose>
 
@@ -137,7 +138,7 @@
                                 </div>
 
                                 <input type="hidden" name="ArticleContent">
-
+                                <input type="hidden" name="articleidnumber" value="${articleContents.articleid}">
                                 <% if (session.getAttribute("articleContents") != null) {
                                     System.out.println("EDIT");
                                     out.println("<input type=\"submit\" name=\"add\" value=\"Editted\" style='visibility: hidden' id='submitButton'>");
@@ -178,26 +179,27 @@
                                 </div>
 
                             </div>
-                                <!-- Media upload -->
-                                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                                    <h3>Upload Something</h3>
-                                    <form action="/Upload" method="post" id="Upload"
-                                          enctype="multipart/form-data">
-                                        <input type="file" name="file" size="50" class="btn btn-white"/>
-                                        <input type="submit" class="btn btn-primary" name="Upload" value="Upload"/>
-                                    </form>
+                            <!-- Media upload -->
+                            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                                <h3>Upload Something</h3>
+                                <form action="/Upload" method="post" id="Upload"
+                                      enctype="multipart/form-data">
+                                    <input type="file" name="file" size="50" class="btn btn-white"/>
+                                    <input type="submit" class="btn btn-primary" name="Upload" value="Upload"/>
+                                </form>
 
+                            </div>
+                            <!-- Youtube upload -->
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <h3>Youtube video</h3>
+                                <div class="form-group">
+                                    <form id="Youtube" action="/ArticleUpload" method="post">
+                                        <input id="youtubeurl" type="text" name="youtube" class="form-control">
+                                        <input type="submit" name="youtubeVideoSubmition" value="youtube"
+                                               class="btn btn-danger">
+                                    </form>
                                 </div>
-                                <!-- Youtube upload -->
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <h3>Youtube video</h3>
-                                    <div class="form-group">
-                                        <form id="Youtube" action="/ArticleUpload" method="post">
-                                            <input id="youtubeurl" type="text" name="youtube" class="form-control">
-                                            <input type="submit" name="youtubeVideoSubmition" value="youtube" class="btn btn-danger">
-                                        </form>
-                                    </div>
-                                </div>
+                            </div>
 
                             <!-- Space for holding content to be uploaded to DB -->
                             <!-- DRAGGABLE SECTIONS -->
@@ -348,16 +350,16 @@
 
 <!-- More WYSIWYG JS -->
 <script>
-//    submit button on click to submit the form of the draggible content set
+    //    submit button on click to submit the form of the draggible content set
     function whenClickAdd() {
         $("#submitButton").click();
     }
 
-// The reset the Textarea to empty the wysiwys.
+    // The reset the Textarea to empty the wysiwys.
     function resetText() {
         $('.wysiwys').trumbowyg('empty');
     }
-// Adding the new section or submitting the edit line of the wysiwys into the selected section of the draggible.
+    // Adding the new section or submitting the edit line of the wysiwys into the selected section of the draggible.
     function addNewSection() {
         var content = $('.wysiwys').trumbowyg('html');
         if (mouse == -1) {
@@ -391,7 +393,7 @@
             $(".ui-state-default").eq($(".ui-state-default").length - 1).remove();
         }
     }
-// Used to disattach a class from the li or the draggible to display to the user,
+    // Used to disattach a class from the li or the draggible to display to the user,
     function clearSection() {
         mouse = -1;
         clicked = false;
