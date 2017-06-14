@@ -284,6 +284,8 @@
 <script src="../../Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
 <script src="../../Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
 <script src="../../Trumbowyg/dist/plugins/noembed/trumbowyg.noembed.js"></script>
+<script src="../../Trumbowyg/dist/plugins/table/trumbowyg.table.min.js"></script>
+<script src="../../Trumbowyg/dist/plugins/base64/trumbowyg.base64.min.js"></script>
 
 <!-- WYSIWYG -->
 <!-- WYSIWYG Editor Implementation START -->
@@ -315,16 +317,16 @@
         superscript: 'Superscript',
         subscript: 'Subscript',
 
-        unorderedList: 'Unordered list',
-        orderedList: 'Ordered list',
+        unorderedList: 'Unordered List',
+        orderedList: 'Ordered List',
 
         justifyLeft: 'Align Left',
         justifyCenter: 'Align Center',
         justifyRight: 'Align Right',
         justifyFull: 'Align Justify',
 
-        horizontalRule: 'Insert horizontal rule',
-        removeformat: 'Remove formatting',
+        horizontalRule: 'Insert Horizontal Rule',
+        removeformat: 'Remove Formatting',
 
         fullscreen: 'Fullscreen',
 
@@ -340,18 +342,28 @@
         target: 'Target',
 
         link: "Hyperlink",
-        createLink: "Add hyperlink",
-        unlink: "Remove hyperlink",
+        createLink: "Add Hyperlink",
+        unlink: "Remove Hyperlink",
 
         insertImage: 'Insert Image',
         upload: "Upload Image",
+        base64: 'Embed Image',
+
         insertAudio: "Insert Audio",
         noembed: "Embed Media",
 
         preformatted: "Code (Preformatted Text)",
 
         foreColor: "Text Color",
-        backColor: "Background Color"
+        backColor: "Background Color",
+
+        table: 'Insert table',
+        tableAddRow: 'Add rows',
+        tableAddColumn: 'Add columns',
+        rows: 'Rows',
+        columns: 'Columns',
+        styler: 'Table class',
+        error: 'Error'
     };
 
     $('.wysiwys').trumbowyg({
@@ -364,7 +376,7 @@
         btnsDef: {
             // Customizables dropdowns
             Multimedia: {
-                dropdown: ['insertImage', 'insertAudio', 'noembed'],
+                dropdown: ['insertImage', 'base64', 'insertAudio', 'noembed'],
                 ico: 'upload'
             }
         },
@@ -375,13 +387,13 @@
             'btnGrp-design',
             ['link'],
             ['Multimedia'],
+            ['table'],
             'btnGrp-justify',
             'btnGrp-lists',
             ['foreColor', 'backColor'],
             ['preformatted'],
             ['horizontalRule'],
-            ['removeformat'],
-//            ['fullscreen']
+            ['removeformat']
         ]
     });
 </script>

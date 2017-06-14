@@ -151,6 +151,8 @@
                                 </div>
                                 <!-- Article Content end -->
 
+                                <div class="container">
+
                                 <!-- Article comments section -->
                                 <h2 style="margin-left: -1em;"><small>Comments</small></h2>
 
@@ -212,6 +214,8 @@
 
                                 <!-- Empty div for adding some space at the bottom of the container -->
                                 <div class="row" style="margin-bottom:2em;"></div>
+
+                                </div>
 
                             </div>
                         </div>
