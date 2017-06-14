@@ -20,6 +20,12 @@
 
     <%@include file="../../component/Header(styling Template).html" %>
 
+    <style>
+        .modal-backdrop {
+            z-index: -1;
+        }
+    </style>
+
 </head>
 <body class="signup-page">
 
@@ -328,9 +334,83 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <input type="submit" name="Upload" value="Upload Image"
                                            class="btn btn-block btn-success btn-lg"/>
-                                </div>
+                                </div>&nbsp;
                             </div>
                         </form>
+
+                        <!-- Delete profile start -->
+
+                        <div class="container">
+                            <!-- Trigger the modal with a button -->
+                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Profile Delete</button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <%--<h4 class="modal-title">Modal Header</h4>--%>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="card card-signup" id="loginCard">
+
+                                                <!-- FORM ELEMENT START -->
+                                                <form class="form" method="post" action="/Deleting" id="loginForm">
+
+                                                    <!-- Form heading -->
+                                                    <div class="header header-info text-center">
+                                                        <h4>Leaving to Slash N</h4>
+                                                    </div>
+
+                                                    <!-- Form subtext -->
+                                                    <p class="text-divider">Please Fill in the Following Delete</p>
+                                                    <div class="content">
+
+                                                        <!-- TEXT BOXES -->
+
+                                                        <!-- Text input box start -->
+                                                        <div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">account_circle</i>
+										</span>
+                                                            <input name="username" type="text" class="form-control"
+                                                                   placeholder="Username">
+                                                        </div>
+                                                        <!-- Text input box end -->
+
+                                                        <!-- Text input box start -->
+                                                        <div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">lock_outline</i>
+										</span>
+                                                            <input name="password" type="password" placeholder="Password"
+                                                                   class="form-control"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <%--This button is to submit the above form to sign in--%>
+                                                    <div class="footer text-center" class="form">
+                                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                                            <input type="submit" value="Deleting Profile" name="log"
+                                                                   class="btn btn-block btn-success btn-lg clickOnce">
+                                                        </div>
+
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Delete profile end -->
+
                         <% } %>
 
                         <%--Short script which ensures that no empty space is entered--%>

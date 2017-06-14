@@ -26,10 +26,10 @@
 </head>
 <body>
 <% System.out.println(response.getHeaderNames());%>
-<% response.addHeader("Cache-Control", "max-age=0,no-cache,no-store,must-revalidate");
-    response.addHeader("Pragma", "no-cache");
-    response.addHeader("Expires", "Tue, 01 Jan 1970 00:00:00 GMT");
-    System.out.println(response.getHeaderNames());%>
+<%--<% response.addHeader("Cache-Control", "max-age=0,no-cache,no-store,must-revalidate");--%>
+    <%--response.addHeader("Pragma", "no-cache");--%>
+    <%--response.addHeader("Expires", "Tue, 01 Jan 1970 00:00:00 GMT");--%>
+    <%--System.out.println(response.getHeaderNames());%>--%>
 <script>
 
     var ctx = "<%= request.getRequestURI() %>";
