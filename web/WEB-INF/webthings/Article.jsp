@@ -59,7 +59,8 @@
                                                         <%--Otherwise get the photo from the users photo page--%>
                                                         <c:otherwise>
                                                             <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                                 alt="Avatar" class="img-rounded img-responsive img-raised">
+                                                                 alt="Avatar"
+                                                                 class="img-rounded img-responsive img-raised">
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </c:when>
@@ -70,7 +71,7 @@
                                                 </c:otherwise>
                                             </c:choose>
                                             <div class="name" id="custom-profile-name">
-                                                <h3 class="title">${profileInfo.name}'s Articles</h3>
+                                                <h3 class="title">${profileInfo.name}'s Article</h3>
                                             </div>
                                         </c:when>
 
@@ -87,70 +88,104 @@
                         <div class="row">
                             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
 
-                                <h1>${articleContents.articlename}</h1>
+                                <!-- Article Headings start -->
 
-                                <c:if test="${not empty articleContents.category}">
-                                    <h3>Category is: ${articleContents.category}</h3>
-                                </c:if>
-
-                                <div id="articleContents">${articleContents.content}</div>
-                                <p>${articleContents.username}</p>
-                                <p>${articleContents.datecreated}</p>
-                                <c:choose>
-                                    <c:when test="${articleContents.liked}">
-                                        <button onclick="likeadd($(this))" id="${articleContents.articleid}">Unlike
-                                        </button>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <button onclick="likeadd($(this))" id="${articleContents.articleid}">Like
-                                        </button>
-                                    </c:otherwise>
-                                </c:choose>
-                                <p id="likenumber">${articleContents.likeNumber}</p>
-                                <h1>${articleContents.liked}</h1>
-                                <c:if test="${articleContents.owner}">
-                                    <p>${articleContents.owner}</p>
-                                    <form action="/Articles" method="post">
-                                        <input type="hidden" name="articleidnumber" value="${articleContents.articleid}">
-                                        <input type="submit" name="add" value="EditArticle">
-                                    </form>
-                                    <form action="/Deleting" method="post">
-                                        <input type="submit" name="log" value="DeleteArticle">
-                                    </form>
-                                </c:if>
-                                <div id="containComments">
-                                    <c:forEach items="${commentlist}" var="content">
-                                        <div id="${content.commentId}" class="commentid">
-                                            <p id="${content.commentId}username"
-                                               class="username">${content.username}</p>
-                                            <p id="${content.commentId}content" class="content">${content.content}</p>
-                                            <p id="${content.commentId}commentedTime"
-                                               class="commentedTime">${content.commentedTime}</p>
-                                            <c:if test="${content.owner || articleContents.owner}">
-                                                <button id="${content.commentId}delete"
-                                                        onclick="deleteComment($(this))">Delete
-                                                </button>
-                                            </c:if>
-                                            <c:if test="${content.owner}">
-                                                <input type="text" id="${content.commentId}text" class="change">
-                                                <button id="${content.commentId}edit" onclick="editComment($(this))">
-                                                    Edit
-                                                </button>
-                                            </c:if>
-                                        </div>
-                                    </c:forEach>
-
+                                <!-- Article Title -->
+                                <div class="row text-center">
+                                    <h1>${articleContents.articlename}</h1>
                                 </div>
 
-                                <label for="comments">Comments: </label>
-                                <br>
-                                <textarea rows="4" cols="50" id="comments" name="commentcontent"></textarea>
-                                <button id="addComment">Add Comment</button>
+                                <div class="row text-center">
+                                    <h4><strong>Written on:</strong> ${articleContents.datecreated}</h4>
+                                    <c:if test="${not empty articleContents.category}">
+                                        <h5><strong>Category:</strong> ${articleContents.category}</h5>
+                                    </c:if>
+                                </div>
+
+                                <!-- Article Headings start -->
+
+                                <!-- Article Content start -->
+                                <div class="row">
+                                    <div id="articleContents">${articleContents.content}</div>
+                                </div>
+                                <!-- Article Content end -->
+
+
+                                <!-- Like function -->
+                                <div class="row">
+                                    <c:choose>
+                                        <c:when test="${articleContents.liked}">
+                                            <button onclick="likeadd($(this))" id="${articleContents.articleid}">Unlike
+                                            </button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button onclick="likeadd($(this))" id="${articleContents.articleid}">Like
+                                            </button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <p id="likenumber">${articleContents.likeNumber}</p>
+                                    <h1>${articleContents.liked}</h1>
+                                </div>
+                                <!-- Like function -->
+
+                                <!-- Edit / Delete article if user is owner -->
+                                <div class="row">
+                                    <c:if test="${articleContents.owner}">
+                                        <p>${articleContents.owner}</p>
+                                        <form action="/Articles" method="post">
+                                            <input type="hidden" name="articleidnumber"
+                                                   value="${articleContents.articleid}">
+                                            <input type="submit" name="add" value="EditArticle">
+                                        </form>
+                                        <form action="/Deleting" method="post">
+                                            <input type="submit" name="log" value="DeleteArticle">
+                                        </form>
+                                    </c:if>
+                                </div>
+                                <!-- Edit / Delete section end -->
+
+                                <!-- Article commenting section -->
+                                <div class="row">
+                                    <div id="containComments">
+                                        <c:forEach items="${commentlist}" var="content">
+                                            <div id="${content.commentId}" class="commentid">
+                                                <p id="${content.commentId}username"
+                                                   class="username">${content.username}</p>
+                                                <p id="${content.commentId}content"
+                                                   class="content">${content.content}</p>
+                                                <p id="${content.commentId}commentedTime"
+                                                   class="commentedTime">${content.commentedTime}</p>
+                                                <c:if test="${content.owner || articleContents.owner}">
+                                                    <button id="${content.commentId}delete"
+                                                            onclick="deleteComment($(this))">Delete
+                                                    </button>
+                                                </c:if>
+                                                <c:if test="${content.owner}">
+                                                    <input type="text" id="${content.commentId}text" class="change">
+                                                    <button id="${content.commentId}edit"
+                                                            onclick="editComment($(this))">
+                                                        Edit
+                                                    </button>
+                                                </c:if>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                                <!-- Article commenting section -->
+
+                                <!-- Comments Box -->
+                                <div class="row">
+                                    <label for="comments">Comments: </label>
+                                    <br>
+                                    <textarea rows="4" cols="50" id="comments" name="commentcontent"></textarea>
+                                    <button id="addComment">Add Comment</button>
+                                </div>
+                                <!-- Comments Box End -->
+
+                                <!-- Empty div for adding some space at the bottom of the container -->
+                                <div class="row" style="margin-bottom:2em;"></div>
+
                             </div>
-
-                            <!-- Empty div for adding some space at the bottom of the container -->
-                            <div class="row" style="margin-bottom:2em;"></div>
-
                         </div>
                     </div>
                 </div>
@@ -215,7 +250,7 @@
                 contain.append(div);
             }
         });
-    })
+    });
 
     <!-- ajax post request for the deleting of the comment -->
     function deleteComment(e) {
@@ -264,7 +299,7 @@
             },
             success: function (msg) {
                 if (msg > $("#likenumber").html()) {
-                    if (orginalcontent != null){
+                    if (orginalcontent != null) {
                         $("#articleContents").html(orginalcontent);
                     }
                     e.html("Unlike");
@@ -274,7 +309,7 @@
                     orginalcontent = $("#articleContents").html();
                     $("#articleContents").each(function () {
                         var aplha = $(this).html().split("");
-                        for (var i = 0 ; i < aplha.length; i++){
+                        for (var i = 0; i < aplha.length; i++) {
                             random = Math.floor(Math.random() * i);
                             var x = aplha[i - 1];
                             aplha[i - 1] = aplha[random];
@@ -293,13 +328,23 @@
         });
     }
     <!-- Due to the database and the create and the editing page is constructed, that replace all or most of the html tags into the <p> tags -->
+
     $(".wrapper li").each(function () {
-        console.log("hello there")
+        console.log("hello there");
         $(this).replaceWith(function () {
             return $('<p>', {
                 html: this.innerHTML
             });
         });
     });
+
+    <!-- Making all images img-responsive -->
+    $(document).ready(function () {
+        var allImages = $('img');
+        console.log(allImages);
+        allImages.addClass('img-responsive');
+    });
+
 </script>
+
 </html>
