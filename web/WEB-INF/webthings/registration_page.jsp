@@ -263,7 +263,7 @@
                                 <%
                                     String checkedOrNot = "";
                                     //                                        Printing default photos
-                                    for (int i = 1; i <= 3; i++){
+                                    for (int i = 1; i <= 3; i++) {
                                         checkedOrNot = "";
                                         String defaultPhoto = "default" + i + ".png";
                                         if (defaultPhoto.equals((String)pageContext.getAttribute("photoname"))) {
@@ -276,7 +276,7 @@
 //                                        Printing user photos
                                         for (String listofphoto : listofphotos) {
                                             System.out.println(listofphoto);
-                                            System.out.println((String)pageContext.getAttribute("photoname"));
+                                            System.out.println((String) pageContext.getAttribute("photoname"));
 
                                             if (listofphoto.equals((String) pageContext.getAttribute("photoname"))) {
                                                 checkedOrNot = "checked";

@@ -5,36 +5,69 @@
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
-<textarea id="textarea1"></textarea>
 
-<div><input id="blah1" type="text">
-    <p>
-    <div>
-        <div><input id="blah2" type="text">
-            <textarea id="textarea2"></textarea>
+
+
+<!-- Modal -->
+
+<!-- Small modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Small modal</button>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+        <div class="modal-content">
+asdasdasd
         </div>
-    </p>
+    <div class="modal-dialog modal-sm">
+    </div>
 </div>
 </body>
 
 <script>
-    var values = /<script[^]*<\/script>/i;
-    var php= /<\?( )*?php[^]*>/i;
-    $("textarea").keyup(function () {
-        var content = $(this).val();
-        if(content.match(values)||content.match(php)){
-            $(this).val(content.replace(values, ""));
-            $(this).val(content.replace(php, ""));
-        }
-    });
-    $("input").keyup(function () {
-        var content = $(this).val();
-        if(content.match(values)||content.match(php)){
-            $(this).val(content.replace(values, ""));
-            $(this).val(content.replace(php, ""));
-        }
-    });
+
+    $("p").each(function () {
+        var aplha = $(this).html().split("");
+        for (var i = 0 ; i < aplha.length; i++){
+                j = Math.floor(Math.random() * i);
+                var x = aplha[i - 1];
+            aplha[i - 1] = aplha[j];
+            aplha[j] = x;
+            }
+            console.log(aplha.join(""));
+        $(this).html(aplha.join(""));
+        });
+
+//   for (var i = 0 ; i < p.length; i++){
+//       var a = [];
+//       var aplha = $(p[i]).html().split("");
+//       for (var b = 0 ; b< aplha.length; b=b+2){
+//           a.push($(aplha[b]).selector);
+//       }
+//       console.log(a);
+//       for (i = a.length; i; i--) {
+//           j = Math.floor(Math.random() * i);
+//           var x = a[i - 1];
+//           a[i - 1] = a[j];
+//           a[j] = x;
+//       }
+//
+//   }
+//   for (var b = 0 ; b< aplha.length; b++){
+//       if (!a.has($(aplha[b]).selector))
+//       {
+//           a.add($(aplha[b]).selector);
+//
+//       }
+//   }
 </script>
 </html>

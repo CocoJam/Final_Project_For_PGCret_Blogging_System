@@ -6,7 +6,11 @@
     <title>Login Page</title>
 
     <%@ include file="component/Header(styling Template).html" %>
-
+<style>
+    .modal-backdrop {
+        z-index: -1;
+    }
+</style>
 </head>
 <body class="signup-page">
 
@@ -74,8 +78,8 @@
                         </form>
                         <div class="footer text-center">
 
-                            <a href="/login?Registration=Registration" style="color: deepskyblue" class="clickOnce">Register</a>
-                            now to join our community!
+                            Click <a href="/login?Registration=Register" style="color: green" class="clickOnce">Register</a>
+                            to to join our community!
                             <br><br>
 
                         </div>

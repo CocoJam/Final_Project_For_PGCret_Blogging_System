@@ -164,7 +164,7 @@
                                 </div>
 
                                 <input type="hidden" name="ArticleContent">
-
+                                <input type="hidden" name="articleidnumber" value="${articleContents.articleid}">
                                 <% if (session.getAttribute("articleContents") != null) {
                                     System.out.println("EDIT");
                                     out.println("<input type=\"submit\" name=\"add\" value=\"Editted\" style='visibility: hidden' id='submitButton'>");
@@ -391,7 +391,7 @@
 
 <!-- More WYSIWYG JS -->
 <script>
-    //    submit button on click to submit the form of the draggible content set
+    // Submit button on click to submit the form of the draggible content set
     function whenClickAdd() {
         $("#submitButton").click();
     }
@@ -515,6 +515,10 @@
                     }
                     else if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
                         li.innerHTML = "<img src=\"" + msg + "\">";
+                    }
+                    else {
+                        alert("Upload file is not supported.");
+                        return;
                     }
                     $("#sortable").append(li);
                 },

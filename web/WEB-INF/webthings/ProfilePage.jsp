@@ -79,7 +79,7 @@
                                         </c:when>
 
                                         <c:otherwise>
-                                            <img src="Upload-photos/placeholder.gif" alt="Avatar"
+                                            <img src=Upload-photos/placeholder.gif" alt="Avatar"
                                                  class="img-rounded img-responsive img-raised">
                                         </c:otherwise>
                                     </c:choose>
@@ -181,6 +181,8 @@
                                 </c:if>
 
                                 <% }
+
+                                    if (!friendsprofile) {
                                 %>
 
                                 <button id="showArticleList" class="btn btn-info btn-round">Show Articles List</button>
@@ -189,6 +191,7 @@
 
                                 <table class="table table-striped table-hover table-responsive">
                                 </table>
+                                <% }%>
                                 <%--end testing--%>
 
                                 <script>
