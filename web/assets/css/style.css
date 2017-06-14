@@ -1,7 +1,7 @@
-/* NAV BAR - POSITION ON TOP */
+/* NAVBAR - POSITION ON TOP */
 #navbar-full .navbar{
     border-radius: 0 !important;
-    margin-bottom: 15px;
+    /*margin-bottom: 15px;*/
     z-index: 2;
 }
 
@@ -18,11 +18,7 @@
 }
 
 #custom-bg-user {
-    background-image: url('/assets/img/background/bg-05.jpg');
-}
-
-#custom-bg-article {
-    background-image: url('/assets/img/background/bg-03.jpg');
+    background-image: url('/assets/img/background/bg-02.jpg');
 }
 
 /* OVERRIDE DEFAULT FORM FOCUS COLORS */
@@ -104,6 +100,15 @@ a, a:hover, a:focus {
     z-index: 9999;
     visibility: hidden;
     background: url(/pokemonloader3.gif) center no-repeat;
+}
+
+/* NAVBAR - custom */
+/* changes applied in material-kit.css to navbar-inverse */
+
+/* BUTTON - custom */
+.btn-group.open > .dropdown-toggle.btn.btn-inverse,
+.btn-group-vertical.open > .dropdown-toggle.btn.btn-inverse {
+    background-color: #293A46;
 }
 
 #carouselMediaPage {

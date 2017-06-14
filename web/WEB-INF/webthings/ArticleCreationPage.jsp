@@ -133,7 +133,7 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label">Category</label>
                                     <input name="ArticleCategory" class="form-control" type="text"
-                                           id="ArticleCategory" required/>
+                                           id="ArticleCategory" value="${articleContents.category}" required/>
                                 </div>
 
                                 <input type="hidden" name="ArticleContent">
@@ -180,7 +180,7 @@
                             </div>
                                 <!-- Media upload -->
                                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                                    <h3>Upload Something</h3>
+                                    <h3>Upload Media</h3>
                                     <form action="/Upload" method="post" id="Upload"
                                           enctype="multipart/form-data">
                                         <input type="file" name="file" size="50" class="btn btn-white"/>
@@ -190,10 +190,10 @@
                                 </div>
                                 <!-- Youtube upload -->
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <h3>Youtube video</h3>
+                                    <h3>Embed Youtube</h3>
                                     <div class="form-group">
                                         <form id="Youtube" action="/ArticleUpload" method="post">
-                                            <input id="youtubeurl" type="text" name="youtube" class="form-control">
+                                            <input id="youtubeurl" type="text" name="youtube" class="form-control" placeholder="Paste your Youtube link and click the button below to embed in your article">
                                             <input type="submit" name="youtubeVideoSubmition" value="youtube" class="btn btn-danger">
                                         </form>
                                     </div>
@@ -222,7 +222,7 @@
 
                             <!-- Media upload - TODO integrate with the uploader inside the WYSIWYG Editor -->
 
-                            <div class="row">
+                            <div class="row" style="margin-bottom: 2em;">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <button id="formsubmit" class="btn btn-success btn-block"
                                             onclick="whenClickAdd()">Submit
@@ -237,7 +237,10 @@
         </div>
     </div>
 </div>
-</div>
+
+<!-- FOOTER START -->
+<%@ include file="../../component/Footer(Template).html" %>
+<!-- FOOTER END -->
 
 </body>
 
@@ -310,7 +313,12 @@
         insertImage: 'Insert Image',
         upload: "Upload Image",
         insertAudio: "Insert Audio",
-        noembed: "Embed Media"
+        noembed: "Embed Media",
+
+        preformatted: "Code (Preformatted Text)",
+
+        foreColor: "Text Color",
+        backColor: "Background Color"
     };
 
     $('.wysiwys').trumbowyg({

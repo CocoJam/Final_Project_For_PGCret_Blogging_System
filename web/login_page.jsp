@@ -74,8 +74,8 @@
                         </form>
                         <div class="footer text-center">
 
-                            Click <a href="/login?Registration=Registration" style="color: green" class="clickOnce">Register</a>
-                            to signup now
+                            <a href="/login?Registration=Registration" style="color: deepskyblue" class="clickOnce">Register</a>
+                            now to join our community!
                             <br><br>
 
                         </div>

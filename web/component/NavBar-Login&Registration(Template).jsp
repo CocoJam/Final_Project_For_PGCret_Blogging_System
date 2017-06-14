@@ -16,7 +16,7 @@
 <body>
 
 <!-- Navbar with class to set color and position behaviour -->
-<nav class="navbar navbar-info navbar-transparent navbar-fixed-top navbar-color-on-scroll">
+<nav class="navbar navbar-fixed-top navbar-inverse navbar-transparent navbar-color-on-scroll">
 
     <!-- responsive container for div --><!-- do not remove -->
     <div class="container">
