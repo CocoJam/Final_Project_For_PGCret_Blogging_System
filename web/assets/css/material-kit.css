@@ -2143,34 +2143,34 @@ legend {
   color: #ffffff;
 }
 .navbar.navbar-inverse {
-  background-color: #3f51b5;
-  color: contrast-color(#3f51b5, #000000, #ffffff);
+  background-color: rgba(31, 31, 31, 0.9); /* CUSTOM */
+  color: contrast-color(#293A46, #000000, #ffffff); /* CUSTOM */
 }
 .navbar.navbar-inverse .navbar-form .form-group input.form-control::-moz-placeholder,
 .navbar.navbar-inverse .navbar-form input.form-control::-moz-placeholder {
-  color: contrast-color(#3f51b5, #000000, #ffffff);
+  color: contrast-color(#293A46, #000000, #ffffff); /* CUSTOM */
 }
 .navbar.navbar-inverse .navbar-form .form-group input.form-control:-ms-input-placeholder,
 .navbar.navbar-inverse .navbar-form input.form-control:-ms-input-placeholder {
-  color: contrast-color(#3f51b5, #000000, #ffffff);
+  color: contrast-color(#293A46, #000000, #ffffff); /* CUSTOM */
 }
 .navbar.navbar-inverse .navbar-form .form-group input.form-control::-webkit-input-placeholder,
 .navbar.navbar-inverse .navbar-form input.form-control::-webkit-input-placeholder {
-  color: contrast-color(#3f51b5, #000000, #ffffff);
+  color: contrast-color(#293A46, #000000, #ffffff); /* CUSTOM */
 }
 .navbar.navbar-inverse .dropdown-menu {
   border-radius: 3px !important;
 }
 .navbar.navbar-inverse .dropdown-menu li > a:hover, .navbar.navbar-inverse .dropdown-menu li > a:focus {
   color: #FFFFFF;
-  background-color: #3f51b5;
+  background-color: rgba(31, 31, 31, 0.9); /* CUSTOM */
 }
 .navbar.navbar-inverse .dropdown-menu .active > a {
-  background-color: #3f51b5;
-  color: contrast-color(#3f51b5, #000000, #ffffff);
+  background-color: rgba(31, 31, 31, 0.9); /* CUSTOM */
+  color: contrast-color(#293A46, #000000, #ffffff); /* CUSTOM */
 }
 .navbar.navbar-inverse .dropdown-menu .active > a:hover, .navbar.navbar-inverse .dropdown-menu .active > a:focus {
-  color: contrast-color(#3f51b5, #000000, #ffffff);
+  color: contrast-color(#293A46, #000000, #ffffff); /* CUSTOM */
 }
 .navbar.navbar-primary {
   background-color: #9c27b0;
@@ -2323,7 +2323,7 @@ legend {
   color: #ffffff;
 }
 .navbar-inverse {
-  background-color: #3f51b5;
+  background-color: rgba(41, 58, 70, 0.8); /* CUSTOM */
 }
 .navbar.navbar-transparent {
   background-color: transparent;
@@ -3581,7 +3581,7 @@ h2.title {
   left: 0;
   top: 0;
   content: "";
-  background-color: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.4) linear-gradient(45deg, rgba(0, 0, 0, 0.6) 0%, rgba(31, 31, 31, 0.4) 100%); /* CUSTOM */
 }
 .header-filter .container {
   z-index: 2;
@@ -3687,7 +3687,7 @@ h2.title {
   margin-top: 60px;
 }
 .profile-page .gallery {
-  margin-top: 45px;
+  /*margin-top: 45px;*/
   padding-bottom: 50px;
 }
 .profile-page .gallery img {

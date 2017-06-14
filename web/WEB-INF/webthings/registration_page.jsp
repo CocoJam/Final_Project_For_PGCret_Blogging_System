@@ -101,7 +101,6 @@
                                 </c:otherwise>
                             </c:choose>
 
-
                             <!-- TODO use JSTL to change this text dynamically based on login status -->
 
                             <!-- TODO change this text when user is logged in to: "Please update your details" -->
@@ -142,7 +141,7 @@
                                                 //msg is returning a boolean for check if false meaning no such username so ok
 
                                                 //If the msg is true, return 'The username already exists'
-                                                if (msg == "true"){
+                                                if (msg == "true") {
                                                     $(reponseToUsername).text("The username already exists");
                                                     $("#reponseToUsername").css({"color": "red", "font-weight": "bold"})
                                                 } else {
@@ -245,29 +244,42 @@
 										<span class="input-group-addon">
 											<i class="material-icons">chat</i>
 										</span>
-                                    <textarea form="form" id="Introduction" name="Introduction" placeholder="Let your classmates know a little bit about yourself"
-                                           class="form-control">${profileInfo.introduction}</textarea>
+                                    <textarea form="form" id="Introduction" name="Introduction"
+                                              placeholder="Let your classmates know a little bit about yourself"
+                                              class="form-control">${profileInfo.introduction}</textarea>
                                 </div>
 
                                 <%--Viewing list of users photos--%>
                                 <%--2nd part: uses the above set to display the images in the set, by going through the list of photoname strings, and then accessing by pathing in the photo by the username folder--%>
+
+
                                 <c:set var="photoname" value="${profileInfo.profilepic}"/>
-
-                                <% if (username != null) {
-
-                                    for (String listofphoto : listofphotos) {
-                                        System.out.println(listofphoto);
-                                        System.out.println((String)pageContext.getAttribute("photoname"));
-
-                                        String checkedOrNot = "";
-                                        if (listofphoto.equals((String)pageContext.getAttribute("photoname"))){
+                                <%
+                                    String checkedOrNot = "";
+                                    //                                        Printing default photos
+                                    for (int i = 1; i <= 3; i++){
+                                        checkedOrNot = "";
+                                        String defaultPhoto = "default" + i + ".png";
+                                        if (defaultPhoto.equals((String)pageContext.getAttribute("photoname"))) {
                                             checkedOrNot = "checked";
                                         }
-
-                                        out.println(" <input type=\"radio\" name=\"profilePicture\" value=\"" + listofphoto + "\"" + checkedOrNot + "> <img  src=\"Upload-photos/" + username + "/photo/" + listofphoto + "\" height='20%'><br>");
-
+                                        out.println(" <input type=\"radio\" name=\"profilePicture\" value=\"" + defaultPhoto + "\"" + checkedOrNot + "> <img src=\"defaultImg/" + defaultPhoto + "\" height='20%'><br>");
                                     }
-                                }
+                                    if (username != null) {
+
+//                                        Printing user photos
+                                        for (String listofphoto : listofphotos) {
+                                            System.out.println(listofphoto);
+                                            System.out.println((String)pageContext.getAttribute("photoname"));
+
+                                            if (listofphoto.equals((String) pageContext.getAttribute("photoname"))) {
+                                                checkedOrNot = "checked";
+                                            }
+
+                                            out.println(" <input type=\"radio\" name=\"profilePicture\" value=\"" + listofphoto + "\"" + checkedOrNot + "> <img  src=\"Upload-photos/" + username + "/photo/" + listofphoto + "\" height='20%'><br>");
+
+                                        }
+                                    }
                                 %>
                                 <!-- Text input box end -->
 
@@ -283,12 +295,12 @@
                                     <c:choose>
                                         <%--Scenario 1: when already logged in see ChangeUserInformation--%>
                                         <c:when test="${log}">
-                                            <input type="submit" name="log" value="ChangeUserInformation"
+                                            <input type="submit" name="log" value="Update Profile"
                                                    class="btn btn-block btn-danger btn-lg">
                                         </c:when>
                                         <%--Scenario 2: when NOT logged in then just see Registration--%>
                                         <c:otherwise>
-                                            <input type="submit" name="log" value="Registration"
+                                            <input type="submit" name="log" value="Register"
                                                    class="btn btn-block btn-success btn-lg">
                                         </c:otherwise>
                                     </c:choose>
@@ -314,7 +326,7 @@
                             <%--submit button for loading images--%>
                             <div class="footer text-center">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <input type="submit" name="Upload" value="ProfileUpload"
+                                    <input type="submit" name="Upload" value="Upload Image"
                                            class="btn btn-block btn-success btn-lg"/>
                                 </div>
                             </div>
@@ -352,11 +364,11 @@
                                     return console.log("weakMiddle")
                                 }
                                 <!-- Simplely using the length to test strength -->
-                                if ($("#password").val().length < 8 && $("#password").val().length >0) {
+                                if ($("#password").val().length < 8 && $("#password").val().length > 0) {
                                     $("#reponseToPassword").text("Weak");
                                     return console.log("weak")
                                 }
-                                if ($("#password").val().length > 8 ) {
+                                if ($("#password").val().length > 8) {
                                     $("#reponseToPassword").text("Ok");
                                     return console.log("ok")
                                 }
@@ -379,7 +391,7 @@
                                         success: function (msg) {
                                             console.log(msg);
                                             if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
-                                                var ratioButton = "<input type=\"radio\" name= \"profilePicture\" value=\""+msg.replace("Upload-photos\\${username}\\photo\\","")+"\">";
+                                                var ratioButton = "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos\\${username}\\photo\\", "") + "\">";
                                                 var image = "<img src=\"" + msg + "\"height=\"20%\">";
                                                 var breakline = "<br>";
                                                 $(".content").eq(0).append(ratioButton);
@@ -387,9 +399,9 @@
                                                 $(".content").eq(0).append(breakline);
                                             }
                                             <!-- if the media is successfully uploaded but it is not a picture or photo in the right formate, that the alert will pop and show -->
-                                            else{
+                                            else {
                                                 console.log("upload fail");
-                                                alert(msg.replace("Upload-photos\\${username}\\photo\\","") + " failed to upload due to format not supplied");
+                                                alert(msg.replace("Upload-photos\\${username}\\photo\\", "") + " failed to upload due to format not supplied");
                                             }
                                         },
                                         <!-- Error when the error such as the file is not in any right formate or such that the size of the file is too big, then the this will alert the user. -->

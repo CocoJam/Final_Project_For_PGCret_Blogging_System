@@ -122,4 +122,5 @@ public class ConnectionToTheDataBase {
         Matcher m = p.matcher(word);
         return "";
     }
+
 }

@@ -16,13 +16,17 @@
 <body>
 
 <!-- Navbar with class to set color and position behaviour -->
-<nav class="navbar navbar-info navbar-transparent navbar-fixed-top navbar-color-on-scroll">
+<nav class="navbar navbar-fixed-top navbar-inverse navbar-transparent navbar-color-on-scroll">
 
     <!-- responsive container for div --><!-- do not remove -->
     <div class="container">
 
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
+
+            <%--Div to load up loader--%>
+            <div id='loaderID'></div>
+            <%--Div loader ending--%>
 
             <!-- Navbar toggle which display when on mobile device -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#expand-navbar-icons">
@@ -48,7 +52,7 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li>
-                    <a href="/login?Registration=Registration" target="_self">
+                    <a href="/login?Registration=Register" target="_self">
                         <i class="material-icons">create</i>
                         Register
                     </a>

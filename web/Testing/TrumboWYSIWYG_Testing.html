@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WYSIWYG</title>
+
+    <!-- jQUERY & jQUERY UI -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <!-- Load WYSIWYG STYLE -->
+    <link rel="stylesheet" href="../Trumbowyg/dist/ui/trumbowyg.min.css">
+    <link rel="stylesheet" href="../Trumbowyg/dist/plugins/colors/ui/trumbowyg.colors.min.css">
+
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            margin-bottom: 10px;
+        }
+
+        li {
+            margin: 5px;
+            padding: 5px;
+            width: 100%;
+        }
+
+        .section-selected {
+            border: 1px solid #ededed;
+            background: #c5c5c5;
+            color: #2b2b2b;
+        }
+
+        #contents {
+            border: 1px solid #ededed;
+            border-radius: 6px;
+            box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- Editor Box -->
+<h1>WYSIWYG</h1>
+<div class="wysiwys" placeholder="Enter your content here"></div>
+
+<!-- Make a new section, put current WYSIWYG content in -->
+<button onclick="addNewSection()">Add Section</button>
+
+<!-- Delete currently selected section -->
+<button onclick="deleteSection()">Delete Section</button>
+
+<!-- Clear all content inside WYSIWYG editor -->
+<button onclick="resetText()">Reset</button>
+
+<p></p>
+
+<!-- Space for holding content to be uploaded to DB -->
+<h2>Contents holding area</h2>
+<div id="contents">
+
+    <!-- creates new section boxes -->
+    <ul>
+        <li class="ui-state draggable"></li>
+    </ul>
+
+    <!-- place where you drag stuff into for sorting their order -->
+    <ul id="sortable">
+    </ul>
+
+</div>
+
+</body>
+
+<!-- Load WYSIWYG JS -->
+<script src="../Trumbowyg/dist/trumbowyg.min.js"></script>
+<script src="../Trumbowyg/dist/plugins/preformatted/trumbowyg.preformatted.min.js"></script>
+<script src="../Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
+<script src="../Trumbowyg/dist/plugins/upload/trumbowyg.upload.js"></script>
+<script src="../Trumbowyg/dist/plugins/emoji/trumbowyg.emoji.min.js"></script>
+<script src="../Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
+
+
+<!-- WYSIWYG Editor Implementation START -->
+<script>
+    $('.wysiwys').trumbowyg({
+        // Settings
+        semantic: true,
+        autogrow: true,
+        resetCss: true,
+
+        // Buttons
+        btnsDef: {
+            // Customizables dropdowns
+            image: {
+                dropdown: ['insertImage', 'upload', 'base64', 'noembed'],
+                ico: 'insertImage'
+            }
+        },
+        btns: [
+            ['viewHTML'],
+            ['undo', 'redo'],
+            ['formatting'],
+            'btnGrp-design',
+            ['link'],
+            ['image'],
+            ['emoji'],
+            ['audio'],
+            'btnGrp-justify',
+            'btnGrp-lists',
+            ['foreColor', 'backColor'],
+            ['preformatted'],
+            ['horizontalRule'],
+            ['removeformat'],
+            ['fullscreen']
+        ]
+    });
+</script>
+<!-- WYSIWYG Editor Implementation END -->
+
+<!-- More WYSIWYG JS -->
+<script>
+    function resetText() {
+        $('.wysiwys').trumbowyg('empty');
+    }
+
+    function addNewSection() {
+        var content = $('.wysiwys').trumbowyg('html');
+        if (mouse == -1) {
+            console.log("making");
+            var paragraph1 = document.createElement("li");
+            paragraph1.className = "ui-state-default ";
+            paragraph1.addEventListener("click", selection);
+            $("#sortable").append(paragraph1);
+            paragraph1.innerHTML = content;
+            resetText();
+        }
+        <!-- Make the selection number -1, so it won't put the content of what's currently in the WYSIWYG directly into the selected section if made -->
+        else {
+            console.log("change");
+            mouse.innerHTML = content;
+            mouse.class.removeClass("section-selected");
+            clicked = false;
+            mouse = -1;
+            resetText();
+        }
+    }
+
+    // Delete currently selected section
+    function deleteSection() {
+        if (mouse != -1) {
+            mouse.remove();
+            mouse = -1;
+        }
+        else {
+            console.log($(".ui-state-default").length);
+            $(".ui-state-default").eq($(".ui-state-default").length - 1).remove();
+        }
+    }
+
+    function clearSection() {
+        mouse = -1;
+        clicked = false;
+        $(".section-selected").each(function () {
+            console.log("hello");
+            $(this).removeClass("section-selected");
+        })
+    }
+
+</script>
+
+<!-- Scripts for dealing with draggable sections -->
+<script>
+    var mouse = -1;
+    var clicked = false;
+    // Get ID of section we clicked on, grab the content, put back inside WYSIWYG
+  function selection () {
+        console.log("clicked");
+        if (!clicked) {
+            mouse = this;
+            console.log(this);
+            console.log(mouse.innerHTML);
+            console.log("section id: " + mouse);
+            $('.wysiwys').trumbowyg('html', mouse.innerHTML);
+            console.log($('.wysiwys').trumbowyg('html'));
+            $(this).addClass("section-selected");
+            clicked = true;
+        }
+        else {
+            clearSection();
+        }
+    };
+
+    // Typing and populating the section with content from the WYSIWYG
+    // If mouse is null, won't do anything
+    // Binds all input from keystroke inside textarea, runs function - display what's inside textarea in console.log, assign the id to a section inside the contents div
+
+    //    $('.wysiwys').bind('input', function () {
+    //        var content = $('.wysiwys').trumbowyg('html');
+    //        console.log(content);
+    //        $("#textarea").text(content);
+    //        $("#" + mouse).text(content);
+    //    });
+
+
+    $(function () {
+        $("#sortable").sortable({
+            revert: true
+        });
+        $(".draggable").draggable({
+            connectToSortable: "#sortable",
+            revert: "invalid"
+        });
+        $("ul, li").disableSelection();
+    });
+
+</script>
+
+</html>

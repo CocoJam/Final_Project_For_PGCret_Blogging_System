@@ -58,33 +58,53 @@
 
                                     <c:choose>
                                         <c:when test="${profileInfo.profilepic != null}">
-                                            <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                 alt="Circle Image" class="img-rounded img-responsive img-raised">
+
+                                            <c:choose>
+                                                <%--If this is a default profile image get the image from default photo directory--%>
+                                                <c:when test='${profileInfo.profilepic.startsWith("default")}'>
+                                                    <img src="defaultImg/${profileInfo.profilepic}"
+                                                         alt="Avatar"
+                                                         class="img-rounded img-responsive img-raised">
+                                                </c:when>
+
+                                                <%--Otherwise get the photo from the users photo page--%>
+
+                                                <c:otherwise>
+                                                    <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
+                                                         alt="Avatar"
+                                                         class="img-rounded img-responsive img-raised">
+                                                </c:otherwise>
+                                            </c:choose>
+
                                         </c:when>
 
                                         <c:otherwise>
-                                            <img src="Upload-photos/placeholder.gif" alt="Circle Image"
+                                            <img src="Upload-photos/placeholder.gif" alt="Avatar"
                                                  class="img-rounded img-responsive img-raised">
                                         </c:otherwise>
                                     </c:choose>
-                                        <!-- loading the friendlist from the session, which allow the user to veiw is that person a friend of the user and display the button of friend and unfriend depending-->
+                                    <!-- loading the friendlist from the session, which allow the user to veiw is that person a friend of the user and display the button of friend and unfriend depending-->
                                     <% boolean friended = false;
-                                        List<Friend> friendList;
+                                        List<Friend> friendList = null;
                                         if (session.getAttribute("firendlist") != null) {
                                             System.out.println("yes this is friend");
                                             friendList = (ArrayList<Friend>) session.getAttribute("firendlist");
-                                            if (friendList.contains(((ProfilePAge) session.getAttribute("profileInfo")).getUsername())) {
-                                                System.out.println("yes it is one of your friend");
-                                                friended = true;
+
+                                            for (Friend friend : friendList) {
+                                                if (friend.getFriendusername().equals(((ProfilePAge) session.getAttribute("profileInfo")).getUsername())) {
+                                                    System.out.println("yes it is one of your friend");
+                                                    friended = true;
+                                                }
                                             }
                                         }
                                         if (session.getAttribute("showFriend") != null) {
                                             //Check are u the user or the other people's profile.
                                             if (friendsprofile) {
-                                                out.println(" <button id=\"addfriend\">Add</button>");
-                                                out.println(" <button id=\"unfriend\">Unfriend</button>");
+                                                out.println("<button class=\"btn btn-success btn-round\" id=\"addfriend\"><i class=\"material-icons\">add_circle</i>Add</button>");
+                                                out.println("<button class=\"btn btn-danger btn-round\" id=\"unfriend\"><i class=\"material-icons\">remove_circle</i>Unfriend</button>");
                                             }
-                                        }%>
+                                        }
+                                    %>
                                 </div>
                                 <div class="name" id="custom-profile-name">
                                     <h3 class="title">Hello ${profileInfo.name}</h3>
@@ -95,96 +115,118 @@
                             </div>
                         </div>
 
-                        <!-- Profile bio text -->
-                        <div class="description text-center col-lg-offset-5 col-md-offset-5 col-sm-offset-5">
+                        <%--Introduction "blurb'--%>
+                        <div class="description text-center">
+                            <p>${profileInfo.introduction}</p>
+                        </div>
 
-                            <%--Introduction "blurb'--%>
-                            <div>
-                                ${profileInfo.introduction}
+                        <div class="row">
+                            <!-- Profile bio text -->
+                            <div class="description text-center col-lg-offset-5 col-md-offset-5 col-sm-offset-5">
+
+                                <table class="table borderless" align="center">
+                                    <tr>
+                                        <th>Specs</th>
+                                        <th>Your details</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Username:</td>
+                                        <td>${profileInfo.username}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fullname:</td>
+                                        <td>${profileInfo.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email:</td>
+                                        <td>${profileInfo.email}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address:</td>
+                                        <td>${profileInfo.address}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Education:</td>
+                                        <td>${profileInfo.education}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ethnicity:</td>
+                                        <td>${profileInfo.ethnicity}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date of Birth:</td>
+                                        <td>
+                                            <fmt:formatDate value="${profileInfo.date}" pattern="dd MMMM YYYY"/>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <% if (!friendsprofile) { %>
+
+                                <c:if test="${firendlist != null}">
+                                    <table class="table table-striped table-hover table-responsive">
+                                        <tr>
+                                            <th>Friend List</th>
+                                        </tr>
+
+                                        <c:forEach var="friend" items="${firendlist}">
+                                            <c:if test="${friend.friendusername != null}">
+                                                <tr>
+                                                    <td><a href=ProfilePage?accessFriend=${friend.friendusername}
+                                                           class="username">${friend.friendusername}</a></td>
+                                                </tr>
+                                            </c:if>
+                                        </c:forEach>
+                                    </table>
+                                </c:if>
+
+                                <% }
+                                %>
+
+                                <button id="showArticleList">Show article list</button>
+
+                                <div id="ArticleTable"></div>
+
+                                <table class="table table-striped table-hover table-responsive">
+                                </table>
+                                <%--end testing--%>
+
+                                <script>
+                                    // An ajax call of post to get the article list which is then append and display within the given table
+                                    var clickStatus = true;
+
+                                    $("#showArticleList").click(function () {
+
+
+                                        if (clickStatus) {
+                                            $.ajax({
+                                                url: '/ProfilePage',
+                                                type: 'Post',
+                                                data: {
+                                                    "clickedShowList": "clickedShowList",
+                                                    "username": "<%= session.getAttribute("username")%>"
+                                                },
+                                                success: function (msg) {
+                                                    console.log(msg);
+
+                                                    $("#ArticleTable").html(msg);
+
+                                                }
+                                            });
+                                            //Toggle between the hide of the list and the showing of the list based on the button
+                                            $("#showArticleList").html("Hide article list");
+                                            clickStatus = !clickStatus;
+                                        } else {
+                                            $("#ArticleTable").html("");
+                                            $("#showArticleList").html("Show article list");
+                                            clickStatus = !clickStatus;
+                                        }
+
+
+                                    });
+                                </script>
                             </div>
 
-                            <table class="table borderless" align="center">
-                                <tr>
-                                    <th>Specs</th>
-                                    <th>Your details</th>
-                                </tr>
-                                <tr>
-                                    <td>Username:</td>
-                                    <td>${profileInfo.username}</td>
-                                </tr>
-                                <tr>
-                                    <td>Fullname:</td>
-                                    <td>${profileInfo.name}</td>
-                                </tr>
-                                <tr>
-                                    <td>Email:</td>
-                                    <td>${profileInfo.email}</td>
-                                </tr>
-                                <tr>
-                                    <td>Address:</td>
-                                    <td>${profileInfo.address}</td>
-                                </tr>
-                                <tr>
-                                    <td>Education:</td>
-                                    <td>${profileInfo.education}</td>
-                                </tr>
-                                <tr>
-                                    <td>Ethnicity:</td>
-                                    <td>${profileInfo.ethnicity}</td>
-                                </tr>
-                                <tr>
-                                    <td>Date of Birth:</td>
-                                    <td>
-                                        <fmt:formatDate value="${profileInfo.date}" pattern="dd MMMM YYYY"/>
-                                    </td>
-                                </tr>
-
-
-                            </table>
-
-
-                            <button id="showArticleList">Show article list</button>
-
-                            <div id="ArticleTable"></div>
-
-                            <table class="table table-striped table-hover table-responsive">
-                            </table>
-                            <%--end testing--%>
-
-                            <script>
-                                // An ajax call of post to get the article list which is then append and display within the given table
-                                var clickStatus = true;
-
-                                $("#showArticleList").click(function () {
-
-
-                                    if (clickStatus) {
-                                        $.ajax({
-                                            url: '/ProfilePage',
-                                            type: 'Post',
-                                            data: {
-                                                "clickedShowList": "clickedShowList",
-                                                "username": "<%= session.getAttribute("username")%>"
-                                            },
-                                            success: function (msg) {
-                                                console.log(msg);
-
-                                                $("#ArticleTable").html(msg);
-
-                                            }
-                                        });
-                                        //Toggle between the hide of the list and the showing of the list based on the button
-                                        $("#showArticleList").html("Hide article list");
-                                        clickStatus = !clickStatus;
-                                    } else {
-                                        $("#ArticleTable").html("");
-                                        $("#showArticleList").html("Show article list");
-                                        clickStatus = !clickStatus;
-                                    }
-
-
-                                });
-                            </script>
                         </div>
 
                     </div>
@@ -202,10 +244,22 @@
 <!-- FOOTER END -->
 
 
-<%   //if The user is within their own profile this script will not appear, so the following function will  not be apply to the jsp.
+<% //if The user is within their own profile this script will not appear, so the following function will  not be apply to the jsp.
     if (session.getAttribute("showFriend") != null) { %>
 <script>
     //The switching of the button of adding friend and unfriending the person depending the orginal state of is this person friended.
+
+    <%--$(document).ready(function (){--%>
+    <%--<% if (friended){--%>
+    <%--%>--%>
+    <%----%>
+    <%----%>
+    <%----%>
+    <%--<% --%>
+    <%--}--%>
+    <%--%>--%>
+    <%--})--%>
+
     <% if (!friended){ %>
     $("#addfriend").fadeIn("1", function () {
         $(this).css("z-index", 0)

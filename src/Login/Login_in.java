@@ -78,6 +78,8 @@ public class Login_in extends HttpServlet {
     //This is to check the login logic used by doPost to check user login from the login_page.jsp.
     // TODO just refactor this out for convenience
     public boolean loginLogic(HttpServletRequest req, HttpServletResponse resp, HttpSession session, LoginPassing loginPassing) throws ServletException, IOException {
+
+
         if (loginPassing.selectionUsersNames(username, password)) {
             //Login in logic passed through sql selection query.
             session.setAttribute("username", username);
@@ -122,7 +124,7 @@ public class Login_in extends HttpServlet {
                 return;
             } else {
                 //If user is not login then it will bring them to the registration page.
-                if (registration.equals("Registration")) {
+                if (registration.equals("Register")) {
                     session.setAttribute("Upload", "ArticlesUpload");
                     req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                     return;

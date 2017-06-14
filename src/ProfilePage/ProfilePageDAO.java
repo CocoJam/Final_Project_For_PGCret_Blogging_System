@@ -39,6 +39,7 @@ public class ProfilePageDAO extends LoginPassing {
         ProfilePAge profilePAge = null;
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT Username, Name, Email, Address, Education, Ethnicity, DateOfBirth, Introduction, profilePicture FROM UsersNames WHERE Username = ?;")) {
+                System.out.println(statement);
                 statement.setString(1, username);
                 System.out.println(statement);
                 try (ResultSet resultSet = statement.executeQuery()) {
@@ -60,11 +61,12 @@ public class ProfilePageDAO extends LoginPassing {
         ProfilePageGetters(profilePAge);
         saltAndIteration();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth, Introduction, Password, salt, iteration) VALUES( ?, ? ,?,?,?,?,?,?,?,?,?);")) {
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth, Introduction, profilePicture, Password, salt, iteration) VALUES( ?, ? ,?,?,?,?,?,?,?,?,?,?);")) {
+                System.out.println(statement);
                 statement.setString(1, usernames);
                 sqlSetStatment(pass.hashing(password, salt, iterations), statement);
-                statement.setInt(10, salt);
-                statement.setInt(11, iterations);
+                statement.setInt(11, salt);
+                statement.setInt(12, iterations);
                 statement.executeUpdate();
                 System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
@@ -88,6 +90,12 @@ public class ProfilePageDAO extends LoginPassing {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?, Introduction=?, Password=?, profilePicture=?, salt=?, iteration=?  WHERE  Username = ?;")) {
                 statement.setString(1, username);
                 sqlSetStatment(password, statement);
+                System.out.println(newPassword);
+                System.out.println(password);
+                System.out.println(salt);
+                System.out.println(iterations);
+                System.out.println(oldSalt);
+                System.out.println(oldIterations);
                 System.out.println(pass.hashing(newPassword, salt, iterations));
 //                System.out.println(pass.hashing(password, oldSalt, oldIterations));
                 statement.setString(9, pass.hashing(newPassword, salt, iterations));
@@ -142,7 +150,8 @@ public class ProfilePageDAO extends LoginPassing {
         statement.setString(6, ethnicity);
         statement.setDate(7, date);
         statement.setString(8, introduction);
-        statement.setString(9, password);
+        statement.setString(9, profilePicture);
+        statement.setString(10, password);
     }
 
     //Setting the javabean instance variables for ProfilePage
