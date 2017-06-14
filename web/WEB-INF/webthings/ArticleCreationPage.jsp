@@ -180,7 +180,7 @@
                                     <div class="col-xs-4 col-sm-4 col-md-4">
                                         <button class="btn btn-block btn-flat" onclick="addNewSection()"><i
                                                 class="material-icons">done</i>
-                                            <span class="hidden-xs">Add</span>
+                                            <span class="hidden-xs"> Add</span>
                                         </button>
                                     </div>
 
@@ -188,7 +188,7 @@
                                     <div class="col-xs-4 col-sm-4 col-md-4">
                                         <button class="btn btn-block btn-flat" onclick="deleteSection()"><i
                                                 class="material-icons">delete</i>
-                                            <span class="hidden-xs">Delete</span>
+                                            <span class="hidden-xs"> Delete</span>
                                         </button>
                                     </div>
 
@@ -196,7 +196,7 @@
                                     <div class="col-xs-4 col-sm-4 col-md-4">
                                         <button class="btn btn-block btn-flat" onclick="resetText()"><i
                                                 class="material-icons">sync</i>
-                                            <span class="hidden-xs">Reset</span>
+                                            <span class="hidden-xs"> Reset</span>
                                         </button>
                                     </div>
 
@@ -210,8 +210,10 @@
                                     <form action="/Upload" method="post" id="Upload"
                                           enctype="multipart/form-data">
                                         <input type="file" name="file" size="50" class="btn btn-white"/>
-                                        <input type="submit" class="btn btn-flat btn-primary" name="Upload"
-                                               value="Upload"/>
+                                        <%--<input type="submit" class="btn btn-flat btn-primary" name="Upload"--%>
+                                               <%--value="Upload"/>--%>
+                                        <button type="submit" class="btn btn-flat btn-primary" name="Upload"
+                                                value="Upload"><i class="material-icons">file_upload</i> Upload</button>
                                     </form>
                                 </div>
 
@@ -222,8 +224,10 @@
                                         <input id="youtubeurl" type="text" name="youtube" class="form-control"
                                                placeholder="Paste your Youtube link and click button below to add"
                                                style="margin-top:-1em;">
-                                        <input type="submit" name="youtubeVideoSubmition" value="youtube"
-                                               class="btn btn-flat btn-danger">
+                                        <%--<input type="submit" name="youtubeVideoSubmition" value="youtube"--%>
+                                               <%--class="btn btn-flat btn-danger">--%>
+                                        <button type="submit" name="youtubeVideoSubmition" value="youtube"
+                                                class="btn btn-flat btn-danger"><i class="material-icons">video_library</i> Embed</button>
                                     </form>
                                 </div>
                             </div>
@@ -251,7 +255,7 @@
 
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <button id="formsubmit" class="btn btn-success btn-block"
+                                    <button id="formsubmit" class="btn btn-success btn-block btn-lg"
                                             onclick="whenClickAdd()">Submit
                                     </button>
                                 </div>

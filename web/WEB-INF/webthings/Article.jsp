@@ -204,7 +204,7 @@
                                     <div class="row"><textarea class="form-control" placeholder="Enter your comments here" rows="5" id="comments" name="commentcontent"></textarea></div>
                                     <div class="row">
                                         <button class="btn btn-round btn-info" id="addComment"><i
-                                                class="material-icons">message</i> Add Comment
+                                                class="material-icons">speaker_notes</i> Add Comment
                                         </button>
                                     </div>
                                 </div>
