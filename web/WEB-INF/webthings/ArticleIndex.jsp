@@ -9,7 +9,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>ArticleIndex</title>
+    <title>Article Index</title>
 
     <%@include file="../../component/Header(styling Template).html" %>
     <style>
@@ -70,7 +70,43 @@
             display: none;
         }
 
+        #sort-collapsible {
+            -webkit-transition: width 2s ease;
+            -moz-transition: width 2s ease;
+            -o-transition: width 2s ease;
+            transition: width 2s ease;
 
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            vertical-align: middle;
+            line-height: 35px;
+            height: 35px;
+            width: 0px;
+        }
+
+        #sort-collapsible.in {
+            width: 300px;
+        }
+
+        #search-collapsible {
+            -webkit-transition: width 2s ease;
+            -moz-transition: width 2s ease;
+            -o-transition: width 2s ease;
+            transition: width 2s ease;
+
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            vertical-align: middle;
+            line-height: 35px;
+            height: 35px;
+            width: 0px;
+        }
+
+        #search-collapsible.in {
+            width: 160px;
+        }
     </style>
 </head>
 <body class="profile-page">
@@ -106,16 +142,16 @@
                                                 <c:when test="${profileInfo.profilepic != null}">
                                                     <c:choose>
                                                         <%--If this is a default profile image get the image from default photo directory--%>
-                                                        <c:when test='${profileInfo.profilepic.startsWith("defaultslashn")}'>
+                                                        <c:when test='${profileInfo.profilepic.startsWith("default")}'>
                                                             <img src="defaultImg/${profileInfo.profilepic}"
-                                                                 alt="Circle Image"
+                                                                 alt="Avatar"
                                                                  class="img-rounded img-responsive img-raised">
                                                         </c:when>
 
                                                         <%--Otherwise get the photo from the users photo page--%>
                                                         <c:otherwise>
                                                             <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                                 alt="Circle Image"
+                                                                 alt="Avatar"
                                                                  class="img-rounded img-responsive img-raised">
                                                         </c:otherwise>
                                                     </c:choose>
@@ -144,220 +180,230 @@
 
                         <div class="row">
                             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col xs-offset-1">
-                                <button id="listorcard" class="btn btn-round btn-info"><i class="material-icons">view_list</i> List View</button>
+                                <button id="listorcard" class="btn btn-round btn-info"><i class="material-icons">view_list</i>
+                                    List View
+                                </button>
 
+                                <button id="sort" class="btn btn-round btn-primary" data-toggle="toggle"
+                                        data-target="#sort-collapsible">
+                                    <i class="material-icons">filter_list</i> Sort Assemble
+                                </button>
 
-                        <button id="sorttitle" class="btn btn-round btn-success">By title</button>
-                        <button id="sortcategory" class="btn btn-round btn-warning">By category</button>
-                        <button id="sortdate" class="btn btn-round btn-danger">By date</button>
+                                <div id="sort-collapsible" class="collapse">
+                                    <button id="sorttitle" class="btn btn-success btn-sm">By title</button>
+                                    <button id="sortcategory" class="btn btn-warning btn-sm">By category</button>
+                                    <button id="sortdate" class="btn btn-danger btn-sm">By date</button>
+                                </div>
+
 
                                 <%--<label>Search: </label>--%>
                                 <%--<input type="text" id="searchBar">--%>
 
-                                <div class="">
-                                <input class="form-control" placeholder="Search"
-                                       id="searchBar">
-                                </div>
-
                                 <%--<div class="col-sm-3">--%>
                                 <%--<div class="form-group label-floating is-empty">--%>
-                                        <%--<label class="control-label">Search</label>--%>
-                                        <%--<input id="searchBar" type="text" class="form-control" style="width:100px;">--%>
-                                        <%--<span class="material-input"></span></div>--%>
+                                <%--<label class="control-label">Search</label>--%>
+                                <%--<input id="searchBar" type="text" class="form-control" style="width:100px;">--%>
+                                <%--<span class="material-input"></span></div>--%>
                                 <%--</div>--%>
 
-                        </div>
-                        <!-- Article Display options end -->
+                                <button id="seach-toggle" class="btn btn-round btn-primary" data-toggle="collapse"
+                                        data-target="#search-collapsible">
+                                    <i class="material-icons">search</i> Search
+                                </button>
 
-                        <!-- This is the card based article index-->
-                        <div class="row">
-                            <div id="cardarticle"
-                                 class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-                                <div class="pull-right">
-                                <label for="sort">Sort</label>
-                                <button id="sort" class="btn btn-round btn-primary btn-sm">Assemble</button>
+                                <div id="search-collapsible" class="toggle">
+                                <input placeholder="Search Articles"
+                                       id="searchBar" style="width:150px;">
                                 </div>
 
-                                <div class="ui-widget ui-helper-clearfix">
-                                    <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix"
-                                        style="margin-top: 0px;">
-                                        <c:forEach items="${ArticleIndex}" var="index">
+                            </div>
+                            <!-- Article Display options end -->
 
-                                            <%--<li class="ui-widget-content ui-corner-tr">--%>
-                                            <%--<div>--%>
-                                            <%--<c:choose>--%>
-                                            <%--<c:when test="${not empty index.firstimage}">--%>
-                                            <%--<img class="card-img-top" src="${index.firstimage}"--%>
-                                            <%--alt="${index.articlename}"--%>
-                                            <%--style="width: 80%; height: 50%">--%>
-                                            <%--</c:when>--%>
-                                            <%--<c:otherwise>--%>
-                                            <%--<img class="card-img-top" src="assets/img/img6.jpg" alt="Circle Image"--%>
-                                            <%--style="width: 80%; height: 50%">--%>
-                                            <%--</c:otherwise>--%>
-                                            <%--</c:choose>--%>
-                                            <%--<p class="card-block">--%>
-                                            <%--<h4 class="ui-widget-header cart-title" style="margin-bottom: 0">${index.articlename}</h4>--%>
-                                            <%--<p class="card-text">${index.content}</p>--%>
+                            <!-- This is the card based article index-->
+                            <div class="row">
+                                <div id="cardarticle"
+                                     class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
 
-                                            <%--<a href="/Articles?acticleId=${index.articleid}"--%>
-                                            <%--title="View larger image"--%>
-                                            <%--class="ui-icon ui-icon-zoomin articleid">View larger</a>--%>
-                                            <%--<a href="link/to/trash/script/when/we/have/js/off"--%>
-                                            <%--title="Delete this image" class="ui-icon ui-icon-plusthick">Delete--%>
-                                            <%--image</a>--%>
-                                            <%--<p class="category">${index.category}</p>--%>
-                                            <%--<p hidden class="date">${index.datecreated}</p>--%>
-                                            <%--<p hidden class="id">${index.articleid}</p>--%>
-                                            <%--</div>--%>
-                                            <%--</div>--%>
-                                            <%--</li>--%>
+                                    <div class="ui-widget ui-helper-clearfix">
+                                        <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix"
+                                            style="margin-top: 0px;">
+                                            <c:forEach items="${ArticleIndex}" var="index">
 
+                                                <%--<li class="ui-widget-content ui-corner-tr">--%>
+                                                <%--<div>--%>
+                                                <%--<c:choose>--%>
+                                                <%--<c:when test="${not empty index.firstimage}">--%>
+                                                <%--<img class="card-img-top" src="${index.firstimage}"--%>
+                                                <%--alt="${index.articlename}"--%>
+                                                <%--style="width: 80%; height: 50%">--%>
+                                                <%--</c:when>--%>
+                                                <%--<c:otherwise>--%>
+                                                <%--<img class="card-img-top" src="assets/img/img6.jpg" alt="Circle Image"--%>
+                                                <%--style="width: 80%; height: 50%">--%>
+                                                <%--</c:otherwise>--%>
+                                                <%--</c:choose>--%>
+                                                <%--<p class="card-block">--%>
+                                                <%--<h4 class="ui-widget-header cart-title" style="margin-bottom: 0">${index.articlename}</h4>--%>
+                                                <%--<p class="card-text">${index.content}</p>--%>
 
-                                            <li class="ui-widget-content ui-corner-tr">
-
-                                                    <%--<c:if test="${articleList.equals('all')}">--%>
-
-                                                    <%--</c:if>--%>
-                                                <p class="articlename" hidden>${index.articlename}</p>
-                                                <c:choose>
-                                                    <c:when test="${not empty index.firstimage}">
-                                                        <img class="card-img-top" src="${index.firstimage}"
-                                                             alt="${index.articlename}"
-                                                             width="96" height="72" style="margin-bottom: 5">
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <img class="card-img-top" src="../../pokemonloader4.gif"
-                                                             alt="Circle Image"
-                                                             width="96" height="72" style="margin-bottom: 5">
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <h4 class="card-title articlename"
-                                                    style="overflow: hidden; width: 100%; height: 10%">${index.articlename}</h4>
-
-                                                <div class="card-text"
-                                                     style="overflow: hidden; width: 100%; height: 30%">${index.content}
-                                                    <div class="Articlecategory"
-                                                         style="overflow: hidden; width: 80%; height: 30%; align-content: center;">${index.category}</div>
-                                                </div>
-                                                    <%--<p class="category" style="overflow: hidden; width: 80%; height: 10%">${index.category}</p>--%>
-
-                                                <a href="/Articles?acticleId=${index.articleid}"
-                                                   title="View larger image"
-                                                   class="ui-icon ui-icon-zoomin articleid">View larger</a>
-
-                                                <a href="link/to/trash/script/when/we/have/js/off"
-                                                   title="Delete this image" class="ui-icon ui-icon-plusthick">Delete
-                                                    image</a>
-
-                                                <p hidden class="date">${index.datecreated}</p>
-                                                <p hidden class="id">${index.articleid}</p>
-                                                <a href=ProfilePage?accessFriend=${index.username} class="username"
-                                                   hidden>${index.username}</a>
-                                            </li>
+                                                <%--<a href="/Articles?acticleId=${index.articleid}"--%>
+                                                <%--title="View larger image"--%>
+                                                <%--class="ui-icon ui-icon-zoomin articleid">View larger</a>--%>
+                                                <%--<a href="link/to/trash/script/when/we/have/js/off"--%>
+                                                <%--title="Delete this image" class="ui-icon ui-icon-plusthick">Delete--%>
+                                                <%--image</a>--%>
+                                                <%--<p class="category">${index.category}</p>--%>
+                                                <%--<p hidden class="date">${index.datecreated}</p>--%>
+                                                <%--<p hidden class="id">${index.articleid}</p>--%>
+                                                <%--</div>--%>
+                                                <%--</div>--%>
+                                                <%--</li>--%>
 
 
-                                            <%--<div>--%>
-                                            <%--&lt;%&ndash;<img class="card-img-top" src="../pokemonloader4.gif" alt="Card image cap" style="width: 80%">&ndash;%&gt;--%>
-                                            <%--<c:choose>--%>
-                                            <%--<c:when test="${not empty index.firstimage}">--%>
-                                            <%--<img src="${index.firstimage}"--%>
-                                            <%--alt="${index.articlename}"--%>
-                                            <%--style="width: 80%">--%>
-                                            <%--</c:when>--%>
-                                            <%--<c:otherwise>--%>
-                                            <%--<img src="assets/img/img6.jpg" alt="Circle Image"--%>
-                                            <%--style="width: 80%">--%>
-                                            <%--</c:otherwise>--%>
-                                            <%--</c:choose>--%>
-                                            <%--<div class="card-block">--%>
-                                            <%--<h5 class="ui-widget-header card-title" style="margin-bottom: 0">${index.articlename}</h5>--%>
+                                                <li class="ui-widget-content ui-corner-tr">
 
-                                            <%--<p class="card-text" style="overflow: hidden">${index.content}</p>--%>
-                                            <%--<a href="images/high_tatras3.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View--%>
-                                            <%--larger</a>--%>
-                                            <%--<!--<a href="#" class="btn btn-primary">Go somewhere</a>-->--%>
-                                            <%--<a href="/Articles?acticleId=${index.articleid}"--%>
-                                            <%--title="View larger image"--%>
-                                            <%--class="ui-icon ui-icon-zoomin articleid">View larger</a>--%>
-                                            <%--<a href="link/to/trash/script/when/we/have/js/off"--%>
-                                            <%--title="Delete this image" class="ui-icon ui-icon-plusthick">Delete--%>
-                                            <%--image</a>--%>
-                                            <%--<p class=" articlename" hidden>${index.articlename}</p>--%>
-                                            <%--<p hidden class="date">${index.datecreated}</p>--%>
-                                            <%--<p hidden class="id">${index.articleid}</p>--%>
-                                            <%--</div>--%>
-                                            <%--</div>--%>
+                                                        <%--<c:if test="${articleList.equals('all')}">--%>
+
+                                                        <%--</c:if>--%>
+                                                    <p class="articlename" hidden>${index.articlename}</p>
+                                                    <c:choose>
+                                                        <c:when test="${not empty index.firstimage}">
+                                                            <img class="card-img-top" src="${index.firstimage}"
+                                                                 alt="${index.articlename}"
+                                                                 width="96" height="72" style="margin-bottom: 5">
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <img class="card-img-top" src="../../pokemonloader4.gif"
+                                                                 alt="Circle Image"
+                                                                 width="96" height="72" style="margin-bottom: 5">
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <h4 class="card-title articlename"
+                                                        style="overflow: hidden; width: 100%; height: 10%">${index.articlename}</h4>
+
+                                                    <div class="card-text"
+                                                         style="overflow: hidden; width: 100%; height: 30%">${index.content}
+                                                        <div class="Articlecategory"
+                                                             style="overflow: hidden; width: 80%; height: 30%; align-content: center;">${index.category}</div>
+                                                    </div>
+                                                        <%--<p class="category" style="overflow: hidden; width: 80%; height: 10%">${index.category}</p>--%>
+
+                                                    <a href="/Articles?acticleId=${index.articleid}"
+                                                       title="View larger image"
+                                                       class="ui-icon ui-icon-zoomin articleid">View larger</a>
+
+                                                    <a href="link/to/trash/script/when/we/have/js/off"
+                                                       title="Delete this image" class="ui-icon ui-icon-plusthick">Delete
+                                                        image</a>
+
+                                                    <p hidden class="date">${index.datecreated}</p>
+                                                    <p hidden class="id">${index.articleid}</p>
+                                                    <a href=ProfilePage?accessFriend=${index.username} class="username"
+                                                       hidden>${index.username}</a>
+                                                </li>
 
 
-                                        </c:forEach>
-                                    </ul>
-                                    <div id="save" class="ui-widget-content ui-state-default">
-                                        <h4 class="ui-widget-header"><span
-                                                class="ui-icon ui-icon-plusthick">Save</span> Cart</h4>
+                                                <%--<div>--%>
+                                                <%--&lt;%&ndash;<img class="card-img-top" src="../pokemonloader4.gif" alt="Card image cap" style="width: 80%">&ndash;%&gt;--%>
+                                                <%--<c:choose>--%>
+                                                <%--<c:when test="${not empty index.firstimage}">--%>
+                                                <%--<img src="${index.firstimage}"--%>
+                                                <%--alt="${index.articlename}"--%>
+                                                <%--style="width: 80%">--%>
+                                                <%--</c:when>--%>
+                                                <%--<c:otherwise>--%>
+                                                <%--<img src="assets/img/img6.jpg" alt="Circle Image"--%>
+                                                <%--style="width: 80%">--%>
+                                                <%--</c:otherwise>--%>
+                                                <%--</c:choose>--%>
+                                                <%--<div class="card-block">--%>
+                                                <%--<h5 class="ui-widget-header card-title" style="margin-bottom: 0">${index.articlename}</h5>--%>
+
+                                                <%--<p class="card-text" style="overflow: hidden">${index.content}</p>--%>
+                                                <%--<a href="images/high_tatras3.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View--%>
+                                                <%--larger</a>--%>
+                                                <%--<!--<a href="#" class="btn btn-primary">Go somewhere</a>-->--%>
+                                                <%--<a href="/Articles?acticleId=${index.articleid}"--%>
+                                                <%--title="View larger image"--%>
+                                                <%--class="ui-icon ui-icon-zoomin articleid">View larger</a>--%>
+                                                <%--<a href="link/to/trash/script/when/we/have/js/off"--%>
+                                                <%--title="Delete this image" class="ui-icon ui-icon-plusthick">Delete--%>
+                                                <%--image</a>--%>
+                                                <%--<p class=" articlename" hidden>${index.articlename}</p>--%>
+                                                <%--<p hidden class="date">${index.datecreated}</p>--%>
+                                                <%--<p hidden class="id">${index.articleid}</p>--%>
+                                                <%--</div>--%>
+                                                <%--</div>--%>
+
+
+                                            </c:forEach>
+                                        </ul>
+                                        <div id="save" class="ui-widget-content ui-state-default">
+                                            <h4 class="ui-widget-header"><i class="material-icons">bookmark</i> Saved
+                                                Articles</h4>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- The card based article index end here-->
+                                <!-- The card based article index end here-->
 
-                            <!-- The list based article index start here-->
-                            <div id="listarticle"
-                                 class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-                                <table class="table table-striped table-hover table-responsive">
-                                    <tr>
-                                        <th>
-                                            Article Names
-                                        </th>
-                                        <th>
-                                            Date Created
-                                        </th>
-                                        <%--Scenario 1: ALL articles are requested--%>
-                                        <c:if test="${articleList.equals('all')}">
+                                <!-- The list based article index start here-->
+                                <div id="listarticle"
+                                     class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+                                    <table class="table table-striped table-hover table-responsive">
+                                        <tr>
                                             <th>
-                                                Article Author
+                                                Article Names
                                             </th>
-                                        </c:if>
-
-                                        <th>
-                                            Article Category
-                                        </th>
-
-                                    </tr>
-                                    <%--Looping through the Article Index (list of articles in the ArticleIndex Servlet) and populates a row per article--%>
-                                    <c:forEach items="${ArticleIndex}" var="index">
-                                        <tr class="tablecontentR">
-                                            <td class="tablearticleid" hidden>${index.articleid}</td>
-                                            <td class="tablearticlename">
-                                                <a href="/Articles?acticleId=${index.articleid}">${index.articlename}</a>
-                                            </td>
-                                            <td class="tablearticledate">${index.datecreated}</td>
-
+                                            <th>
+                                                Date Created
+                                            </th>
+                                            <%--Scenario 1: ALL articles are requested--%>
                                             <c:if test="${articleList.equals('all')}">
-                                                <td class="tablearticleusername">
-                                                        ${index.username}
-                                                </td>
+                                                <th>
+                                                    Article Author
+                                                </th>
                                             </c:if>
-                                            <td class="tablearticlecategory">
-                                                    ${index.category}
-                                            </td>
+
+                                            <th>
+                                                Article Category
+                                            </th>
 
                                         </tr>
-                                    </c:forEach>
+                                        <%--Looping through the Article Index (list of articles in the ArticleIndex Servlet) and populates a row per article--%>
+                                        <c:forEach items="${ArticleIndex}" var="index">
+                                            <tr class="tablecontentR">
+                                                <td class="tablearticleid" hidden>${index.articleid}</td>
+                                                <td class="tablearticlename">
+                                                    <a href="/Articles?acticleId=${index.articleid}">${index.articlename}</a>
+                                                </td>
+                                                <td class="tablearticledate">${index.datecreated}</td>
 
-                                </table>
+                                                <c:if test="${articleList.equals('all')}">
+                                                    <td class="tablearticleusername">
+                                                            ${index.username}
+                                                    </td>
+                                                </c:if>
+                                                <td class="tablearticlecategory">
+                                                        ${index.category}
+                                                </td>
+
+                                            </tr>
+                                        </c:forEach>
+
+                                    </table>
+                                </div>
+                                <!-- The list based article index end here-->
                             </div>
-                            <!-- The list based article index end here-->
-                        </div>
 
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </div><!-- main container end -->
+            </div><!-- main container end -->
 
-    </div><!-- outer div 2 -->
-</div><!-- outer div 1 -->
+        </div><!-- outer div 2 -->
+    </div><!-- outer div 1 -->
 </div><!-- wrapper div -->
 
 <!-- FOOTER START -->
@@ -544,14 +590,14 @@
             var img = $("<p style='text-align:center'></p>");
             "ProfilePage?accessFriend=111"
             if (image != undefined) {
-                img.html("<a href=\"" + hyper + "\">"+"<h1>" + title +"<h1>" +"</a>" + "<a href=\"" + usernameAddress + "\">" + username + "</a>" +"<h3><strong>Written on:</strong>"+ date +"</h3>" + "<img src=\'" + image + "\'width=\"50%\">" + "<p>" + content + "</p>");
+                img.html("<a href=\"" + hyper + "\">" + "<h1>" + title + "<h1>" + "</a>" + "<a href=\"" + usernameAddress + "\">" + username + "</a>" + "<h3><strong>Written on:</strong>" + date + "</h3>" + "<img src=\'" + image + "\'width=\"50%\">" + "<p>" + content + "</p>");
             }
             else {
                 img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<p>" + content + "</p>");
             }
             var linking = $("<a href=\"" + hyper + "\">");
-            var windowWidth = $(window).width()*0.5;
-            var windowheight = $(window).height()*0.5;
+            var windowWidth = $(window).width() * 0.5;
+            var windowheight = $(window).height() * 0.5;
             setTimeout(function () {
                 img.dialog({
                     title: title,
@@ -756,8 +802,29 @@
             }
         });
         $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").click(function () {
-            $(this).effect("shake");
+            $(this).effect("highlight");
         })
+    });
+</script>
+
+<script>
+    /* Horizontal collapse */
+
+    $("[data-toggle='toggle']").click(function () {
+        var selector = $(this).data("target");
+        $(selector).toggleClass('in');
+    });
+
+    $("#sorttitle").click(function () {
+        $("#sort-collapsible").toggleClass('in');
+    });
+
+    $("#sortcategory").click(function () {
+        $("#sort-collapsible").toggleClass('in');
+    });
+
+    $("#sortdate").click(function () {
+        $("#sort-collapsible").toggleClass('in');
     });
 </script>
 
