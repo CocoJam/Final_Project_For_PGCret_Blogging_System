@@ -52,30 +52,33 @@
                                                         <%--If this is a default profile image get the image from default photo directory--%>
                                                         <c:when test='${profileInfo.profilepic.startsWith("defaultslashn")}'>
                                                             <img src="defaultImg/${profileInfo.profilepic}"
-                                                                 alt="Circle Image"
+                                                                 alt="Avatar"
                                                                  class="img-rounded img-responsive img-raised">
                                                         </c:when>
 
                                                         <%--Otherwise get the photo from the users photo page--%>
                                                         <c:otherwise>
                                                             <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
-                                                                 alt="Circle Image" class="img-rounded img-responsive img-raised">
+                                                                 alt="Avatar"
+                                                                 class="img-rounded img-responsive img-raised">
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </c:when>
 
                                                 <c:otherwise>
-                                                    <img src="Upload-photos/placeholder.gif" alt="Circle Image"
+                                                    <img src="../placeholder.gif" alt="Avatar"
                                                          class="img-rounded img-responsive img-raised">
                                                 </c:otherwise>
                                             </c:choose>
                                             <div class="name" id="custom-profile-name">
-                                                <h3 class="title">${profileInfo.name}'s Articles</h3>
+                                                <h3 class="title">${profileInfo.name}'s Article</h3>
                                             </div>
                                         </c:when>
 
                                         <c:otherwise>
-                                            <h3>${articleContents.username}</h3>
+                                            <h3 class="title"><strong>Written by: </strong><a
+                                                    href="ProfilePage?accessFriend=${articleContents.username}">${articleContents.username}</a>
+                                            </h3>
                                         </c:otherwise>
                                     </c:choose>
 
@@ -87,64 +90,188 @@
                         <div class="row">
                             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
 
-                                <h1>${articleContents.articlename}</h1>
+                                <!-- Article Headings start -->
+                                <div class="row text-center">
+                                    <h1>${articleContents.articlename}</h1>
+                                </div>
 
-                                <c:if test="${not empty articleContents.category}">
-                                    <h3>Category is: ${articleContents.category}</h3>
-                                </c:if>
+                                <div class="row text-center">
+                                    <h4><strong>Written on:</strong> ${articleContents.datecreated}</h4>
+                                    <c:if test="${not empty articleContents.category}">
+                                        <h5><strong>Category:</strong> ${articleContents.category}</h5>
+                                    </c:if>
+                                </div>
+                                <!-- Article Headings start -->
 
-                                <div id="articleContents">${articleContents.content}</div>
-                                <p>${articleContents.username}</p>
-                                <p>${articleContents.datecreated}</p>
-                                <c:choose>
-                                    <c:when test="${articleContents.liked}">
-                                        <button onclick="likeadd($(this))" id="${articleContents.articleid}">Unlike
-                                        </button>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <button onclick="likeadd($(this))" id="${articleContents.articleid}">Like
-                                        </button>
-                                    </c:otherwise>
-                                </c:choose>
-                                <p id="likenumber">${articleContents.likeNumber}</p>
-                                <h1>${articleContents.liked}</h1>
-                                <c:if test="${articleContents.owner}">
-                                    <p>${articleContents.owner}</p>
-                                    <form action="/Articles" method="post">
-                                        <input type="submit" name="add" value="EditArticle">
-                                    </form>
-                                    <form action="/Deleting" method="post">
-                                        <input type="submit" name="log" value="DeleteArticle">
-                                    </form>
-                                </c:if>
-                                <div id="containComments">
-                                    <c:forEach items="${commentlist}" var="content">
-                                        <div id="${content.commentId}" class="commentid">
-                                            <p id="${content.commentId}username"
-                                               class="username">${content.username}</p>
-                                            <p id="${content.commentId}content" class="content">${content.content}</p>
-                                            <p id="${content.commentId}commentedTime"
-                                               class="commentedTime">${content.commentedTime}</p>
-                                            <c:if test="${content.owner || articleContents.owner}">
-                                                <button id="${content.commentId}delete"
-                                                        onclick="deleteComment($(this))">Delete
+                                <!-- Like function -->
+                                <div class="row text-center">
+                                    <h1 id="likenumber">${articleContents.likeNumber}</h1>
+                                    <%--<!-- DEBUG --><h1>LIKED ARTICLE? ${articleContents.liked}</h1>--%>
+
+                                    <c:choose>
+                                        <c:when test="${articleContents.liked}">
+                                            <button class="btn btn-round btn-danger" onclick="likeadd($(this))"
+                                                    id="${articleContents.articleid}"><i
+                                                    class="material-icons">cancel</i> Unlike
+                                            </button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button class="btn btn-round btn-success" onclick="likeadd($(this))"
+                                                    id="${articleContents.articleid}"><i
+                                                    class="material-icons">favorite</i> Like
+                                            </button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <!-- Like function -->
+
+                                <!-- Edit / Delete article if user is owner -->
+                                <div class="row text-center">
+                                    <c:if test="${articleContents.owner}">
+                                        <%--<!-- DEBUG --><h1>IS CURRENT USER THE OWNER? ${articleContents.owner}</h1>--%>
+                                        <div class="btn-group btn-group-sm">
+                                            <form action="/Articles" method="post">
+                                                <input type="hidden" name="articleidnumber"
+                                                       value="${articleContents.articleid}">
+                                                    <%--<input class="btn btn-round btn-info" type="submit" name="add" value="EditArticle">--%>
+                                                <button class="btn btn-round btn-primary" type="submit" name="add"
+                                                        value="EditArticle"><i class="material-icons">create</i> Edit
+                                                    Article
                                                 </button>
-                                            </c:if>
-                                            <c:if test="${content.owner}">
-                                                <input type="text" id="${content.commentId}text" class="change">
-                                                <button id="${content.commentId}edit" onclick="editComment($(this))">
-                                                    Edit
+                                            </form>
+                                            <form action="/Deleting" method="post">
+                                                    <%--<input class="btn btn-round btn-info" type="submit" name="log" value="DeleteArticle">--%>
+                                                <button class="btn btn-round btn-danger" type="submit" name="log"
+                                                        value="DeleteArticle"><i
+                                                        class="material-icons">delete_forever</i> Delete Article
                                                 </button>
-                                            </c:if>
+                                            </form>
                                         </div>
-                                    </c:forEach>
+                                    </c:if>
+                                </div>
+                                <!-- Edit / Delete section end -->
+
+                                <!-- Article Content start -->
+                                <div class="row">
+                                    <div id="articleContents">${articleContents.content}</div>
+                                </div>
+                                <!-- Article Content end -->
+
+
+                                <!-- COMMENTS SECTION start -->
+
+                                <h2>Comments</h2>
+
+                                <div class="row col-lg-12 col-lg-offset-1 col-md-12 col-md-offset-1 col-sm-12 col-sm-offset-1 col-xs-12 col xs-offset-1"
+                                     id="comments-section" style="margin-left: 1em;">
+
+                                    <h4 style="margin-left: -1em; margin-bottom: -1em;">Add a comment:</h4>
+                                    <!-- Comments Box -->
+                                    <div id="comment-box" class="row">
+                                        <textarea class="form-control"
+                                                  placeholder="Enter your comments here" rows="5"
+                                                  id="comments" name="commentcontent"></textarea>
+                                        <button class="btn btn-round btn-info" id="addComment"><i
+                                                class="material-icons">speaker_notes</i> Add Comment
+                                        </button>
+                                    </div>
+                                    <!-- Comments Box End -->
+
+                                    <!-- Empty div for adding some space between divs -->
+                                    <div class="row" style="height:2em;"></div>
+
+                                    <!-- Display article comments section -->
+
+                                    <h4 style="margin-left: -1em;">View comments:</h4>
+
+                                    <!-- Display comments -->
+                                    <div id="containComments">
+                                        <c:forEach items="${commentlist}" var="content">
+
+                                            <!-- Each comment -->
+                                            <div id="${content.commentId}" class="commentid">
+
+                                                <!-- Display username and time posted -->
+                                                <p><strong>
+                                                    <small>Posted by:</small>
+                                                </strong>
+                                                    <small id="${content.commentId}username"
+                                                           class="username">
+                                                        <a href="ProfilePage?accessFriend=${content.username}">
+                                                                ${content.username}
+                                                        </a>
+                                                    </small>
+                                                    on
+                                                    <small id="${content.commentId}commentedTime"
+                                                           class="commentedTime">
+                                                            ${content.commentedTime}
+                                                    </small>
+                                                </p>
+
+                                                <!-- Display comment content -->
+                                                <blockquote>
+                                                    <p id="${content.commentId}content"
+                                                       class="content">${content.content}</p>
+                                                </blockquote>
+                                                <!-- Display comment content end -->
+
+                                                <!-- Button to show/hide the edit/delete buttons & textbox -->
+                                                <c:if test="${content.owner || articleContents.owner}">
+                                                <button data-toggle="collapse"
+                                                        data-target="#comment-collapsible-${content.commentId}"
+                                                        class="btn btn-round btn-info btn-sm" id="comment-collapsible-toggle" style="margin-top: -1em;">Edit/Delete Comment
+                                                </button>
+
+                                                <!-- Container for the show/hide -->
+                                                <div id="comment-collapsible-${content.commentId}" class="collapse">
+                                                    </c:if>
+
+                                                    <!-- Edit and Delete Commment buttons & textbox -->
+                                                    <c:if test="${content.owner}">
+
+                                                        <!-- Edit comment - Text input area -->
+                                                        <div class="form-group label-floating is-empty">
+                                                            <label class="control-label">Edit comment</label>
+                                                            <input type="text" id="${content.commentId}text"
+                                                                   class="change form-control">
+                                                        </div>
+                                                        <!-- Edit comment - Text input area -->
+
+                                                        <!-- Edit and delete comment buttons -->
+                                                        <button class="btn btn-round btn-primary btn-sm"
+                                                                id="${content.commentId}edit"
+                                                                onclick="editComment($(this))"><i
+                                                                class="material-icons">create</i> Edit
+                                                        </button>
+                                                    </c:if>
+                                                    <c:if test="${content.owner || articleContents.owner}">
+                                                        <button class="btn btn-round btn-danger btn-sm"
+                                                                id="${content.commentId}delete"
+                                                                onclick="deleteComment($(this))"><i
+                                                                class="material-icons">delete_forever</i> Delete
+                                                        </button>
+                                                    </c:if>
+                                                    <!-- Edit and Delete Commment buttons end -->
+
+                                                    <c:if test="${content.owner || articleContents.owner}"></div>
+                                                </c:if>
+                                            </div>
+
+                                            <!-- Empty div for adding some space at the bottom of each comment -->
+                                            <div class="row" style="height:1em;"></div>
+                                        </c:forEach>
+                                    </div>
+                                    <!-- Display article comments section -->
 
                                 </div>
-                                <label for="comments">Comments: </label>
-                                <br>
-                                <textarea rows="4" cols="50" id="comments" name="commentcontent"></textarea>
-                                <button id="addComment">Add Comment</button>
+
+                                <!-- COMMENTS SECTION end -->
+
+                                <!-- Empty div for adding some space at the bottom of the container -->
+                                <div class="row" style="height:2em;"></div>
+
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -174,6 +301,8 @@
                 var contain = $("#containComments");
                 var div = document.createElement("div");
                 div.id = Data.CommentId;
+
+                /* Content */
                 var p1 = document.createElement("p");
                 p1.innerHTML = Data.Username;
                 p1.id = Data.CommentId + "username";
@@ -186,10 +315,12 @@
                 p3.innerHTML = Data.CommentedTime;
                 p3.id = Data.CommentId + "commentedTime";
                 p3.className = "commentedTime";
+
+                /* Buttons & Input */
                 var deletebutton = document.createElement("button");
                 deletebutton.id = Data.CommentId + "delete";
-                deletebutton.className = "delete";
-                deletebutton.innerHTML = "Delete";
+                deletebutton.className = "delete btn btn-round btn-info btn-sm";
+                deletebutton.innerHTML = "<i class='material-icons'>delete_forever</i> Delete";
                 deletebutton.setAttribute("onclick", "deleteComment($(this))");
                 var editinput = document.createElement("input");
                 editinput.type = "text";
@@ -197,28 +328,30 @@
                 editinput.className = "change";
                 var editbutton = document.createElement("button");
                 editbutton.id = Data.CommentId + "edit";
-                editbutton.className = "edit";
-                editbutton.innerHTML = "Edit";
+                editbutton.className = "edit btn btn-round btn-info btn-sm";
+                editbutton.innerHTML = "<i class='material-icons'>create</i> Edit";
                 editbutton.setAttribute("onclick", "editComment($(this))");
+
+                /* Append elements to div */
                 div.append(p1);
                 div.append(p2);
                 div.append(p3);
-                div.append(deletebutton);
                 div.append(editinput);
                 div.append(editbutton);
+                div.append(deletebutton);
                 contain.append(div);
             }
         });
-    })
+    });
 
     <!-- ajax post request for the deleting of the comment -->
     function deleteComment(e) {
         $.post("/Deleting", {
-            "commentId": e.parent().attr("id"),
+            "commentId": e.parent().parent().attr("id"),
             "log": "DeleteComment"
         })
             .done(function (data) {
-                $(e.parent()).remove();
+                $(e.parent().parent()).remove();
                 console.log("hello");
             });
 
@@ -229,18 +362,18 @@
             url: '/Comments',
             type: 'Post',
             data: {
-                "commentId": e.parent().attr("id"),
-                "commentcontent": e.parent().find(".change").val(),
+                "commentId": e.parent().parent().attr("id"),
+                "commentcontent": e.parent().parent().find(".change").val(),
                 "comments": "EditComment"
             },
             success: function (msg) {
                 console.log(msg);
                 var Data = JSON.parse(msg);
-                var p1 = e.parent().find(".username");
+                var p1 = e.parent().parent().find(".username");
                 p1.html(Data.Username);
-                var p2 = e.parent().find(".content");
+                var p2 = e.parent().parent().find(".content");
                 p2.html(Data.Content);
-                var p3 = e.parent().find(".commentedTime");
+                var p3 = e.parent().parent().find(".commentedTime");
                 p3.html(Data.CommentedTime);
             }
         });
@@ -258,17 +391,22 @@
             },
             success: function (msg) {
                 if (msg > $("#likenumber").html()) {
-                    if (orginalcontent != null){
+                    if (orginalcontent != null) {
                         $("#articleContents").html(orginalcontent);
                     }
-                    e.html("Unlike");
+                    e.html("<i class='material-icons'>cancel</i> Unlike");
+                    e.addClass("btn-danger");
+                    e.removeClass("btn-success");
                 }
                 else {
-                    e.html("Like");
+                    e.html("<i class='material-icons'>favorite</i> Like");
+                    e.addClass("btn-success");
+                    e.removeClass("btn-danger");
+
                     orginalcontent = $("#articleContents").html();
                     $("#articleContents").each(function () {
                         var aplha = $(this).html().split("");
-                        for (var i = 0 ; i < aplha.length; i++){
+                        for (var i = 0; i < aplha.length; i++) {
                             random = Math.floor(Math.random() * i);
                             var x = aplha[i - 1];
                             aplha[i - 1] = aplha[random];
@@ -287,6 +425,7 @@
         });
     }
     <!-- Due to the database and the create and the editing page is constructed, that replace all or most of the html tags into the <p> tags -->
+
     $(".wrapper li").each(function () {
         console.log("hello there")
         $(this).replaceWith(function () {
@@ -295,5 +434,17 @@
             });
         });
     });
+
+    <!-- Making all images img-responsive -->
+    $(document).ready(function () {
+        $("#articleContents img").each(function () {
+            $(this).addClass('img-responsive');
+        })
+        /* Alternative version below: this will grab all the img on page */
+//        var allImages = $('img');
+//        allImages.addClass('img-responsive');
+    });
+
 </script>
+
 </html>
