@@ -284,7 +284,7 @@
 <script src="../../Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
 <script src="../../Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
 <script src="../../Trumbowyg/dist/plugins/noembed/trumbowyg.noembed.js"></script>
-<script src="../../Trumbowyg/dist/plugins/table/trumbowyg.table.min.js"></script>
+<%--<script src="../../Trumbowyg/dist/plugins/table/trumbowyg.table.min.js"></script>--%>
 
 <!-- WYSIWYG -->
 <!-- WYSIWYG Editor Implementation START -->
@@ -355,13 +355,13 @@
         foreColor: "Text Color",
         backColor: "Background Color",
 
-        table: 'Insert table',
-        tableAddRow: 'Add rows',
-        tableAddColumn: 'Add columns',
-        rows: 'Rows',
-        columns: 'Columns',
-        styler: 'Table class',
-        error: 'Error'
+//        table: 'Insert table',
+//        tableAddRow: 'Add rows',
+//        tableAddColumn: 'Add columns',
+//        rows: 'Rows',
+//        columns: 'Columns',
+//        styler: 'Table class',
+//        error: 'Error'
     };
 
     $('.wysiwys').trumbowyg({
@@ -385,7 +385,7 @@
             'btnGrp-design',
             ['link'],
             ['Multimedia'],
-            ['table'],
+//            ['table'],
             'btnGrp-justify',
             'btnGrp-lists',
             ['foreColor', 'backColor'],
