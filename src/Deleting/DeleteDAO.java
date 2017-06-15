@@ -130,22 +130,22 @@ public class DeleteDAO {
         }
     }
 
-    public synchronized void dropSpeificYoutube(String youtubeURL) throws NullPointerException{
-        try (Connection connection = new ConnectionToTheDataBase().getConn()){
-            PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM youtube WHERE youtubeURL LIKE '%'?'%';"
-            );
-            statement.setString(1, youtubeURL);
-            System.out.println("deleting");
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        catch (NullPointerException e){
-            e.printStackTrace();
-            throw new NullPointerException();
-        }
-    }
+//    public synchronized void dropSpeificYoutube(String youtubeURL) throws NullPointerException{
+//        try (Connection connection = new ConnectionToTheDataBase().getConn()){
+//            PreparedStatement statement = connection.prepareStatement(
+//                    "DELETE FROM youtube WHERE youtubeURL LIKE '%'?'%';"
+//            );
+//            statement.setString(1, youtubeURL);
+//            System.out.println("deleting");
+//            statement.executeUpdate();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        catch (NullPointerException e){
+//            e.printStackTrace();
+//            throw new NullPointerException();
+//        }
+//    }
 
     public synchronized void dropLikes(int ArticleId) throws NullPointerException {
         try (Connection connection = new ConnectionToTheDataBase().getConn()){
@@ -181,17 +181,33 @@ public class DeleteDAO {
         }
     }
 
-    public synchronized boolean DeleteFriends(String username, String type) throws NullPointerException {
+    public synchronized void DeleteFriendsseondround(String username) throws NullPointerException {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-            try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Friendlist WHERE ? = ? ")) {
-                statement.setString(1,  type);
-                statement.setString(2, username);
-                return true;
+            try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Friendlist WHERE friendusername = ? ")) {
+                statement.setString(1, username);
+                statement.executeUpdate();
             }
         } catch (SQLException e) {
             System.out.println("Error. Friend not found");
             e.printStackTrace();
-            return false;
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
+    }
+
+    public synchronized void DeleteFriends(String username) throws NullPointerException {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Friendlist WHERE username = ? ")) {
+                System.out.println(statement);
+                statement.setString(1, username);
+                System.out.println(statement);
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error. Friend not found");
+            e.printStackTrace();
         }
         catch (NullPointerException e){
             e.printStackTrace();
@@ -200,8 +216,8 @@ public class DeleteDAO {
     }
 
     public synchronized void dropAllByUsername(String username) {
-        DeleteFriends("username", username);
-        DeleteFriends("friendusername", username);
+        DeleteFriends( username);
+        DeleteFriendsseondround( username);
         dropLikes(username);
         dropComments(username);
         dropArticles(username);

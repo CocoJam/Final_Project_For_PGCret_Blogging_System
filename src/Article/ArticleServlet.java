@@ -52,7 +52,7 @@ public class ArticleServlet extends HttpServlet {
         articlesDAO = new ArticlesDAO();
         int ArticleID = 0;
         try {
-            ArticleID = getArticleBasedOnId(req);
+            ArticleID = getArticleBasedOnId(req, resp);
         } catch (NumberFormatException e) {
             cookieTracker(req, resp);
             return;
@@ -82,7 +82,8 @@ public class ArticleServlet extends HttpServlet {
         return;
     }
 
-    private int getArticleBasedOnId(HttpServletRequest req) throws SQLException {
+    private int getArticleBasedOnId(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+        try {
         int ArticleID;
         ArticleID = Integer.parseInt(req.getParameter("acticleId"));
         System.out.println(ArticleID + "articleid");
@@ -90,6 +91,11 @@ public class ArticleServlet extends HttpServlet {
         article.setLikeNumber(articlesDAO.NumberLike(article.getArticleid()));
         article.setLiked(articlesDAO.Liked((String) session.getAttribute("username"),article.getArticleid()));
         return ArticleID;
+        }
+        catch (Exception e){
+            cookieTracker(req,resp);
+        }
+        return 0;
     }
 
     private void addNewArticle(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
