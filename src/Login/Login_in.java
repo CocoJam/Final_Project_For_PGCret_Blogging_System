@@ -74,7 +74,9 @@ public class Login_in extends HttpServlet {
             LoginPassing loginPassing = new LoginPassing(); //See loginPassing class: stores all the methods for login including DAO query the database.
 
             if (session.getAttribute("log") != null) {
+                System.out.println("loggin check");
                 if ((boolean) session.getAttribute("log")) {
+                    System.out.println("loggin check");
                     //checking for when a user is logined in and other user tries to login within the same session.
                     //This will logout the first person's account then login the second person. Hence when the second person logout everyone should be logged out.
 
@@ -115,6 +117,7 @@ public class Login_in extends HttpServlet {
 
     //This is to check the login logic used by doPost to check user login from the login_page.jsp.
     // TODO just refactor this out for convenience
+<<<<<<<<< Temporary merge branch 1
     public boolean loginLogic(HttpServletRequest req, HttpServletResponse resp, HttpSession session, LoginPassing loginPassing, innerclass innerclass) throws ServletException, IOException {
         try {
             if (loginPassing.selectionUsersNames(innerclass.username, innerclass.password)) {
@@ -127,8 +130,6 @@ public class Login_in extends HttpServlet {
                 List<Friend> friendList = new FriendDAO().selectionListOfFriends(innerclass.username);
                 List<String> userList = new FriendDAO().GetAllPeopleUsername();
                 new FriendDAO().pullAllFriendProfile(friendList);
-                System.out.println("Friends profile pic added");
-
                 session.setAttribute("firendlist", friendList);
                 session.setAttribute("userlist", userList);
                 System.out.println("logged-in");
@@ -150,37 +151,38 @@ public class Login_in extends HttpServlet {
     }
 
 
-    //doGet is when a GET request sent from the login page where the user wants to goto the register page to register a new account.
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            HttpSession session = req.getSession();
-            String registration = req.getParameter("Registration");
-            session.setAttribute("Registration", false);
-            if (registration != null) { //TODO refactor to switch statement.
-                //checking if user is login already bound back to profilepage when registration is clicked.
-                if (session.getAttribute("log") == null) {
-                    req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
-                    return;
-                }
-                //If the user is logined in already the user will be transfer back to his own profilepage.
-                if ((boolean) session.getAttribute("log")) {
-                    req.getRequestDispatcher("/ProfilePage").forward(req, resp);
-                    return;
-                } else {
-                    //If user is not login then it will bring them to the registration page.
-                    if (registration.equals("Register")) {
-                        session.setAttribute("Upload", "ArticlesUpload");
+
+        //doGet is when a GET request sent from the login page where the user wants to goto the register page to register a new account.
+        @Override
+        protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            try {
+                HttpSession session = req.getSession();
+                String registration = req.getParameter("Registration");
+                session.setAttribute("Registration", false);
+                if (registration != null) { //TODO refactor to switch statement.
+                    //checking if user is login already bound back to profilepage when registration is clicked.
+                    if (session.getAttribute("log") == null) {
                         req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                         return;
                     }
+                    //If the user is logined in already the user will be transfer back to his own profilepage.
+                    if ((boolean) session.getAttribute("log")) {
+                        req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+                        return;
+                    } else {
+                        //If user is not login then it will bring them to the registration page.
+                        if (registration.equals("Register")) {
+                            session.setAttribute("Upload", "ArticlesUpload");
+                            req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+                            return;
+                        }
+                    }
+                } else {
+                    //Anything else bounce!
+                    cookieTracker(req, resp);
                 }
-            } else {
-                //Anything else bounce!
+            } catch (Exception e) {
                 cookieTracker(req, resp);
             }
-        } catch (Exception e) {
-            cookieTracker(req, resp);
         }
     }
-}

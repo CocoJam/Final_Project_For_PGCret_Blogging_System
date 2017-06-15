@@ -132,7 +132,7 @@ public class Registration extends HttpServlet {
         profilePage.setEthnicity(req.getParameter("ethnicity"));
         profilePage.setEmail(req.getParameter("email"));
         dateofbirth = req.getParameter("date");
-//        password = req.getParameter("password");
+        password = req.getParameter("password");
         profilePage.setIntroduction(req.getParameter("Introduction").replaceAll("<(/?script[^>]*)>", ""));
         profilePage.setProfilepic(req.getParameter("profilePicture"));
         System.out.println("profile pic :" + req.getParameter("profilePicture"));

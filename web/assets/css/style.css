@@ -10,15 +10,18 @@
     color: #000000;
 }
 
-/* CUSTOM BACKGROUND - LOGIN PAGE */
+/* CUSTOM BACKGROUND - LOGIN & PROFILE PAGE */
 #custom-bg-container {
-    background-image: url('/assets/img/background/bg-04.jpg');
+    background-image: url('/assets/img/background/bg-06.jpg');
     background-size: cover;
     background-position: top center;
 }
 
+/* CUSTOM BACKGROUND - AFTER LOGIN */
 #custom-bg-user {
-    background-image: url('/assets/img/background/bg-02.jpg');
+    background-image: url('/assets/img/background/bg-01.jpg');
+    background-size: cover;
+    background-position: center center;
 }
 
 /* OVERRIDE DEFAULT FORM FOCUS COLORS */
@@ -92,18 +95,39 @@ a, a:hover, a:focus {
 
 #loaderID {
     position: fixed;
-    left: 10%;
-    top: 90%;
+    left: 50%;
+    top: 50%;
     transform: translate(-50%, -50%) scale(0.5,0.5);
-    width: 250px;
-    height: 177px;
+    width: 498px;
+    height: 632px;
     z-index: 9999;
     visibility: hidden;
-    background: url(/pokemonloader3.gif) center no-repeat;
+    background: url(/gploader.gif) center no-repeat;
 }
 
 /* NAVBAR - custom */
 /* changes applied in material-kit.css to navbar-inverse */
+
+/* Make image inside article content div fit */
+
+
+/* media-query flags start */
+/* Code below for debugging purposes, to display the responsive design breakpoints upon resizing of window */
+
+body:before
+{
+    position: fixed;
+    z-index: 3000;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    height: 40px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: bold;
+    font-size: 50px;
+    content: "XS";
+    background: rgba(215, 44, 44, 0.5);
+}
 
 /* BUTTON - custom */
 .btn-group.open > .dropdown-toggle.btn.btn-inverse,
@@ -230,3 +254,9 @@ audio {
 /*}*/
 
 /*style="left: 50%; right: 50%"*/
+
+@media (min-width: 768px) { body:before { content: "SM"; background: rgba(215, 44, 215, 0.5); } }
+@media (min-width: 992px) { body:before { content: "MD"; background: rgba(44, 215, 44, 0.5); } }
+@media (min-width: 1200px) { body:before { content: "LG"; background: rgba(44, 44, 215, 0.5); } }
+
+/* media-query flags end */

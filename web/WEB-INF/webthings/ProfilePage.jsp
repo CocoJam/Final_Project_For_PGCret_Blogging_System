@@ -244,7 +244,7 @@
                                     <%--Articles begin--%>
                                     <div>
 
-                                        <button id="showArticleList">Show article list</button>
+                                <button id="showArticleList" class="btn btn-info btn-round">Show Articles List</button>
 
                                         <div id="ArticleTable"></div>
 
