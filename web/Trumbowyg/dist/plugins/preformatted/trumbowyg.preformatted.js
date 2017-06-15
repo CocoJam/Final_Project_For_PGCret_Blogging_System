@@ -41,7 +41,8 @@
                                     if (curtag === 'code' || curtag === 'pre') {
                                         return unwrapCode();
                                     }
-                                    else {
+                                    else {trstA
+                                    else {trstA
                                         trumbowyg.execCmd('insertHTML', '<pre><code>' + strip(text) + '</code></pre>');
                                     }
                                 } catch (e) {
