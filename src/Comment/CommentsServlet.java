@@ -130,6 +130,7 @@ public class CommentsServlet extends HttpServlet {
                     innerclass.setComments(innerclass.commentsDAO.selectionComment(commentId));
 //                comments = commentsDAO.selectionComment(commentId);
                 }
+                System.out.println(innerclass.comments);
                 if (innerclass.comments != null) {
                     JSONObject jsonObject = getJsonObject(innerclass.comments);
                     System.out.println(jsonObject);
@@ -189,6 +190,7 @@ public class CommentsServlet extends HttpServlet {
         System.out.println(session.getAttribute("articleID"));
         innerclass.setArticleID((int) session.getAttribute("articleID"));
 //        articleID = (int) session.getAttribute("articleID");
+
     }
 
     @Override
