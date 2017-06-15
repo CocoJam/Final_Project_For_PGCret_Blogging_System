@@ -31,7 +31,6 @@
     <%--response.addHeader("Expires", "Tue, 01 Jan 1970 00:00:00 GMT");--%>
     <%--System.out.println(response.getHeaderNames());%>--%>
 <script>
-
     var ctx = "<%= request.getRequestURI() %>";
     var date = new Date();
     var currentTime = date.getTime();
@@ -252,23 +251,7 @@
             e.preventDefault();
         }
     });
-//    $("a:not(.dropdown *)").click(function (event) {
-//        if ($(this).hasClass("disabled")) {
-//            event.preventDefault();
-//        }
-//        $(this).addClass("disabled");
-//    });
-    //    $('.clickOnce').click(function (e) {
-    //        e.preventDefault();
-    //    });
 
-    //    $(document).ready(
-    //        function clickOnce() {
-    //            $(".clickOnce").on("click", function () {
-    //                $(this).off('click');
-    //            })
-    //        }
-    //    )
     $(document).ready(function () {
         $("#imageselect").change(function () {
             $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + imageValue + ".jpg')");

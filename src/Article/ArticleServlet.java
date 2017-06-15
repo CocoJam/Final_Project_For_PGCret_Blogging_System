@@ -136,63 +136,69 @@ public class ArticleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         cookieLogOut(req, resp);
-        innerclass innerclass = new innerclass();
-        HttpSession session = req.getSession();
-        innerclass.setSession(session);
-//        This is when the create new article button is clicked on the navbar it forwards to the relevant Post method.
-        System.out.println("Creating new article from Navbar");
-        if (req.getParameter("add") != null) {
-            addNewArticle(req, resp);
-            return;
-        }
-//        session = req.getSession();
-        ArticlesDAO articlesDAO = new ArticlesDAO();
-        innerclass.setArticlesDAO(articlesDAO);
-        int ArticleID = 0;
         try {
-            ArticleID = getArticleBasedOnId(req, innerclass);
-        } catch (NumberFormatException e) {
-            cookieTracker(req, resp);
-            return;
-        } catch (SQLException e) {
-            cookieTracker(req, resp);
-            return;
-        }
-        //This is viewing the Article
-        session.setAttribute("articleList", "self");
-        if (innerclass.getArticle() != null) {
-            if (session.getAttribute("username") != null) {
-                if (innerclass.getArticle().getUsername().equals(session.getAttribute("username"))) {
-                    innerclass.getArticle().setOwner(true);
-                }
+            innerclass innerclass = new innerclass();
+            HttpSession session = req.getSession();
+            innerclass.setSession(session);
+//        This is when the create new article button is clicked on the navbar it forwards to the relevant Post method.
+            System.out.println("Creating new article from Navbar");
+            if (req.getParameter("add") != null) {
+                addNewArticle(req, resp);
+                return;
             }
-            //The below is comments in the article.
-            session.setAttribute("articleID", ArticleID);
-            session.setAttribute("articleContents", innerclass.getArticle());
-            List<Comments> listOfComments = gettingTheListOfComments(innerclass.getArticle().getArticleid());
-            session.setAttribute("commentlist", listOfComments);
-            //Dispatching the article and comments.
-            System.out.println("selected articles");
-            req.getRequestDispatcher("/Comments").include(req, resp);
-            return;
+//        session = req.getSession();
+            ArticlesDAO articlesDAO = new ArticlesDAO();
+            innerclass.setArticlesDAO(articlesDAO);
+            int ArticleID = 0;
+            try {
+                ArticleID = getArticleBasedOnId(req, resp, innerclass);
+            } catch (NumberFormatException e) {
+                cookieTracker(req, resp);
+                return;
+            } catch (SQLException e) {
+                cookieTracker(req, resp);
+                return;
+            }
+            //This is viewing the Article
+            session.setAttribute("articleList", "self");
+            if (innerclass.getArticle() != null) {
+                if (session.getAttribute("username") != null) {
+                    if (innerclass.getArticle().getUsername().equals(session.getAttribute("username"))) {
+                        innerclass.getArticle().setOwner(true);
+                    }
+                }
+                //The below is comments in the article.
+                session.setAttribute("articleID", ArticleID);
+                session.setAttribute("articleContents", innerclass.getArticle());
+                List<Comments> listOfComments = gettingTheListOfComments(innerclass.getArticle().getArticleid());
+                session.setAttribute("commentlist", listOfComments);
+                //Dispatching the article and comments.
+                System.out.println("selected articles");
+                req.getRequestDispatcher("/Comments").include(req, resp);
+                return;
+            }
+            cookieTracker(req, resp);
+        } catch (Exception e) {
+            e.printStackTrace();
+            cookieTracker(req, resp);
         }
-        cookieTracker(req, resp);
         return;
     }
 
-    private int getArticleBasedOnId(HttpServletRequest req, innerclass innerclass) throws SQLException {
+    private int getArticleBasedOnId(HttpServletRequest req, HttpServletResponse resp, innerclass innerclass) throws SQLException {
         int ArticleID = 0;
         try {
             ArticleID = Integer.parseInt(req.getParameter("acticleId"));
-        } catch (NumberFormatException e) {
+            System.out.println(ArticleID + "articleid");
+            System.out.println(innerclass.getArticlesDAO());
+            Articles article = innerclass.getArticlesDAO().selectionArticles(ArticleID);
+            article.setLikeNumber(innerclass.getArticlesDAO().NumberLike(article.getArticleid()));
+            article.setLiked(innerclass.getArticlesDAO().Liked((String) innerclass.getSession().getAttribute("username"), article.getArticleid()));
+            innerclass.setArticle(article);
+        } catch (Exception e) {
             e.getStackTrace();
+            cookieTracker(req, resp);
         }
-        System.out.println(ArticleID + "articleid");
-        System.out.println(innerclass.getArticlesDAO());
-        Articles article = innerclass.getArticlesDAO().selectionArticles(ArticleID);
-        article.setLikeNumber(innerclass.getArticlesDAO().NumberLike(article.getArticleid()));
-        article.setLiked(innerclass.getArticlesDAO().Liked((String) innerclass.getSession().getAttribute("username"), article.getArticleid()));
-        innerclass.setArticle(article);
         return innerclass.getArticle().getArticleid();
     }
 
@@ -210,82 +216,82 @@ public class ArticleServlet extends HttpServlet {
     //doPost gets POST request to add or edit article depends on where the button was pushed (dependent on the parameter value).
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        cookieLogOut(req, resp);
-        ArticlesDAO articlesDAO = new ArticlesDAO();
-        String addingArticles = req.getParameter("add");
-        HttpSession session = req.getSession();
-        String username = (String) session.getAttribute("username");
-        innerclass innerclass = new innerclass();
-        innerclass.setArticlesDAO(articlesDAO);
-        if (addingArticles != null) {
-
-            //Scenario 1: When adding new article when pressed within the articleIndex.jsp.
-            if (addingArticles.equals("addNewArticle")) {
-                doPostAddNewArticle(req, session);
-                req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
-                return;
-                //Scenario 2: Edit inside of your own article, therefore setting ownership is important. Dispatches to the ArticleCreationPage.jsp (but in editing mode).
-            } else if (addingArticles.equals("EditArticle")) {
+        try {
+            cookieLogOut(req, resp);
+            ArticlesDAO articlesDAO = new ArticlesDAO();
+            String addingArticles = req.getParameter("add");
+            HttpSession session = req.getSession();
+            String username = (String) session.getAttribute("username");
+            innerclass innerclass = new innerclass();
+            innerclass.setArticlesDAO(articlesDAO);
+            if (addingArticles != null) {
+                //Scenario 1: When adding new article when pressed within the articleIndex.jsp.
+                if (addingArticles.equals("addNewArticle")) {
+                    doPostAddNewArticle(req, session);
+                    req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
+                    return;
+                    //Scenario 2: Edit inside of your own article, therefore setting ownership is important. Dispatches to the ArticleCreationPage.jsp (but in editing mode).
+                } else if (addingArticles.equals("EditArticle")) {
 //                gettingContentFromJsp(req,innerclass);
-                int articlenumber = 0;
-                try {
+                    int articlenumber = 0;
                     articlenumber = Integer.parseInt(req.getParameter("articleidnumber"));
-                } catch (NumberFormatException e) {
-                    e.getStackTrace();
-                }
-                innerclass.setArticleId(articlenumber);
-                System.out.println("here is the innerclass article number " + articlenumber);
-                doPostEnteringEditArticle(session, articlenumber);
-                req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
-                return;
+                    innerclass.setArticleId(articlenumber);
+                    System.out.println("here is the innerclass article number " + articlenumber);
+                    doPostEnteringEditArticle(req, resp, session, articlenumber);
+                    req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
+                    return;
 
-                //Scenario 3: Redirect from Article Creation page once editing complete.
-                // This is when you have finished editing the article and redirecting back to the article page from the article creation page, and then update that SQL the article details.
-            } else if (addingArticles.equals("Editted")) {
-                gettingContentFromJsp(req, innerclass);
-                Articles article = null;
-                try {
+                    //Scenario 3: Redirect from Article Creation page once editing complete.
+                    // This is when you have finished editing the article and redirecting back to the article page from the article creation page, and then update that SQL the article details.
+                } else if (addingArticles.equals("Editted")) {
+                    gettingContentFromJsp(req, resp, innerclass);
+                    Articles article = null;
+                    try {
 //                    article = articlesDAO.updateArticles(ArticleName, articleCategory, ArticleContent, article.getArticleid());
-                    article = innerclass.articlesDAO.updateArticles(innerclass.ArticleName, innerclass.articleCategory, innerclass.ArticleContent, innerclass.ArticleId);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                session.setAttribute("articleList", "self");
-                session.setAttribute("articleContents", article);
-                session.setAttribute("Upload", null);
-                checkingForOwnershipArticle(username, article);
-                req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
-                return;
-                //Scenario 4: Redirect from Article Creation page once creation of a new page is completed.
-            } else if (addingArticles.equals("addingToDataBase")) {
-                gettingContentFromJsp(req, innerclass);
-                innerclass.articlesDAO.madeArticles(innerclass.ArticleName, innerclass.articleCategory, username, innerclass.ArticleContent);
-                String Listformation = (String) session.getAttribute("articleList");
-                RequiredListAllOrSelf(username, Listformation, innerclass);
-                // dispatching back into the articleIndex after finished creating new article and have uploaded the info to SQL via DAO
-                session.setAttribute("ArticleIndex", innerclass.indexList);
-                session.setAttribute("Upload", null);
-                req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
-                return;
-            }
-        }
-        if (req.getParameter("like") != null) {
-            System.out.println("here is like");
-            if (req.getParameter("like").equals("like")) {
-                if (req.getParameter("articleIdnumber") != null && req.getParameter("likepeople") != null) {
-                    System.out.println(req.getParameter("likepeople"));
-                    System.out.println(req.getParameter("articleIdnumber"));
-                    System.out.println(Integer.parseInt(req.getParameter("articleIdnumber")));
-                    boolean like = innerclass.articlesDAO.updateLike((String) session.getAttribute("username"), Integer.parseInt(req.getParameter("articleIdnumber")));
-                    if (!like) {
-                        System.out.println("delete like");
-                        innerclass.articlesDAO.deleteLike((String) session.getAttribute("username"), Integer.parseInt(req.getParameter("articleIdnumber")));
+                        article = innerclass.articlesDAO.updateArticles(innerclass.ArticleName, innerclass.articleCategory, innerclass.ArticleContent, innerclass.ArticleId);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-                    System.out.println(innerclass.articlesDAO.NumberLike(Integer.parseInt(req.getParameter("articleIdnumber"))));
-                    resp.getWriter().print(innerclass.articlesDAO.NumberLike(Integer.parseInt(req.getParameter("articleIdnumber"))));
+                    session.setAttribute("articleList", "self");
+                    session.setAttribute("articleContents", article);
+                    session.setAttribute("Upload", null);
+                    checkingForOwnershipArticle(username, article);
+                    req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
+                    return;
+                    //Scenario 4: Redirect from Article Creation page once creation of a new page is completed.
+                } else if (addingArticles.equals("addingToDataBase")) {
+                    gettingContentFromJsp(req, resp, innerclass);
+                    innerclass.articlesDAO.madeArticles(innerclass.ArticleName, innerclass.articleCategory, username, innerclass.ArticleContent);
+                    String Listformation = (String) session.getAttribute("articleList");
+                    RequiredListAllOrSelf(username, Listformation, innerclass);
+                    // dispatching back into the articleIndex after finished creating new article and have uploaded the info to SQL via DAO
+                    session.setAttribute("ArticleIndex", innerclass.indexList);
+                    session.setAttribute("Upload", null);
+                    req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
                     return;
                 }
             }
+            if (req.getParameter("like") != null) {
+                System.out.println("here is like");
+                if (req.getParameter("like").equals("like")) {
+                    if (req.getParameter("articleIdnumber") != null && req.getParameter("likepeople") != null) {
+                        System.out.println(req.getParameter("likepeople"));
+                        System.out.println(req.getParameter("articleIdnumber"));
+                        System.out.println(Integer.parseInt(req.getParameter("articleIdnumber")));
+                        boolean like = innerclass.articlesDAO.updateLike((String) session.getAttribute("username"), Integer.parseInt(req.getParameter("articleIdnumber")));
+                        if (!like) {
+                            System.out.println("delete like");
+                            innerclass.articlesDAO.deleteLike((String) session.getAttribute("username"), Integer.parseInt(req.getParameter("articleIdnumber")));
+                        }
+                        System.out.println(innerclass.articlesDAO.NumberLike(Integer.parseInt(req.getParameter("articleIdnumber"))));
+                        resp.getWriter().print(innerclass.articlesDAO.NumberLike(Integer.parseInt(req.getParameter("articleIdnumber"))));
+                        return;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.getStackTrace();
+            cookieTracker(req, resp);
         }
         doGet(req, resp);
         return;
@@ -301,38 +307,40 @@ public class ArticleServlet extends HttpServlet {
         }
     }
 
-    private innerclass gettingContentFromJsp(HttpServletRequest req, innerclass innerclass) {
-        innerclass.setArticleName(req.getParameter("ArticleName"));
-//        ArticleName = req.getParameter("ArticleName");
-        innerclass.setArticleContent(req.getParameter("ArticleContent"));
-//        ArticleContent = req.getParameter("ArticleContent");
-        innerclass.setArticleCategory(req.getParameter("ArticleCategory"));
-//        articleCategory = req.getParameter("ArticleCategory");
-        int articlenumber = 0;
-        HttpSession session = req.getSession();
+    private innerclass gettingContentFromJsp(HttpServletRequest req, HttpServletResponse resp, innerclass innerclass) {
         try {
+            innerclass.setArticleName(req.getParameter("ArticleName"));
+//        ArticleName = req.getParameter("ArticleName");
+            innerclass.setArticleContent(req.getParameter("ArticleContent"));
+//        ArticleContent = req.getParameter("ArticleContent");
+            innerclass.setArticleCategory(req.getParameter("ArticleCategory"));
+//        articleCategory = req.getParameter("ArticleCategory");
+            int articlenumber = 0;
+            HttpSession session = req.getSession();
             articlenumber = (int) session.getAttribute("articleID");
-        } catch (NumberFormatException e) {
+            System.out.println("inner class aricle id" + articlenumber);
+            innerclass.setArticleId(articlenumber);
+        } catch (Exception e) {
             e.getStackTrace();
+            cookieTracker(req, resp);
         }
-        System.out.println("inner class aricle id" + articlenumber);
-        innerclass.setArticleId(articlenumber);
         return innerclass;
     }
 
-    private void doPostEnteringEditArticle(HttpSession session, int articlenumber) {
-        session.setAttribute("articleList", "self");
-        session.setAttribute("articleID", articlenumber);
-        session.setAttribute("Upload", "ArticlesUpload");
-        ArticlesDAO articlesDAO = new ArticlesDAO();
+    private void doPostEnteringEditArticle(HttpServletRequest req, HttpServletResponse resp, HttpSession session, int articlenumber) {
         Articles article = null;
         try {
+            session.setAttribute("articleList", "self");
+            session.setAttribute("articleID", articlenumber);
+            session.setAttribute("Upload", "ArticlesUpload");
+            ArticlesDAO articlesDAO = new ArticlesDAO();
             article = articlesDAO.selectionArticles(articlenumber);
-        } catch (SQLException e) {
+            System.out.println("Entering the editting page with " + articlenumber);
+            session.setAttribute("articleContents", article);
+        } catch (Exception e) {
             e.printStackTrace();
+            cookieTracker(req, resp);
         }
-        System.out.println("Entering the editting page with " + articlenumber);
-        session.setAttribute("articleContents", article);
     }
 
     private void doPostAddNewArticle(HttpServletRequest req, HttpSession session) {

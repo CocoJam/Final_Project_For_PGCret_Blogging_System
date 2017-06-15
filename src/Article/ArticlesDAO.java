@@ -25,7 +25,7 @@ public class ArticlesDAO {
         super();
     }
 
-    public Articles selectionArticles(String articleName) {
+    public synchronized Articles selectionArticles(String articleName) throws NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, UserIDName, Category, Content, SpecificDateCreated FROM Articles WHERE ArticlesName = ?;")) {
                 System.out.println(statement);
@@ -43,10 +43,15 @@ public class ArticlesDAO {
             System.out.println("Error. Article not found.");
             e.printStackTrace();
         }
+        catch (NullPointerException e) {
+            System.out.println("Error. Article not found.");
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
         return null;
     }
 
-    public Articles selectionArticles(int articlesID) throws SQLException{
+    public synchronized Articles selectionArticles(int articlesID) throws SQLException, NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, UserIDName, Category, Content, SpecificDateCreated FROM Articles WHERE ArticlesID = ?;")) {
                 System.out.println(statement);
@@ -65,11 +70,16 @@ public class ArticlesDAO {
             e.printStackTrace();
             throw new SQLException();
         }
+        catch (NullPointerException e) {
+            System.out.println("Error. Article not found.");
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
         return null;
     }
 
     //making a new article (DAO)
-    public void madeArticles(String ArticleName, String categoryName, String UserIDName, String content) {
+    public synchronized void madeArticles(String ArticleName, String categoryName, String UserIDName, String content) throws NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Articles (ArticlesName, UserIDName, Category, Content) VALUES( ? ,? ,?, ?);")) {
                 System.out.println(statement);
@@ -85,10 +95,15 @@ public class ArticlesDAO {
             System.out.println("Error creating article");
             e.printStackTrace();
         }
+        catch (NullPointerException e) {
+            System.out.println("Error. Article not found.");
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
     }
 
     //updating existing article
-    public Articles updateArticles(String ArticleName, String categoryName, String content, int ArticleID) throws SQLException{
+    public synchronized Articles updateArticles(String ArticleName, String categoryName, String content, int ArticleID) throws SQLException,NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE Articles SET ArticlesName = ?, Category = ?, Content= ? WHERE ArticlesID = ?;")) {
                 System.out.println(statement);
@@ -104,16 +119,17 @@ public class ArticlesDAO {
         } catch (SQLException e) {
             System.out.println("Error updating article.");
             e.printStackTrace();
+            throw new SQLException();
         }
-        try {
+        catch (NullPointerException e) {
+            System.out.println("Error. Article not found.");
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
             return selectionArticles(ArticleID);
-        } catch (SQLException e) {
-            System.out.println("ARticlesDAO Error");
-           throw new SQLException("updateArticles error");
-        }
     }
 
-    public boolean deleteLike(String username,int ArticleID) {
+    public synchronized boolean deleteLike(String username,int ArticleID) throws NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("DELETE FROM likes WHERE username=? AND ArticlesID=?;")) {
                 statement.setString(1, username);
@@ -126,9 +142,14 @@ public class ArticlesDAO {
             e.printStackTrace();
             return false;
         }
+        catch (NullPointerException e) {
+            System.out.println("Error. Article not found.");
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
     }
 
-    public boolean updateLike(String username,int ArticleID) {
+    public synchronized boolean updateLike(String username,int ArticleID) throws NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("INSERT INTO likes (username, ArticlesID) VALUES( ? ,?);")) {
                 statement.setString(1, username);
@@ -141,15 +162,19 @@ public class ArticlesDAO {
             e.printStackTrace();
             return false;
         }
+        catch (NullPointerException e) {
+            System.out.println("Error. Article not found.");
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
     }
 
-    public int NumberLike(int ArticleID) {
+    public synchronized int NumberLike(int ArticleID)throws NullPointerException {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT count(username) FROM likes WHERE ArticlesID = ?;")) {
                 statement.setInt(1, ArticleID);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
-                        System.out.println(resultSet.getInt(1));
                         return resultSet.getInt(1);
                     }
                 }
@@ -159,10 +184,15 @@ public class ArticlesDAO {
             e.printStackTrace();
             return 0;
         }
+        catch (NullPointerException e) {
+            System.out.println("Error. Article not found.");
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
         return 0;
     }
 
-    public boolean Liked(String username,int ArticleID) {
+    public synchronized boolean Liked(String username,int ArticleID) throws NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT username, ArticlesID FROM likes WHERE username= ? AND ArticlesID = ?;")) {
                 statement.setString(1, username);
@@ -178,10 +208,15 @@ public class ArticlesDAO {
             e.printStackTrace();
             return false;
         }
+        catch (NullPointerException e) {
+            System.out.println("Error. Article not found.");
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
         return false;
     }
 
-    private Articles makeArticle(ResultSet resultSet) throws SQLException {
+    private synchronized Articles makeArticle(ResultSet resultSet) throws SQLException{
         Articles articles = new Articles();
         ArticleID = resultSet.getInt(1);
         ArticleName = resultSet.getString(2);
@@ -194,7 +229,7 @@ public class ArticlesDAO {
         return articles;
     }
 
-    private void ArticlesSetStatments(Articles articles, Date dateCreated) {
+    private synchronized void ArticlesSetStatments(Articles articles, Date dateCreated) {
         articles.setArticlename(ArticleName);
         articles.setArticleid(ArticleID);
         articles.setCategory(categoryName);

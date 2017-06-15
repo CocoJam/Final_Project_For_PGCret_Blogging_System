@@ -16,7 +16,7 @@ public class DeleteDAO {
     }
 
 
-    public void dropSpeificComment(int CommentID) {
+    public synchronized void dropSpeificComment(int CommentID) throws NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Comments WHERE CommentID = ?;")) {
                 System.out.println(CommentID);
@@ -30,10 +30,14 @@ public class DeleteDAO {
             System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
     }
 
 
-    public void dropSpeificArticle(int ArticlesID) {
+    public synchronized void dropSpeificArticle(int ArticlesID) throws NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try {
                 dropArticleAllComments(ArticlesID);
@@ -51,9 +55,13 @@ public class DeleteDAO {
             System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
     }
 
-    public void dropArticleAllComments(int ArticlesID) {
+    public synchronized void dropArticleAllComments(int ArticlesID) throws NullPointerException {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Comments WHERE ArticlesID = ?;")) {
                 System.out.println(statement);
@@ -65,9 +73,13 @@ public class DeleteDAO {
             System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
     }
 
-    public void dropComments(String username) {
+    public synchronized void dropComments(String username) throws NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Comments WHERE CommenterName = ?;")) {
                 System.out.println(statement);
@@ -79,9 +91,13 @@ public class DeleteDAO {
             System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
     }
 
-    public void dropArticles(String username) {
+    public void dropArticles(String username) throws NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Articles WHERE UserIDName = ?;")) {
                 statement.setString(1, username);
@@ -91,9 +107,13 @@ public class DeleteDAO {
             System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
     }
 
-    public void dropUserInformation(String username) {
+    public synchronized void dropUserInformation(String username) throws NullPointerException {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("DELETE FROM UsersNames WHERE Username = ?;")) {
                 statement.setString(1, username);
@@ -104,9 +124,13 @@ public class DeleteDAO {
             System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
     }
 
-    public void dropSpeificYoutube(String youtubeURL) {
+    public synchronized void dropSpeificYoutube(String youtubeURL) throws NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()){
             PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM youtube WHERE youtubeURL LIKE '%'?'%';"
@@ -117,9 +141,13 @@ public class DeleteDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
     }
 
-    public void dropLikes(int ArticleId) {
+    public synchronized void dropLikes(int ArticleId) throws NullPointerException {
         try (Connection connection = new ConnectionToTheDataBase().getConn()){
             PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM likes WHERE ArticlesID = ?;"
@@ -130,9 +158,13 @@ public class DeleteDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
     }
 
-    public void dropLikes(String usernames) {
+    public synchronized void dropLikes(String usernames) throws NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()){
             PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM likes WHERE username = ?;"
@@ -143,9 +175,13 @@ public class DeleteDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
     }
 
-    public boolean DeleteFriends(String username, String type) {
+    public synchronized boolean DeleteFriends(String username, String type) throws NullPointerException {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Friendlist WHERE ? = ? ")) {
                 statement.setString(1,  type);
@@ -157,9 +193,13 @@ public class DeleteDAO {
             e.printStackTrace();
             return false;
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
     }
 
-    public void dropAllByUsername(String username) {
+    public synchronized void dropAllByUsername(String username) {
         DeleteFriends("username", username);
         DeleteFriends("friendusername", username);
         dropLikes(username);
@@ -168,7 +208,7 @@ public class DeleteDAO {
         dropUserInformation(username);
 
     }
-    public void dropSpecificArticlesAll(int ArticleId){
+    public synchronized void dropSpecificArticlesAll(int ArticleId){
         dropLikes(ArticleId);
         dropArticleAllComments(ArticleId);
         dropSpeificArticle(ArticleId);

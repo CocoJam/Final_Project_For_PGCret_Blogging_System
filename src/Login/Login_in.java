@@ -24,7 +24,7 @@ import static Connection.ConnectionToTheDataBase.cookieTracker;
  * Created by ljam763 on 23/05/2017.
  */
 public class Login_in extends HttpServlet {
-    public class innerclass{
+    public class innerclass {
         private String username;
 
         public String getUsername() {
@@ -64,44 +64,48 @@ public class Login_in extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        innerclass innerclass = new innerclass();
-        System.out.println("Processing login");
-        innerclass.setUsername(req.getParameter("username"));
+        try {
+            innerclass innerclass = new innerclass();
+            System.out.println("Processing login");
+            innerclass.setUsername(req.getParameter("username"));
 //        username = req.getParameter("username");
-        innerclass.setPassword(req.getParameter("password"));
+            innerclass.setPassword(req.getParameter("password"));
 //        password = req.getParameter("password");
-        LoginPassing loginPassing = new LoginPassing(); //See loginPassing class: stores all the methods for login including DAO query the database.
+            LoginPassing loginPassing = new LoginPassing(); //See loginPassing class: stores all the methods for login including DAO query the database.
 
-        if (session.getAttribute("log") != null) {
-            if ((boolean) session.getAttribute("log")) {
-                //checking for when a user is logined in and other user tries to login within the same session.
-                //This will logout the first person's account then login the second person. Hence when the second person logout everyone should be logged out.
+            if (session.getAttribute("log") != null) {
+                if ((boolean) session.getAttribute("log")) {
+                    //checking for when a user is logined in and other user tries to login within the same session.
+                    //This will logout the first person's account then login the second person. Hence when the second person logout everyone should be logged out.
 
-                //this is to bounce people out if people are already logged in. IF username and password is not in session bounces to profile and logs out the previous user.
-                if (!innerclass.username.equals(session.getAttribute("username")) && !innerclass.password.equals(session.getAttribute("password"))) {
-                    if (loginLogic(req, resp, session, loginPassing, innerclass)) {
+                    //this is to bounce people out if people are already logged in. IF username and password is not in session bounces to profile and logs out the previous user.
+                    if (!innerclass.username.equals(session.getAttribute("username")) && !innerclass.password.equals(session.getAttribute("password"))) {
+                        if (loginLogic(req, resp, session, loginPassing, innerclass)) {
+                            closingConnection();
+                            req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+                            return;
+                        }
+
+                        //There is a major bug, even though there is someone logged in ppl can still bypass it because it does not check the login here.
+                    } else {
+                        System.out.println("Login");
                         closingConnection();
-                        req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+                        req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                         return;
                     }
-
-                    //There is a major bug, even though there is someone logged in ppl can still bypass it because it does not check the login here.
-                } else {
-                    System.out.println("Login");
-                    closingConnection();
-                    req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
-                    return;
                 }
             }
-        }
-        //TODO check hashing algorithm, need to check if it works.
-        //If the password is not null or empty then the password is check by the loginlogic. Or not bounce back to login page.
-        if (!innerclass.password.trim().equals("") && !innerclass.password.trim().isEmpty() && innerclass.password.trim() != null) {
-            loginLogic(req, resp, session, loginPassing, innerclass);
-        } else {
-            session.setAttribute("log", false); //TODO refactoring for login status.
-            System.out.println("logged-in rejected");
-            req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
+            //TODO check hashing algorithm, need to check if it works.
+            //If the password is not null or empty then the password is check by the loginlogic. Or not bounce back to login page.
+            if (!innerclass.password.trim().equals("") && !innerclass.password.trim().isEmpty() && innerclass.password.trim() != null) {
+                loginLogic(req, resp, session, loginPassing, innerclass);
+            } else {
+                session.setAttribute("log", false); //TODO refactoring for login status.
+                System.out.println("logged-in rejected");
+                req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
+            }
+        } catch (Exception e) {
+            cookieTracker(req, resp);
         }
         return;
 
@@ -112,60 +116,67 @@ public class Login_in extends HttpServlet {
     //This is to check the login logic used by doPost to check user login from the login_page.jsp.
     // TODO just refactor this out for convenience
     public boolean loginLogic(HttpServletRequest req, HttpServletResponse resp, HttpSession session, LoginPassing loginPassing, innerclass innerclass) throws ServletException, IOException {
-
-
-        if (loginPassing.selectionUsersNames(innerclass.username, innerclass.password)) {
-            //Login in logic passed through sql selection query.
-            session.setAttribute("username", innerclass.username);
-            session.setAttribute("password", innerclass.password);
-            session.setAttribute("articleList", "self");
-            session.setAttribute("log", true); //TODO refactoring for login status.
-            //Getting friendlist and the username list for the search bar of firent
-            List<Friend> friendList = new FriendDAO().selectionListOfFriends(innerclass.username);
-            List<String> userList = new FriendDAO().GetAllPeopleUsername();
-            session.setAttribute("firendlist", friendList);
-            session.setAttribute("userlist", userList);
-            System.out.println("logged-in");
-            System.out.println(session.getAttribute("username"));
-            req.getRequestDispatcher("/ProfilePage").forward(req, resp); //TODO to take out.
-            return true;
-        } else {
-            //Login in logic fail.
-            session.setAttribute("log", false); //TODO refactoring for login status.
-            System.out.println("logged-in rejected");
-            req.setAttribute("loginFail", true); //attribute to indicate to login_page jsp to shake if rejected onload
-            req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
-            return false;
+        try {
+            if (loginPassing.selectionUsersNames(innerclass.username, innerclass.password)) {
+                //Login in logic passed through sql selection query.
+                session.setAttribute("username", innerclass.username);
+                session.setAttribute("password", innerclass.password);
+                session.setAttribute("articleList", "self");
+                session.setAttribute("log", true); //TODO refactoring for login status.
+                //Getting friendlist and the username list for the search bar of firent
+                List<Friend> friendList = new FriendDAO().selectionListOfFriends(innerclass.username);
+                List<String> userList = new FriendDAO().GetAllPeopleUsername();
+                session.setAttribute("firendlist", friendList);
+                session.setAttribute("userlist", userList);
+                System.out.println("logged-in");
+                System.out.println(session.getAttribute("username"));
+                req.getRequestDispatcher("/ProfilePage").forward(req, resp); //TODO to take out.
+                return true;
+            } else {
+                //Login in logic fail.
+                session.setAttribute("log", false); //TODO refactoring for login status.
+                System.out.println("logged-in rejected");
+                req.setAttribute("loginFail", true); //attribute to indicate to login_page jsp to shake if rejected onload
+                req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
+                return false;
+            }
+        } catch (Exception e) {
+            cookieTracker(req, resp);
         }
+        return false;
     }
 
 
     //doGet is when a GET request sent from the login page where the user wants to goto the register page to register a new account.
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        String registration = req.getParameter("Registration");
-        session.setAttribute("Registration", false);
-        if (registration != null) { //TODO refactor to switch statement.
-            //checking if user is login already bound back to profilepage when registration is clicked.
-            if (session.getAttribute("log") == null) {
-                req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
-                return;
-            }
-            //If the user is logined in already the user will be transfer back to his own profilepage.
-            if ((boolean) session.getAttribute("log")) {
-                req.getRequestDispatcher("/ProfilePage").forward(req, resp);
-                return;
-            } else {
-                //If user is not login then it will bring them to the registration page.
-                if (registration.equals("Register")) {
-                    session.setAttribute("Upload", "ArticlesUpload");
+        try {
+            HttpSession session = req.getSession();
+            String registration = req.getParameter("Registration");
+            session.setAttribute("Registration", false);
+            if (registration != null) { //TODO refactor to switch statement.
+                //checking if user is login already bound back to profilepage when registration is clicked.
+                if (session.getAttribute("log") == null) {
                     req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                     return;
                 }
+                //If the user is logined in already the user will be transfer back to his own profilepage.
+                if ((boolean) session.getAttribute("log")) {
+                    req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+                    return;
+                } else {
+                    //If user is not login then it will bring them to the registration page.
+                    if (registration.equals("Register")) {
+                        session.setAttribute("Upload", "ArticlesUpload");
+                        req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+                        return;
+                    }
+                }
+            } else {
+                //Anything else bounce!
+                cookieTracker(req, resp);
             }
-        } else {
-            //Anything else bounce!
+        } catch (Exception e) {
             cookieTracker(req, resp);
         }
     }

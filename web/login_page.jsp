@@ -108,6 +108,7 @@
                 $("#loginCard").effect("shake");
 
         }
+        document.cookie = "pagemark=login_page.jsp";
     })
 </script>
 

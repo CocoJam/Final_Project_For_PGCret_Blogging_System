@@ -108,49 +108,53 @@ public class DeletingServlet extends HttpServlet {
     //The dopost method is used to stop user to use non-conventional way to delete content or accounts.
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        cookieLogOut(req,resp);
+        cookieLogOut(req, resp);
+        try {
+            HttpSession session = req.getSession();
+            innerclass innerclass = new innerclass();
+            innerclass.setDeleteDAO(new DeleteDAO());
+            innerclass.setLoginPassing(new LoginPassing());
+            setupForUsernameAndPasswordCheck(req, session, innerclass);
 
-        HttpSession session = req.getSession();
-        innerclass innerclass = new innerclass();
-        innerclass.setDeleteDAO(new DeleteDAO());
-        innerclass.setLoginPassing(new LoginPassing());
-        setupForUsernameAndPasswordCheck(req, session, innerclass);
-
-        if (req.getParameter("log") != null) {
-            //Deleting this current Profile
-            if (req.getParameter("log").equals("Deleting Profile")) {
-                tryingTodeleteWholeProfile(req, resp, innerclass);
-                closingConnection();
-                return;
-                //Deleting this current Article
-            } else if (req.getParameter("log").equals("DeleteArticle")) {
-                System.out.println("deleting article");
-                tryingTodeleteWholeArticle(req, resp, innerclass);
-                closingConnection();
-                return;
-                //Deleting this comment.
-            } else if (req.getParameter("log").equals("DeleteComment")) {
-                System.out.println("converting id of article to int");
-                System.out.println(req.getParameter("commentId"));
-                int commentId = 0;
-                try {
-                    commentId = Integer.parseInt(req.getParameter("commentId"));
-                } catch (NumberFormatException e) {
-                    System.out.println(e);
+            if (req.getParameter("log") != null) {
+                //Deleting this current Profile
+                if (req.getParameter("log").equals("Deleting Profile")) {
+                    tryingTodeleteWholeProfile(req, resp, innerclass);
+                    closingConnection();
+                    return;
+                    //Deleting this current Article
+                } else if (req.getParameter("log").equals("DeleteArticle")) {
+                    System.out.println("deleting article");
+                    tryingTodeleteWholeArticle(req, resp, innerclass);
+                    closingConnection();
+                    return;
+                    //Deleting this comment.
+                } else if (req.getParameter("log").equals("DeleteComment")) {
+                    System.out.println("converting id of article to int");
+                    System.out.println(req.getParameter("commentId"));
+                    int commentId = 0;
+                    try {
+                        commentId = Integer.parseInt(req.getParameter("commentId"));
+                    } catch (NumberFormatException e) {
+                        System.out.println(e);
+                    }
+                    tryingTodeleteAComment(innerclass, commentId);
+                    closingConnection();
+                    return;
+                    //Deleting the Media.
+                } else if (req.getParameter("log").equals("DeleteMedia")) {
+                    tryingToDeleteSpeificMedia(req, resp);
+                    //Deleting youtube.
                 }
-                tryingTodeleteAComment(innerclass, commentId);
-                closingConnection();
-                return;
-                //Deleting the Media.
-            } else if (req.getParameter("log").equals("DeleteMedia")){
-                tryingToDeleteSpeificMedia(req, resp);
-                //Deleting youtube.
-            }
 //            else if (req.getParameter("log").equals("DeleteYoutube")){
 ////                TryingTodeleteAYoutubeVideo(req, resp);
 //            }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            cookieTracker(req, resp);
         }
-        cookieTracker(req,resp);
+        cookieTracker(req, resp);
         return;
     }
 
@@ -167,8 +171,8 @@ public class DeletingServlet extends HttpServlet {
     private void tryingToDeleteSpeificMedia(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
         String filePath = servletContext.getRealPath(req.getParameter("media"));
-        if (new File(filePath).exists()){
-            System.out.println("Deleted? "+ new File(filePath).delete());
+        if (new File(filePath).exists()) {
+            System.out.println("Deleted? " + new File(filePath).delete());
         }
         req.getRequestDispatcher("/ArticleUpload").forward(req, resp);
     }
@@ -177,15 +181,16 @@ public class DeletingServlet extends HttpServlet {
     private void tryingTodeleteWholeArticle(HttpServletRequest req, HttpServletResponse resp, innerclass innerclass) throws ServletException, IOException {
         HttpSession session = req.getSession();
         setupForUsernameAndPasswordCheck(req, session, innerclass);
-       Articles article = (Articles) session.getAttribute("articleContents");
+        Articles article = (Articles) session.getAttribute("articleContents");
         if (article.getUsername().equals(innerclass.sessionUsername)) {
             System.out.println("dropping this article");
             innerclass.deleteDAO.dropSpecificArticlesAll(article.getArticleid());
         }
-        cookieTracker(req,resp);
+        cookieTracker(req, resp);
         return;
     }
-//Deleting the whole profile.
+
+    //Deleting the whole profile.
     private void tryingTodeleteWholeProfile(HttpServletRequest req, HttpServletResponse resp, innerclass innerclass) throws ServletException, IOException {
         if (usernameAndPasswordCheckForDelete(innerclass)) {
             innerclass.deleteDAO.dropAllByUsername(innerclass.username);
@@ -196,20 +201,23 @@ public class DeletingServlet extends HttpServlet {
             return;
         }
     }
-//Deleting a speific comment given by the comment id.
+
+    //Deleting a speific comment given by the comment id.
     private void tryingTodeleteAComment(innerclass innerclass, int commentId) throws ServletException, IOException {
-       innerclass.deleteDAO.dropSpeificComment(commentId);
+        innerclass.deleteDAO.dropSpeificComment(commentId);
         closingConnection();
         System.out.println("trying to delete the comment");
 //        req.getRequestDispatcher("/Articles").forward(req, resp);
         return;
     }
-// Password and username check of deleting profile.
+
+    // Password and username check of deleting profile.
     private boolean usernameAndPasswordCheckForDelete(innerclass innerclass) {
         return innerclass.username.equals(innerclass.sessionUsername) && innerclass.password.equals(innerclass.sessionpassword) && innerclass.loginPassing.selectionUsersNames(innerclass.username, innerclass.password);
     }
-// setup for overall delete function when user is deleting their profile.
-    private void setupForUsernameAndPasswordCheck(HttpServletRequest req, HttpSession session,innerclass innerclass) {
+
+    // setup for overall delete function when user is deleting their profile.
+    private void setupForUsernameAndPasswordCheck(HttpServletRequest req, HttpSession session, innerclass innerclass) {
         innerclass.setUsername(req.getParameter("username"));
 //        username = req.getParameter("username");
         innerclass.setPassword(req.getParameter("password"));

@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class FriendDAO {
     //Selecting list of friends, based the username to populate a list of <friend>
-    public List<Friend> selectionListOfFriends(String username) {
+    public synchronized List<Friend> selectionListOfFriends(String username) throws NullPointerException{
         List<Friend> ListOfFriends = new ArrayList<>();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT friendusername FROM Friendlist WHERE username=?;")) {
@@ -40,11 +40,15 @@ public class FriendDAO {
             System.out.println("Error. Comment not found");
             e.printStackTrace();
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
         return ListOfFriends;
     }
 
     //To check and also add a friend.
-    public boolean AddFriends(String username, String friendusername) {
+    public synchronized boolean AddFriends(String username, String friendusername) throws NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Friendlist (username, friendusername) VALUES(?,?);")) {
                 System.out.println(statement);
@@ -55,11 +59,14 @@ public class FriendDAO {
             System.out.println("Error. Comment not found");
             e.printStackTrace();
             return false;
+        } catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
         }
     }
 
     //Deleting friend from the database.
-    public boolean DeleteFriends(String username, String friendusername) {
+    public synchronized boolean DeleteFriends(String username, String friendusername) throws NullPointerException {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Friendlist WHERE username = ? AND friendusername = ?;")) {
                 System.out.println(statement);
@@ -70,11 +77,14 @@ public class FriendDAO {
             System.out.println("Error. Comment not found");
             e.printStackTrace();
             return false;
+        } catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
         }
     }
 
     //Getting all Usernames into a String list
-    public List<String> GetAllPeopleUsername() {
+    public synchronized List<String> GetAllPeopleUsername() throws NullPointerException{
         List<String> usernamelist = new ArrayList<>();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT Username FROM UsersNames;")) {
@@ -90,13 +100,16 @@ public class FriendDAO {
         } catch (SQLException e) {
             System.out.println("Error. Comment not found");
             e.printStackTrace();
+        } catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
         }
         System.out.println(usernamelist.size());
         return usernamelist;
     }
 
 
-    private void friendUpdateOrDelete(String username, String friendusername, PreparedStatement statement) throws SQLException {
+    private synchronized void friendUpdateOrDelete(String username, String friendusername, PreparedStatement statement) throws SQLException {
         statement.setString(1, username);
         statement.setString(2, friendusername);
         statement.executeUpdate();

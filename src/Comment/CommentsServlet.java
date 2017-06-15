@@ -101,52 +101,58 @@ public class CommentsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         cookieLogOut(req, resp);
-        CommentsDAO  commentsDAO = new CommentsDAO();
+        try {
+            CommentsDAO commentsDAO = new CommentsDAO();
 //        Comments comments = null;
-        HttpSession session = req.getSession();
-        innerclass innerclass= new innerclass();
-        innerclass.setCommentsDAO(commentsDAO);
-        commentSetUp(req, session, innerclass);
-        String commentStatus = req.getParameter("comments");
-        if (commentStatus != null) {
-            //Scenario 1: This is to add a new comment
-            if (commentStatus.equals("Add a Comment")) {
+            HttpSession session = req.getSession();
+            innerclass innerclass = new innerclass();
+            innerclass.setCommentsDAO(commentsDAO);
+            commentSetUp(req, session, innerclass);
+            String commentStatus = req.getParameter("comments");
+            if (commentStatus != null) {
+                //Scenario 1: This is to add a new comment
+                if (commentStatus.equals("Add a Comment")) {
 //                commentsDAO.AddingCommentsToDataBase(articleID, username, comment);
-                innerclass.commentsDAO.AddingCommentsToDataBase(innerclass.articleID,innerclass.username,innerclass.comment);
-                   innerclass.setComments(innerclass.commentsDAO.selectionLastComment(innerclass.articleID,innerclass.username,innerclass.comment));
+                    innerclass.commentsDAO.AddingCommentsToDataBase(innerclass.articleID, innerclass.username, innerclass.comment);
+                    innerclass.setComments(innerclass.commentsDAO.selectionLastComment(innerclass.articleID, innerclass.username, innerclass.comment));
 //                   comments = commentsDAO.selectionLastComment();
-            }
-            //Scenario 2: Editing comments
-            else if (commentStatus.equals("EditComment")) {
-                int commentId = 0;
-                try {
-                    commentId = Integer.parseInt(req.getParameter("commentId"));
-                } catch (NumberFormatException e) {
-                    System.out.println(e);
                 }
-                //updating comments (using DAO)
-                innerclass.commentsDAO.editComments(innerclass.comment, commentId);
-                innerclass.setComments(innerclass.commentsDAO.selectionComment(commentId));
+                //Scenario 2: Editing comments
+                else if (commentStatus.equals("EditComment")) {
+                    int commentId = 0;
+                    try {
+                        commentId = Integer.parseInt(req.getParameter("commentId"));
+                    } catch (NumberFormatException e) {
+                        System.out.println(e);
+                    }
+                    //updating comments (using DAO)
+                    innerclass.commentsDAO.editComments(innerclass.comment, commentId);
+                    innerclass.setComments(innerclass.commentsDAO.selectionComment(commentId));
 //                comments = commentsDAO.selectionComment(commentId);
+                }
+                if (innerclass.comments != null) {
+                    JSONObject jsonObject = getJsonObject(innerclass.comments);
+                    System.out.println(jsonObject);
+                    resp.getWriter().print(jsonObject);
+                    return;
+                }
+                cookieTracker(req, resp);
             }
-            if (innerclass.comments != null) {
-                JSONObject jsonObject = getJsonObject( innerclass.comments);
-                System.out.println(jsonObject);
-                resp.getWriter().print(jsonObject);
-                return;
-            }
-            cookieTracker(req, resp);
-        }
-        //Grabbing list again since it is fully updated.
-        System.out.println("selected article comments   ");
-        innerclass.setListOfComments(innerclass.commentsDAO.selectionComments(innerclass.articleID));
+            //Grabbing list again since it is fully updated.
+            System.out.println("selected article comments   ");
+            innerclass.setListOfComments(innerclass.commentsDAO.selectionComments(innerclass.articleID));
 //        listOfComments = commentsDAO.selectionComments(articleID);
-        if (innerclass.listOfComments != null) {
-            checkingForOwner(innerclass.listOfComments, innerclass);
-            session.setAttribute("commentlist", innerclass.listOfComments);
+            if (innerclass.listOfComments != null) {
+                checkingForOwner(innerclass.listOfComments, innerclass);
+                session.setAttribute("commentlist", innerclass.listOfComments);
+            }
+            System.out.println("dispatcher");
+            req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
         }
-        System.out.println("dispatcher");
-        req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
+        catch (Exception e){
+            e.printStackTrace();
+            cookieTracker(req,resp);
+        }
         return;
     }
 

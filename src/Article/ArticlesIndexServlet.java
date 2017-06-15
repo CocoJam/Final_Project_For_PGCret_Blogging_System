@@ -18,7 +18,7 @@ import static Connection.ConnectionToTheDataBase.cookieTracker;
  * Created by ljam763 on 25/05/2017.
  */
 public class ArticlesIndexServlet extends HttpServlet {
-    public class innerclass{
+    public class innerclass {
         private List<Articles> indexList;
 
         public List<Articles> getIndexList() {
@@ -56,18 +56,23 @@ public class ArticlesIndexServlet extends HttpServlet {
     //Hyperlink from the Profilepage.jsp has parameter called ArticleList and the value of the parameter will return ALL or SELF.
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        cookieLogOut(req,resp);
-        HttpSession session = req.getSession();
-        innerclass innerclass =new innerclass();
-        innerclass.setUsername((String) session.getAttribute("username"));
+        try {
+            cookieLogOut(req, resp);
+            HttpSession session = req.getSession();
+            innerclass innerclass = new innerclass();
+            innerclass.setUsername((String) session.getAttribute("username"));
 //        username = (String) session.getAttribute("username");
-        if (req.getParameter("articleList") != null) {
-            session.setAttribute("ArticleListStatus", req.getParameter("articleList"));
-            innerclass.setArticleListStatus((String) session.getAttribute("ArticleListStatus"));
+            if (req.getParameter("articleList") != null) {
+                session.setAttribute("ArticleListStatus", req.getParameter("articleList"));
+                innerclass.setArticleListStatus((String) session.getAttribute("ArticleListStatus"));
 //            ArticleListStatus = (String) session.getAttribute("ArticleListStatus");
-            switchbetweenAllOrSelf(req, resp, session, innerclass.username, innerclass);
-            req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp); //testing
-            return;
+                switchbetweenAllOrSelf(req, resp, session, innerclass.username, innerclass);
+                req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp); //testing
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            cookieTracker(req, resp);
         }
         cookieTracker(req, resp);
         return;
@@ -76,24 +81,29 @@ public class ArticlesIndexServlet extends HttpServlet {
     //This: (1) determines whether to grab ALL or SELF (2) populate the list to be sent back
     private void switchbetweenAllOrSelf(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String username, innerclass innerclass) {
         System.out.println("Checking self or all");
-        if (innerclass.ArticleListStatus != null) {
-            if (innerclass.ArticleListStatus.equals("self")) {
-                System.out.println("self");
-                session.setAttribute("articleList", "self");
-                innerclass.setIndexList( new ArticleListObjectDAO().selectionArticlesList(username));
+        try {
+            if (innerclass.ArticleListStatus != null) {
+                if (innerclass.ArticleListStatus.equals("self")) {
+                    System.out.println("self");
+                    session.setAttribute("articleList", "self");
+                    innerclass.setIndexList(new ArticleListObjectDAO().selectionArticlesList(username));
 //                indexList = new ArticleListObjectDAO().selectionArticlesList(username);
-                checkingForOwnership(username, innerclass.indexList);
-                session.setAttribute("ArticleIndex", innerclass.indexList);
-            } else if (innerclass.ArticleListStatus.equals("all")) {
-                session.setAttribute("articleList", "all");
-                innerclass.setIndexList(new ArticleListObjectDAO().selectionAllArticlesList());
+                    checkingForOwnership(username, innerclass.indexList);
+                    session.setAttribute("ArticleIndex", innerclass.indexList);
+                } else if (innerclass.ArticleListStatus.equals("all")) {
+                    session.setAttribute("articleList", "all");
+                    innerclass.setIndexList(new ArticleListObjectDAO().selectionAllArticlesList());
 //                indexList = new ArticleListObjectDAO().selectionAllArticlesList();
-                checkingForOwnership(username, innerclass.indexList);
-                session.setAttribute("ArticleIndex",  innerclass.indexList);
+                    checkingForOwnership(username, innerclass.indexList);
+                    session.setAttribute("ArticleIndex", innerclass.indexList);
+                }
+            } else {
+                cookieTracker(req, resp);
             }
-        } else {
+        } catch (Exception e){
             cookieTracker(req, resp);
         }
+
     }
 
     //Using session username to check if the accessor is the owner, set Article .setOwner
@@ -115,7 +125,7 @@ public class ArticlesIndexServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        cookieLogOut(req,resp);
+        cookieLogOut(req, resp);
         doGet(req, resp);
     }
 }

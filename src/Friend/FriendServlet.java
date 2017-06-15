@@ -18,6 +18,7 @@ public class FriendServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         cookieLogOut(req,resp);
+        try{
         HttpSession session = req.getSession();
         FriendDAO friendDAO = new FriendDAO();
         System.out.println("posted");
@@ -42,7 +43,10 @@ public class FriendServlet extends HttpServlet {
         List<Friend> friendList =friendDAO.selectionListOfFriends(username);
         session.setAttribute("firendlist", friendList);
         System.out.println(friendList);
-        req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+        req.getRequestDispatcher("/ProfilePage").forward(req, resp);}
+        catch (Exception e){
+            cookieTracker(req,resp);
+        }
         return;
     }
 }
