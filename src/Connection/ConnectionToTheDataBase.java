@@ -88,6 +88,7 @@ public class ConnectionToTheDataBase {
             if (cookie.getName().equals("pagemark")) {
                 try {
                     req.getRequestDispatcher(cookie.getValue()).forward(req, resp);
+                    return;
                 } catch (ServletException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

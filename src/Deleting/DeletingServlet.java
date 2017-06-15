@@ -142,10 +142,11 @@ public class DeletingServlet extends HttpServlet {
                     closingConnection();
                     return;
                     //Deleting the Media.
-                } else if (req.getParameter("log").equals("DeleteMedia")) {
-                    tryingToDeleteSpeificMedia(req, resp);
-                    //Deleting youtube.
                 }
+//                else if (req.getParameter("log").equals("DeleteMedia")) {
+//                    tryingToDeleteSpeificMedia(req, resp);
+//                    //Deleting youtube.
+//                }
 //            else if (req.getParameter("log").equals("DeleteYoutube")){
 ////                TryingTodeleteAYoutubeVideo(req, resp);
 //            }
@@ -185,6 +186,8 @@ public class DeletingServlet extends HttpServlet {
         if (article.getUsername().equals(innerclass.sessionUsername)) {
             System.out.println("dropping this article");
             innerclass.deleteDAO.dropSpecificArticlesAll(article.getArticleid());
+            req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+            return;
         }
         cookieTracker(req, resp);
         return;
