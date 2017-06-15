@@ -31,6 +31,12 @@
 
     <%@include file="../../component/Header(styling Template).html" %>
 
+    <style>
+        .modal-backdrop {
+            z-index: -1;
+        }
+    </style>
+
 </head>
 <body class="signup-page">
 
@@ -274,8 +280,7 @@
                                         if (defaultPhoto.equals((String)pageContext.getAttribute("photoname"))) {
                                             checkedOrNot = "checked";
                                         }
-                                        out.println("<div class=\"radio\"> <label> <input type=\"radio\" name=\"profilePicture\" value=\"" + defaultPhoto + "\"" + checkedOrNot + "> </label> <img src=\"defaultImg/" + defaultPhoto + "\" height='20%'> </div> <br>");
-                                        out.println(" <input type=\"radio\" name=\"profilePicture\" value=\"" + defaultPhoto + "\"" + checkedOrNot + "> <img src=\"../../assets/img/defaultImg/" + defaultPhoto + "\" height='20%'><br>");
+                                        out.println("<div class=\"radio\"> <label> <input type=\"radio\" name=\"profilePicture\" value=\"" + defaultPhoto + "\"" + checkedOrNot + "> </label> <img src=\"../../assets/img/defaultImg/" + defaultPhoto + "\" height='20%'> </div> <br>");
                                     }
                                     if (username != null) {
 
@@ -360,7 +365,7 @@
                                             <%--<h4 class="modal-title">Modal Header</h4>--%>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="card card-signup" id="loginCard">
+                                            <div class="card card-signup" id="loginCard" style="margin: 0px">
 
                                                 <!-- FORM ELEMENT START -->
                                                 <form class="form" method="post" action="/Deleting" id="loginForm">
