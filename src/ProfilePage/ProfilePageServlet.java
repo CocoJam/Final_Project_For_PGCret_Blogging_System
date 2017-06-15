@@ -77,6 +77,7 @@ public class ProfilePageServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             cookieTracker(req, resp);
+            return;
         }
     }
 
@@ -87,6 +88,7 @@ public class ProfilePageServlet extends HttpServlet {
             innerclass innerclass = new innerclass();
             innerclass.setProfilePageDAO(new ProfilePageDAO());
             if (req.getParameter("accessFriend") == null) {
+                System.out.println("No accessFriend");
                 doPost(req, resp);
             } else {
                 HttpSession session = req.getSession();
@@ -112,6 +114,7 @@ public class ProfilePageServlet extends HttpServlet {
         catch (Exception e){
             e.printStackTrace();
             cookieTracker(req,resp);
+            return;
         }
     }
 }

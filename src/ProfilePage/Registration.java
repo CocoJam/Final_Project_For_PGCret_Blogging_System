@@ -38,7 +38,6 @@ public class Registration extends HttpServlet {
     //do Get to serve to Registration page jsp for update profile info
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
             HttpSession session = req.getSession();
             //The following if and else does two different actions, depends on the different GET calls, determined by the log parameter.
             //This is a call from the Profile page, "changeuserinfo" button. This is to redirect user to update the userInfo
@@ -59,14 +58,11 @@ public class Registration extends HttpServlet {
                     resp.getWriter().print(asdna);
                     return;
                 }
-            } else {
-                cookieTracker(req, resp);
-                return;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            cookieTracker(req, resp);
-        }
+        System.out.println("Change user");
+        cookieTracker(req, resp);
+        return;
+
     }
 
     //The doPOST method receives information from the form within the registration page via the POST method.
