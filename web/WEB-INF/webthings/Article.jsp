@@ -193,7 +193,7 @@
 
                                                 <!-- Display username and time posted -->
                                                 <p><strong>
-                                                    <small>Posted by:</small>
+                                                    <small>Posted by: </small>
                                                 </strong>
                                                     <small id="${content.commentId}username"
                                                            class="username">
@@ -219,7 +219,8 @@
                                                 <c:if test="${content.owner || articleContents.owner}">
                                                 <button data-toggle="collapse"
                                                         data-target="#comment-collapsible-${content.commentId}"
-                                                        class="btn btn-round btn-info btn-sm" id="comment-collapsible-toggle" style="margin-top: -1em;">Edit/Delete Comment
+                                                        class="btn btn-round btn-white btn-sm" id="comment-collapsible-toggle" style="margin-top: -1em;">
+                                                    Edit/Delete
                                                 </button>
 
                                                 <!-- Container for the show/hide -->
@@ -238,17 +239,17 @@
                                                         <!-- Edit comment - Text input area -->
 
                                                         <!-- Edit and delete comment buttons -->
-                                                        <button class="btn btn-round btn-primary btn-sm"
+                                                        <button class="edit btn btn-round btn-primary btn-sm"
                                                                 id="${content.commentId}edit"
                                                                 onclick="editComment($(this))"><i
-                                                                class="material-icons">create</i> Edit
+                                                                class="material-icons">create</i><span class="hidden-xs"> Edit</span>
                                                         </button>
                                                     </c:if>
                                                     <c:if test="${content.owner || articleContents.owner}">
-                                                        <button class="btn btn-round btn-danger btn-sm"
+                                                        <button class="delete btn btn-round btn-danger btn-sm"
                                                                 id="${content.commentId}delete"
                                                                 onclick="deleteComment($(this))"><i
-                                                                class="material-icons">delete_forever</i> Delete
+                                                                class="material-icons">delete_forever</i><span class="hidden-xs"> Delete</span>
                                                         </button>
                                                     </c:if>
                                                     <!-- Edit and Delete Commment buttons end -->
@@ -302,43 +303,81 @@
                 var div = document.createElement("div");
                 div.id = Data.CommentId;
 
-                /* Content */
-                var p1 = document.createElement("p");
-                p1.innerHTML = Data.Username;
+                /* Content */ /* p1 = username, p2 = content, p3 = time */
+                var p1 = document.createElement("span");
+                p1.innerHTML = "<small><a href='ProfilePage?accessFriend=" + Data.Username + "'>" + Data.Username + "</a></small>";
                 p1.id = Data.CommentId + "username";
                 p1.className = "username";
+
+                var p3 = document.createElement("span");
+                p3.innerHTML = "<small> on " + Data.CommentedTime + " </small>";
+                p3.id = Data.CommentId + "commentedTime";
+                p3.className = "commentedTime";
+
+                var commentinfocontainer = document.createElement("p");
+                var commentinfo = document.createElement("span");
+                commentinfo.innerHTML = "<strong><small>Posted by: </small></strong>";
+                commentinfocontainer.append(commentinfo);
+                commentinfocontainer.append(p1);
+                commentinfocontainer.append(p3);
+
                 var p2 = document.createElement("p");
                 p2.innerHTML = Data.Content;
                 p2.id = Data.CommentId + "content";
                 p2.className = "content";
-                var p3 = document.createElement("p");
-                p3.innerHTML = Data.CommentedTime;
-                p3.id = Data.CommentId + "commentedTime";
-                p3.className = "commentedTime";
+                var commentcontent = document.createElement("blockquote");
 
-                /* Buttons & Input */
-                var deletebutton = document.createElement("button");
-                deletebutton.id = Data.CommentId + "delete";
-                deletebutton.className = "delete btn btn-round btn-info btn-sm";
-                deletebutton.innerHTML = "<i class='material-icons'>delete_forever</i> Delete";
-                deletebutton.setAttribute("onclick", "deleteComment($(this))");
+                /* Collapsible */
+                var collapsebutton = document.createElement("button");
+                collapsebutton.innerHTML = "Edit/Delete";
+                collapsebutton.setAttribute("data-toggle","collapse");
+                collapsebutton.setAttribute("data-target","#comment-collapsible-" + Data.CommentId);
+                collapsebutton.className = "btn btn-round btn-white btn-sm";
+                collapsebutton.id = "comment-collapsible-toggle";
+                collapsebutton.style.marginTop = "-1em";
+
+                /* Collapsible Div */
+                var collapsediv = document.createElement("div");
+                collapsediv.id = "comment-collapsible-" + Data.CommentId;
+                collapsediv.className = "collapse";
+                collapsediv.style.marginBottom = "1em";
+
+                /* Edit Input */
+                var editinputdiv = document.createElement("div");
+                editinputdiv.className = "form-group label-floating is-empty";
+
+                var editinputdivlabel = document.createElement("label");
+                editinputdivlabel.className = "control-label";
+                editinputdivlabel.innerHTML = "Edit comment";
+
                 var editinput = document.createElement("input");
                 editinput.type = "text";
                 editinput.id = Data.CommentId + "text";
-                editinput.className = "change";
+                editinput.className = "change form-control";
+
+                /* Edit & Delete Buttons */
                 var editbutton = document.createElement("button");
                 editbutton.id = Data.CommentId + "edit";
-                editbutton.className = "edit btn btn-round btn-info btn-sm";
-                editbutton.innerHTML = "<i class='material-icons'>create</i> Edit";
+                editbutton.className = "edit btn btn-round btn-primary btn-sm";
+                editbutton.innerHTML = "<i class='material-icons'>create</i><span class='hidden-xs'> Edit</span>";
                 editbutton.setAttribute("onclick", "editComment($(this))");
+                var deletebutton = document.createElement("button");
+                deletebutton.id = Data.CommentId + "delete";
+                deletebutton.className = "delete btn btn-round btn-danger btn-sm";
+                deletebutton.innerHTML = "<i class='material-icons'>delete_forever</i><span class='hidden-xs'> Delete</span>";
+                deletebutton.setAttribute("onclick", "deleteComment($(this))");
 
                 /* Append elements to div */
-                div.append(p1);
-                div.append(p2);
-                div.append(p3);
-                div.append(editinput);
-                div.append(editbutton);
-                div.append(deletebutton);
+                div.append(commentinfocontainer);
+                commentcontent.append(p2);
+                div.append(commentcontent);
+                div.append(collapsebutton);
+                div.append(collapsediv);
+                editinputdiv.append(editinputdivlabel);
+                editinputdiv.append(editinput);
+                collapsediv.append(editinputdiv);
+                collapsediv.append(editbutton);
+                collapsediv.append(deletebutton);
                 contain.append(div);
             }
         });
