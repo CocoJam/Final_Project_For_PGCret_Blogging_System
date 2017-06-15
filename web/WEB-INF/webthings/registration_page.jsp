@@ -16,7 +16,18 @@
 
 <html>
 <head>
-    <title>Login Page</title>
+    <title>
+
+        <c:choose>
+            <c:when test="${log}">
+                Edit Profile
+            </c:when>
+            <c:otherwise>
+                Register
+            </c:otherwise>
+        </c:choose>
+
+    </title>
 
     <%@include file="../../component/Header(styling Template).html" %>
 
@@ -94,7 +105,7 @@
 
                             <c:choose>
                                 <c:when test="${log}">
-                                    <p class="text-divider">Please change your details below:</p>
+                                    <p class="text-divider">Please update your details below</p>
                                 </c:when>
                                 <c:otherwise>
                                     <p class="text-divider">Please enter your details to register</p>
@@ -121,7 +132,7 @@
 
                                 <%--The following paragraph is to click to check when the username is available TODO STYLING is required!! (consider taking this outside of <p> and into styled <div>--%>
                                 <p style="text-align: center">
-                                    Username availability status: <span id="reponseToUsername"></span>
+                                    Username Availability: <span id="reponseToUsername"></span>
                                 </p>
 
                                 <%--The following is the script for username availability feature above--%>
@@ -245,7 +256,7 @@
 											<i class="material-icons">chat</i>
 										</span>
                                     <textarea form="form" id="Introduction" name="Introduction"
-                                              placeholder="Let your classmates know a little bit about yourself"
+                                              placeholder="Let your classmates know a little bit about yourself!"
                                               class="form-control">${profileInfo.introduction}</textarea>
                                 </div>
 
@@ -256,13 +267,14 @@
                                 <c:set var="photoname" value="${profileInfo.profilepic}"/>
                                 <%
                                     String checkedOrNot = "";
-                                    //                                        Printing default photos
-                                    for (int i = 1; i <= 3; i++){
+                                    // Printing default photos
+                                    for (int i = 1; i <= 3; i++) {
                                         checkedOrNot = "";
                                         String defaultPhoto = "defaultslashn" + i + ".png";
                                         if (defaultPhoto.equals((String)pageContext.getAttribute("photoname"))) {
                                             checkedOrNot = "checked";
                                         }
+                                        out.println("<div class=\"radio\"> <label> <input type=\"radio\" name=\"profilePicture\" value=\"" + defaultPhoto + "\"" + checkedOrNot + "> </label> <img src=\"defaultImg/" + defaultPhoto + "\" height='20%'> </div> <br>");
                                         out.println(" <input type=\"radio\" name=\"profilePicture\" value=\"" + defaultPhoto + "\"" + checkedOrNot + "> <img src=\"../../assets/img/defaultImg/" + defaultPhoto + "\" height='20%'><br>");
                                     }
                                     if (username != null) {
@@ -270,13 +282,14 @@
 //                                        Printing user photos
                                         for (String listofphoto : listofphotos) {
                                             System.out.println(listofphoto);
-                                            System.out.println((String)pageContext.getAttribute("photoname"));
+                                            System.out.println((String) pageContext.getAttribute("photoname"));
 
                                             if (listofphoto.equals((String) pageContext.getAttribute("photoname"))) {
                                                 checkedOrNot = "checked";
                                             }
 
-                                            out.println(" <input type=\"radio\" name=\"profilePicture\" value=\"" + listofphoto + "\"" + checkedOrNot + "> <img  src=\"Upload-photos/" + username + "/photo/" + listofphoto + "\" height='20%'><br>");
+                                             out.println("<div class=\"radio\"> <label> <input type=\"radio\" name=\"profilePicture\" value=\"" + listofphoto + "\"" + checkedOrNot + "> </label> <img src=\"Upload-photos/" + username + "/photo/" + listofphoto + "\" height='20%'> </div> <br>");
+
 
                                         }
                                     }
@@ -328,9 +341,83 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <input type="submit" name="Upload" value="Upload Image"
                                            class="btn btn-block btn-success btn-lg"/>
-                                </div>
+                                </div>&nbsp;
                             </div>
                         </form>
+
+                        <!-- Delete profile start -->
+
+                        <div class="container">
+                            <!-- Trigger the modal with a button -->
+                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Profile Delete</button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <%--<h4 class="modal-title">Modal Header</h4>--%>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="card card-signup" id="loginCard">
+
+                                                <!-- FORM ELEMENT START -->
+                                                <form class="form" method="post" action="/Deleting" id="loginForm">
+
+                                                    <!-- Form heading -->
+                                                    <div class="header header-info text-center">
+                                                        <h4>Leaving to Slash N</h4>
+                                                    </div>
+
+                                                    <!-- Form subtext -->
+                                                    <p class="text-divider">Please Fill in the Following Delete</p>
+                                                    <div class="content">
+
+                                                        <!-- TEXT BOXES -->
+
+                                                        <!-- Text input box start -->
+                                                        <div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">account_circle</i>
+										</span>
+                                                            <input name="username" type="text" class="form-control"
+                                                                   placeholder="Username">
+                                                        </div>
+                                                        <!-- Text input box end -->
+
+                                                        <!-- Text input box start -->
+                                                        <div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">lock_outline</i>
+										</span>
+                                                            <input name="password" type="password" placeholder="Password"
+                                                                   class="form-control"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <%--This button is to submit the above form to sign in--%>
+                                                    <div class="footer text-center" class="form">
+                                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                                            <input type="submit" value="Deleting Profile" name="log"
+                                                                   class="btn btn-block btn-success btn-lg clickOnce">
+                                                        </div>
+
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Delete profile end -->
+
                         <% } %>
 
                         <%--Short script which ensures that no empty space is entered--%>
@@ -391,12 +478,12 @@
                                         success: function (msg) {
                                             console.log(msg);
                                             if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
-                                                var ratioButton = "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos\\${username}\\photo\\", "") + "\">";
-                                                var image = "<img src=\"" + msg + "\"height=\"20%\" class='center-block'>";
+                                                var ratioButton = "<div class=\"radio\">  <label>" + "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos\\${username}\\photo\\", "") + "\">  <label>" + "</div>";
+                                                var image = "<img src=\"" + msg + "\"height=\"20%\">";
                                                 var breakline = "<br>";
                                                 $(".content").eq(0).append(ratioButton);
                                                 $(".content").eq(0).append(image);
-                                                $(".content").eq(0).append("</div>");
+                                                $(".content").eq(0).append(breakline);
                                             }
                                             <!-- if the media is successfully uploaded but it is not a picture or photo in the right formate, that the alert will pop and show -->
                                             else {

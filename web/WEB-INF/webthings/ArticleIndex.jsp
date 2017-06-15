@@ -167,7 +167,7 @@
                                         </c:when>
 
                                         <c:otherwise>
-                                            <h1>ALL ARTICLES</h1>
+                                            <h1>All Articles</h1>
                                         </c:otherwise>
                                     </c:choose>
 
@@ -176,10 +176,11 @@
                             </div>
                         </div>
 
-                        <!-- Article Display options start -->
 
                         <div class="row">
-                            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col xs-offset-1">
+
+                            <!-- Article Display options start -->
+                            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col xs-offset-1" style="z-index: 5000;">
                                 <button id="listorcard" class="btn btn-round btn-info"><i class="material-icons">view_list</i>
                                     List View
                                 </button>
@@ -206,14 +207,14 @@
                                 <%--<span class="material-input"></span></div>--%>
                                 <%--</div>--%>
 
-                                <button id="seach-toggle" class="btn btn-round btn-primary" data-toggle="collapse"
+                                <button id="search-toggle" class="btn btn-round btn-primary" data-toggle="collapse"
                                         data-target="#search-collapsible">
                                     <i class="material-icons">search</i> Search
                                 </button>
 
                                 <div id="search-collapsible" class="toggle">
-                                <input placeholder="Search Articles"
-                                       id="searchBar" style="width:150px;">
+                                <input placeholder="Search Articles" class="form-group-sm form-control input-sm"
+                                       id="searchBar" style="width:150px; margin-top: -1.6em;">
                                 </div>
 
                             </div>
@@ -265,7 +266,6 @@
                                                         <%--<c:if test="${articleList.equals('all')}">--%>
 
                                                         <%--</c:if>--%>
-                                                    <p class="articlename" hidden>${index.articlename}</p>
                                                     <c:choose>
                                                         <c:when test="${not empty index.firstimage}">
                                                             <img class="card-img-top" src="${index.firstimage}"
@@ -284,16 +284,16 @@
                                                     <div class="card-text"
                                                          style="overflow: hidden; width: 100%; height: 30%">${index.content}
                                                         <div class="Articlecategory"
-                                                             style="overflow: hidden; width: 80%; height: 30%; align-content: center;">${index.category}</div>
+                                                             style="overflow: hidden; width: 80%; height: 30%; align-content: center; visibility: hidden;">${index.category}</div>
                                                     </div>
                                                         <%--<p class="category" style="overflow: hidden; width: 80%; height: 10%">${index.category}</p>--%>
 
                                                     <a href="/Articles?acticleId=${index.articleid}"
-                                                       title="View larger image"
+                                                       title="Preview"
                                                        class="ui-icon ui-icon-zoomin articleid">View larger</a>
 
                                                     <a href="link/to/trash/script/when/we/have/js/off"
-                                                       title="Delete this image" class="ui-icon ui-icon-plusthick">Delete
+                                                       title="Add to your Saved Articles" class="ui-icon ui-icon-plusthick">Delete
                                                         image</a>
 
                                                     <p hidden class="date">${index.datecreated}</p>
@@ -339,17 +339,19 @@
                                             </c:forEach>
                                         </ul>
                                         <div id="save" class="ui-widget-content ui-state-default">
-                                            <h4 class="ui-widget-header"><i class="material-icons">bookmark</i> Saved
-                                                Articles</h4>
+                                            <h4 class="ui-widget-header"><i class="material-icons">bookmark</i> Saved Articles</h4>
                                         </div>
+
+                                        <!-- Empty div for adding some space at the bottom of the container -->
+                                        <div class="row" style="margin-bottom:1em;"></div>
+
                                     </div>
                                 </div>
 
                                 <!-- The card based article index end here-->
 
                                 <!-- The list based article index start here-->
-                                <div id="listarticle"
-                                     class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+                                <div id="listarticle" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
                                     <table class="table table-striped table-hover table-responsive">
                                         <tr>
                                             <th>
@@ -517,7 +519,7 @@
 
 
         // Image deletion function
-        var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>";
+        var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Remove from Saved Articles' class='ui-icon ui-icon-refresh'>Remove from Saved Articles</a>";
 
         function deleteImage($item) {
             $item.fadeOut(function () {
@@ -541,7 +543,7 @@
         }
 
         // Image recycle function
-        var trash_icon = "<a href='link/to/trash/script/when/we/have/js/off' title='Delete this image' class='ui-icon ui-icon-plusthick'>Delete image</a>";
+        var trash_icon = "<a href='link/to/trash/script/when/we/have/js/off' title='Add to Saved Articles' class='ui-icon ui-icon-plusthick'>Add to Saved Articles</a>";
 
         function recycleImage($item) {
             $item.fadeOut(function () {
@@ -586,14 +588,22 @@
             var username = $link.siblings(".username").html();
             var usernameAddress = $link.siblings(".username").attr("href");
             var date = $link.siblings(".date").html();
+            var category = $link.siblings(".card-text").find(".Articlecategory").html();
 
             var img = $("<p style='text-align:center'></p>");
             "ProfilePage?accessFriend=111"
             if (image != undefined) {
-                img.html("<a href=\"" + hyper + "\">" + "<h1>" + title + "<h1>" + "</a>" + "<a href=\"" + usernameAddress + "\">" + username + "</a>" + "<h3><strong>Written on:</strong>" + date + "</h3>" + "<img src=\'" + image + "\'width=\"50%\">" + "<p>" + content + "</p>");
+                img.html(
+                    "<h2><a href=\"" + hyper + "\">" + title + "</a></h2>" +
+                    "<h3><strong>Written by: </strong><a href=\"" + usernameAddress + "\">" + username + "</a></h3>" +
+                    "<h5><strong>Written on: </strong>" + date + "</h5>" +
+                    "<h5><strong>Category: </strong>" + category + "</h5>" +
+                    "<img src=\'" + image + "\' width=\"50%\">" +
+                    "<p>" + content.substring(0,300) + "</p>");
             }
             else {
-                img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<p>" + content + "</p>");
+//                img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<p>" + content + "</p>");
+//                img.html("DEBUG");
             }
             var linking = $("<a href=\"" + hyper + "\">");
             var windowWidth = $(window).width() * 0.5;
@@ -615,10 +625,12 @@
                 $target = $(event.target);
             var hyper = $target.siblings("a").attr('href');
             var title = $target.siblings(".articlename").text();
+            console.log(hyper);
+            console.log(title);
 
             if ($target.is("a.ui-icon-plusthick")) {
                 deleteImage($item);
-                $.post("/ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
+                $.post("/ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title+ "</a>"})
             } else if ($target.is("a.ui-icon-zoomin")) {
                 viewLargerImage($target);
             } else if ($target.is("a.ui-icon-refresh")) {
