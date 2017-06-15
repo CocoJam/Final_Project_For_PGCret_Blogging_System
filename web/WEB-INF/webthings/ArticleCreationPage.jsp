@@ -157,8 +157,8 @@
 
                                 </div>
 
-                                <input type="hidden" name="ArticleContent">
-                                <input type="hidden" name="articleidnumber" value="${articleContents.articleid}">
+                                <input type="hidden" name="ArticleContent"/>
+                                    <input style="visibility: hidden" type="text" name="articleidnumber" value="${articleContents.articleid}"/ >
                                 <% if (session.getAttribute("articleContents") != null) {
                                     System.out.println("EDIT");
                                     out.println("<input type=\"submit\" name=\"add\" value=\"Editted\" style='visibility: hidden' id='submitButton'>");
@@ -211,9 +211,10 @@
                                           enctype="multipart/form-data">
                                         <input type="file" name="file" size="50" class="btn btn-white"/>
                                         <%--<input type="submit" class="btn btn-flat btn-primary" name="Upload"--%>
-                                               <%--value="Upload"/>--%>
+                                        <%--value="Upload"/>--%>
                                         <button type="submit" class="btn btn-flat btn-primary" name="Upload"
-                                                value="Upload"><i class="material-icons">file_upload</i> Upload</button>
+                                                value="Upload"><i class="material-icons">file_upload</i> Upload
+                                        </button>
                                     </form>
                                 </div>
 
@@ -225,9 +226,11 @@
                                                placeholder="Paste your Youtube link and click button below to add"
                                                style="margin-top:-1em;">
                                         <%--<input type="submit" name="youtubeVideoSubmition" value="youtube"--%>
-                                               <%--class="btn btn-flat btn-danger">--%>
+                                        <%--class="btn btn-flat btn-danger">--%>
                                         <button type="submit" name="youtubeVideoSubmition" value="youtube"
-                                                class="btn btn-flat btn-danger"><i class="material-icons">video_library</i> Embed</button>
+                                                class="btn btn-flat btn-danger"><i
+                                                class="material-icons">video_library</i> Embed
+                                        </button>
                                     </form>
                                 </div>
                             </div>

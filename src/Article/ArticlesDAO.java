@@ -5,7 +5,9 @@ import Connection.*;
 import java.sql.*;
 import java.util.Date;
 import java.util.Locale;
-
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import static Connection.ConnectionToTheDataBase.closingConnection;
 
 /**
@@ -69,11 +71,6 @@ public class ArticlesDAO {
             System.out.println("Error. Article not found.");
             e.printStackTrace();
             throw new SQLException();
-        }
-        catch (NullPointerException e) {
-            System.out.println("Error. Article not found.");
-            e.printStackTrace();
-            throw new NullPointerException();
         }
         return null;
     }
@@ -183,11 +180,6 @@ public class ArticlesDAO {
             System.out.println("Error Like.");
             e.printStackTrace();
             return 0;
-        }
-        catch (NullPointerException e) {
-            System.out.println("Error. Article not found.");
-            e.printStackTrace();
-            throw new NullPointerException();
         }
         return 0;
     }

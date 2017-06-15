@@ -92,6 +92,7 @@ public class ArticleListObjectDAO extends ArticlesDAO {
         DateCreated = resultSet.getDate(4);
         UsernameID = resultSet.getString(5);
         ArticleContent = resultSet.getString(6);
+        System.out.println(ArticleContent+" HERE!!!!");
     }
 
     private synchronized void articleListObjectSetStatments(Articles articleListObject) {

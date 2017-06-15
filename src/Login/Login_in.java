@@ -180,9 +180,11 @@ public class Login_in extends HttpServlet {
                 } else {
                     //Anything else bounce!
                     cookieTracker(req, resp);
+                    return;
                 }
             } catch (Exception e) {
                 cookieTracker(req, resp);
+                return;
             }
         }
     }

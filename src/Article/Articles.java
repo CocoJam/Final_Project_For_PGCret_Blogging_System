@@ -1,5 +1,9 @@
 package Article;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -113,13 +117,12 @@ public class Articles {
     }
     //This method is using regex to find the first image within the article, which ignores the other.
     public String FirstImg (String thing){
-        String ptr= "img alt=\"\" src\\s*=\\s*([\"'])?([^\"']*)";
-        Pattern p = Pattern.compile(ptr);
-        Matcher m = p.matcher(thing);
-        if (m.find()) {
-            return m.group(2);
-        }
-        return null;
+        Document doc = Jsoup.parse(thing);
+        Element img = doc.select("img").first();
+        String src = null;
+        if (img != null){
+        src = img.attr("src");}
+        return src;
     }
-//    .replaceAll("<(/?script[^>]*)>", "")
+
 }
