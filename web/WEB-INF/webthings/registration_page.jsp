@@ -16,7 +16,18 @@
 
 <html>
 <head>
-    <title>Login Page</title>
+    <title>
+
+        <c:choose>
+            <c:when test="${log}">
+                Edit Profile
+            </c:when>
+            <c:otherwise>
+                Register
+            </c:otherwise>
+        </c:choose>
+
+    </title>
 
     <%@include file="../../component/Header(styling Template).html" %>
 
@@ -100,7 +111,7 @@
 
                             <c:choose>
                                 <c:when test="${log}">
-                                    <p class="text-divider">Please change your details below:</p>
+                                    <p class="text-divider">Please update your details below</p>
                                 </c:when>
                                 <c:otherwise>
                                     <p class="text-divider">Please enter your details to register</p>
@@ -127,7 +138,7 @@
 
                                 <%--The following paragraph is to click to check when the username is available TODO STYLING is required!! (consider taking this outside of <p> and into styled <div>--%>
                                 <p style="text-align: center">
-                                    Username availability status: <span id="reponseToUsername"></span>
+                                    Username Availability: <span id="reponseToUsername"></span>
                                 </p>
 
                                 <%--The following is the script for username availability feature above--%>
@@ -251,7 +262,7 @@
 											<i class="material-icons">chat</i>
 										</span>
                                     <textarea form="form" id="Introduction" name="Introduction"
-                                              placeholder="Let your classmates know a little bit about yourself"
+                                              placeholder="Let your classmates know a little bit about yourself!"
                                               class="form-control">${profileInfo.introduction}</textarea>
                                 </div>
 
@@ -262,14 +273,14 @@
                                 <c:set var="photoname" value="${profileInfo.profilepic}"/>
                                 <%
                                     String checkedOrNot = "";
-                                    //                                        Printing default photos
+                                    // Printing default photos
                                     for (int i = 1; i <= 3; i++) {
                                         checkedOrNot = "";
                                         String defaultPhoto = "default" + i + ".png";
                                         if (defaultPhoto.equals((String)pageContext.getAttribute("photoname"))) {
                                             checkedOrNot = "checked";
                                         }
-                                        out.println(" <input type=\"radio\" name=\"profilePicture\" value=\"" + defaultPhoto + "\"" + checkedOrNot + "> <img src=\"defaultImg/" + defaultPhoto + "\" height='20%'><br>");
+                                        out.println("<div class=\"radio\"> <label> <input type=\"radio\" name=\"profilePicture\" value=\"" + defaultPhoto + "\"" + checkedOrNot + "> </label> <img src=\"defaultImg/" + defaultPhoto + "\" height='20%'> </div> <br>");
                                     }
                                     if (username != null) {
 
@@ -282,7 +293,8 @@
                                                 checkedOrNot = "checked";
                                             }
 
-                                            out.println(" <input type=\"radio\" name=\"profilePicture\" value=\"" + listofphoto + "\"" + checkedOrNot + "> <img  src=\"Upload-photos/" + username + "/photo/" + listofphoto + "\" height='20%'><br>");
+                                             out.println("<div class=\"radio\"> <label> <input type=\"radio\" name=\"profilePicture\" value=\"" + listofphoto + "\"" + checkedOrNot + "> </label> <img src=\"Upload-photos/" + username + "/photo/" + listofphoto + "\" height='20%'> </div> <br>");
+
 
                                         }
                                     }
@@ -471,7 +483,7 @@
                                         success: function (msg) {
                                             console.log(msg);
                                             if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
-                                                var ratioButton = "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos\\${username}\\photo\\", "") + "\">";
+                                                var ratioButton = "<div class=\"radio\">  <label>" + "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos\\${username}\\photo\\", "") + "\">  <label>" + "</div>";
                                                 var image = "<img src=\"" + msg + "\"height=\"20%\">";
                                                 var breakline = "<br>";
                                                 $(".content").eq(0).append(ratioButton);
