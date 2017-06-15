@@ -119,10 +119,58 @@ public class DeleteDAO {
         }
     }
 
+    public void dropLikes(int ArticleId) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()){
+            PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM likes WHERE ArticlesID = ?;"
+            );
+            statement.setInt(1, ArticleId);
+            System.out.println("deleting likes");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void dropLikes(String usernames) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()){
+            PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM likes WHERE username = ?;"
+            );
+            statement.setString(1, usernames);
+            System.out.println("deleting likes");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean DeleteFriends(String username, String type) {
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+            try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Friendlist WHERE ? = ? ")) {
+                statement.setString(1,  type);
+                statement.setString(2, username);
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error. Friend not found");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public void dropAllByUsername(String username) {
+        DeleteFriends("username", username);
+        DeleteFriends("friendusername", username);
+        dropLikes(username);
         dropComments(username);
         dropArticles(username);
         dropUserInformation(username);
 
+    }
+    public void dropSpecificArticlesAll(int ArticleId){
+        dropLikes(ArticleId);
+        dropArticleAllComments(ArticleId);
+        dropSpeificArticle(ArticleId);
     }
 }

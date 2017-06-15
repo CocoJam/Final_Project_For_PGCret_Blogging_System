@@ -3581,7 +3581,7 @@ h2.title {
   left: 0;
   top: 0;
   content: "";
-  background-color: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.4) linear-gradient(45deg, rgba(0, 0, 0, 0.6) 0%, rgba(31, 31, 31, 0.4) 100%); /* CUSTOM */
 }
 .header-filter .container {
   z-index: 2;

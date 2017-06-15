@@ -42,8 +42,8 @@ public class FriendServlet extends HttpServlet {
         System.out.println("Friends profile pic added");
 
         session.setAttribute("firendlist", friendList);
-        System.out.println(friendList);
-        req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+//        System.out.println(friendList);
+//        req.getRequestDispatcher("/ProfilePage").forward(req, resp);
         return;
     }
 }
