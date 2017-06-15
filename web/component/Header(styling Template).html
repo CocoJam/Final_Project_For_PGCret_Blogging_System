@@ -47,9 +47,9 @@
 
 <script>
 
-//This loads up the loader onclick of any loading buttons with the class "clickOnce".
+    //This loads up the loader onclick of any loading buttons with the class "clickOnce".
     $(document).ready(function () {
-        $(".clickOnce").click(function(){
+        $(".clickOnce").click(function () {
             $("#loaderID").css("visibility", "visible");
         });
     });
@@ -65,10 +65,10 @@
             }
         });
     });
-$("a:not(.dropdown *)").click(function (event) {
-    if ($(this).hasClass("disabled")) {
-        event.preventDefault();
-    }
-    $(this).addClass("disabled");
-});
+    $("a:not(.dropdown *)").click(function (event) {
+        if ($(this).hasClass("disabled")) {
+            event.preventDefault();
+        }
+        $(this).addClass("disabled");
+    });
 </script>

@@ -44,13 +44,13 @@
                                     <%--<img src="" alt="Circle Image" class="img-rounded img-responsive img-raised">--%>
                                     <p hidden class="currentuser">${profileInfo.username}</p>
                                     <c:choose>
-                                        <c:when test="${articleList.equals('self')}">
+                                        <c:when test="${profileInfo.username == articleContents.username}">
                                             <c:choose>
                                                 <c:when test="${profileInfo.profilepic != null}">
 
                                                     <c:choose>
                                                         <%--If this is a default profile image get the image from default photo directory--%>
-                                                        <c:when test='${profileInfo.profilepic.startsWith("defaultslashn")}'>
+                                                        <c:when test='${profileInfo.profilepic.startsWith("default")}'>
                                                             <img src="defaultImg/${profileInfo.profilepic}"
                                                                  alt="Avatar"
                                                                  class="img-rounded img-responsive img-raised">
@@ -134,17 +134,11 @@
                                                 <input type="hidden" name="articleidnumber"
                                                        value="${articleContents.articleid}">
                                                     <%--<input class="btn btn-round btn-info" type="submit" name="add" value="EditArticle">--%>
-                                                <button class="btn btn-round btn-primary" type="submit" name="add"
-                                                        value="EditArticle"><i class="material-icons">create</i> Edit
-                                                    Article
-                                                </button>
+                                                <button class="btn btn-round btn-primary" type="submit" name="add" value="EditArticle"><i class="material-icons">create</i> Edit Article</button>
                                             </form>
                                             <form action="/Deleting" method="post">
                                                     <%--<input class="btn btn-round btn-info" type="submit" name="log" value="DeleteArticle">--%>
-                                                <button class="btn btn-round btn-danger" type="submit" name="log"
-                                                        value="DeleteArticle"><i
-                                                        class="material-icons">delete_forever</i> Delete Article
-                                                </button>
+                                                <button class="btn btn-round btn-danger" type="submit" name="log" value="DeleteArticle"><i class="material-icons">delete_forever</i> Delete Article</button>
                                             </form>
                                         </div>
                                     </c:if>
@@ -157,122 +151,73 @@
                                 </div>
                                 <!-- Article Content end -->
 
+                                <div class="container">
 
-                                <!-- COMMENTS SECTION start -->
+                                    <!-- Article comments section -->
+                                    <h2 style="margin-left: -1em;"><small>Comments</small></h2>
 
-                                <h2>Comments</h2>
+                                    <div class="row">
+                                        <div id="containComments">
+                                            <c:forEach items="${commentlist}" var="content">
+                                                <div class="row">
+                                                    <div id="${content.commentId}" class="commentid">
 
-                                <div class="row col-lg-12 col-lg-offset-1 col-md-12 col-md-offset-1 col-sm-12 col-sm-offset-1 col-xs-12 col xs-offset-1"
-                                     id="comments-section" style="margin-left: 1em;">
+                                                        <!-- Display comment -->
+                                                        <small><p id="${content.commentId}username"
+                                                                  class="username"><strong>Posted by:</strong>
+                                                            <a href="ProfilePage?accessFriend=${content.username}">
+                                                                    ${content.username}</a> on
+                                                                <%--</p>--%>
+                                                                <%--<p id="${content.commentId}commentedTime"--%>
+                                                                <%--class="commentedTime"><strong>Posted on:</strong>--%>
+                                                                ${content.commentedTime}</p>
+                                                        </small>
 
-                                    <h4 style="margin-left: -1em; margin-bottom: -1em;">Add a comment:</h4>
+                                                        <blockquote>
+                                                            <p id="${content.commentId}content"
+                                                               class="content">${content.content}</p>
+                                                        </blockquote>
+                                                        <!-- Display comment end -->
+
+                                                        <!-- Edit and Delete Commment buttons -->
+                                                        <c:if test="${content.owner}">
+                                                            <input type="text" id="${content.commentId}text" class="change">
+                                                            <button class="btn btn-round btn-info btn-sm" id="${content.commentId}edit"
+                                                                    onclick="editComment($(this))"><i class="material-icons">create</i> Edit
+                                                            </button>
+                                                        </c:if>
+                                                        <c:if test="${content.owner || articleContents.owner}">
+                                                            <button class="btn btn-round btn-info btn-sm" id="${content.commentId}delete"
+                                                                    onclick="deleteComment($(this))"><i class="material-icons">delete_forever</i> Delete
+                                                            </button>
+                                                        </c:if>
+                                                        <!-- Edit and Delete Commment buttons end -->
+
+                                                    </div>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                    <!-- Article comments section -->
+
                                     <!-- Comments Box -->
-                                    <div id="comment-box" class="row">
-                                        <textarea class="form-control"
-                                                  placeholder="Enter your comments here" rows="5"
-                                                  id="comments" name="commentcontent"></textarea>
-                                        <button class="btn btn-round btn-info" id="addComment"><i
-                                                class="material-icons">speaker_notes</i> Add Comment
-                                        </button>
+                                    <div class="row">
+                                        <h3 style="margin-left: -0.5em;"><small>Add a comment:</small></h3>
+                                        <div class="row"><textarea class="form-control" placeholder="Enter your comments here" rows="5" id="comments" name="commentcontent"></textarea></div>
+                                        <div class="row">
+                                            <button class="btn btn-round btn-info" id="addComment"><i
+                                                    class="material-icons">speaker_notes</i> Add Comment
+                                            </button>
+                                        </div>
                                     </div>
                                     <!-- Comments Box End -->
 
-                                    <!-- Empty div for adding some space between divs -->
-                                    <div class="row" style="height:2em;"></div>
-
-                                    <!-- Display article comments section -->
-
-                                    <h4 style="margin-left: -1em;">View comments:</h4>
-
-                                    <!-- Display comments -->
-                                    <div id="containComments">
-                                        <c:forEach items="${commentlist}" var="content">
-
-                                            <!-- Each comment -->
-                                            <div id="${content.commentId}" class="commentid">
-
-                                                <!-- Display username and time posted -->
-                                                <p><strong>
-                                                    <small>Posted by: </small>
-                                                </strong>
-                                                    <small id="${content.commentId}username"
-                                                           class="username">
-                                                        <a href="ProfilePage?accessFriend=${content.username}">
-                                                                ${content.username}
-                                                        </a>
-                                                    </small>
-                                                    on
-                                                    <small id="${content.commentId}commentedTime"
-                                                           class="commentedTime">
-                                                            ${content.commentedTime}
-                                                    </small>
-                                                </p>
-
-                                                <!-- Display comment content -->
-                                                <blockquote>
-                                                    <p id="${content.commentId}content"
-                                                       class="content">${content.content}</p>
-                                                </blockquote>
-                                                <!-- Display comment content end -->
-
-                                                <!-- Button to show/hide the edit/delete buttons & textbox -->
-                                                <c:if test="${content.owner || articleContents.owner}">
-                                                <button data-toggle="collapse"
-                                                        data-target="#comment-collapsible-${content.commentId}"
-                                                        class="btn btn-round btn-white btn-sm" id="comment-collapsible-toggle" style="margin-top: -1em;">
-                                                    Edit/Delete
-                                                </button>
-
-                                                <!-- Container for the show/hide -->
-                                                <div id="comment-collapsible-${content.commentId}" class="collapse">
-                                                    </c:if>
-
-                                                    <!-- Edit and Delete Commment buttons & textbox -->
-                                                    <c:if test="${content.owner}">
-
-                                                        <!-- Edit comment - Text input area -->
-                                                        <div class="form-group label-floating is-empty">
-                                                            <label class="control-label">Edit comment</label>
-                                                            <input type="text" id="${content.commentId}text"
-                                                                   class="change form-control">
-                                                        </div>
-                                                        <!-- Edit comment - Text input area -->
-
-                                                        <!-- Edit and delete comment buttons -->
-                                                        <button class="edit btn btn-round btn-primary btn-sm"
-                                                                id="${content.commentId}edit"
-                                                                onclick="editComment($(this))"><i
-                                                                class="material-icons">create</i><span class="hidden-xs"> Edit</span>
-                                                        </button>
-                                                    </c:if>
-                                                    <c:if test="${content.owner || articleContents.owner}">
-                                                        <button class="delete btn btn-round btn-danger btn-sm"
-                                                                id="${content.commentId}delete"
-                                                                onclick="deleteComment($(this))"><i
-                                                                class="material-icons">delete_forever</i><span class="hidden-xs"> Delete</span>
-                                                        </button>
-                                                    </c:if>
-                                                    <!-- Edit and Delete Commment buttons end -->
-
-                                                    <c:if test="${content.owner || articleContents.owner}"></div>
-                                                </c:if>
-                                            </div>
-
-                                            <!-- Empty div for adding some space at the bottom of each comment -->
-                                            <div class="row" style="height:1em;"></div>
-                                        </c:forEach>
-                                    </div>
-                                    <!-- Display article comments section -->
+                                    <!-- Empty div for adding some space at the bottom of the container -->
+                                    <div class="row" style="margin-bottom:2em;"></div>
 
                                 </div>
 
-                                <!-- COMMENTS SECTION end -->
-
-                                <!-- Empty div for adding some space at the bottom of the container -->
-                                <div class="row" style="height:2em;"></div>
-
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -302,82 +247,38 @@
                 var contain = $("#containComments");
                 var div = document.createElement("div");
                 div.id = Data.CommentId;
-
-                /* Content */ /* p1 = username, p2 = content, p3 = time */
-                var p1 = document.createElement("span");
-                p1.innerHTML = "<small><a href='ProfilePage?accessFriend=" + Data.Username + "'>" + Data.Username + "</a></small>";
+                var p1 = document.createElement("p");
+                p1.innerHTML = Data.Username;
                 p1.id = Data.CommentId + "username";
                 p1.className = "username";
-
-                var p3 = document.createElement("span");
-                p3.innerHTML = "<small> on " + Data.CommentedTime + " </small>";
-                p3.id = Data.CommentId + "commentedTime";
-                p3.className = "commentedTime";
-
-                var commentinfocontainer = document.createElement("p");
-                var commentinfo = document.createElement("span");
-                commentinfo.innerHTML = "<strong><small>Posted by: </small></strong>";
-                commentinfocontainer.append(commentinfo);
-                commentinfocontainer.append(p1);
-                commentinfocontainer.append(p3);
-
                 var p2 = document.createElement("p");
                 p2.innerHTML = Data.Content;
                 p2.id = Data.CommentId + "content";
                 p2.className = "content";
-                var commentcontent = document.createElement("blockquote");
-
-                /* Collapsible */
-                var collapsebutton = document.createElement("button");
-                collapsebutton.innerHTML = "Edit/Delete";
-                collapsebutton.setAttribute("data-toggle","collapse");
-                collapsebutton.setAttribute("data-target","#comment-collapsible-" + Data.CommentId);
-                collapsebutton.className = "btn btn-round btn-white btn-sm";
-                collapsebutton.id = "comment-collapsible-toggle";
-                collapsebutton.style.marginTop = "-1em";
-
-                /* Collapsible Div */
-                var collapsediv = document.createElement("div");
-                collapsediv.id = "comment-collapsible-" + Data.CommentId;
-                collapsediv.className = "collapse";
-                collapsediv.style.marginBottom = "1em";
-
-                /* Edit Input */
-                var editinputdiv = document.createElement("div");
-                editinputdiv.className = "form-group label-floating is-empty";
-
-                var editinputdivlabel = document.createElement("label");
-                editinputdivlabel.className = "control-label";
-                editinputdivlabel.innerHTML = "Edit comment";
-
+                var p3 = document.createElement("p");
+                p3.innerHTML = Data.CommentedTime;
+                p3.id = Data.CommentId + "commentedTime";
+                p3.className = "commentedTime";
+                var deletebutton = document.createElement("button");
+                deletebutton.id = Data.CommentId + "delete";
+                deletebutton.className = "delete btn btn-round btn-info btn-sm";
+                deletebutton.innerHTML = "<i class='material-icons'>delete_forever</i> Delete";
+                deletebutton.setAttribute("onclick", "deleteComment($(this))");
                 var editinput = document.createElement("input");
                 editinput.type = "text";
                 editinput.id = Data.CommentId + "text";
-                editinput.className = "change form-control";
-
-                /* Edit & Delete Buttons */
+                editinput.className = "change";
                 var editbutton = document.createElement("button");
                 editbutton.id = Data.CommentId + "edit";
-                editbutton.className = "edit btn btn-round btn-primary btn-sm";
-                editbutton.innerHTML = "<i class='material-icons'>create</i><span class='hidden-xs'> Edit</span>";
+                editbutton.className = "edit btn btn-round btn-info btn-sm";
+                editbutton.innerHTML = "<i class='material-icons'>create</i> Edit";
                 editbutton.setAttribute("onclick", "editComment($(this))");
-                var deletebutton = document.createElement("button");
-                deletebutton.id = Data.CommentId + "delete";
-                deletebutton.className = "delete btn btn-round btn-danger btn-sm";
-                deletebutton.innerHTML = "<i class='material-icons'>delete_forever</i><span class='hidden-xs'> Delete</span>";
-                deletebutton.setAttribute("onclick", "deleteComment($(this))");
-
-                /* Append elements to div */
-                div.append(commentinfocontainer);
-                commentcontent.append(p2);
-                div.append(commentcontent);
-                div.append(collapsebutton);
-                div.append(collapsediv);
-                editinputdiv.append(editinputdivlabel);
-                editinputdiv.append(editinput);
-                collapsediv.append(editinputdiv);
-                collapsediv.append(editbutton);
-                collapsediv.append(deletebutton);
+                div.append(p1);
+                div.append(p2);
+                div.append(p3);
+                div.append(editinput);
+                div.append(editbutton);
+                div.append(deletebutton);
                 contain.append(div);
             }
         });
@@ -386,11 +287,11 @@
     <!-- ajax post request for the deleting of the comment -->
     function deleteComment(e) {
         $.post("/Deleting", {
-            "commentId": e.parent().parent().attr("id"),
+            "commentId": e.parent().attr("id"),
             "log": "DeleteComment"
         })
             .done(function (data) {
-                $(e.parent().parent()).remove();
+                $(e.parent()).remove();
                 console.log("hello");
             });
 
@@ -401,18 +302,18 @@
             url: '/Comments',
             type: 'Post',
             data: {
-                "commentId": e.parent().parent().attr("id"),
-                "commentcontent": e.parent().parent().find(".change").val(),
+                "commentId": e.parent().attr("id"),
+                "commentcontent": e.parent().find(".change").val(),
                 "comments": "EditComment"
             },
             success: function (msg) {
                 console.log(msg);
                 var Data = JSON.parse(msg);
-                var p1 = e.parent().parent().find(".username");
+                var p1 = e.parent().find(".username");
                 p1.html(Data.Username);
-                var p2 = e.parent().parent().find(".content");
+                var p2 = e.parent().find(".content");
                 p2.html(Data.Content);
-                var p3 = e.parent().parent().find(".commentedTime");
+                var p3 = e.parent().find(".commentedTime");
                 p3.html(Data.CommentedTime);
             }
         });
@@ -466,7 +367,7 @@
     <!-- Due to the database and the create and the editing page is constructed, that replace all or most of the html tags into the <p> tags -->
 
     $(".wrapper li").each(function () {
-        console.log("hello there")
+        console.log("hello there");
         $(this).replaceWith(function () {
             return $('<p>', {
                 html: this.innerHTML

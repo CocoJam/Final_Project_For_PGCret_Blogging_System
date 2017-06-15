@@ -129,6 +129,7 @@ public class CommentsServlet extends HttpServlet {
                     innerclass.commentsDAO.editComments(innerclass.comment, commentId);
                     innerclass.setComments(innerclass.commentsDAO.selectionComment(commentId));
 //                comments = commentsDAO.selectionComment(commentId);
+                    return;
                 }
                 if (innerclass.comments != null) {
                     JSONObject jsonObject = getJsonObject(innerclass.comments);

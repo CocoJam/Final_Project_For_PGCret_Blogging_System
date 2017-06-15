@@ -117,7 +117,7 @@ public class Login_in extends HttpServlet {
 
     //This is to check the login logic used by doPost to check user login from the login_page.jsp.
     // TODO just refactor this out for convenience
-<<<<<<<<< Temporary merge branch 1
+
     public boolean loginLogic(HttpServletRequest req, HttpServletResponse resp, HttpSession session, LoginPassing loginPassing, innerclass innerclass) throws ServletException, IOException {
         try {
             if (loginPassing.selectionUsersNames(innerclass.username, innerclass.password)) {

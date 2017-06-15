@@ -41,6 +41,18 @@
     document.cookie = "pagemark=" + ctx + ";expires=" + date.toGMTString() + ";path=/";
     console.log(date.toGMTString());
     console.log(document.cookie);
+
+//    Loader gif displays while Ajax request started but not completed.
+    $(document).ready(function () {
+
+        $(document).ajaxStart(function () {
+            $("#loaderID").css("visibility", "visible");
+        });
+        $(document).ajaxComplete(function () {
+            $("#loaderID").css("visibility", "hidden");
+        });
+    });
+
 </script>
 
 <nav class="navbar navbar-fixed-top navbar-inverse navbar-transparent navbar-color-on-scroll">
