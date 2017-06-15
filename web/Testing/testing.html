@@ -20,6 +20,8 @@
 </head>
 <body>
 
+<p>Upload-photos\jongwoowon\audio\Beethoven-Moonlight Sonata (Mvt. 1).mp3
+</p>
 
 <table class="table table-striped table-hover table-responsive">
     <tr>
@@ -109,6 +111,11 @@
 </body>
 
 <script>
+    var regex= /Upload-photos\\.+\\/i;
+    var sample1 =$("p").eq(0).html();
+    console.log(regex);
+    console.log(sample1.match(regex));
+    console.log(sample1.replace(regex,""))
     var things = [];
     $(".tablearticlecategory").each(function () {
         things.push($(this));

@@ -81,6 +81,7 @@
                             <c:choose>
                                 <%--If this is a default profile image get the image from default photo directory--%>
                                 <c:when test='${profileInfo.profilepic.startsWith("default")}'>
+                                <c:when test='${profileInfo.profilepic.startsWith("defaultslashn")}'>
                                     <img src="defaultImg/${profileInfo.profilepic}"
                                          height="20">
                                 </c:when>

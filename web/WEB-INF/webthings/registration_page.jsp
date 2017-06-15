@@ -265,7 +265,7 @@
                                     //                                        Printing default photos
                                     for (int i = 1; i <= 3; i++) {
                                         checkedOrNot = "";
-                                        String defaultPhoto = "default" + i + ".png";
+                                        String defaultPhoto = "defaultslashn" + i + ".png";
                                         if (defaultPhoto.equals((String)pageContext.getAttribute("photoname"))) {
                                             checkedOrNot = "checked";
                                         }
@@ -472,11 +472,11 @@
                                             console.log(msg);
                                             if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
                                                 var ratioButton = "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos\\${username}\\photo\\", "") + "\">";
-                                                var image = "<img src=\"" + msg + "\"height=\"20%\">";
+                                                var image = "<img src=\"" + msg + "\"height=\"20%\" class='center-block'>";
                                                 var breakline = "<br>";
                                                 $(".content").eq(0).append(ratioButton);
                                                 $(".content").eq(0).append(image);
-                                                $(".content").eq(0).append(breakline);
+                                                $(".content").eq(0).append("</div>");
                                             }
                                             <!-- if the media is successfully uploaded but it is not a picture or photo in the right formate, that the alert will pop and show -->
                                             else {

@@ -61,7 +61,7 @@
 
                                             <c:choose>
                                                 <%--If this is a default profile image get the image from default photo directory--%>
-                                                <c:when test='${profileInfo.profilepic.startsWith("default")}'>
+                                                <c:when test='${profileInfo.profilepic.startsWith("defaultslashn")}'>
                                                     <img src="defaultImg/${profileInfo.profilepic}"
                                                          alt="Avatar"
                                                          class="img-rounded img-responsive img-raised">
@@ -107,7 +107,12 @@
                                     %>
                                 </div>
                                 <div class="name" id="custom-profile-name">
-                                    <h3 class="title">${profileInfo.name}</h3>
+                                    <h3 class="title">
+                                        <% if (!friendsprofile) { %>
+                                        Welcome back
+                                        <% } %>
+                                        ${profileInfo.name}</h3>
+                                    </h3>
                                 </div>
                                 <div class="name" id="custom-profile-subtitle">
                                     <h6>${profileInfo.education}</h6>
@@ -117,205 +122,268 @@
 
                         <%--Introduction "blurb'--%>
                         <div class="description text-center">
-                            <p>${profileInfo.introduction}</p>
+
+                            <c:choose>
+                                <c:when test="${not empty profileInfo.introduction}">
+                                    <p>${profileInfo.introduction}</p>
+                                </c:when>
+                                <c:otherwise>
+                                    <p>Welcome to ${profileInfo.name}'s page! Feel free to look around and view the
+                                        articles!</p>
+                                </c:otherwise>
+                            </c:choose>
+
+
                         </div>
 
-                        <div class="row">
-                            <!-- Profile bio text -->
-                            <div class="description text-center col-lg-offset-5 col-md-offset-5 col-sm-offset-5">
+                        <div class="container">
+                            <div class="row">
+                                <!-- Profile bio text -->
+                                <div class="description text-center col-lg-offset-5 col-md-offset-5 col-sm-offset-5">
 
-                                <table class="table borderless" align="center">
-                                    <tr>
-                                        <th>Specs</th>
-                                        <th>Your details</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Username:</td>
-                                        <td>${profileInfo.username}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fullname:</td>
-                                        <td>${profileInfo.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Email:</td>
-                                        <td>${profileInfo.email}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Address:</td>
-                                        <td>${profileInfo.address}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Education:</td>
-                                        <td>${profileInfo.education}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Ethnicity:</td>
-                                        <td>${profileInfo.ethnicity}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Date of Birth:</td>
-                                        <td>
-                                            <fmt:formatDate value="${profileInfo.date}" pattern="dd MMMM YYYY"/>
-                                        </td>
-                                    </tr>
-                                </table>
-
-                                <% if (!friendsprofile) { %>
-
-                                <c:if test="${firendlist != null}">
-                                    <table class="table table-striped table-hover table-responsive">
+                                    <table class="table borderless" align="center">
                                         <tr>
-                                            <th>Friend List</th>
+                                            <th>Specs</th>
+                                            <th>Your details</th>
                                         </tr>
-
-                                        <c:forEach var="friend" items="${firendlist}">
-                                            <c:if test="${friend.friendusername != null}">
-                                                <tr>
-                                                    <td><a href=ProfilePage?accessFriend=${friend.friendusername}
-                                                           class="username">${friend.friendusername}</a></td>
-                                                </tr>
-                                            </c:if>
-                                        </c:forEach>
+                                        <tr>
+                                            <td>Username:</td>
+                                            <td>${profileInfo.username}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fullname:</td>
+                                            <td>${profileInfo.name}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email:</td>
+                                            <td>${profileInfo.email}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Address:</td>
+                                            <td>${profileInfo.address}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Education:</td>
+                                            <td>${profileInfo.education}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ethnicity:</td>
+                                            <td>${profileInfo.ethnicity}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Date of Birth:</td>
+                                            <td>
+                                                <fmt:formatDate value="${profileInfo.date}" pattern="dd MMMM YYYY"/>
+                                            </td>
+                                        </tr>
                                     </table>
-                                </c:if>
+                                    <%--Profile details end--%>
 
-                                <% }
+                                    <%--Friends list section begins--%>
+                                    <% if (!friendsprofile) { %>
 
-                                    if (!friendsprofile) {
-                                %>
+                                    <hr>
+
+                                    <c:if test="${firendlist != null}">
+                                        <%--<table class="table table-striped table-hover table-responsive">--%>
+                                        <h2>Friend List:</h2>
+
+                                        <div class="card-group">
+
+                                            <c:forEach var="friend" items="${firendlist}">
+                                                <c:if test="${friend.friendusername != null}">
+
+                                                    <div class="card" style="max-width: 10rem">
+                                                        <%--<div class="imageContainer" style="width: 10rem">--%>
+                                                            <c:choose>
+
+                                                                <%--If this is a default profile image get the image from default photo directory--%>
+                                                                <c:when test='${friend.friendProfilePicture.startsWith("defaultslashn")}'>
+                                                                    <img src="defaultImg/${friend.friendProfilePicture}"
+                                                                         alt="Card image cap"
+                                                                         class="img-slashResponsive card-img-top center-block">
+                                                                </c:when>
+
+                                                                <%--Otherwise get the photo from the users photo page--%>
+
+                                                                <c:otherwise>
+                                                                    <img src="Upload-photos/${friend.friendusername}/photo/${friend.friendProfilePicture}"
+                                                                         alt="Card image cap"
+                                                                         class="img-slashResponsive card-img-top center-block">
+                                                                </c:otherwise>
+
+                                                            </c:choose>
+                                                        <%--</div>--%>
+                                                        <div class="card-block">
+                                                            <div style="height: 1em; line-height: 1em">
+                                                                <h7
+                                                                        class="card-title"
+                                                                        style="text-overflow: ellipsis"><a href="ProfilePage?accessFriend=${friend.friendusername}"
+                                                                                                                                  class="friendButton">${friend.friendusername}</a></h7>
+
+                                                                <p class="card-text"></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </c:if>
+                                            </c:forEach>
+                                        </div>
+                                        <%--</table>--%>
+
+
+                                    </c:if>
+
+                                    <% }
+
+//                                    if (!friendsprofile) {
+                                    %>
+
+                                    <hr>
+
+                                    <%--Articles begin--%>
+                                    <div>
 
                                 <button id="showArticleList" class="btn btn-info btn-round">Show Articles List</button>
 
-                                <div id="ArticleTable"></div>
+                                        <div id="ArticleTable"></div>
 
-                                <table class="table table-striped table-hover table-responsive">
-                                </table>
-                                <% }%>
-                                <%--end testing--%>
+                                        <table class="table table-striped table-hover table-responsive">
+                                        </table>
+                                        <%--<% }%>--%>
+                                        <%--end testing--%>
 
-                                <script>
-                                    // An ajax call of post to get the article list which is then append and display within the given table
-                                    var clickStatus = true;
-
-                                    $("#showArticleList").click(function () {
+                                    </div>
 
 
-                                        if (clickStatus) {
-                                            $.ajax({
-                                                url: '/ProfilePage',
-                                                type: 'Post',
-                                                data: {
-                                                    "clickedShowList": "clickedShowList",
-                                                    "username": "<%= session.getAttribute("username")%>"
-                                                },
-                                                success: function (msg) {
-                                                    console.log(msg);
+                                    <script>
+                                        // An ajax call of post to get the article list which is then append and display within the given table
+                                        var clickStatus = true;
 
-                                                    $("#ArticleTable").html(msg);
-
-                                                }
-                                            });
-                                            //Toggle between the hide of the list and the showing of the list based on the button
-                                            $("#showArticleList").html("Hide Articles List");
-                                            clickStatus = !clickStatus;
-                                        } else {
-                                            $("#ArticleTable").html("");
-                                            $("#showArticleList").html("Show Articles List");
-                                            clickStatus = !clickStatus;
-                                        }
+                                        <%--var articleUsername = "";--%>
+                                        <%----%>
+                                        <%--if (<%= friendsprofile%>){--%>
+                                        <%--articleUsername = <%=fri%>--%>
+                                        <%--}--%>
 
 
-                                    });
-                                </script>
+                                        $("#showArticleList").click(function () {
+
+                                            if (clickStatus) {
+                                                $.ajax({
+                                                    url: '/ProfilePage',
+                                                    type: 'Post',
+                                                    data: {
+                                                        "clickedShowList": "clickedShowList",
+                                                        "username": "${profileInfo.username}"
+                                                    },
+                                                    success: function (msg) {
+                                                        console.log(msg);
+
+                                                        $("#ArticleTable").html(msg);
+
+                                                    }
+                                                });
+                                                //Toggle between the hide of the list and the showing of the list based on the button
+                                                $("#showArticleList").html("Hide article list");
+                                                clickStatus = !clickStatus;
+                                            } else {
+                                                $("#ArticleTable").html("");
+                                                $("#showArticleList").html("Show article list");
+                                                clickStatus = !clickStatus;
+                                            }
+
+
+                                        });
+                                    </script>
+                                </div>
+
                             </div>
 
                         </div>
 
                     </div>
+                    <%--table of friends for this person--%>
+                </div><!-- main container end -->
 
-                </div>
-                <%--table of friends for this person--%>
-            </div><!-- main container end -->
+            </div><!-- outer div 2 -->
+        </div><!-- outer div 1 -->
+    </div><!-- wrapper div -->
 
-        </div><!-- outer div 2 -->
-    </div><!-- outer div 1 -->
-</div><!-- wrapper div -->
-
-<!-- FOOTER START -->
-<%@ include file="../../component/Footer(Template).html" %>
-<!-- FOOTER END -->
+    <!-- FOOTER START -->
+    <%@ include file="../../component/Footer(Template).html" %>
+    <!-- FOOTER END -->
 
 
-<% //if The user is within their own profile this script will not appear, so the following function will  not be apply to the jsp.
+        <% //if The user is within their own profile this script will not appear, so the following function will  not be apply to the jsp.
     if (session.getAttribute("showFriend") != null) { %>
-<script>
-    //The switching of the button of adding friend and unfriending the person depending the orginal state of is this person friended.
+    <script>
+        //The switching of the button of adding friend and unfriending the person depending the orginal state of is this person friended.
 
-    <%--$(document).ready(function (){--%>
-    <%--<% if (friended){--%>
-    <%--%>--%>
-    <%----%>
-    <%----%>
-    <%----%>
-    <%--<% --%>
-    <%--}--%>
-    <%--%>--%>
-    <%--})--%>
+        <%--$(document).ready(function (){--%>
+        <%--<% if (friended){--%>
+        <%--%>--%>
+        <%----%>
+        <%----%>
+        <%----%>
+        <%--<% --%>
+        <%--}--%>
+        <%--%>--%>
+        <%--})--%>
 
-    <% if (!friended){ %>
-    $("#addfriend").fadeIn("1", function () {
-        $(this).css("z-index", 0)
-    });
-    $("#unfriend").fadeOut("1", function () {
-        $(this).css("z-index", -1)
-    });
-    <% } else {%>
-    $("#unfriend").fadeIn("1", function () {
-        $(this).css("z-index", 0)
-    });
-    $("#addfriend").fadeOut("1", function () {
-        $(this).css("z-index", -1)
-    });
-    <% } %>
-    //Depending the button of the clicked, which speific ajax call of post will be sent, which allow the friend servlet to be adding the friend bi-directional to the database.
-    $("#addfriend").click(function () {
-        $("#unfriend").fadeIn("1", function () {
-            $(this).css("z-index", 0)
-        });
-        $("#addfriend").fadeOut("1", function () {
-            $(this).css("z-index", -1)
-        });
-        console.log("clicked")
-        $.post("Friend", {
-            username: "<%= currentuser.getUsername()%>",
-            friendname: "${profileInfo.username}",
-            friendprocess: "add"
-        })
-            .done(function () {
-                console.log("done adding");
-
-            })
-    });
-
-    $("#unfriend").click(function () {
+        <% if (!friended){ %>
         $("#addfriend").fadeIn("1", function () {
             $(this).css("z-index", 0)
         });
         $("#unfriend").fadeOut("1", function () {
             $(this).css("z-index", -1)
         });
-        $.post("Friend", {
-            username: "<%= currentuser.getUsername()%>",
-            friendname: "${profileInfo.username}",
-            friendprocess: "unadd"
-        })
-            .done(function () {
-                console.log("done unadding");
+        <% } else {%>
+        $("#unfriend").fadeIn("1", function () {
+            $(this).css("z-index", 0)
+        });
+        $("#addfriend").fadeOut("1", function () {
+            $(this).css("z-index", -1)
+        });
+        <% } %>
+        //Depending the button of the clicked, which speific ajax call of post will be sent, which allow the friend servlet to be adding the friend bi-directional to the database.
+        $("#addfriend").click(function () {
+            $("#unfriend").fadeIn("1", function () {
+                $(this).css("z-index", 0)
+            });
+            $("#addfriend").fadeOut("1", function () {
+                $(this).css("z-index", -1)
+            });
+            console.log("clicked")
+            $.post("Friend", {
+                username: "<%= currentuser.getUsername()%>",
+                friendname: "${profileInfo.username}",
+                friendprocess: "add"
             })
-    });
-</script>
-<%
+                .done(function () {
+                    console.log("done adding");
+
+                })
+        });
+
+        $("#unfriend").click(function () {
+            $("#addfriend").fadeIn("1", function () {
+                $(this).css("z-index", 0)
+            });
+            $("#unfriend").fadeOut("1", function () {
+                $(this).css("z-index", -1)
+            });
+            $.post("Friend", {
+                username: "<%= currentuser.getUsername()%>",
+                friendname: "${profileInfo.username}",
+                friendprocess: "unadd"
+            })
+                .done(function () {
+                    console.log("done unadding");
+                })
+        });
+    </script>
+        <%
         session.setAttribute("profileInfo", currentuser);
         session.setAttribute("showFriend", null);
     }

@@ -34,8 +34,8 @@ public class Upload_files extends HttpServlet {
     }
 
     private String filePath;
-    private int maxFileSize = 5000 * 1024;
-    private int maxMemSize = 5000 * 1024;
+    private int maxFileSize = 50000 * 1024;
+    private int maxMemSize = 50000 * 1024;
     private File file;
     private String fileName;
     private String caption;

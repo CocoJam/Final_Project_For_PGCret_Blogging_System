@@ -142,6 +142,34 @@ public class Login_in extends HttpServlet {
             }
         } catch (Exception e) {
             cookieTracker(req, resp);
+    public boolean loginLogic(HttpServletRequest req, HttpServletResponse resp, HttpSession session, LoginPassing loginPassing) throws ServletException, IOException {
+
+
+        if (loginPassing.selectionUsersNames(username, password)) {
+            //Login in logic passed through sql selection query.
+            session.setAttribute("username", username);
+            session.setAttribute("password", password);
+            session.setAttribute("articleList", "self");
+            session.setAttribute("log", true); //TODO refactoring for login status.
+            //Getting friendlist and the username list for the search bar of firent
+            List<Friend> friendList = new FriendDAO().selectionListOfFriends(username);
+            List<String> userList = new FriendDAO().GetAllPeopleUsername();
+            new FriendDAO().pullAllFriendProfile(friendList);
+            System.out.println("Friends profile pic added");
+
+            session.setAttribute("firendlist", friendList);
+            session.setAttribute("userlist", userList);
+            System.out.println("logged-in");
+            System.out.println(session.getAttribute("username"));
+            req.getRequestDispatcher("/ProfilePage").forward(req, resp); //TODO to take out.
+            return true;
+        } else {
+            //Login in logic fail.
+            session.setAttribute("log", false); //TODO refactoring for login status.
+            System.out.println("logged-in rejected");
+            req.setAttribute("loginFail", true); //attribute to indicate to login_page jsp to shake if rejected onload
+            req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
+            return false;
         }
         return false;
     }

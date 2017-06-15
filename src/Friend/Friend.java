@@ -6,6 +6,11 @@ import java.io.Serializable;
  * Created by ljam763 on 8/06/2017.
  */
 public class Friend implements Serializable {
+
+    private String username;
+    private String friendusername;
+    private String friendProfilePicture;
+
     public String getUsername() {
         return username;
     }
@@ -22,7 +27,11 @@ public class Friend implements Serializable {
         this.friendusername = friendusername;
     }
 
-    private String username;
-    private String friendusername;
+    public String getFriendProfilePicture() {
+        return friendProfilePicture;
+    }
 
+    public void setFriendProfilePicture(String friendProfilePicture) {
+        this.friendProfilePicture = friendProfilePicture;
+    }
 }
