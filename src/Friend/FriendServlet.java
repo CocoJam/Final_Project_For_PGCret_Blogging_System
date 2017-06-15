@@ -18,16 +18,19 @@ public class FriendServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         cookieLogOut(req,resp);
+        try{
         HttpSession session = req.getSession();
         FriendDAO friendDAO = new FriendDAO();
         System.out.println("posted");
         String username = req.getParameter("username");
         String friendname = req.getParameter("friendname");
         String friendprocess = req.getParameter("friendprocess");
+        //Two way adding friends.
         if (username != null && friendname != null && friendprocess != null && friendprocess.equals("add")){
            boolean addedoneway = friendDAO.AddFriends(username,friendname);
            boolean addedtwoway = friendDAO.AddFriends(friendname,username);
         }
+        //Two way deleting friends
         else if (username != null && friendname != null && friendprocess != null && friendprocess.equals("unadd")){
             boolean deleteFriends = friendDAO.DeleteFriends(username,friendname);
             boolean deleteFriends1 = friendDAO.DeleteFriends(friendname,username);
@@ -42,8 +45,11 @@ public class FriendServlet extends HttpServlet {
         System.out.println("Friends profile pic added");
 
         session.setAttribute("firendlist", friendList);
-//        System.out.println(friendList);
-//        req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+        System.out.println(friendList);
+        req.getRequestDispatcher("/ProfilePage").forward(req, resp);}
+        catch (Exception e){
+            cookieTracker(req,resp);
+        }
         return;
     }
 }

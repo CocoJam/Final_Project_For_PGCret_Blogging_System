@@ -38,78 +38,88 @@ public class Registration extends HttpServlet {
     //do Get to serve to Registration page jsp for update profile info
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-
-        //The following if and else does two different actions, depends on the different GET calls, determined by the log parameter.
-
-        //This is a call from the Profile page, "changeuserinfo" button. This is to redirect user to update the userInfo
-        if (req.getParameter("log") != null) {
-            if (req.getParameter("log").equals("Update Profile")) {
-                session.setAttribute("Upload", "ProfilePageUpload");
-                req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+        try {
+            HttpSession session = req.getSession();
+            //The following if and else does two different actions, depends on the different GET calls, determined by the log parameter.
+            //This is a call from the Profile page, "changeuserinfo" button. This is to redirect user to update the userInfo
+            if (req.getParameter("log") != null) {
+                if (req.getParameter("log").equals("Update Profile")) {
+                    session.setAttribute("Upload", "ProfilePageUpload");
+                    req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+                    return;
+                }
+                //  TODO check logic of returning boolean from selectionUsersCheck()
+                // This is related to the AJAX call in Registration.jsp
+                else if (req.getParameter("log").equals("RegistrationCheck")) {
+                    String usernameCheck = req.getParameter("usernameCheck");
+                    System.out.println(usernameCheck);
+                    LoginPassing loginPassing = new LoginPassing();
+                    boolean asdna = loginPassing.selectionUsersCheck(usernameCheck);
+                    System.out.println(asdna);
+                    resp.getWriter().print(asdna);
+                    return;
+                }
+            } else {
+                cookieTracker(req, resp);
                 return;
             }
-            //  TODO check logic of returning boolean from selectionUsersCheck()
-            // This is related to the AJAX call in Registration.jsp
-            else if (req.getParameter("log").equals("RegistrationCheck")) {
-                String usernameCheck = req.getParameter("usernameCheck");
-                System.out.println(usernameCheck);
-                LoginPassing loginPassing = new LoginPassing();
-                boolean asdna = loginPassing.selectionUsersCheck(usernameCheck);
-                System.out.println(asdna);
-                resp.getWriter().print(asdna);
-                return;
-            }
-        } else {
+        } catch (Exception e) {
+            e.printStackTrace();
             cookieTracker(req, resp);
-            return;
         }
     }
 
     //The doPOST method receives information from the form within the registration page via the POST method.
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        session.setAttribute("Upload", "ProfilePageUpload");
+        try {
+            HttpSession session = req.getSession();
+            session.setAttribute("Upload", "ProfilePageUpload");
 
-        // profileSetUp is used to simplify the logic here. All the setters of the profilepage Object is done within this method (see profileSetUp()).
-        profileSetUp(req);
+            // profileSetUp is used to simplify the logic here. All the setters of the profilepage Object is done within this method (see profileSetUp()).
+            profileSetUp(req);
 
-        profilePageDAO = new ProfilePageDAO();
-        if (req.getParameter("log") != null) {
-            System.out.println("Regs");
-            //TODO refactor to switch statement if possible.
-            // Scenario 1: The below is an editing scenario.
-            if (req.getParameter("log").equals("Update Profile")) {
-                System.out.println("Trying for info update");
-                profilePage = profilePageDAO.updateUsersProfile((String) session.getAttribute("username"), password, profilePage, req.getParameter("password"));
-                System.out.println("info updated");
-                session.setAttribute("profileInfo", profilePage);
-//                session.setAttribute("password",password);
-                closingConnection();
-                req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
-                return;
-            }
-//            Scenario 2: create new profile scenario
-            else {
-                try {
-                    System.out.println("Create");
-                    session.setAttribute("password",req.getParameter("password"));
-                    profilePageDAO.createUsersProfile(profilePage, req.getParameter("password"));
-                    profilePage = profilePageDAO.getUsersProfile(profilePage.getUsername());
+            profilePageDAO = new ProfilePageDAO();
+            if (req.getParameter("log") != null) {
+                System.out.println("Regs");
+                //TODO refactor to switch statement if possible.
+                // Scenario 1: The below is an editing scenario.
+                if (req.getParameter("log").equals("Update Profile")) {
+                    System.out.println("Trying for info update");
+                    profilePage = profilePageDAO.updateUsersProfile((String) session.getAttribute("username"), password, profilePage, req.getParameter("password"));
+                    System.out.println("info updated");
                     session.setAttribute("profileInfo", profilePage);
-                    System.out.println(profilePage.getUsername());
-                    session.setAttribute("username", profilePage.getUsername());
-                    session.setAttribute("log", true);
-                    req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
-                } catch (SQLException e1) {
-                    //If SQL Exception thrown by profilePageDAO.CreateUsersProfile() (when username already exists), then this is caught here and the user is redirected to the registration page where they have to start again.
+//                session.setAttribute("password",password);
                     closingConnection();
-                    req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                     return;
+                }
+//            Scenario 2: create new profile scenario
+                else {
+                    try {
+                        System.out.println("Create");
+                        session.setAttribute("password", req.getParameter("password"));
+                        profilePageDAO.createUsersProfile(profilePage, req.getParameter("password"));
+                        profilePage = profilePageDAO.getUsersProfile(profilePage.getUsername());
+                        session.setAttribute("profileInfo", profilePage);
+                        System.out.println(profilePage.getUsername());
+                        session.setAttribute("username", profilePage.getUsername());
+                        session.setAttribute("log", true);
+                        req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+                    } catch (SQLException e1) {
+                        //If SQL Exception thrown by profilePageDAO.CreateUsersProfile() (when username already exists), then this is caught here and the user is redirected to the registration page where they have to start again.
+                        closingConnection();
+                        req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+                        return;
+                    }
                 }
             }
         }
+        catch (Exception e){
+            e.printStackTrace();
+            cookieTracker(req,resp);
+        }
+
     }
 
     //This is the setup of the profile page whether for logged in or new registration users. Takes parameters from the form and sets them to the JAVABEAN Object instance variables.

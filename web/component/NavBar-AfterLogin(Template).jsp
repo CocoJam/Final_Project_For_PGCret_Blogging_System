@@ -26,12 +26,11 @@
 </head>
 <body>
 <% System.out.println(response.getHeaderNames());%>
-<% response.addHeader("Cache-Control", "max-age=0,no-cache,no-store,must-revalidate");
-    response.addHeader("Pragma", "no-cache");
-    response.addHeader("Expires", "Tue, 01 Jan 1970 00:00:00 GMT");
-    System.out.println(response.getHeaderNames());%>
+<%--<% response.addHeader("Cache-Control", "max-age=0,no-cache,no-store,must-revalidate");--%>
+    <%--response.addHeader("Pragma", "no-cache");--%>
+    <%--response.addHeader("Expires", "Tue, 01 Jan 1970 00:00:00 GMT");--%>
+    <%--System.out.println(response.getHeaderNames());%>--%>
 <script>
-
     var ctx = "<%= request.getRequestURI() %>";
     var date = new Date();
     var currentTime = date.getTime();
@@ -213,7 +212,7 @@
 
     $(document).ready(function () {
         $("#bgImgStatus").text("Background " + imageValue + "/5");
-    })
+    });
 
     $("#leftButton").click(function () {
         if (imageValue > 1) {
@@ -244,15 +243,14 @@
 <%--This script limits clicking of the button to one click--%>
 <script>
 
-    <%--Function to prevent user spamming the button.--%>
-    //    var clicked = false;
-    //    $(".clickOnce").on("click", function (e) {
-    //        if (clicked === false) {
-    //            clicked = true;
-    //        } else {
-    //            e.preventDefault();
-    //        }
-    //    });
+    var clicked = false;
+    $(".clickOnce").on("click", function (e) {
+        if (clicked === false) {
+            clicked = true;
+        } else {
+            e.preventDefault();
+        }
+    });
 
     $(document).ready(function () {
         $("#imageselect").change(function () {

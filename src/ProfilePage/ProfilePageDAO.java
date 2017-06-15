@@ -30,16 +30,15 @@ public class ProfilePageDAO extends LoginPassing {
     private int oldIterations;
 
 
-    public ProfilePageDAO() {
+    public  ProfilePageDAO() {
         this.pass = new Passwords_Checker();
     }
 
 //    Allows retrieving of user details from UsersNames database with username parameter.
-    public ProfilePAge getUsersProfile(String username) { // Pass in username from GET
+    public synchronized ProfilePAge getUsersProfile(String username) throws NullPointerException{ // Pass in username from GET
         ProfilePAge profilePAge = null;
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT Username, Name, Email, Address, Education, Ethnicity, DateOfBirth, Introduction, profilePicture FROM UsersNames WHERE Username = ?;")) {
-                System.out.println(statement);
                 statement.setString(1, username);
                 System.out.println(statement);
                 try (ResultSet resultSet = statement.executeQuery()) {
@@ -53,11 +52,15 @@ public class ProfilePageDAO extends LoginPassing {
             System.out.println("Error. No profile page under this username.");
             e.printStackTrace();
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
         return profilePAge;
     }
 
     //    Creating user Profile in UsersNames database.
-    public ProfilePAge createUsersProfile(ProfilePAge profilePAge, String password) throws SQLException {
+    public synchronized ProfilePAge createUsersProfile(ProfilePAge profilePAge, String password) throws SQLException, NullPointerException {
         ProfilePageGetters(profilePAge);
         saltAndIteration();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
@@ -78,11 +81,15 @@ public class ProfilePageDAO extends LoginPassing {
         catch (IllegalArgumentException e){
             return null;
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
         return getUsersProfile(profilePAge.getUsername());
     }
 
 //    Update user details in the UsersNames table in database.
-    public ProfilePAge updateUsersProfile(String username, String password, ProfilePAge profilePAge, String newPassword) {
+    public synchronized ProfilePAge updateUsersProfile(String username, String password, ProfilePAge profilePAge, String newPassword) throws NullPointerException {
         ProfilePageGetters(profilePAge);
         getSaltAndIteration(username);
         saltAndIteration();
@@ -90,12 +97,6 @@ public class ProfilePageDAO extends LoginPassing {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?, Introduction=?, Password=?, profilePicture=?, salt=?, iteration=?  WHERE  Username = ?;")) {
                 statement.setString(1, username);
                 sqlSetStatment(password, statement);
-                System.out.println(newPassword);
-                System.out.println(password);
-                System.out.println(salt);
-                System.out.println(iterations);
-                System.out.println(oldSalt);
-                System.out.println(oldIterations);
                 System.out.println(pass.hashing(newPassword, salt, iterations));
 //                System.out.println(pass.hashing(password, oldSalt, oldIterations));
                 statement.setString(9, pass.hashing(newPassword, salt, iterations));
@@ -117,10 +118,14 @@ public class ProfilePageDAO extends LoginPassing {
         catch (IllegalArgumentException e){
             return null;
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
         return getUsersProfile(username);
     }
 
-    public void getSaltAndIteration(String username) {
+    public synchronized void getSaltAndIteration(String username) throws NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             //user pass.hashing() with the password needed to be hash to match and salt number with iteration numbers
             try (PreparedStatement statement = connection.prepareStatement(
@@ -139,10 +144,14 @@ public class ProfilePageDAO extends LoginPassing {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
     }
 
     //This is the shortcut for setting strings for all normal user details apart from password and username.
-    private void sqlSetStatment(String password, PreparedStatement statement) throws SQLException {
+    private synchronized void sqlSetStatment(String password, PreparedStatement statement) throws SQLException {
         statement.setString(2, name);
         statement.setString(3, email);
         statement.setString(4, address);
@@ -155,7 +164,7 @@ public class ProfilePageDAO extends LoginPassing {
     }
 
     //Setting the javabean instance variables for ProfilePage
-    private ProfilePAge makeProfilePAge(ResultSet resultSet) throws SQLException {
+    private synchronized ProfilePAge makeProfilePAge(ResultSet resultSet) throws SQLException {
         ProfilePAge profilePAge = new ProfilePAge();
         sqlGetStatements(resultSet);
         profilePAge.setUsername(usernames);
@@ -172,7 +181,7 @@ public class ProfilePageDAO extends LoginPassing {
     }
 
     //This is grabbing information from result sets into the variables that you later set to the profile page.
-    private void sqlGetStatements(ResultSet resultSet) throws SQLException {
+    private synchronized void sqlGetStatements(ResultSet resultSet) throws SQLException {
         usernames = resultSet.getString(1);
         name = resultSet.getString(2);
         email = resultSet.getString(3);
@@ -185,7 +194,7 @@ public class ProfilePageDAO extends LoginPassing {
     }
 
     //Getting things from the profile page and putting to the Database page.
-    private void ProfilePageGetters(ProfilePAge profilePAge) {
+    private synchronized void ProfilePageGetters(ProfilePAge profilePAge) {
         usernames = profilePAge.getUsername();
         name = profilePAge.getName();
         email = profilePAge.getEmail();
@@ -197,7 +206,7 @@ public class ProfilePageDAO extends LoginPassing {
         profilePicture = profilePAge.getProfilepic();
         System.out.println("getting :" + profilePicture);
     }
-    private void saltAndIteration() {
+    private synchronized void saltAndIteration() {
         Random rand = new Random();
         salt = rand.nextInt(255-1) + 1;
         iterations = rand.nextInt(1000-1) + 1;

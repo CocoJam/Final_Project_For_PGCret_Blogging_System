@@ -28,7 +28,7 @@ public class ArticleListObjectDAO extends ArticlesDAO {
     }
 
     //Selecting article content for displaying All article.
-    public List<Articles> selectionAllArticlesList() {
+    public List<Articles> selectionAllArticlesList() throws NullPointerException{
         List<Articles> ListIndex = new ArrayList<>();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName, Category, SpecificDateCreated, UserIDName, Content FROM Articles;")) {
@@ -42,13 +42,17 @@ public class ArticleListObjectDAO extends ArticlesDAO {
             System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
         System.out.println("Article size" + ListIndex.size());
         return ListIndex;
     }
 
 
     //Selecting article content for displaying specific list (UserID parameter).
-    public List<Articles> selectionArticlesList(String UserIDName) {
+    public synchronized List<Articles> selectionArticlesList(String UserIDName) throws NullPointerException{
         List<Articles> ListIndex = new ArrayList<>();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName,Category ,SpecificDateCreated, UserIDName, Content FROM Articles WHERE UserIDName = ?;")) {
@@ -64,11 +68,15 @@ public class ArticleListObjectDAO extends ArticlesDAO {
             System.out.println("Error article not found");
             e.printStackTrace();
         }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            throw new NullPointerException();
+        }
         System.out.println("Article size" + ListIndex.size());
         return ListIndex;
     }
 
-    private void addingArticlesIntoTheList(List<Articles> listIndex, ResultSet resultSet) throws SQLException {
+    private synchronized void addingArticlesIntoTheList(List<Articles> listIndex, ResultSet resultSet) throws SQLException,NullPointerException{
         while (resultSet.next()) {
             Articles articleListObject = new Articles();
             sqlSetStatments(resultSet);
@@ -77,7 +85,7 @@ public class ArticleListObjectDAO extends ArticlesDAO {
         }
     }
 
-    private void sqlSetStatments(ResultSet resultSet) throws SQLException {
+    private synchronized void sqlSetStatments(ResultSet resultSet) throws SQLException, NullPointerException{
         ArticleID = resultSet.getInt(1);
         ArticleName = resultSet.getString(2);
         categoryName = resultSet.getString(3);
@@ -86,7 +94,7 @@ public class ArticleListObjectDAO extends ArticlesDAO {
         ArticleContent = resultSet.getString(6);
     }
 
-    private void articleListObjectSetStatments(Articles articleListObject) {
+    private synchronized void articleListObjectSetStatments(Articles articleListObject) {
         articleListObject.setArticleid(ArticleID);
         articleListObject.setArticlename(ArticleName);
         articleListObject.setCategory(categoryName);

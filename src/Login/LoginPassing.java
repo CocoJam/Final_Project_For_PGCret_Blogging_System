@@ -30,13 +30,13 @@ public class LoginPassing {
         this.pass = new Passwords_Checker();
     }
 
-    public boolean selectionUsersNames(String username, String password) {
+    public synchronized boolean selectionUsersNames(String username, String password) throws NullPointerException {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             //user pass.hashing() with the password needed to be hash to match and salt number with iteration numbers
             try (PreparedStatement statement = connection.prepareStatement("SELECT Username, Password FROM UsersNames WHERE Username = ? AND Password = ?;")) {
                 getSaltAndIteration(username);
                 statement.setString(1, username);
-                statement.setString(2, pass.hashing(password,salt,iteration));
+                statement.setString(2, pass.hashing(password, salt, iteration));
                 System.out.println(statement);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
@@ -51,15 +51,18 @@ public class LoginPassing {
             System.out.println("Error creating database connection.");
             e.printStackTrace();
             return false;
-        }
-        catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
             return false;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            throw new NullPointerException();
         }
         return false;
     }
 
 
-    public boolean selectionUsersCheck(String username) {
+    public synchronized boolean selectionUsersCheck(String username) throws NullPointerException {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             //user pass.hashing() with the password needed to be hash to match and salt number with iteration numbers
             try (PreparedStatement statement = connection.prepareStatement("SELECT Username FROM UsersNames WHERE Username = ?;")) {
@@ -78,11 +81,14 @@ public class LoginPassing {
         } catch (SQLException e) {
             System.out.println("Error creating database connection.");
             return false;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            throw new NullPointerException();
         }
         return false;
     }
 
-    public void getSaltAndIteration(String username) {
+    public synchronized void getSaltAndIteration(String username) throws NullPointerException {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             //user pass.hashing() with the password needed to be hash to match and salt number with iteration numbers
             try (PreparedStatement statement = connection.prepareStatement("SELECT salt,iteration FROM UsersNames WHERE Username = ?;")) {
@@ -97,9 +103,11 @@ public class LoginPassing {
                 }
             }
         } catch (
-                SQLException e)
-        {
+                SQLException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            throw new NullPointerException();
         }
     }
 
