@@ -341,6 +341,10 @@
                                         <div id="save" class="ui-widget-content ui-state-default">
                                             <h4 class="ui-widget-header"><i class="material-icons">bookmark</i> Saved Articles</h4>
                                         </div>
+
+                                        <!-- Empty div for adding some space at the bottom of the container -->
+                                        <div class="row" style="margin-bottom:1em;"></div>
+
                                     </div>
                                 </div>
 

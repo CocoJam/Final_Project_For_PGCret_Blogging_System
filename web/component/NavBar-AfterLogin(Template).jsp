@@ -107,7 +107,7 @@
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li class="dropdown-header">Saved articles</li>
+                                <li class="dropdown-header">Your Saved Articles</li>
                                 <c:forEach var="carted" items="${cartlist}">
                                     <li>
                                             ${carted}
