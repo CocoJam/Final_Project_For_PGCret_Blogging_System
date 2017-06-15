@@ -62,11 +62,18 @@ public class ProfilePageServlet extends HttpServlet {
 
                     innerclass.username = req.getParameter("username");
                     List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(innerclass.username);
-                    String message = "<table class=\"table table-striped table-hover table-responsive\" id=\"ArticleTable\"><tr><th>Article Names</th><th>Article Category</th><th>Date Created</th></tr>";
-                    for (Articles articles : indexList) {
-                        message += "<tr><td><a href=\"/Articles?acticleId=" + articles.getArticleid() + "\">" + articles.getArticlename() + "</a></td><td>" + articles.getCategory() + "</td><td>" + articles.getDatecreated() + "</td></tr>";
+                    String message ="";
+
+                    if (indexList.size() > 0){
+                        message = "<h3>Articles</h3><table class=\"table table-striped table-hover table-responsive\" id=\"ArticleTable\"><tr><th>Article Names</th><th>Article Category</th><th>Date Created</th></tr>";
+                        for (Articles articles : indexList) {
+                            message += "<tr><td><a href=\"/Articles?acticleId=" + articles.getArticleid() + "\">" + articles.getArticlename() + "</a></td><td>" + articles.getCategory() + "</td><td>" + articles.getDatecreated() + "</td></tr>";
+                        }
+                        message += "</table>";
+
+                    } else {
+                        message = "No articles, time to get busy writing! click <a href='Articles?add=addNewArticle'>here</a> to start writing your first Article!";
                     }
-                    message += "</table>";
                     resp.getWriter().print(message);
                     return;
                 }

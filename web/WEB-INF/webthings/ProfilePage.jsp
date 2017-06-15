@@ -143,7 +143,7 @@
 
                                     <table class="table borderless" align="center">
                                         <tr>
-                                            <th>Specs</th>
+                                            <th>Profile</th>
                                             <th>Your details</th>
                                         </tr>
                                         <tr>
@@ -184,9 +184,14 @@
 
                                     <hr>
 
-                                    <c:if test="${firendlist != null}">
-                                        <%--<table class="table table-striped table-hover table-responsive">--%>
-                                        <h2>Friend List:</h2>
+                                    <h3>Friend List:</h3>
+
+                                    <c:if test="${empty friendlist}">
+                                        Aww... ${profileInfo.name} has no friends, time to make some friends ${profileInfo.name}!
+                                    </c:if>
+
+                                    <c:if test="${not empty firendlist}">
+
 
                                         <div class="card-group">
 
@@ -194,33 +199,36 @@
                                                 <c:if test="${friend.friendusername != null}">
 
                                                     <div class="card" style="max-width: 15rem">
-                                                        <%--<div class="imageContainer" style="width: 10rem">--%>
-                                                            <c:choose>
+                                                            <%--<div class="imageContainer" style="width: 10rem">--%>
+                                                        <c:choose>
 
-                                                                <%--If this is a default profile image get the image from default photo directory--%>
-                                                                <c:when test='${friend.friendProfilePicture.startsWith("defaultslashn")}'>
-                                                            <a href="ProfilePage?accessFriend=${friend.friendusername}"
-                                                               class="friendButton"><img src="defaultImg/${friend.friendProfilePicture}"
-                                                                         alt="Card image cap"
-                                                                                         class="img-slashResponsive card-img-top center-block"></a>
-                                                                </c:when>
+                                                            <%--If this is a default profile image get the image from default photo directory--%>
+                                                            <c:when test='${friend.friendProfilePicture.startsWith("defaultslashn")}'>
+                                                                <a href="ProfilePage?accessFriend=${friend.friendusername}"
+                                                                   class="friendButton"><img
+                                                                        src="defaultImg/${friend.friendProfilePicture}"
+                                                                        alt="Card image cap"
+                                                                        class="img-slashResponsive card-img-top center-block"></a>
+                                                            </c:when>
 
-                                                                <%--Otherwise get the photo from the users photo page--%>
+                                                            <%--Otherwise get the photo from the users photo page--%>
 
-                                                                <c:otherwise>
-                                                                    <img src="Upload-photos/${friend.friendusername}/photo/${friend.friendProfilePicture}"
-                                                                         alt="Card image cap"
-                                                                         class="img-slashResponsive card-img-top center-block">
-                                                                </c:otherwise>
+                                                            <c:otherwise>
+                                                                <img src="Upload-photos/${friend.friendusername}/photo/${friend.friendProfilePicture}"
+                                                                     alt="Card image cap"
+                                                                     class="img-slashResponsive card-img-top center-block">
+                                                            </c:otherwise>
 
-                                                            </c:choose>
-                                                        <%--</div>--%>
+                                                        </c:choose>
+                                                            <%--</div>--%>
                                                         <div class="card-block">
                                                             <div style="height: 1em; line-height: 1em">
                                                                 <h7
                                                                         class="card-title"
-                                                                        style="text-overflow: ellipsis"><a href="ProfilePage?accessFriend=${friend.friendusername}"
-                                                                                                                                  class="friendButton">${friend.friendusername}</a></h7>
+                                                                        style="text-overflow: ellipsis"><a
+                                                                        href="ProfilePage?accessFriend=${friend.friendusername}"
+                                                                        class="friendButton">${friend.friendusername}</a>
+                                                                </h7>
 
                                                                 <p class="card-text"></p>
                                                             </div>
@@ -245,11 +253,15 @@
                                     <%--Articles begin--%>
                                     <div>
 
-                                <button id="showArticleList" class="btn btn-info btn-round">Show Articles List <i class='material-icons'>arrow_drop_down</i></button>
+                                        <button id="showArticleList" class="btn btn-info btn-round">Show Articles List
+                                            <i class='material-icons'>arrow_drop_down</i></button>
 
                                         <div id="ArticleTable"></div>
 
-                                        <div class="wait" style="display:none;width:69px;height:89px;border:1px solid black;position:absolute;top:50%;left:50%;padding:2px;"><img src='demo_wait.gif' width="64" height="64" /><br>Loading..</div>
+                                        <div class="wait"
+                                             style="display:none;width:69px;height:89px;border:1px solid black;position:absolute;top:50%;left:50%;padding:2px;">
+                                            <img src='demo_wait.gif' width="64" height="64"/><br>Loading..
+                                        </div>
 
                                         <table class="table table-striped table-hover table-responsive">
                                         </table>

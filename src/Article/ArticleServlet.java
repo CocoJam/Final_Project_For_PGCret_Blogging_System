@@ -123,12 +123,12 @@ public class ArticleServlet extends HttpServlet {
             //Scenario 1: When adding new article when pressed within the articleIndex.jsp.
             if (addingArticles.equals("addNewArticle")) {
                 doPostAddNewArticle(req, session);
-                req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
+                req.getRequestDispatcher("${contextPath}/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
                 return;
                 //Scenario 2: Edit inside of your own article, therefore setting ownership is important. Dispatches to the ArticleCreationPage.jsp (but in editing mode).
             } else if (addingArticles.equals("EditArticle")) {
                 doPostEnteringEditArticle(session);
-                req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
+                req.getRequestDispatcher("${contextPath}/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
                 return;
 
                 //Scenario 3: Redirect from Article Creation page once editing complete.
@@ -144,7 +144,7 @@ public class ArticleServlet extends HttpServlet {
                 session.setAttribute("articleContents", article);
                 session.setAttribute("Upload", null);
                 checkingForOwnershipArticle(username, article);
-                req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
+                req.getRequestDispatcher("${contextPath}/WEB-INF/webthings/Article.jsp").forward(req, resp);
                 return;
                 //Scenario 4: Redirect from Article Creation page once creation of a new page is completed.
             } else if (addingArticles.equals("addingToDataBase")) {
@@ -155,7 +155,7 @@ public class ArticleServlet extends HttpServlet {
                 // dispatching back into the articleIndex after finished creating new article and have uploaded the info to SQL via DAO
                 session.setAttribute("ArticleIndex", indexList);
                 session.setAttribute("Upload", null);
-                req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
+                req.getRequestDispatcher("${contextPath}/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
                 return;
             }
         }
