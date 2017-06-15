@@ -62,7 +62,7 @@
                                             <c:choose>
                                                 <%--If this is a default profile image get the image from default photo directory--%>
                                                 <c:when test='${profileInfo.profilepic.startsWith("defaultslashn")}'>
-                                                    <img src="defaultImg/${profileInfo.profilepic}"
+                                                    <img src="../../assets/img/defaultImg/${profileInfo.profilepic}"
                                                          alt="Circle Image"
                                                          class="img-rounded img-responsive img-raised">
                                                 </c:when>
@@ -75,11 +75,10 @@
                                                          class="img-rounded img-responsive img-raised">
                                                 </c:otherwise>
                                             </c:choose>
-
                                         </c:when>
 
                                         <c:otherwise>
-                                            <img src="Upload-photos/placeholder.gif" alt="Circle Image"
+                                            <img src="../../assets/img/defaultImg/placeholder.gif" alt="Circle Image"
                                                  class="img-rounded img-responsive img-raised">
                                         </c:otherwise>
                                     </c:choose>
@@ -206,12 +205,17 @@
                                                             <c:when test='${friend.friendProfilePicture.startsWith("defaultslashn")}'>
                                                                 <a href="ProfilePage?accessFriend=${friend.friendusername}"
                                                                    class="friendButton"><img
-                                                                        src="defaultImg/${friend.friendProfilePicture}"
+                                                                        src="../../assets/img/defaultImg/${friend.friendProfilePicture}"
                                                                         alt="Card image cap"
                                                                         class="img-slashResponsive card-img-top center-block"></a>
                                                             </c:when>
 
                                                             <%--Otherwise get the photo from the users photo page--%>
+
+                                                            <c:when test="${empty friend.friendProfilePicture}">
+                                                                <img src="../../assets/img/defaultImg/placeholder.gif" alt="Circle Image"
+                                                                     class="img-slashResponsive card-img-top center-block">
+                                                            </c:when>
 
                                                             <c:otherwise>
                                                                 <img src="Upload-photos/${friend.friendusername}/photo/${friend.friendProfilePicture}"
@@ -257,11 +261,6 @@
                                             <i class='material-icons'>arrow_drop_down</i></button>
 
                                         <div id="ArticleTable"></div>
-
-                                        <div class="wait"
-                                             style="display:none;width:69px;height:89px;border:1px solid black;position:absolute;top:50%;left:50%;padding:2px;">
-                                            <img src='demo_wait.gif' width="64" height="64"/><br>Loading..
-                                        </div>
 
                                         <table class="table table-striped table-hover table-responsive">
                                         </table>

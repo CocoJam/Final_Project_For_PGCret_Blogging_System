@@ -149,7 +149,7 @@
                                                                     <div class="carousel-inner">
                                                                             <%--TODO need to replace this with proper welcome to media gallery--%>
                                                                         <div class="item active">
-                                                                            <img src="/defaultImg/defaultslashn1.png"
+                                                                            <img src="../../assets/img/defaultImg/defaultslashn1.png"
                                                                                  class="center-block">
                                                                         </div>
 
@@ -216,7 +216,7 @@
                                                                             <img src="../../assets/img/audio_wave.png" id="defaultAudioWave" class="center-block">
                                                                             <audio controls>
                                                                                     <%--<p>Audio filename: opening mp3</p>--%>
-                                                                                <source src="/defaultImg/opening.mp3"
+                                                                                <source src="../../assets/img/defaultImg/opening.mp3"
                                                                                         type="audio/ogg">
                                                                             </audio>
                                                                         </div>
@@ -287,7 +287,7 @@
                                                                             <%--TODO need to replace this with proper welcome to media gallery--%>
                                                                         <div class="item active">
                                                                             <video controls class="center-block">
-                                                                                <source src="/defaultImg/pokemon.mp4">
+                                                                                <source src="../../assets/img/defaultImg/pokemon.mp4">
                                                                             </video>
                                                                         </div>
 

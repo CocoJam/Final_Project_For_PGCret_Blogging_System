@@ -67,7 +67,7 @@ public class ArticlesIndexServlet extends HttpServlet {
                 innerclass.setArticleListStatus((String) session.getAttribute("ArticleListStatus"));
 //            ArticleListStatus = (String) session.getAttribute("ArticleListStatus");
                 switchbetweenAllOrSelf(req, resp, session, innerclass.username, innerclass);
-                req.getRequestDispatcher("${contextPath}/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp); //testing
+                req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp); //testing
                 return;
             }
         } catch (Exception e) {

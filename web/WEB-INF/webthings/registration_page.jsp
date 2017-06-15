@@ -263,7 +263,7 @@
                                         if (defaultPhoto.equals((String)pageContext.getAttribute("photoname"))) {
                                             checkedOrNot = "checked";
                                         }
-                                        out.println(" <input type=\"radio\" name=\"profilePicture\" value=\"" + defaultPhoto + "\"" + checkedOrNot + "> <img src=\"defaultImg/" + defaultPhoto + "\" height='20%'><br>");
+                                        out.println(" <input type=\"radio\" name=\"profilePicture\" value=\"" + defaultPhoto + "\"" + checkedOrNot + "> <img src=\"../../assets/img/defaultImg/" + defaultPhoto + "\" height='20%'><br>");
                                     }
                                     if (username != null) {
 

@@ -82,7 +82,7 @@
                                                     <c:choose>
                                                         <%--If this is a default profile image get the image from default photo directory--%>
                                                         <c:when test='${profileInfo.profilepic.startsWith("defaultslashn")}'>
-                                                            <img src="defaultImg/${profileInfo.profilepic}"
+                                                            <img src="../../assets/img/defaultImg/${profileInfo.profilepic}"
                                                                  alt="Avatar"
                                                                  class="img-rounded img-responsive img-raised">
                                                         </c:when>

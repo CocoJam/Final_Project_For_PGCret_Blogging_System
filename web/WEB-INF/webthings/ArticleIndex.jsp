@@ -143,7 +143,7 @@
                                                     <c:choose>
                                                         <%--If this is a default profile image get the image from default photo directory--%>
                                                         <c:when test='${profileInfo.profilepic.startsWith("default")}'>
-                                                            <img src="defaultImg/${profileInfo.profilepic}"
+                                                            <img src="../../assets/img/defaultImg/${profileInfo.profilepic}"
                                                                  alt="Avatar"
                                                                  class="img-rounded img-responsive img-raised">
                                                         </c:when>
@@ -160,7 +160,7 @@
                                                     </div>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <img src="assets/img/placeholder.gif" alt="Circle Image"
+                                                    <img src="../../assets/img/defaultImg/placeholder.gif" alt="Circle Image"
                                                          class="img-rounded img-responsive img-raised">
                                                 </c:otherwise>
                                             </c:choose>
@@ -273,7 +273,7 @@
                                                                  width="96" height="72" style="margin-bottom: 5">
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <img class="card-img-top" src="../../pokemonloader4.gif"
+                                                            <img class="card-img-top" src="../../defaultImg/pokemonloader4.gif"
                                                                  alt="Circle Image"
                                                                  width="96" height="72" style="margin-bottom: 5">
                                                         </c:otherwise>
