@@ -334,13 +334,13 @@
                         <%--UPLOAD new profile photos--%>
 
                         <form id="Upload" action="/Upload" method="post"
-                              enctype="multipart/form-data">
+                              enctype="multipart/form-data" class="btn btn-white">
                             <!-- Text input box start -->
                             <div class="input-group">
                                 <span class="input-group-addon">
                                 <i class="material-icons">attachment</i>
                                 </span>
-                                <input type="file" id="file" name="file" placeholder="your file here" size="50">
+                                <input type="file" id="file" name="file" placeholder="your file here" size="50" class="btn btn-white">
                             </div>
                             <!-- Text input box end -->
 
@@ -495,11 +495,7 @@
                                             console.log(msg);
                                             if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
                                                 var ratioButton = "<div class=\"radio\"> <label>" + "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos\\${username}\\photo\\", "") + "\">" + "<span class=\"circle\"></span>" + "<span class=\"check\"></span>" + "</label>" + "<img src=\"" + msg + "\"height=\"20%\">" + "</div>" + "</br>";
-//                                                var image = "<img src=\"" + msg + "\"height=\"20%\">";
-//                                                var breakline = "<br>";
                                                 $(".content").eq(0).append(ratioButton);
-//                                                ratioButton.eq(0).append(image);
-//                                                ratioButton.eq(0).append(breakline);
                                             }
                                             <!-- if the media is successfully uploaded but it is not a picture or photo in the right formate, that the alert will pop and show -->
                                             else {
