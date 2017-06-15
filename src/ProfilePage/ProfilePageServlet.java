@@ -70,8 +70,10 @@ public class ProfilePageServlet extends HttpServlet {
             } else {
                 ProfilePAge profilePAge = profilePageDAO.getUsersProfile(req.getParameter("accessFriend"));
                 if (profilePAge != null) {
+
+                    FriendDAO friendDAO = new FriendDAO();
                     List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(req.getParameter("accessFriend"));
-                    List<Friend> friendList = new FriendDAO().selectionListOfFriends(req.getParameter("accessFriend"));
+                    List<Friend> friendList = friendDAO.selectionListOfFriends(req.getParameter("accessFriend"));
                     session.setAttribute("accessFriendfirendlist", friendList);
                     System.out.println("Firend list" + friendList);
                     System.out.println(req.getParameter("accessFriend"));

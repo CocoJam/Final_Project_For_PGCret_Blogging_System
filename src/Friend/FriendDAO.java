@@ -17,11 +17,13 @@ import java.util.List;
 public class FriendDAO {
     //Selecting list of friends, based the username to populate a list of <friend>
     public List<Friend> selectionListOfFriends(String username) {
+
         List<Friend> ListOfFriends = new ArrayList<>();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT friendusername FROM Friendlist WHERE username=?;")) {
                 System.out.println(statement);
                 statement.setString(1, username);
+
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         Friend friend = new Friend();
@@ -100,6 +102,44 @@ public class FriendDAO {
         statement.setString(1, username);
         statement.setString(2, friendusername);
         statement.executeUpdate();
+    }
+
+    public void pullAllFriendProfile(List<Friend> list) {
+        // get list, populate into SQL
+//        List<Friend> list = friendList;
+        System.out.println("123123123");
+        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+
+            System.out.println("76456546456");
+
+            try (PreparedStatement statement = connection.prepareStatement("SELECT Username, profilePicture FROM uoaslashn.UsersNames;")) {
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        for (Friend friend : list) {
+                            if (friend.getFriendusername().equals(resultSet.getString(1))) {
+                                friend.setFriendProfilePicture(resultSet.getString(2));
+                                System.out.println("Added profile picture to friend");
+                                System.out.println(resultSet.getString(1));
+                                System.out.println(resultSet.getString(2));
+                            }
+                        }
+
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Error creating database connection.");
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error. Comment not found");
+            e.printStackTrace();
+            return;
+        }
+
+//        for (Friend listOfFriend : ListOfFriends) {
+//            listOfFriend.getFriendusername()
+//        }
     }
 
 }

@@ -147,6 +147,13 @@ audio {
     object-fit: contain;
 }
 
+.friendButton {
+    position: static;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
 /*video {*/
     /*height: 240px;*/
     /*width: 426px;*/
@@ -188,6 +195,18 @@ audio {
     position: absolute;
     right: 10%;
     top: 45%;
+}
+
+.imageContainer {
+    display: block;
+    width: 100%;
+}
+
+.img-slashResponsive {
+    display: block;
+    width: 10rem;
+    height: 100px;
+    object-fit: contain;
 }
 
 /*.nav-pills-slashn > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {*/

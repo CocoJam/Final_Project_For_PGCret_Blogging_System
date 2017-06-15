@@ -396,7 +396,7 @@
                                                 var breakline = "<br>";
                                                 $(".content").eq(0).append(ratioButton);
                                                 $(".content").eq(0).append(image);
-                                                $(".content").eq(0).append(breakline);
+                                                $(".content").eq(0).append("</div>");
                                             }
                                             <!-- if the media is successfully uploaded but it is not a picture or photo in the right formate, that the alert will pop and show -->
                                             else {

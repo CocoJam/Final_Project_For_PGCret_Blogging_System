@@ -89,6 +89,9 @@ public class Login_in extends HttpServlet {
             //Getting friendlist and the username list for the search bar of firent
             List<Friend> friendList = new FriendDAO().selectionListOfFriends(username);
             List<String> userList = new FriendDAO().GetAllPeopleUsername();
+            new FriendDAO().pullAllFriendProfile(friendList);
+            System.out.println("Friends profile pic added");
+
             session.setAttribute("firendlist", friendList);
             session.setAttribute("userlist", userList);
             System.out.println("logged-in");
