@@ -106,7 +106,7 @@
                                                 <c:when test="${profileInfo.profilepic != null}">
                                                     <c:choose>
                                                         <%--If this is a default profile image get the image from default photo directory--%>
-                                                        <c:when test='${profileInfo.profilepic.startsWith("dEfAuLt")}'>
+                                                        <c:when test='${profileInfo.profilepic.startsWith("defaultslashn")}'>
                                                             <img src="defaultImg/${profileInfo.profilepic}"
                                                                  alt="Circle Image"
                                                                  class="img-rounded img-responsive img-raised">
@@ -120,7 +120,7 @@
                                                         </c:otherwise>
                                                     </c:choose>
                                                     <div class="name" id="custom-profile-name">
-                                                        <h3 class="title">${profileInfo.name}'s Articles list</h3>
+                                                        <h3 class="title">${profileInfo.name}'s Article List</h3>
                                                     </div>
                                                 </c:when>
                                                 <c:otherwise>
@@ -139,18 +139,45 @@
 
                             </div>
                         </div>
-                        <button id="listorcard" class="btn btn-round btn-info">List View</button>
-                        <label>Search: </label>
-                        <input type="text" id="searchBar">
-                        <button id="sorttitle">By title</button>
-                        <button id="sortcategory">By category</button>
-                        <button id="sortdate">By date</button>
+
+                        <!-- Article Display options start -->
+
+                        <div class="row">
+                            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col xs-offset-1">
+                                <button id="listorcard" class="btn btn-round btn-info"><i class="material-icons">view_list</i> List View</button>
+
+
+                        <button id="sorttitle" class="btn btn-round btn-success">By title</button>
+                        <button id="sortcategory" class="btn btn-round btn-warning">By category</button>
+                        <button id="sortdate" class="btn btn-round btn-danger">By date</button>
+
+                                <%--<label>Search: </label>--%>
+                                <%--<input type="text" id="searchBar">--%>
+
+                                <div class="">
+                                <input class="form-control" placeholder="Search"
+                                       id="searchBar">
+                                </div>
+
+                                <%--<div class="col-sm-3">--%>
+                                <%--<div class="form-group label-floating is-empty">--%>
+                                        <%--<label class="control-label">Search</label>--%>
+                                        <%--<input id="searchBar" type="text" class="form-control" style="width:100px;">--%>
+                                        <%--<span class="material-input"></span></div>--%>
+                                <%--</div>--%>
+
+                        </div>
+                        <!-- Article Display options end -->
+
                         <!-- This is the card based article index-->
                         <div class="row">
                             <div id="cardarticle"
                                  class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+                                <div class="pull-right">
                                 <label for="sort">Sort</label>
-                                <button id="sort">Assemble</button>
+                                <button id="sort" class="btn btn-round btn-primary btn-sm">Assemble</button>
+                                </div>
+
                                 <div class="ui-widget ui-helper-clearfix">
                                     <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix"
                                         style="margin-top: 0px;">
@@ -267,7 +294,7 @@
                                     </ul>
                                     <div id="save" class="ui-widget-content ui-state-default">
                                         <h4 class="ui-widget-header"><span
-                                                class="ui-icon ui-icon-plusthick">Save</span> Saved articles</h4>
+                                                class="ui-icon ui-icon-plusthick">Save</span> Cart</h4>
                                     </div>
                                 </div>
                             </div>
@@ -357,7 +384,7 @@
                     $(this).css("z-index", 0);
                 });
                 cardOrList = true;
-                $("#listorcard").html("To card");
+                $("#listorcard").html("<i class='material-icons'>view_module</i> Cards View");
             }
             else {
                 $("#cardarticle").fadeIn("fast", function () {
@@ -367,7 +394,7 @@
                     $(this).css("z-index", -1);
                 });
                 cardOrList = false;
-                $("#listorcard").html("List View");
+                $("#listorcard").html("<i class='material-icons'>view_list</i> List View");
             }
         });
 
@@ -512,20 +539,24 @@
             var content = $link.siblings(".card-text").html();
             var username = $link.siblings(".username").html();
             var usernameAddress = $link.siblings(".username").attr("href");
+            var date = $link.siblings(".date").html();
 
             var img = $("<p style='text-align:center'></p>");
             "ProfilePage?accessFriend=111"
             if (image != undefined) {
-                img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<br/>" + "<a href=\"" + usernameAddress + "\">" + username + "</a>" + "<br/>" + "<img src=\'" + image + "\'width=\"96\" height=\"72\">" + "<p>" + content + "</p>");
+                img.html("<a href=\"" + hyper + "\">"+"<h1>" + title +"<h1>" +"</a>" + "<a href=\"" + usernameAddress + "\">" + username + "</a>" +"<h3><strong>Written on:</strong>"+ date +"</h3>" + "<img src=\'" + image + "\'width=\"50%\">" + "<p>" + content + "</p>");
             }
             else {
                 img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<p>" + content + "</p>");
             }
             var linking = $("<a href=\"" + hyper + "\">");
+            var windowWidth = $(window).width()*0.5;
+            var windowheight = $(window).height()*0.5;
             setTimeout(function () {
                 img.dialog({
-                    width: 400,
-                    height: 400,
+                    title: title,
+                    width: windowWidth,
+//                    height: windowheight,
                     modal: true
                 });
             }, 1);
