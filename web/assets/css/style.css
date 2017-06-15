@@ -108,8 +108,24 @@ a, a:hover, a:focus {
 /* NAVBAR - custom */
 /* changes applied in material-kit.css to navbar-inverse */
 
-/* Make image inside article content div fit */
-
+/* RADIO BUTTON - blue */
+.radio label .check {
+    height: 15px;
+    width: 15px;
+    border-radius: 100%;
+    background-color: #03A9F4;
+    -webkit-transform: scale3d(0,0,0);
+    -moz-transform: scale3d(0,0,0);
+    -o-transform: scale3d(0,0,0);
+    -ms-transform: scale3d(0,0,0);
+    transform: scale3d(0,0,0);
+}
+.radio input[type=radio]:checked ~ .check {
+    background-color: #03A9F4;
+}
+.radio input[type=radio]:checked ~ .circle {
+    border-color: #03A9F4;
+}
 
 /* media-query flags start */
 /* Code below for debugging purposes, to display the responsive design breakpoints upon resizing of window */
