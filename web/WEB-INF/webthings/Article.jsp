@@ -12,7 +12,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Article</title>
+    <title>Article - ${articleContents.articlename} - by ${articleContents.username}</title>
 
     <%@include file="../../component/Header(styling Template).html" %>
 
@@ -183,7 +183,9 @@
 
                                     <!-- Display article comments section -->
 
+                                    <c:if test="${not empty commentlist}">
                                     <h4 style="margin-left: -1em;">View comments:</h4>
+                                    </c:if>
 
                                     <!-- Display comments -->
                                     <div id="containComments">
@@ -336,11 +338,13 @@
                 collapsebutton.className = "btn btn-round btn-white btn-sm";
                 collapsebutton.id = "comment-collapsible-toggle";
                 collapsebutton.style.marginTop = "-1em";
+                collapsebutton.style.marginBottom = "1em";
 
                 /* Collapsible Div */
                 var collapsediv = document.createElement("div");
                 collapsediv.id = "comment-collapsible-" + Data.CommentId;
                 collapsediv.className = "collapse";
+                collapsediv.style.marginTop = "-1em";
                 collapsediv.style.marginBottom = "1em";
 
                 /* Edit Input */

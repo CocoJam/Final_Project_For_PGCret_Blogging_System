@@ -139,7 +139,7 @@
 
                             </div>
                         </div>
-                        <button id="listorcard">To list</button>
+                        <button id="listorcard" class="btn btn-round btn-info">List View</button>
                         <label>Search: </label>
                         <input type="text" id="searchBar">
                         <button id="sorttitle">By title</button>
@@ -267,7 +267,7 @@
                                     </ul>
                                     <div id="save" class="ui-widget-content ui-state-default">
                                         <h4 class="ui-widget-header"><span
-                                                class="ui-icon ui-icon-plusthick">Save</span> Cart</h4>
+                                                class="ui-icon ui-icon-plusthick">Save</span> Saved articles</h4>
                                     </div>
                                 </div>
                             </div>
@@ -367,7 +367,7 @@
                     $(this).css("z-index", -1);
                 });
                 cardOrList = false;
-                $("#listorcard").html("To list");
+                $("#listorcard").html("List View");
             }
         });
 
