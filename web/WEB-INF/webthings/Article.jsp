@@ -220,9 +220,8 @@
                                                 <c:if test="${content.owner || articleContents.owner}">
                                                 <button data-toggle="collapse"
                                                         data-target="#comment-collapsible-${content.commentId}"
-                                                        class="btn btn-round btn-info btn-sm" id="comment-collapsible-toggle" style="margin-top: -1em;">
-                                                    <span class="hidden-xs"> Edit/Delete Comment</span>
-                                                    <span class="hidden-lg hidden-md hidden-sm"> Edit/Delete</span>
+                                                        class="btn btn-round btn-white btn-sm" id="comment-collapsible-toggle" style="margin-top: -1em;">
+                                                    Edit/Delete
                                                 </button>
 
                                                 <!-- Container for the show/hide -->
@@ -331,10 +330,10 @@
 
                 /* Collapsible */
                 var collapsebutton = document.createElement("button");
-                collapsebutton.innerHTML = "Edit/Delete Comment";
+                collapsebutton.innerHTML = "Edit/Delete";
                 collapsebutton.setAttribute("data-toggle","collapse");
                 collapsebutton.setAttribute("data-target","#comment-collapsible-" + Data.CommentId);
-                collapsebutton.className = "btn btn-round btn-info btn-sm";
+                collapsebutton.className = "btn btn-round btn-white btn-sm";
                 collapsebutton.id = "comment-collapsible-toggle";
                 collapsebutton.style.marginTop = "-1em";
 
