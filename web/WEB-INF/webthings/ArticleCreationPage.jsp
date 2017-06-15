@@ -285,7 +285,6 @@
 <script src="../../Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
 <script src="../../Trumbowyg/dist/plugins/noembed/trumbowyg.noembed.js"></script>
 <script src="../../Trumbowyg/dist/plugins/table/trumbowyg.table.min.js"></script>
-<script src="../../Trumbowyg/dist/plugins/base64/trumbowyg.base64.min.js"></script>
 
 <!-- WYSIWYG -->
 <!-- WYSIWYG Editor Implementation START -->
@@ -347,7 +346,6 @@
 
         insertImage: 'Insert Image',
         upload: "Upload Image",
-        base64: 'Embed Image',
 
         insertAudio: "Insert Audio",
         noembed: "Embed Media",
@@ -376,7 +374,7 @@
         btnsDef: {
             // Customizables dropdowns
             Multimedia: {
-                dropdown: ['insertImage', 'base64', 'insertAudio', 'noembed'],
+                dropdown: ['insertImage', 'insertAudio', 'noembed'],
                 ico: 'upload'
             }
         },
