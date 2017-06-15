@@ -32,8 +32,14 @@
     <%@include file="../../component/Header(styling Template).html" %>
 
     <style>
+        /* Delete Profile - MODAL BACKDROP */
         .modal-backdrop {
             z-index: -1;
+        }
+
+        /* Delete Profile - SHRINK CARD */
+        #loginCard {
+            margin: 0;
         }
     </style>
 
@@ -99,7 +105,7 @@
 
                                 <c:choose>
                                     <c:when test="${log}">
-                                        <h4>Edit profile</h4>
+                                        <h4>Edit Profile</h4>
                                     </c:when>
                                     <c:otherwise>
                                         <h4>Sign up with Slash N</h4>
@@ -111,16 +117,13 @@
 
                             <c:choose>
                                 <c:when test="${log}">
-                                    <p class="text-divider">Please update your details below</p>
+                                    <p class="text-divider">Please update your details below:</p>
                                 </c:when>
                                 <c:otherwise>
-                                    <p class="text-divider">Please enter your details to register</p>
+                                    <p class="text-divider">Please enter your details to register:</p>
                                 </c:otherwise>
                             </c:choose>
 
-                            <!-- TODO use JSTL to change this text dynamically based on login status -->
-
-                            <!-- TODO change this text when user is logged in to: "Please update your details" -->
                             <div class="content">
 
                                 <!-- TEXT BOXES -->
@@ -159,7 +162,7 @@
 
                                                 //If the msg is true, return 'The username already exists'
                                                 if (msg == "true") {
-                                                    $(reponseToUsername).text("The username already exists");
+                                                    $(reponseToUsername).text("The username already exist");
                                                     $("#reponseToUsername").css({"color": "red", "font-weight": "bold"})
                                                 } else {
                                                     $(reponseToUsername).text("You can use the username!");
@@ -314,7 +317,7 @@
                                         <%--Scenario 1: when already logged in see ChangeUserInformation--%>
                                         <c:when test="${log}">
                                             <input type="submit" name="log" value="Update Profile"
-                                                   class="btn btn-block btn-danger btn-lg">
+                                                   class="btn btn-block btn-success btn-lg">
                                         </c:when>
                                         <%--Scenario 2: when NOT logged in then just see Registration--%>
                                         <c:otherwise>
@@ -331,13 +334,13 @@
                         <%--UPLOAD new profile photos--%>
 
                         <form id="Upload" action="/Upload" method="post"
-                              enctype="multipart/form-data">
+                              enctype="multipart/form-data" class="btn btn-white">
                             <!-- Text input box start -->
                             <div class="input-group">
                                 <span class="input-group-addon">
                                 <i class="material-icons">attachment</i>
                                 </span>
-                                <input type="file" id="file" name="file" placeholder="your file here" size="50">
+                                <input type="file" id="file" name="file" placeholder="your file here" size="50" class="btn btn-white">
                             </div>
                             <!-- Text input box end -->
 
@@ -345,16 +348,20 @@
                             <div class="footer text-center">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <input type="submit" name="Upload" value="Upload Image"
-                                           class="btn btn-block btn-success btn-lg"/>
+                                           class="btn btn-block btn-info btn-lg"/>
                                 </div>&nbsp;
                             </div>
                         </form>
 
                         <!-- Delete profile start -->
 
-                        <div class="container">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                        <button type="button" class="btn btn-block btn-danger btn-lg" data-toggle="modal" data-target="#myModal">Delete Profile</button>
+                        </div>
+
+                        <%--<div class="container">--%>
                             <!-- Trigger the modal with a button -->
-                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Profile Delete</button>
+                            <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Profile Delete</button>--%>
 
                             <!-- Modal -->
                             <div class="modal fade" id="myModal" role="dialog">
@@ -371,12 +378,17 @@
                                                 <form class="form" method="post" action="/Deleting" id="loginForm">
 
                                                     <!-- Form heading -->
-                                                    <div class="header header-info text-center">
-                                                        <h4>Leaving to Slash N</h4>
+                                                    <div class="header header-danger text-center">
+                                                        <h4>Leaving Slash N</h4>
                                                     </div>
 
                                                     <!-- Form subtext -->
-                                                    <p class="text-divider">Please Fill in the Following Delete</p>
+                                                    <span class="text-divider">
+                                                        <p>We're sorry to see you go!</p>
+                                                        <p>If you are sure about deleting your account, please reconfirm your username and password to continue.</p>
+                                                        <p>You will not be able to recover your account once it's deleted.</p>
+                                                    </span>
+
                                                     <div class="content">
 
                                                         <!-- TEXT BOXES -->
@@ -405,7 +417,7 @@
                                                     <div class="footer text-center" class="form">
                                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                                             <input type="submit" value="Deleting Profile" name="log"
-                                                                   class="btn btn-block btn-success btn-lg clickOnce">
+                                                                   class="btn btn-block btn-danger btn-lg clickOnce">
                                                         </div>
 
                                                     </div>
@@ -419,7 +431,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        <%--</div>--%>
 
                         <!-- Delete profile end -->
 
@@ -483,12 +495,8 @@
                                         success: function (msg) {
                                             console.log(msg);
                                             if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
-                                                var ratioButton = "<div class=\"radio\">  <label>" + "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos\\${username}\\photo\\", "") + "\">  <label>" + "</div>";
-                                                var image = "<img src=\"" + msg + "\"height=\"20%\">";
-                                                var breakline = "<br>";
+                                                var ratioButton = "<div class=\"radio\"> <label>" + "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos\\${username}\\photo\\", "") + "\">" + "<span class=\"circle\"></span>" + "<span class=\"check\"></span>" + "</label>" + "<img src=\"" + msg + "\"height=\"20%\">" + "</div>" + "</br>";
                                                 $(".content").eq(0).append(ratioButton);
-                                                $(".content").eq(0).append(image);
-                                                $(".content").eq(0).append(breakline);
                                             }
                                             <!-- if the media is successfully uploaded but it is not a picture or photo in the right formate, that the alert will pop and show -->
                                             else {
