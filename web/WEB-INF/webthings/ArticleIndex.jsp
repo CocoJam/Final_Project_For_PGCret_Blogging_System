@@ -266,7 +266,6 @@
                                                         <%--<c:if test="${articleList.equals('all')}">--%>
 
                                                         <%--</c:if>--%>
-                                                    <p class="articlename" hidden>${index.articlename}</p>
                                                     <c:choose>
                                                         <c:when test="${not empty index.firstimage}">
                                                             <img class="card-img-top" src="${index.firstimage}"
@@ -622,10 +621,12 @@
                 $target = $(event.target);
             var hyper = $target.siblings("a").attr('href');
             var title = $target.siblings(".articlename").text();
+            console.log(hyper);
+            console.log(title);
 
             if ($target.is("a.ui-icon-plusthick")) {
                 deleteImage($item);
-                $.post("/ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
+                $.post("/ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title+ "</a>"})
             } else if ($target.is("a.ui-icon-zoomin")) {
                 viewLargerImage($target);
             } else if ($target.is("a.ui-icon-refresh")) {
