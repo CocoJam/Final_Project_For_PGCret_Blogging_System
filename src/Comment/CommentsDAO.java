@@ -139,10 +139,26 @@ public class CommentsDAO {
         }
     }
 
-    public Comments selectionLastComment() {
+//    public Comments selectionLastComment() {
+//        Comments comments = null;
+//        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
+//            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Comments ORDER BY CommentID DESC Limit 1;")) {
+//                comments = makeComment(statement);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Error. Comment not found");
+//            e.printStackTrace();
+//        }
+//        return comments;
+//    }
+
+    public Comments selectionLastComment(int articleId, String username, String comment) {
         Comments comments = null;
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Comments ORDER BY CommentID DESC Limit 1;")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Comments WHERE ArticlesID=? AND CommenterName= ? AND Comments =? ORDER BY CommentID DESC Limit 1;")) {
+                statement.setInt(1, articleId);
+                statement.setString(2,username);
+                statement.setString(3,comment);
                 comments = makeComment(statement);
             }
         } catch (SQLException e) {

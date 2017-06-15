@@ -27,19 +27,42 @@ import static Connection.ConnectionToTheDataBase.cookieLogOut;
 //This is the servlet which gets the POST and GET methods for the ProfilePage.jsp
 
 public class ProfilePageServlet extends HttpServlet {
-    ProfilePageDAO profilePageDAO;
-    private String username;
+    public class innerclass{
+        public ProfilePageDAO getProfilePageDAO() {
+            return profilePageDAO;
+        }
+
+        public void setProfilePageDAO(ProfilePageDAO profilePageDAO) {
+            this.profilePageDAO = profilePageDAO;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        ProfilePageDAO profilePageDAO;
+        private String username;
+    }
+//    ProfilePageDAO profilePageDAO;
+//    private String username;
 
     //    Grabs the profile page from the Database based on the username (stored in session)
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        profilePageDAO = new ProfilePageDAO();
-        username = (String) session.getAttribute("username");
+        innerclass innerclass =new innerclass();
+        innerclass.setProfilePageDAO(new ProfilePageDAO());
+//        profilePageDAO = new ProfilePageDAO();
+        innerclass.setUsername((String) session.getAttribute("username"));
+
 
         if (req.getParameter("clickedShowList") != null) {
             if (req.getParameter("clickedShowList").equals("clickedShowList")) {
-                List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(username);
+                List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(innerclass.username);
                 String message = "<table class=\"table table-striped table-hover table-responsive\" id=\"ArticleTable\"><tr><th>Article Names</th><th>Article Category</th><th>Date Created</th></tr>";
                 for (Articles articles : indexList) {
                     message += "<tr><td><a href=\"/Articles?acticleId=" + articles.getArticleid() + "\">" + articles.getArticlename() + "</a></td><td>" + articles.getCategory() + "</td><td>" + articles.getDatecreated() + "</td></tr>";
@@ -49,7 +72,7 @@ public class ProfilePageServlet extends HttpServlet {
                 return;
             }
         }
-        ProfilePAge profilePAge = profilePageDAO.getUsersProfile(username);
+        ProfilePAge profilePAge = innerclass.profilePageDAO.getUsersProfile(innerclass.username);
         session.setAttribute("profileInfo", profilePAge);
         closingConnection();
         req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
@@ -59,6 +82,8 @@ public class ProfilePageServlet extends HttpServlet {
     //    The point of this: TODO need to cleanup connections from Login/Registration servlet (Maybe POST directly(?))
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        innerclass innerclass =new innerclass();
+        innerclass.setProfilePageDAO(new ProfilePageDAO());
         if (req.getParameter("accessFriend") == null) {
             doPost(req, resp);
         } else {
@@ -67,7 +92,7 @@ public class ProfilePageServlet extends HttpServlet {
                 req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                 return;
             } else {
-                ProfilePAge profilePAge = profilePageDAO.getUsersProfile(req.getParameter("accessFriend"));
+                ProfilePAge profilePAge = innerclass.profilePageDAO.getUsersProfile(req.getParameter("accessFriend"));
                 if (profilePAge != null) {
                     List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(req.getParameter("accessFriend"));
                     List<Friend> friendList = new FriendDAO().selectionListOfFriends(req.getParameter("accessFriend"));

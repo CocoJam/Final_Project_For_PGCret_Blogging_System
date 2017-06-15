@@ -22,7 +22,6 @@ public class FriendDAO {
             try (PreparedStatement statement = connection.prepareStatement("SELECT friendusername FROM Friendlist WHERE username=?;")) {
                 System.out.println(statement);
                 statement.setString(1, username);
-                System.out.println(statement);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         Friend friend = new Friend();

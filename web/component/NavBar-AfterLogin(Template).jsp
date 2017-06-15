@@ -252,12 +252,23 @@
             e.preventDefault();
         }
     });
-    $("a:not(.dropdown *)").click(function (event) {
-        if ($(this).hasClass("disabled")) {
-            event.preventDefault();
-        }
-        $(this).addClass("disabled");
-    });
+//    $("a:not(.dropdown *)").click(function (event) {
+//        if ($(this).hasClass("disabled")) {
+//            event.preventDefault();
+//        }
+//        $(this).addClass("disabled");
+//    });
+    //    $('.clickOnce').click(function (e) {
+    //        e.preventDefault();
+    //    });
+
+    //    $(document).ready(
+    //        function clickOnce() {
+    //            $(".clickOnce").on("click", function () {
+    //                $(this).off('click');
+    //            })
+    //        }
+    //    )
     $(document).ready(function () {
         $("#imageselect").change(function () {
             $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + imageValue + ".jpg')");

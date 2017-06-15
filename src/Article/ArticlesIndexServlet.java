@@ -18,20 +18,54 @@ import static Connection.ConnectionToTheDataBase.cookieTracker;
  * Created by ljam763 on 25/05/2017.
  */
 public class ArticlesIndexServlet extends HttpServlet {
-    private List<Articles> indexList;
-    private String username;
-    private String ArticleListStatus;
+    public class innerclass{
+        private List<Articles> indexList;
+
+        public List<Articles> getIndexList() {
+            return indexList;
+        }
+
+        public void setIndexList(List<Articles> indexList) {
+            this.indexList = indexList;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getArticleListStatus() {
+            return ArticleListStatus;
+        }
+
+        public void setArticleListStatus(String articleListStatus) {
+            ArticleListStatus = articleListStatus;
+        }
+
+        private String username;
+        private String ArticleListStatus;
+    }
+
+//    private List<Articles> indexList;
+//    private String username;
+//    private String ArticleListStatus;
 
     //Hyperlink from the Profilepage.jsp has parameter called ArticleList and the value of the parameter will return ALL or SELF.
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         cookieLogOut(req,resp);
         HttpSession session = req.getSession();
-        username = (String) session.getAttribute("username");
+        innerclass innerclass =new innerclass();
+        innerclass.setUsername((String) session.getAttribute("username"));
+//        username = (String) session.getAttribute("username");
         if (req.getParameter("articleList") != null) {
             session.setAttribute("ArticleListStatus", req.getParameter("articleList"));
-            ArticleListStatus = (String) session.getAttribute("ArticleListStatus");
-            switchbetweenAllOrSelf(req, resp, session, username);
+            innerclass.setArticleListStatus((String) session.getAttribute("ArticleListStatus"));
+//            ArticleListStatus = (String) session.getAttribute("ArticleListStatus");
+            switchbetweenAllOrSelf(req, resp, session, innerclass.username, innerclass);
             req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp); //testing
             return;
         }
@@ -40,20 +74,22 @@ public class ArticlesIndexServlet extends HttpServlet {
     }
 
     //This: (1) determines whether to grab ALL or SELF (2) populate the list to be sent back
-    private void switchbetweenAllOrSelf(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String username) {
+    private void switchbetweenAllOrSelf(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String username, innerclass innerclass) {
         System.out.println("Checking self or all");
-        if (ArticleListStatus != null) {
-            if (ArticleListStatus.equals("self")) {
+        if (innerclass.ArticleListStatus != null) {
+            if (innerclass.ArticleListStatus.equals("self")) {
                 System.out.println("self");
                 session.setAttribute("articleList", "self");
-                indexList = new ArticleListObjectDAO().selectionArticlesList(username);
-                checkingForOwnership(username, indexList);
-                session.setAttribute("ArticleIndex", indexList);
-            } else if (ArticleListStatus.equals("all")) {
+                innerclass.setIndexList( new ArticleListObjectDAO().selectionArticlesList(username));
+//                indexList = new ArticleListObjectDAO().selectionArticlesList(username);
+                checkingForOwnership(username, innerclass.indexList);
+                session.setAttribute("ArticleIndex", innerclass.indexList);
+            } else if (innerclass.ArticleListStatus.equals("all")) {
                 session.setAttribute("articleList", "all");
-                indexList = new ArticleListObjectDAO().selectionAllArticlesList();
-                checkingForOwnership(username, indexList);
-                session.setAttribute("ArticleIndex", indexList);
+                innerclass.setIndexList(new ArticleListObjectDAO().selectionAllArticlesList());
+//                indexList = new ArticleListObjectDAO().selectionAllArticlesList();
+                checkingForOwnership(username, innerclass.indexList);
+                session.setAttribute("ArticleIndex",  innerclass.indexList);
             }
         } else {
             cookieTracker(req, resp);

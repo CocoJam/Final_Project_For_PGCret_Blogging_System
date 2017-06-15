@@ -24,10 +24,12 @@ public class FriendServlet extends HttpServlet {
         String username = req.getParameter("username");
         String friendname = req.getParameter("friendname");
         String friendprocess = req.getParameter("friendprocess");
+        //Two way adding friends.
         if (username != null && friendname != null && friendprocess != null && friendprocess.equals("add")){
            boolean addedoneway = friendDAO.AddFriends(username,friendname);
            boolean addedtwoway = friendDAO.AddFriends(friendname,username);
         }
+        //Two way deleting friends
         else if (username != null && friendname != null && friendprocess != null && friendprocess.equals("unadd")){
             boolean deleteFriends = friendDAO.DeleteFriends(username,friendname);
             boolean deleteFriends1 = friendDAO.DeleteFriends(friendname,username);
@@ -39,8 +41,8 @@ public class FriendServlet extends HttpServlet {
         System.out.println("ajax came here");
         List<Friend> friendList =friendDAO.selectionListOfFriends(username);
         session.setAttribute("firendlist", friendList);
-//        System.out.println(friendList);
-//        req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+        System.out.println(friendList);
+        req.getRequestDispatcher("/ProfilePage").forward(req, resp);
         return;
     }
 }
