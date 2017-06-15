@@ -93,6 +93,7 @@ public class ArticleServlet extends HttpServlet {
     }
 
     private void addNewArticle(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println(req.getParameter("add") + "help");
         if (req.getParameter("add").equals("addNewArticle")) {
             doPost(req, resp);
             return;
