@@ -517,17 +517,19 @@
             var img = $("<p style='text-align:center'></p>");
             "ProfilePage?accessFriend=111"
             if (image != undefined) {
-                img.html("<a href=\"" + hyper + "\">"+"<h1>" + title +"<h1>" +"</a>" + "<br/>" + "<a href=\"" + usernameAddress + "\">" +"<h2>"+ username+"</h2>" + "</a>" + "<br/>" + "<h3><strong>Written on:</strong>"+ date +"</h3>" + "<img src=\'" + image + "\'width=\"50%\">" + "<p>" + content + "</p>");
+                img.html("<a href=\"" + hyper + "\">"+"<h1>" + title +"<h1>" +"</a>" + "<a href=\"" + usernameAddress + "\">" + username + "</a>" +"<h3><strong>Written on:</strong>"+ date +"</h3>" + "<img src=\'" + image + "\'width=\"50%\">" + "<p>" + content + "</p>");
             }
             else {
                 img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<p>" + content + "</p>");
             }
             var linking = $("<a href=\"" + hyper + "\">");
+            var windowWidth = $(window).width()*0.5;
+            var windowheight = $(window).height()*0.5;
             setTimeout(function () {
                 img.dialog({
                     title: title,
-                    width: 400,
-                    height: 400,
+                    width: windowWidth,
+//                    height: windowheight,
                     modal: true
                 });
             }, 1);
