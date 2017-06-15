@@ -392,7 +392,7 @@
                                             console.log(msg);
                                             if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
                                                 var ratioButton = "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos\\${username}\\photo\\", "") + "\">";
-                                                var image = "<img src=\"" + msg + "\"height=\"20%\">";
+                                                var image = "<img src=\"" + msg + "\"height=\"20%\" class='center-block'>";
                                                 var breakline = "<br>";
                                                 $(".content").eq(0).append(ratioButton);
                                                 $(".content").eq(0).append(image);
