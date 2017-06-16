@@ -60,7 +60,7 @@ public class Upload_files extends HttpServlet {
         System.out.println("What");
         ServletContext servletContext = Making_Upload_File();
 
-        filePath = servletContext.getRealPath("/Upload-photos") + "/";
+        filePath = servletContext.getRealPath("Upload-photos/");
         dir_name = (String) session.getAttribute("username");
         File dir = new File(filePath + dir_name);
         if (!dir.exists()) {
@@ -118,11 +118,11 @@ public class Upload_files extends HttpServlet {
                     }
                     fileNameEditting(); //this slims down the filenname before it is written
                     fi.write(file);
-                    System.out.println("Something is writeen");
+                    System.out.println("Something is written");
                     resp.getWriter().print(filePath(file));
                     return;
                 } else {
-                    System.out.println("somthing else is throwing here");
+                    System.out.println("something else is throwing here");
                 }
             }
         } catch (FileUploadException ex) {
@@ -138,11 +138,11 @@ public class Upload_files extends HttpServlet {
 
     private ServletContext Making_Upload_File() {
         ServletContext servletContext = getServletContext();
-        filePath = servletContext.getRealPath("/Upload-photos");
+        filePath = servletContext.getRealPath("Upload-photos/");
 
         File uploads = new File(filePath);
         if (!uploads.exists()) {
-            System.out.println("upload-photos");
+            System.out.println("upload-photos/");
             boolean made = uploads.mkdir();
             System.out.println(made);
         }
@@ -219,7 +219,7 @@ public class Upload_files extends HttpServlet {
         Map<String, List<String>> mediaMapping = mapSetUp();
         assigningMultipleMediaIntoMap(list, mediaMapping);
         request.setAttribute("mediaOutPut", mediaMapping);
-        request.getRequestDispatcher("/WEB-INF/webthings/MultiMedia.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/webthings/MultiMedia.jsp").forward(request, response);
     }
 
     //Trilogy 3: Using end of the file name to sort into the right folders.
@@ -240,10 +240,10 @@ public class Upload_files extends HttpServlet {
             ServletContext servletContext = getServletContext();
             if (media.equals("all")) {
                 request.setAttribute("AllOrSelf", "all");
-                userPath = servletContext.getRealPath("/Upload-photos");
+                userPath = servletContext.getRealPath("Upload-photos/");
             } else if (media.equals("self")) {
                 request.setAttribute("AllOrSelf", "self");
-                userPath = servletContext.getRealPath("/Upload-photos/" + username);
+                userPath = servletContext.getRealPath("Upload-photos/" + username);
             }
         }
     }

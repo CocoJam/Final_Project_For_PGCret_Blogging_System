@@ -93,7 +93,7 @@
                             <c:choose>
                                 <%--If this is a default profile image get the image from default photo directory--%>
                                 <c:when test='${profileInfo.profilepic.startsWith("defaultslashn")}'>
-                                    <img src="../../assets/img/defaultImg/${profileInfo.profilepic}"
+                                    <img src="assets/img/defaultImg/${profileInfo.profilepic}"
                                          height="20">
                                 </c:when>
 
@@ -198,7 +198,7 @@
             <ul class="nav navbar-nav navbar-left">
                 <li>
                     <%--<button type="button" class="btn btn-round btn-just-icon btn-simple" style="color:white" data-toggle="collapse" data-target="#searchform"><i class="material-icons">code</i></button>--%>
-                    <form id="searchform" action="/ProfilePage" method="get" class="navbar-form" role="search">
+                    <form id="searchform" action="ProfilePage" method="get" class="navbar-form" role="search">
                         <div class="input-group" style="top:0.2em;">
                             <input list="usernames" name="accessFriend" class="form-control searchBar" placeholder="Search People"
                                    id="NameBarForm" list="usernames" style="width:100px;">
@@ -230,7 +230,7 @@
         if (imageValue > 1) {
             imageValue = imageValue - 1;
 //            $("#imageselect").val(imageValue);
-            $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + imageValue + ".jpg')");
+            $('#custom-bg-user').css("background-image", "url('assets/img/background/bg-0" + imageValue + ".jpg')");
             $("#bgImgStatus").text("Background " + imageValue + "/5");
         }
     });
@@ -240,7 +240,7 @@
         if (imageValue < 5) {
             imageValue = imageValue + 1;
 //            $("#imageselect").val(imageValue);
-            $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + imageValue + ".jpg')");
+            $('#custom-bg-user').css("background-image", "url('assets/img/background/bg-0" + imageValue + ".jpg')");
             $("#bgImgStatus").text("Background " + imageValue + "/5");
         }
     });
@@ -266,7 +266,7 @@
 
     $(document).ready(function () {
         $("#imageselect").change(function () {
-            $('#custom-bg-user').css("background-image", "url('../../assets/img/background/bg-0" + imageValue + ".jpg')");
+            $('#custom-bg-user').css("background-image", "url('assets/img/background/bg-0" + imageValue + ".jpg')");
             console.log(document.getElementById('custom-bg-user'));
         });
     });

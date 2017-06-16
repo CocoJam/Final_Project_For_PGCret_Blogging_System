@@ -1,10 +1,7 @@
 package Login;
 
-import Article.ArticleListObjectDAO;
-import Article.Articles;
 import Friend.Friend;
 import Friend.FriendDAO;
-import com.sun.xml.internal.bind.v2.TODO;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,9 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-
 import static Connection.ConnectionToTheDataBase.closingConnection;
-import static Connection.ConnectionToTheDataBase.conn;
 import static Connection.ConnectionToTheDataBase.cookieTracker;
 
 
@@ -84,7 +79,7 @@ public class Login_in extends HttpServlet {
                     if (!innerclass.username.equals(session.getAttribute("username")) && !innerclass.password.equals(session.getAttribute("password"))) {
                         if (loginLogic(req, resp, session, loginPassing, innerclass)) {
                             closingConnection();
-                            req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+                            req.getRequestDispatcher("ProfilePage").forward(req, resp);
                             return;
                         }
 
@@ -92,7 +87,7 @@ public class Login_in extends HttpServlet {
                     } else {
                         System.out.println("Login");
                         closingConnection();
-                        req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+                        req.getRequestDispatcher("WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                         return;
                     }
                 }
@@ -104,7 +99,7 @@ public class Login_in extends HttpServlet {
             } else {
                 session.setAttribute("log", false); //TODO refactoring for login status.
                 System.out.println("logged-in rejected");
-                req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
+                req.getRequestDispatcher("login_page.jsp").forward(req, resp);
             }
         } catch (Exception e) {
             cookieTracker(req, resp);
@@ -134,14 +129,14 @@ public class Login_in extends HttpServlet {
                 session.setAttribute("userlist", userList);
                 System.out.println("logged-in");
                 System.out.println(session.getAttribute("username"));
-                req.getRequestDispatcher("/ProfilePage").forward(req, resp); //TODO to take out.
+                req.getRequestDispatcher("ProfilePage").forward(req, resp); //TODO to take out.
                 return true;
             } else {
                 //Login in logic fail.
                 session.setAttribute("log", false); //TODO refactoring for login status.
                 System.out.println("logged-in rejected");
                 req.setAttribute("loginFail", true); //attribute to indicate to login_page jsp to shake if rejected onload
-                req.getRequestDispatcher("/login_page.jsp").forward(req, resp);
+                req.getRequestDispatcher("login_page.jsp").forward(req, resp);
                 return false;
             }
         } catch (Exception e) {
@@ -162,18 +157,18 @@ public class Login_in extends HttpServlet {
                 if (registration != null) { //TODO refactor to switch statement.
                     //checking if user is login already bound back to profilepage when registration is clicked.
                     if (session.getAttribute("log") == null) {
-                        req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+                        req.getRequestDispatcher("WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                         return;
                     }
                     //If the user is logined in already the user will be transfer back to his own profilepage.
                     if ((boolean) session.getAttribute("log")) {
-                        req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+                        req.getRequestDispatcher("ProfilePage").forward(req, resp);
                         return;
                     } else {
                         //If user is not login then it will bring them to the registration page.
                         if (registration.equals("Register")) {
                             session.setAttribute("Upload", "ArticlesUpload");
-                            req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+                            req.getRequestDispatcher("WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                             return;
                         }
                     }

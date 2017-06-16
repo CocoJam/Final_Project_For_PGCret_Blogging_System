@@ -44,7 +44,7 @@ public class Registration extends HttpServlet {
             if (req.getParameter("log") != null) {
                 if (req.getParameter("log").equals("Update Profile")) {
                     session.setAttribute("Upload", "ProfilePageUpload");
-                    req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+                    req.getRequestDispatcher("WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                     return;
                 }
                 //  TODO check logic of returning boolean from selectionUsersCheck()
@@ -87,7 +87,7 @@ public class Registration extends HttpServlet {
                     session.setAttribute("profileInfo", profilePage);
 //                session.setAttribute("password",password);
                     closingConnection();
-                    req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+                    req.getRequestDispatcher("WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                     return;
                 }
 //            Scenario 2: create new profile scenario
@@ -101,11 +101,11 @@ public class Registration extends HttpServlet {
                         System.out.println(profilePage.getUsername());
                         session.setAttribute("username", profilePage.getUsername());
                         session.setAttribute("log", true);
-                        req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+                        req.getRequestDispatcher("/slashslash/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                     } catch (SQLException e1) {
                         //If SQL Exception thrown by profilePageDAO.CreateUsersProfile() (when username already exists), then this is caught here and the user is redirected to the registration page where they have to start again.
                         closingConnection();
-                        req.getRequestDispatcher("/WEB-INF/webthings/registration_page.jsp").forward(req, resp);
+                        req.getRequestDispatcher("WEB-INF/webthings/registration_page.jsp").forward(req, resp);
                         return;
                     }
                 }

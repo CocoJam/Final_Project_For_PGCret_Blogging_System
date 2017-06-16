@@ -46,7 +46,7 @@ public class FriendServlet extends HttpServlet {
 
         session.setAttribute("firendlist", friendList);
         System.out.println(friendList);
-        req.getRequestDispatcher("/ProfilePage").forward(req, resp);}
+        req.getRequestDispatcher("ProfilePage").forward(req, resp);}
         catch (Exception e){
             cookieTracker(req,resp);
         }

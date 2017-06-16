@@ -4,7 +4,6 @@ import Article.ArticleListObjectDAO;
 import Article.Articles;
 import Friend.Friend;
 import Friend.FriendDAO;
-import com.sun.net.httpserver.HttpsServer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,11 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
-import static Connection.ConnectionToTheDataBase.*;
+import static Connection.ConnectionToTheDataBase.closingConnection;
+import static Connection.ConnectionToTheDataBase.cookieTracker;
 
 /**
  * Created by ljam763 on 25/05/2017.
@@ -67,7 +65,7 @@ public class ProfilePageServlet extends HttpServlet {
                     if (indexList.size() > 0){
                         message = "<h3>Articles</h3><table class=\"table table-striped table-hover table-responsive\" id=\"ArticleTable\"><tr><th>Article Names</th><th>Article Category</th><th>Date Created</th></tr>";
                         for (Articles articles : indexList) {
-                            message += "<tr><td><a href=\"/Articles?acticleId=" + articles.getArticleid() + "\">" + articles.getArticlename() + "</a></td><td>" + articles.getCategory() + "</td><td>" + articles.getDatecreated() + "</td></tr>";
+                            message += "<tr><td><a href=\"Articles?acticleId=" + articles.getArticleid() + "\">" + articles.getArticlename() + "</a></td><td>" + articles.getCategory() + "</td><td>" + articles.getDatecreated() + "</td></tr>";
                         }
                         message += "</table>";
 
@@ -81,7 +79,7 @@ public class ProfilePageServlet extends HttpServlet {
             ProfilePAge profilePAge = innerclass.profilePageDAO.getUsersProfile(innerclass.username);
             session.setAttribute("profileInfo", profilePAge);
             closingConnection();
-            req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+            req.getRequestDispatcher("WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
             return;
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,7 +100,7 @@ public class ProfilePageServlet extends HttpServlet {
             } else {
                 HttpSession session = req.getSession();
                 if (req.getParameter("accessFriend").equals((String) session.getAttribute("username"))) {
-                    req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+                    req.getRequestDispatcher("WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                     return;
                 } else {
                     ProfilePAge profilePAge = innerclass.profilePageDAO.getUsersProfile(req.getParameter("accessFriend"));
@@ -115,7 +113,7 @@ public class ProfilePageServlet extends HttpServlet {
                         session.setAttribute("IndexOfInterest", indexList);
                         session.setAttribute("showFriend", profilePAge);
                     }
-                    req.getRequestDispatcher("/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+                    req.getRequestDispatcher("WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                     return;
                 }
             }

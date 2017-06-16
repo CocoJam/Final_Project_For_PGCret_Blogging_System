@@ -22,7 +22,7 @@ public class Login_out extends HttpServlet {
         cookie.setPath("/");
         cookie.setMaxAge(0);
         resp.addCookie(cookie);
-        req.getRequestDispatcher("/login_page.jsp").forward(req,resp);
+        req.getRequestDispatcher("login_page.jsp").forward(req,resp);
     }
 
     @Override

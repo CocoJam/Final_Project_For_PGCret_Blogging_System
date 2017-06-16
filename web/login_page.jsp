@@ -32,7 +32,7 @@
                     <div class="card card-signup" id="loginCard">
 
                         <!-- FORM ELEMENT START -->
-                        <form class="form" method="post" action="/login" id="loginForm">
+                        <form class="form" method="post" action="login" id="loginForm">
 
                             <!-- Form heading -->
                             <div class="header header-info text-center">
@@ -78,7 +78,7 @@
                         </form>
                         <div class="footer text-center">
 
-                            Click <a href="/login?Registration=Register" style="color: green" class="clickOnce">Register</a>
+                            Click <a href="login?Registration=Register" style="color: green" class="clickOnce">Register</a>
                             to to join our community!
                             <br><br>
 

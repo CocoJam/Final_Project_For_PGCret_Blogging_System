@@ -11,12 +11,12 @@
 <head>
     <title>Article</title>
 
-    <%@include file="../../component/Header(styling Template).html" %>
-    <link rel="stylesheet" href="../../assets/css/button-flat.css"><!-- Flat button -->
+    <%@include file="/component/Header(styling Template).html" %>
+    <link rel="stylesheet" href="assets/css/button-flat.css"><!-- Flat button -->
 
     <!-- Load WYSIWYG STYLE -->
-    <link rel="stylesheet" href="../../Trumbowyg/dist/ui/trumbowyg.min.css">
-    <link rel="stylesheet" href="../../Trumbowyg/dist/plugins/colors/ui/trumbowyg.colors.min.css">
+    <link rel="stylesheet" href="Trumbowyg/dist/ui/trumbowyg.min.css">
+    <link rel="stylesheet" href="Trumbowyg/dist/plugins/colors/ui/trumbowyg.colors.min.css">
 
     <style>
         ul {
@@ -53,7 +53,7 @@
 
 <!-- !!! NAVIGATION BAR START !!! -->
 
-<%@ include file="../../component/NavBar-AfterLogin(Template).jsp" %>
+<%@ include file="/component/NavBar-AfterLogin(Template).jsp" %>
 
 <!-- !!! NAVIGATION BAR END !!! -->
 
@@ -82,7 +82,7 @@
                                                     <c:choose>
                                                         <%--If this is a default profile image get the image from default photo directory--%>
                                                         <c:when test='${profileInfo.profilepic.startsWith("defaultslashn")}'>
-                                                            <img src="../../assets/img/defaultImg/${profileInfo.profilepic}"
+                                                            <img src="assets/img/defaultImg/${profileInfo.profilepic}"
                                                                  alt="Avatar"
                                                                  class="img-rounded img-responsive img-raised">
                                                         </c:when>
@@ -124,7 +124,7 @@
                         </div>
                         <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
                             <!-- Articles Form for submitting new/changes to database -->
-                            <form id="form" action="/Articles" method="post">
+                            <form id="form" action="Articles" method="post">
                                 <%--Input for Article Name --%>
                                 <div class="form-group label-floating">
                                     <label class="control-label" for="ArticleName">Article Name</label>
@@ -221,7 +221,7 @@
                                 <!-- Youtube upload -->
                                 <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8">
                                     <h3>Embed Youtube</h3>
-                                    <form id="Youtube" action="/ArticleUpload" method="post">
+                                    <form id="Youtube" action="ArticleUpload" method="post">
                                         <input id="youtubeurl" type="text" name="youtube" class="form-control"
                                                placeholder="Paste your Youtube link and click button below to add"
                                                style="margin-top:-1em;">
@@ -276,17 +276,17 @@
 </div>
 
 <!-- FOOTER START -->
-<%@ include file="../../component/Footer(Template).html" %>
+<%@ include file="/component/Footer(Template).html" %>
 <!-- FOOTER END -->
 
 </body>
 
 <!-- Load WYSIWYG JS -->
-<script src="../../Trumbowyg/dist/trumbowyg.min.js"></script>
-<script src="../../Trumbowyg/dist/plugins/preformatted/trumbowyg.preformatted.min.js"></script>
-<script src="../../Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
-<script src="../../Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
-<script src="../../Trumbowyg/dist/plugins/noembed/trumbowyg.noembed.js"></script>
+<script src="Trumbowyg/dist/trumbowyg.min.js"></script>
+<script src="Trumbowyg/dist/plugins/preformatted/trumbowyg.preformatted.min.js"></script>
+<script src="Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
+<script src="Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
+<script src="Trumbowyg/dist/plugins/noembed/trumbowyg.noembed.js"></script>
 <%--<script src="../../Trumbowyg/dist/plugins/table/trumbowyg.table.min.js"></script>--%>
 
 <!-- WYSIWYG -->
@@ -505,7 +505,7 @@
     $('#Upload')
         .submit(function (e) {
             $.ajax({
-                url: '/Upload',
+                url: 'Upload',
                 type: 'POST',
                 data: new FormData(this),
                 processData: false,
@@ -545,7 +545,7 @@
     $('#Youtube')
         .submit(function (e) {
             $.ajax({
-                url: '/ArticleUpload',
+                url: 'ArticleUpload',
                 type: 'POST',
                 data: {"youtubeurl": $("#youtubeurl").val()},
                 success: function (msg) {

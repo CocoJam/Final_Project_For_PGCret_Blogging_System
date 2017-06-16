@@ -4,17 +4,18 @@ import Comment.Comments;
 import Comment.CommentsDAO;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 
 import static Article.ArticlesIndexServlet.articleSetOwnership;
 import static Article.ArticlesIndexServlet.checkingForOwnership;
-import static Connection.ConnectionToTheDataBase.*;
+import static Connection.ConnectionToTheDataBase.cookieLogOut;
+import static Connection.ConnectionToTheDataBase.cookieTracker;
 
 /**
  * Created by ljam763 on 25/05/2017.
@@ -125,7 +126,7 @@ public class ArticleServlet extends HttpServlet {
                 innerclass.session.setAttribute("commentlist", innerclass.listOfComments);
                 //Dispatching the article and comments.
                 System.out.println("selected articles");
-                req.getRequestDispatcher("/Comments").include(req, resp);
+                req.getRequestDispatcher("Comments").include(req, resp);
                 return;
             }
         } catch (Exception e) {
@@ -172,13 +173,13 @@ public class ArticleServlet extends HttpServlet {
                 //Scenario 1: When adding new article when pressed within the articleIndex.jsp.
                 if (addingArticles.equals("addNewArticle")) {
                     doPostAddNewArticle(req, session);
-                    req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
+                    req.getRequestDispatcher("WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
                     return;
                     //Scenario 2: Edit inside of your own article, therefore setting ownership is important. Dispatches to the ArticleCreationPage.jsp (but in editing mode).
                 } else if (addingArticles.equals("EditArticle")) {
                     gettingContentFromJsp(req, innerclass);
                     doPostEnteringEditArticle(session, innerclass);
-                    req.getRequestDispatcher("/WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
+                    req.getRequestDispatcher("WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
                     return;
                     //Scenario 3: Redirect from Article Creation page once editing complete.
                     // This is when you have finished editing the article and redirecting back to the article page from the article creation page, and then update that SQL the article details.
@@ -194,7 +195,7 @@ public class ArticleServlet extends HttpServlet {
                     session.setAttribute("articleContents", article);
                     session.setAttribute("Upload", null);
                     checkingForOwnershipArticle(username, article);
-                    req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
+                    req.getRequestDispatcher("WEB-INF/webthings/Article.jsp").forward(req, resp);
                     return;
                     //Scenario 4: Redirect from Article Creation page once creation of a new page is completed.
                 } else if (addingArticles.equals("addingToDataBase")) {
@@ -205,7 +206,7 @@ public class ArticleServlet extends HttpServlet {
                     // dispatching back into the articleIndex after finished creating new article and have uploaded the info to SQL via DAO
                     session.setAttribute("ArticleIndex", innerclass.indexList);
                     session.setAttribute("Upload", null);
-                    req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
+                    req.getRequestDispatcher("WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
                     return;
                 }
             }

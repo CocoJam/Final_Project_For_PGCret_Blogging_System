@@ -1,7 +1,6 @@
 package Deleting;
 
 import Article.Articles;
-import Article.ArticlesIndexServlet;
 import Login.LoginPassing;
 
 import javax.servlet.ServletContext;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 
 import static Connection.ConnectionToTheDataBase.*;
 
@@ -175,7 +173,7 @@ public class DeletingServlet extends HttpServlet {
         if (new File(filePath).exists()) {
             System.out.println("Deleted? " + new File(filePath).delete());
         }
-        req.getRequestDispatcher("/ArticleUpload").forward(req, resp);
+        req.getRequestDispatcher("ArticleUpload").forward(req, resp);
     }
 
     //deleting the whole article
@@ -186,7 +184,7 @@ public class DeletingServlet extends HttpServlet {
         if (article.getUsername().equals(innerclass.sessionUsername)) {
             System.out.println("dropping this article");
             innerclass.deleteDAO.dropSpecificArticlesAll(article.getArticleid());
-            req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+            req.getRequestDispatcher("ProfilePage").forward(req, resp);
             return;
         }
         cookieTracker(req, resp);
@@ -197,10 +195,10 @@ public class DeletingServlet extends HttpServlet {
     private void tryingTodeleteWholeProfile(HttpServletRequest req, HttpServletResponse resp, innerclass innerclass) throws ServletException, IOException {
         if (usernameAndPasswordCheckForDelete(innerclass)) {
             innerclass.deleteDAO.dropAllByUsername(innerclass.username);
-            req.getRequestDispatcher("/logout").forward(req, resp);
+            req.getRequestDispatcher("logout").forward(req, resp);
             return;
         } else {
-            req.getRequestDispatcher("/ProfilePage").forward(req, resp);
+            req.getRequestDispatcher("ProfilePage").forward(req, resp);
             return;
         }
     }

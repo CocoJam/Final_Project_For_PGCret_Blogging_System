@@ -1,7 +1,5 @@
 package Article;
 
-import com.sun.deploy.net.HttpResponse;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-import static Connection.ConnectionToTheDataBase.closingConnection;
 import static Connection.ConnectionToTheDataBase.cookieLogOut;
 import static Connection.ConnectionToTheDataBase.cookieTracker;
 
@@ -67,7 +64,7 @@ public class ArticlesIndexServlet extends HttpServlet {
                 innerclass.setArticleListStatus((String) session.getAttribute("ArticleListStatus"));
 //            ArticleListStatus = (String) session.getAttribute("ArticleListStatus");
                 switchbetweenAllOrSelf(req, resp, session, innerclass.username, innerclass);
-                req.getRequestDispatcher("/WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp); //testing
+                req.getRequestDispatcher("WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp); //testing
                 return;
             }
         } catch (Exception e) {

@@ -14,14 +14,14 @@
 <head>
     <title>Article - ${articleContents.articlename} - by ${articleContents.username}</title>
 
-    <%@include file="../../component/Header(styling Template).html" %>
+    <%@include file="/component/Header(styling Template).html" %>
 
 </head>
 <body class="profile-page">
 
 <!-- !!! NAVIGATION BAR START !!! -->
 
-<%@ include file="../../component/NavBar-AfterLogin(Template).jsp" %>
+<%@ include file="/component/NavBar-AfterLogin(Template).jsp" %>
 
 <!-- !!! NAVIGATION BAR END !!! -->
 
@@ -51,7 +51,7 @@
                                                     <c:choose>
                                                         <%--If this is a default profile image get the image from default photo directory--%>
                                                         <c:when test='${profileInfo.profilepic.startsWith("default")}'>
-                                                            <img src="img/defaultImg/${profileInfo.profilepic}"
+                                                            <img src="assets/img/defaultImg/${profileInfo.profilepic}"
                                                                  alt="Avatar"
                                                                  class="img-rounded img-responsive img-raised">
                                                         </c:when>
@@ -66,7 +66,7 @@
                                                 </c:when>
 
                                                 <c:otherwise>
-                                                    <img src="img/defaultImg/placeholder.gif" alt="Avatar"
+                                                    <img src="assets/img/defaultImg/placeholder.gif" alt="Avatar"
                                                          class="img-rounded img-responsive img-raised">
                                                 </c:otherwise>
                                             </c:choose>
@@ -131,7 +131,7 @@
                                     <c:if test="${articleContents.owner}">
                                         <%--<!-- DEBUG --><h1>IS CURRENT USER THE OWNER? ${articleContents.owner}</h1>--%>
                                         <div class="btn-group btn-group-sm">
-                                            <form action="/Articles" method="post">
+                                            <form action="Articles" method="post">
                                                 <input type="hidden" name="articleidnumber"
                                                        value="${articleContents.articleid}">
                                                     <%--<input class="btn btn-round btn-info" type="submit" name="add" value="EditArticle">--%>
@@ -140,7 +140,7 @@
                                                     Article
                                                 </button>
                                             </form>
-                                            <form action="/Deleting" method="post">
+                                            <form action="Deleting" method="post">
                                                     <%--<input class="btn btn-round btn-info" type="submit" name="log" value="DeleteArticle">--%>
                                                 <button class="btn btn-round btn-danger" type="submit" name="log"
                                                         value="DeleteArticle"><i
@@ -285,7 +285,7 @@
 </div>
 
 <!-- FOOTER START -->
-<%@ include file="../../component/Footer(Template).html" %>
+<%@ include file="/component/Footer(Template).html" %>
 <!-- FOOTER END -->
 
 </body>

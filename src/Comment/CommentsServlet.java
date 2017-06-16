@@ -8,10 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
-import static Connection.ConnectionToTheDataBase.closingConnection;
 import static Connection.ConnectionToTheDataBase.cookieLogOut;
 import static Connection.ConnectionToTheDataBase.cookieTracker;
 
@@ -149,7 +147,7 @@ public class CommentsServlet extends HttpServlet {
                 session.setAttribute("commentlist", innerclass.listOfComments);
             }
             System.out.println("dispatcher");
-            req.getRequestDispatcher("/WEB-INF/webthings/Article.jsp").forward(req, resp);
+            req.getRequestDispatcher("/slashslash/WEB-INF/webthings/Article.jsp").forward(req, resp);
         }
         catch (Exception e){
             e.printStackTrace();

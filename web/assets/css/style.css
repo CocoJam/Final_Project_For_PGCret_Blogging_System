@@ -12,14 +12,14 @@
 
 /* CUSTOM BACKGROUND - LOGIN & PROFILE PAGE */
 #custom-bg-container {
-    background-image: url('/assets/img/background/bg-06.jpg');
+    background-image: url('/slashslash/assets/img/background/bg-06.jpg');
     background-size: cover;
     background-position: top center;
 }
 
 /* CUSTOM BACKGROUND - AFTER LOGIN */
 #custom-bg-user {
-    background-image: url('/assets/img/background/bg-01.jpg');
+    background-image: url('/slashslash/assets/img/background/bg-01.jpg');
     background-size: cover;
     background-position: center center;
 }
@@ -102,7 +102,7 @@ a, a:hover, a:focus {
     height: 632px;
     z-index: 9999;
     visibility: hidden;
-    background: url(../img/defaultImg/gploader.gif) center no-repeat;
+    background: url(/slashslash/assets/img/defaultImg/gploader.gif) center no-repeat;
 }
 
 /* NAVBAR - custom */
@@ -130,20 +130,20 @@ a, a:hover, a:focus {
 /* media-query flags start */
 /* Code below for debugging purposes, to display the responsive design breakpoints upon resizing of window */
 
-body:before
-{
-    position: fixed;
-    z-index: 3000;
-    top: 0;
-    left: 0;
-    padding: 10px;
-    height: 40px;
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: bold;
-    font-size: 50px;
-    content: "XS";
-    background: rgba(215, 44, 44, 0.5);
-}
+/*body:before*/
+/*{*/
+    /*position: fixed;*/
+    /*z-index: 3000;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*padding: 10px;*/
+    /*height: 40px;*/
+    /*color: rgba(255, 255, 255, 0.5);*/
+    /*font-weight: bold;*/
+    /*font-size: 50px;*/
+    /*content: "XS";*/
+    /*background: rgba(215, 44, 44, 0.5);*/
+/*}*/
 
 /* BUTTON - custom */
 .btn-group.open > .dropdown-toggle.btn.btn-inverse,
@@ -271,8 +271,8 @@ audio {
 
 /*style="left: 50%; right: 50%"*/
 
-@media (min-width: 768px) { body:before { content: "SM"; background: rgba(215, 44, 215, 0.5); } }
-@media (min-width: 992px) { body:before { content: "MD"; background: rgba(44, 215, 44, 0.5); } }
-@media (min-width: 1200px) { body:before { content: "LG"; background: rgba(44, 44, 215, 0.5); } }
+/*@media (min-width: 768px) { body:before { content: "SM"; background: rgba(215, 44, 215, 0.5); } }*/
+/*@media (min-width: 992px) { body:before { content: "MD"; background: rgba(44, 215, 44, 0.5); } }*/
+/*@media (min-width: 1200px) { body:before { content: "LG"; background: rgba(44, 44, 215, 0.5); } }*/
 
-/* media-query flags end */
+/*!* media-query flags end *!*/

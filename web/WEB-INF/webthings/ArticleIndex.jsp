@@ -11,7 +11,7 @@
 <head>
     <title>Article Index</title>
 
-    <%@include file="../../component/Header(styling Template).html" %>
+    <%@include file="/component/Header(styling Template).html" %>
     <style>
         #gallery {
             float: left;
@@ -114,7 +114,7 @@
 
 <!-- !!! NAVIGATION BAR START !!! -->
 
-<%@ include file="../../component/NavBar-AfterLogin(Template).jsp" %>
+<%@ include file="/component/NavBar-AfterLogin(Template).jsp" %>
 
 <!-- !!! NAVIGATION BAR END !!! -->
 
@@ -143,7 +143,7 @@
                                                     <c:choose>
                                                         <%--If this is a default profile image get the image from default photo directory--%>
                                                         <c:when test='${profileInfo.profilepic.startsWith("default")}'>
-                                                            <img src="../../assets/img/defaultImg/${profileInfo.profilepic}"
+                                                            <img src="assets/img/defaultImg/${profileInfo.profilepic}"
                                                                  alt="Avatar"
                                                                  class="img-rounded img-responsive img-raised">
                                                         </c:when>
@@ -160,7 +160,7 @@
                                                     </div>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <img src="../../assets/img/defaultImg/placeholder.gif" alt="Circle Image"
+                                                    <img src="assets/img/defaultImg/placeholder.gif" alt="Circle Image"
                                                          class="img-rounded img-responsive img-raised">
                                                 </c:otherwise>
                                             </c:choose>
@@ -273,7 +273,7 @@
                                                                  width="96" height="72" style="margin-bottom: 5">
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <img class="card-img-top" src="../../defaultImg/pokemonloader4.gif"
+                                                            <img class="card-img-top" src="assets/img/defaultImg/pokemonloader4.gif"
                                                                  alt="Circle Image"
                                                                  width="96" height="72" style="margin-bottom: 5">
                                                         </c:otherwise>
@@ -288,7 +288,7 @@
                                                     </div>
                                                         <%--<p class="category" style="overflow: hidden; width: 80%; height: 10%">${index.category}</p>--%>
 
-                                                    <a href="/Articles?acticleId=${index.articleid}"
+                                                    <a href="Articles?acticleId=${index.articleid}"
                                                        title="Preview"
                                                        class="ui-icon ui-icon-zoomin articleid">View larger</a>
 
@@ -377,7 +377,7 @@
                                             <tr class="tablecontentR">
                                                 <td class="tablearticleid" hidden>${index.articleid}</td>
                                                 <td class="tablearticlename">
-                                                    <a href="/Articles?acticleId=${index.articleid}">${index.articlename}</a>
+                                                    <a href="Articles?acticleId=${index.articleid}">${index.articlename}</a>
                                                 </td>
                                                 <td class="tablearticledate">${index.datecreated}</td>
 
@@ -409,7 +409,7 @@
 </div><!-- wrapper div -->
 
 <!-- FOOTER START -->
-<%@ include file="../../component/Footer(Template).html" %>
+<%@ include file="/component/Footer(Template).html" %>
 <!-- FOOTER END -->
 <script>
 
@@ -499,7 +499,7 @@
                 deleteImage(ui.draggable);
                 var hyper = ui.draggable.eq(0).children().siblings("a").attr('href');
                 var title = ui.draggable.eq(0).children().siblings(".articlename").text();
-                $.post("/ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
+                $.post("ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
             }
         });
         <!-- Same theory applies but to unadd or to disattatch the card from the cart session if dragged out of the cart -->
@@ -513,7 +513,7 @@
                 recycleImage(ui.draggable);
                 var hyper = ui.draggable.eq(0).children().siblings("a").attr('href');
                 var title = ui.draggable.eq(0).children().siblings(".articlename").text();
-                $.post("/ArticleCart", {cartunadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
+                $.post("ArticleCart", {cartunadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
             }
         });
 
@@ -630,12 +630,12 @@
 
             if ($target.is("a.ui-icon-plusthick")) {
                 deleteImage($item);
-                $.post("/ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title+ "</a>"})
+                $.post("ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title+ "</a>"})
             } else if ($target.is("a.ui-icon-zoomin")) {
                 viewLargerImage($target);
             } else if ($target.is("a.ui-icon-refresh")) {
                 recycleImage($item);
-                $.post("/ArticleCart", {cartunadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
+                $.post("ArticleCart", {cartunadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
             } else if ($target.is(".username")) {
                 return $target.attr('href');
             }
