@@ -102,7 +102,7 @@ a, a:hover, a:focus {
     height: 632px;
     z-index: 9999;
     visibility: hidden;
-    background: url(/slashslash/assets/img/defaultImg/gploader.gif) center no-repeat;
+    background: url(/slashslash/assets/img/defaultImg/rubixloader.gif) center no-repeat;
 }
 
 /* NAVBAR - custom */
@@ -126,24 +126,6 @@ a, a:hover, a:focus {
 .radio input[type=radio]:checked ~ .circle {
     border-color: #03A9F4;
 }
-
-/* media-query flags start */
-/* Code below for debugging purposes, to display the responsive design breakpoints upon resizing of window */
-
-/*body:before*/
-/*{*/
-    /*position: fixed;*/
-    /*z-index: 3000;*/
-    /*top: 0;*/
-    /*left: 0;*/
-    /*padding: 10px;*/
-    /*height: 40px;*/
-    /*color: rgba(255, 255, 255, 0.5);*/
-    /*font-weight: bold;*/
-    /*font-size: 50px;*/
-    /*content: "XS";*/
-    /*background: rgba(215, 44, 44, 0.5);*/
-/*}*/
 
 /* BUTTON - custom */
 .btn-group.open > .dropdown-toggle.btn.btn-inverse,
@@ -193,13 +175,6 @@ audio {
     height: 100%;
     object-fit: contain;
 }
-
-/*video {*/
-    /*height: 240px;*/
-    /*width: 426px;*/
-    /*object-fit: contain;*/
-/*}*/
-
 
 .centering {
     display: block;
@@ -256,27 +231,32 @@ audio {
     object-fit: contain;
 }
 
+
+
 /*.nav-pills-slashn > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {*/
     /*background-color: black;*/
     /*color: #FFFFFF;*/
     /*box-shadow: 0 16px 26px -10px rgba(156, 39, 176, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(156, 39, 176, 0.2);*/
-
-
-/*class="img-responsive"*/
-
-/*#carouselMediaPage img {*/
-    /*left: 50%;*/
-    /*!*transform: translate(-50%);*!*/
-/*}*/
-
-/*carousel-inner > .item > img,*/
-/*.carousel-inner > .item > a > img {*/
-    /*display: block;*/
-    /*max-width: 100%;*/
-    /*height: 400px !important;*/
-/*}*/
-
 /*style="left: 50%; right: 50%"*/
+
+
+/* --------------- media-query flags start ---------------------------*/
+/* Code below for debugging purposes, to display the responsive design breakpoints upon resizing of window */
+
+/*body:before*/
+/*{*/
+/*position: fixed;*/
+/*z-index: 3000;*/
+/*top: 0;*/
+/*left: 0;*/
+/*padding: 10px;*/
+/*height: 40px;*/
+/*color: rgba(255, 255, 255, 0.5);*/
+/*font-weight: bold;*/
+/*font-size: 50px;*/
+/*content: "XS";*/
+/*background: rgba(215, 44, 44, 0.5);*/
+/*}*/
 
 /*@media (min-width: 768px) { body:before { content: "SM"; background: rgba(215, 44, 215, 0.5); } }*/
 /*@media (min-width: 992px) { body:before { content: "MD"; background: rgba(44, 215, 44, 0.5); } }*/

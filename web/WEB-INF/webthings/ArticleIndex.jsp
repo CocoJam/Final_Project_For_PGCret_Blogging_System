@@ -126,7 +126,6 @@
 <!-- !!! NAVIGATION BAR END !!! -->
 
 <!-- !!! MAIN CONTENT START !!! -->
-
 <div class="wrapper">
     <div class="header header-filter" id="custom-bg-user"></div><!-- background div -->
 
@@ -141,7 +140,6 @@
                         <div class="row">
                             <div class="profile">
                                 <div class="avatar">
-                                    <%--<img src="" alt="Circle Image" class="img-rounded img-responsive img-raised">--%>
 
                                     <c:choose>
                                         <c:when test="${articleList.equals('self')}">
@@ -227,7 +225,6 @@
 
                             </div>
                             <!-- Article Display options end -->
-
                             <!-- This is the card based article index-->
                             <div class="row">
                                 <div id="cardarticle"

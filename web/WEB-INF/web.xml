@@ -5,6 +5,10 @@
          version="3.1">
 
 
+    <welcome-file-list>
+        <welcome-file>login_page.jsp</welcome-file>
+    </welcome-file-list>
+
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>Login.Login_in</servlet-class>

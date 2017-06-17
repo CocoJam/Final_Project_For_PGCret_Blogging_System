@@ -217,7 +217,6 @@
         </div>
     </div>
 </nav>
-<!-- !!! NAVIGATION BAR END !!! -->
 
 <script>
     var imageValue = 1;
