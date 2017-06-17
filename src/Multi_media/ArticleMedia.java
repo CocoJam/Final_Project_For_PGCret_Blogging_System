@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static Connection.ConnectionToTheDataBase.closingConnection;
 import static Connection.ConnectionToTheDataBase.cookieLogOut;
@@ -29,21 +31,23 @@ public class ArticleMedia extends Upload_files {
     }
 
 
-
     //Post method to post a Youtube link. TODO this is stuffing everything up.
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        cookieLogOut(req,resp);
+        cookieLogOut(req, resp);
         String youtubeurl = req.getParameter("youtubeurl");
         System.out.println(youtubeurl);
         HttpSession session = req.getSession();
-        if  (youtubeurl != null && youtubeurl.startsWith("https://www.youtube.com/")){
-        if (youtubeurl.contains("/watch?v=")){
-            youtubeurl= youtubeurl.replace("/watch?v=", "/embed/").replace("http(s)?:","");
-        }
-        System.out.println("Adding youtube");
-        String youtubevideo= "<div class=\"embed-responsive embed-responsive-4by3\"><iframe class=\"embed-responsive-item\" src=\""+youtubeurl+"\"></iframe></div>";
-        resp.getWriter().print(youtubevideo);
+        Pattern pattern = Pattern.compile("^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/.+");
+        Matcher matcher = pattern.matcher(youtubeurl);
+        matcher.matches();
+        if (youtubeurl != null && matcher.groupCount() > 0) {
+            String sample = matcher.group(0);
+            youtubeurl = "https://www.youtube.com" + sample.substring(matcher.end(matcher.groupCount())).replace("/watch?v=", "/embed/").replace("&","?");
+            System.out.println("Adding youtube");
+            System.out.println(youtubeurl);
+            String youtubevideo = "<div class=\"embed-responsive embed-responsive-4by3\"><iframe class=\"embed-responsive-item\" src=\"" + youtubeurl + "\"></iframe></div>";
+            resp.getWriter().print(youtubevideo);
         }
         return;
     }

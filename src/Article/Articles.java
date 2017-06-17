@@ -17,12 +17,12 @@ public class Articles {
     private String articlename = null;
     private String username = null;
     private String content = null;
-    private Date datecreated =null;
-    private boolean owner= false;
+    private Date datecreated = null;
+    private boolean owner = false;
     private String category = null;
     private String firstimage = null;
     private int likeNumber = 0;
-    private boolean liked =false;
+    private boolean liked = false;
 
     public boolean isLiked() {
         return liked;
@@ -31,8 +31,6 @@ public class Articles {
     public void setLiked(boolean liked) {
         this.liked = liked;
     }
-
-
 
 
     public int getLikeNumber() {
@@ -111,18 +109,31 @@ public class Articles {
 
     public Articles() {
     }
+
     //This method helps cleaning the lines for the content of the article, which is greatly inference by the text editor.
-    public String cuttingLines (String thing){
-        return thing.replace("\\n","").replace("\"","").replace("+","").replaceAll("<[^>]*>","").trim();
+    public String cuttingLines(String thing) {
+        return thing.replace("\\n", "").replace("\"", "").replace("+", "").replaceAll("<[^>]*>", "").trim();
     }
+
     //This method is using regex to find the first image within the article, which ignores the other.
-    public String FirstImg (String thing){
+    public String FirstImg(String thing) {
         Document doc = Jsoup.parse(thing);
         Element img = doc.select("img").first();
         String src = null;
-        if (img != null){
-        src = img.attr("src");}
+        if (img != null) {
+            src = img.attr("src");
+        }
         return src;
     }
 
+    public static void main(String[] args) {
+        Pattern pattern = Pattern.compile("^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/.+");
+        Matcher matcher = pattern.matcher("https://www.youtube.com/watch?v=pHs4riipoS8&list=PLXqOIuKcLjKf5arUaE530VYdt8aKiH6Ig");
+        matcher.matches();
+        String whatYouNeed = matcher.group(0);
+        System.out.println(whatYouNeed.substring(matcher.end(matcher.groupCount())).replace("/watch?v=",  "/embed/"));
+        System.out.println("https://www.youtube.com"+ whatYouNeed.substring(matcher.end(matcher.groupCount())).replace("/watch?v=",  "/embed/"));
+    }
+
 }
+

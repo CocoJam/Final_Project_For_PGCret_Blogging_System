@@ -284,7 +284,7 @@
                                         if (defaultPhoto.equals((String)pageContext.getAttribute("photoname"))) {
                                             checkedOrNot = "checked";
                                         }
-                                        out.println("<div class=\"radio\"> <label> <input type=\"radio\" name=\"profilePicture\" value=\"" + defaultPhoto + "\"" + checkedOrNot + "> </label> <img src=\"assets/img/defaultImg/" + defaultPhoto + "\" height='20%'> </div> <br>");
+                                        out.println("<div class=\"radio\"> <label> <input type=\"radio\" name=\"profilePicture\" value=\"" + defaultPhoto + "\"" + checkedOrNot + "> </label> <img src=\"assets/img/defaultImg/" + defaultPhoto + "\" class='img-registrationResponsive'> </div> <br>");
                                     }
                                     if (username != null) {
 
@@ -297,7 +297,7 @@
                                                 checkedOrNot = "checked";
                                             }
 
-                                             out.println("<div class=\"radio\"> <label> <input type='radio' name='profilePicture' value='" + listofphoto + "'" + checkedOrNot + "> </label> <img src=\"Upload-photos/" + username + "/photo/" + listofphoto + "\" height='20%'> </div> <br>");
+                                             out.println("<div class=\"radio\"> <label> <input type='radio' name='profilePicture' value='" + listofphoto + "'" + checkedOrNot + "> </label> <img src=\"Upload-photos/" + username + "/photo/" + listofphoto + "\" class='img-registrationResponsive'> </div> <br>");
 
 
                                         }
@@ -334,25 +334,81 @@
 
                         <%--UPLOAD new profile photos--%>
 
-                        <form id="Upload" action="Upload" method="post"
-                              enctype="multipart/form-data" class="btn btn-white">
-                            <!-- Text input box start -->
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                <i class="material-icons">attachment</i>
-                                </span>
-                                <input type="file" id="file" name="file" placeholder="your file here" size="50" class="btn btn-white">
-                            </div>
-                            <!-- Text input box end -->
+                        <%--UPLOAD new profile photos--%>
+                        <%--Upload trigger modal button--%>
 
-                            <%--submit button for loading images--%>
-                            <div class="footer text-center">
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <input type="submit" name="Upload" value="Upload Image"
-                                           class="btn btn-block btn-info btn-lg"/>
-                                </div>&nbsp;
+
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <button type="button" class="btn btn-block btn-info btn-lg" data-toggle="modal"
+                                    data-target="#uploadModal">Upload Avatar image
+                            </button>
+                        </div>
+
+                        <%--<div class="container">--%>
+                        <!-- Trigger the modal with a button -->
+                        <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Profile Delete</button>--%>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="uploadModal" role="dialog">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <%--<h4 class="modal-title">Modal Header</h4>--%>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="card card-signup" id="uploadCard" style="margin: 0px">
+
+                                            <!-- FORM ELEMENT START -->
+                                            <form id="Upload" action="/Upload" method="post"
+                                                  enctype="multipart/form-data">
+
+                                                <!-- Form heading -->
+                                                <div class="header header-info text-center">
+                                                    <h4>Upload Avatar</h4>
+                                                </div>
+
+                                                <!-- Form subtext -->
+                                                <span class="text-divider">
+                                                        <p>Upload your own custom image to use as your avatar around the site.
+                                                    </span>
+
+                                                <div class="content">
+
+                                                    <!-- Text input box start -->
+
+                                                    <div class="input-group" align="center">
+                                                        <input class="text-center" type="file" id="file" name="file"
+                                                               placeholder="your file here">
+                                                    </div>
+                                                    <!-- Text input box end -->
+
+                                                </div>
+                                                <%--submit button for loading images--%>
+                                                <div class="footer text-center">
+                                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                                        <input type="submit" name="Upload" value="Upload Image"
+                                                               class="btn btn-block btn-info btn-lg"/>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </form>
+                        </div>
+                        <%--</div>--%>
+
+                        <!-- Delete profile end -->
+
+
+                        <%--Upload modal ends--%>
+
 
                         <!-- Delete profile start -->
 
@@ -436,6 +492,7 @@
                         <%--</div>--%>
 
                         <!-- Delete profile end -->
+
 
                         <% } %>
 

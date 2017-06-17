@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>Login Page</title>
+    <title>Welcome to Slash N! Login or Sign Up</title>
 
     <%@ include file="component/Header(styling Template).html" %>
 <style>
