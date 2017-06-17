@@ -9,7 +9,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Article</title>
+    <title>
+
+        <c:choose>
+            <c:when test="${not empty articleContents}">
+                Slash N - Edit Article - ${articleContents.articlename} - by ${profileInfo.username}
+            </c:when>
+            <c:otherwise>
+                Slash N - Create Article
+            </c:otherwise>
+        </c:choose>
+
+    </title>
 
     <%@include file="../../component/Header(styling Template).html" %>
     <link rel="stylesheet" href="../../assets/css/button-flat.css"><!-- Flat button -->
@@ -158,7 +169,7 @@
                                 </div>
 
                                 <input type="hidden" name="ArticleContent"/>
-                                    <input style="visibility: hidden" type="text" name="articleidnumber" value="${articleContents.articleid}"/ >
+                                    <input style="visibility: hidden" type="text" name="articleidnumber" value="${articleContents.articleid}"/>
                                 <% if (session.getAttribute("articleContents") != null) {
                                     System.out.println("EDIT");
                                     out.println("<input type=\"submit\" name=\"add\" value=\"Editted\" style='visibility: hidden' id='submitButton'>");

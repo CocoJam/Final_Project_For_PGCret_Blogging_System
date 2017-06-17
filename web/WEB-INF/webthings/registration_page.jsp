@@ -20,10 +20,10 @@
 
         <c:choose>
             <c:when test="${log}">
-                Edit Profile
+                Slash N - Edit Profile
             </c:when>
             <c:otherwise>
-                Register
+                Slash N - Register
             </c:otherwise>
         </c:choose>
 
@@ -60,9 +60,6 @@
 
 <!-- !!! MAIN CONTENT START !!! -->
 
-
-<%! Set<String> listofphotos = new TreeSet<>(); %>
-
 <%--This is to check if person has logged in and if so it will not goto the registration page, so this is another bouncing mechanism. This is a duplicate of the servlet bouncing mechanism.--%>
 <%
     if (session.getAttribute("log") != null && session.getAttribute("Registration") != null) {
@@ -79,13 +76,13 @@
     File listofThings = new File(userPath + "/" + username + "/photo");
     System.out.println(listofThings.getPath());
     File[] files = listofThings.listFiles();
+    Set<String> listofphotos = new TreeSet<>();
     if (files != null) {
         for (File file : files) {
             listofphotos.add(file.getName());
         }
     }
 %>
-
 
 <div class="wrapper">
     <div class="header header-filter" id="custom-bg-container"><!-- background div -->
@@ -201,7 +198,7 @@
 										</span>
                                     <input type="text" id="Name" name="name" placeholder="Name"
                                            class="form-control"
-                                           value="${profileInfo.name}">
+                                           value="${profileInfo.name}" required/>
                                 </div>
                                 <!-- Text input box end -->
 
@@ -212,7 +209,7 @@
 										</span>
                                     <input type="email" id="email" name="email" placeholder="Email"
                                            class="form-control"
-                                           value="${profileInfo.email}">
+                                           value="${profileInfo.email}" required/>
                                 </div>
                                 <!-- Text input box end -->
 
@@ -223,7 +220,7 @@
 										</span>
                                     <input type="text" id="date" name="date" placeholder="Date"
                                            class="form-control datepicker"
-                                           value="${profileInfo.date}">
+                                           value="${profileInfo.date}"/>
                                 </div>
                                 <!-- Text input box end -->
 
@@ -234,7 +231,7 @@
 										</span>
                                     <input type="text" id="address" name="address" placeholder="Address"
                                            class="form-control"
-                                           value="${profileInfo.address}">
+                                           value="${profileInfo.address}"/>
                                 </div>
                                 <!-- Text input box end -->
 
@@ -245,7 +242,7 @@
 										</span>
                                     <input type="text" id="education" name="education" placeholder="Education"
                                            class="form-control"
-                                           value="${profileInfo.education}">
+                                           value="${profileInfo.education}" required/>
                                 </div>
                                 <!-- Text input box end -->
 
@@ -256,7 +253,7 @@
 										</span>
                                     <input type="text" id="ethnicity" name="ethnicity" placeholder="Ethnicity"
                                            class="form-control"
-                                           value="${profileInfo.ethnicity}">
+                                           value="${profileInfo.ethnicity}"/>
                                 </div>
 
                                 <!-- Introduction about the user -->
@@ -280,10 +277,10 @@
                                     for (int i = 1; i <= 3; i++) {
                                         checkedOrNot = "";
                                         String defaultPhoto = "defaultslashn" + i + ".png";
-                                        if (defaultPhoto.equals((String)pageContext.getAttribute("photoname"))) {
+                                        if (defaultPhoto.equals((String) pageContext.getAttribute("photoname"))) {
                                             checkedOrNot = "checked";
                                         }
-                                        out.println("<div class=\"radio\"> <label> <input type=\"radio\" name=\"profilePicture\" value=\"" + defaultPhoto + "\"" + checkedOrNot + "> </label> <img src=\"../../assets/img/defaultImg/" + defaultPhoto + "\" height='20%'> </div> <br>");
+                                        out.println("<div class=\"radio\"> <label> <input type=\"radio\" name=\"profilePicture\" value=\"" + defaultPhoto + "\"" + checkedOrNot + "> </label> <img src=\"../../assets/img/defaultImg/" + defaultPhoto + "\" class='img-registrationResponsive'> </div> <br>");
                                     }
                                     if (username != null) {
 
@@ -296,8 +293,7 @@
                                                 checkedOrNot = "checked";
                                             }
 
-                                             out.println("<div class=\"radio\"> <label> <input type=\"radio\" name=\"profilePicture\" value=\"" + listofphoto + "\"" + checkedOrNot + "> </label> <img src=\"Upload-photos/" + username + "/photo/" + listofphoto + "\" height='20%'> </div> <br>");
-
+                                            out.println("<div class=\"radio\"> <label> <input type=\"radio\" name=\"profilePicture\" value=\"" + listofphoto + "\"" + checkedOrNot + "> </label> <img src=\"Upload-photos/" + username + "/photo/" + listofphoto + "\" class='img-registrationResponsive'> </div> <br>");
 
                                         }
                                     }
@@ -332,105 +328,163 @@
                         <% if (username != null) { %>
 
                         <%--UPLOAD new profile photos--%>
-
-                        <form id="Upload" action="/Upload" method="post"
-                              enctype="multipart/form-data" class="btn btn-white">
-                            <!-- Text input box start -->
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                <i class="material-icons">attachment</i>
-                                </span>
-                                <input type="file" id="file" name="file" placeholder="your file here" size="50" class="btn btn-white">
-                            </div>
-                            <!-- Text input box end -->
-
-                            <%--submit button for loading images--%>
-                            <div class="footer text-center">
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <input type="submit" name="Upload" value="Upload Image"
-                                           class="btn btn-block btn-info btn-lg"/>
-                                </div>&nbsp;
-                            </div>
-                        </form>
+                        <%--Upload trigger modal button--%>
 
                         <!-- Delete profile start -->
 
                         <div class="col-xs-12 col-sm-12 col-md-12">
-                        <button type="button" class="btn btn-block btn-danger btn-lg" data-toggle="modal" data-target="#myModal">Delete Profile</button>
+                            <button type="button" class="btn btn-block btn-info btn-lg" data-toggle="modal"
+                                    data-target="#uploadModal">Upload Avatar image
+                            </button>
                         </div>
 
                         <%--<div class="container">--%>
-                            <!-- Trigger the modal with a button -->
-                            <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Profile Delete</button>--%>
+                        <!-- Trigger the modal with a button -->
+                        <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Profile Delete</button>--%>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="myModal" role="dialog">
-                                <div class="modal-dialog modal-sm">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <%--<h4 class="modal-title">Modal Header</h4>--%>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="card card-signup" id="loginCard" style="margin: 0px">
+                        <!-- Modal -->
+                        <div class="modal fade" id="uploadModal" role="dialog">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
 
-                                                <!-- FORM ELEMENT START -->
-                                                <form class="form" method="post" action="/Deleting" id="loginForm">
+                                        <%--<h4 class="modal-title">Modal Header</h4>--%>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="card card-signup" id="uploadCard" style="margin: 0px">
 
-                                                    <!-- Form heading -->
-                                                    <div class="header header-danger text-center">
-                                                        <h4>Leaving Slash N</h4>
+                                            <!-- FORM ELEMENT START -->
+                                            <form id="Upload" action="/Upload" method="post"
+                                                  enctype="multipart/form-data">
+
+                                                <!-- Form heading -->
+                                                <div class="header header-info text-center">
+                                                    <h4>Upload Avatar</h4>
+                                                </div>
+
+                                                <!-- Form subtext -->
+                                                <span class="text-divider">
+                                                        <p>Upload your own custom image to use as your avatar around the site.
+                                                    </span>
+
+                                                <div class="content">
+
+                                                    <!-- Text input box start -->
+
+                                                    <div class="input-group" align="center">
+                                                        <input class="text-center" type="file" id="file" name="file"
+                                                               placeholder="your file here">
                                                     </div>
+                                                    <!-- Text input box end -->
 
-                                                    <!-- Form subtext -->
-                                                    <span class="text-divider">
+                                                </div>
+                                                <%--submit button for loading images--%>
+                                                <div class="footer text-center">
+                                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                                        <input type="submit" name="Upload" value="Upload Image"
+                                                               class="btn btn-block btn-info btn-lg"/>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%--</div>--%>
+
+                        <!-- Delete profile end -->
+
+
+                        <%--Upload modal ends--%>
+
+
+                        <!-- Delete profile start -->
+
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <button type="button" class="btn btn-block btn-danger btn-lg" data-toggle="modal"
+                                    data-target="#myModal">Delete Profile
+                            </button>
+                        </div>
+
+                        <%--<div class="container">--%>
+                        <!-- Trigger the modal with a button -->
+                        <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Profile Delete</button>--%>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <%--<h4 class="modal-title">Modal Header</h4>--%>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="card card-signup" id="loginCard" style="margin: 0px">
+
+                                            <!-- FORM ELEMENT START -->
+                                            <form class="form" method="post" action="/Deleting" id="loginForm">
+
+                                                <!-- Form heading -->
+                                                <div class="header header-danger text-center">
+                                                    <h4>Leaving Slash N</h4>
+                                                </div>
+
+                                                <!-- Form subtext -->
+                                                <span class="text-divider">
                                                         <p>We're sorry to see you go!</p>
                                                         <p>If you are sure about deleting your account, please reconfirm your username and password to continue.</p>
                                                         <p>You will not be able to recover your account once it's deleted.</p>
                                                     </span>
 
-                                                    <div class="content">
+                                                <div class="content">
 
-                                                        <!-- TEXT BOXES -->
+                                                    <!-- TEXT BOXES -->
 
-                                                        <!-- Text input box start -->
-                                                        <div class="input-group">
+                                                    <!-- Text input box start -->
+                                                    <div class="input-group">
 										<span class="input-group-addon">
 											<i class="material-icons">account_circle</i>
 										</span>
-                                                            <input name="username" type="text" class="form-control"
-                                                                   placeholder="Username">
-                                                        </div>
-                                                        <!-- Text input box end -->
+                                                        <input name="username" type="text" class="form-control"
+                                                               placeholder="Username">
+                                                    </div>
+                                                    <!-- Text input box end -->
 
-                                                        <!-- Text input box start -->
-                                                        <div class="input-group">
+                                                    <!-- Text input box start -->
+                                                    <div class="input-group">
 										<span class="input-group-addon">
 											<i class="material-icons">lock_outline</i>
 										</span>
-                                                            <input name="password" type="password" placeholder="Password"
-                                                                   class="form-control"/>
-                                                        </div>
+                                                        <input name="password" type="password" placeholder="Password"
+                                                               class="form-control"/>
+                                                    </div>
+                                                </div>
+
+                                                <%--This button is to submit the above form to sign in--%>
+                                                <div class="footer text-center" class="form">
+                                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                                        <input type="submit" value="Deleting Profile" name="log"
+                                                               class="btn btn-block btn-danger btn-lg clickOnce">
                                                     </div>
 
-                                                    <%--This button is to submit the above form to sign in--%>
-                                                    <div class="footer text-center" class="form">
-                                                        <div class="col-xs-12 col-sm-12 col-md-12">
-                                                            <input type="submit" value="Deleting Profile" name="log"
-                                                                   class="btn btn-block btn-danger btn-lg clickOnce">
-                                                        </div>
+                                                </div>
+                                            </form>
 
-                                                    </div>
-                                                </form>
-
-                                            </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                        </button>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         <%--</div>--%>
 
                         <!-- Delete profile end -->

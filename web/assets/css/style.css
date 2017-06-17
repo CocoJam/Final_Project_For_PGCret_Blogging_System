@@ -249,6 +249,13 @@ audio {
     object-fit: contain;
 }
 
+.img-registrationResponsive {
+    display: inline-block;
+    max-height: 200px;
+    max-width: 200px;
+    object-fit: contain;
+}
+
 /*.nav-pills-slashn > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {*/
     /*background-color: black;*/
     /*color: #FFFFFF;*/

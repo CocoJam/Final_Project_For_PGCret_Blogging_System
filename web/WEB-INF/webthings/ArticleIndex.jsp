@@ -9,7 +9,18 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Article Index</title>
+    <title>
+
+        <c:choose>
+            <c:when test="${articleList.equals('self')}">
+                Slash N - ${profileInfo.name}'s Article List
+            </c:when>
+            <c:otherwise>
+                Slash N - All Article List
+            </c:otherwise>
+        </c:choose>
+
+    </title>
 
     <%@include file="../../component/Header(styling Template).html" %>
     <style>
@@ -273,7 +284,7 @@
                                                                  width="96" height="72" style="margin-bottom: 5">
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <img class="card-img-top" src="../../defaultImg/pokemonloader4.gif"
+                                                            <img class="card-img-top" src="../../assets/img/defaultImg/pokemonloader4.gif"
                                                                  alt="Circle Image"
                                                                  width="96" height="72" style="margin-bottom: 5">
                                                         </c:otherwise>

@@ -10,7 +10,18 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>
+
+        <c:choose>
+            <c:when test="${AllOrSelf.equals('self')}">
+                Slash N - ${profileInfo.name}'s Media Gallery
+            </c:when>
+            <c:otherwise>
+                Slash N - All Media Gallery
+            </c:otherwise>
+        </c:choose>
+
+    </title>
 
     <%@include file="../../component/Header(styling Template).html" %>
 

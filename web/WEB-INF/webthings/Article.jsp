@@ -51,7 +51,7 @@
                                                     <c:choose>
                                                         <%--If this is a default profile image get the image from default photo directory--%>
                                                         <c:when test='${profileInfo.profilepic.startsWith("default")}'>
-                                                            <img src="img/defaultImg/${profileInfo.profilepic}"
+                                                            <img src="assets/img/defaultImg/${profileInfo.profilepic}"
                                                                  alt="Avatar"
                                                                  class="img-rounded img-responsive img-raised">
                                                         </c:when>
@@ -66,7 +66,7 @@
                                                 </c:when>
 
                                                 <c:otherwise>
-                                                    <img src="img/defaultImg/placeholder.gif" alt="Avatar"
+                                                    <img src="assets/img/defaultImg/placeholder.gif" alt="Avatar"
                                                          class="img-rounded img-responsive img-raised">
                                                 </c:otherwise>
                                             </c:choose>
@@ -483,7 +483,7 @@
     $(document).ready(function () {
         $("#articleContents img").each(function () {
             $(this).addClass('img-responsive');
-        })
+        });
         /* Alternative version below: this will grab all the img on page */
 //        var allImages = $('img');
 //        allImages.addClass('img-responsive');

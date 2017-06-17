@@ -14,7 +14,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="en">
 <head>
-    <title>Profile Page</title>
+    <title>Slash N - Profile Page - ${profileInfo.username}</title>
 
     <%@include file="../../component/Header(styling Template).html" %>
 
@@ -99,8 +99,8 @@
                                         if (session.getAttribute("showFriend") != null) {
                                             //Check are u the user or the other people's profile.
                                             if (friendsprofile) {
-                                                out.println("<button id=\"addfriend\">Add</button>");
-                                                out.println("<button id=\"unfriend\">Unfriend</button>");
+                                                out.println("<button class=\"btn btn-success btn-round\" id=\"addfriend\"><i class=\"material-icons\">add_circle</i>Add</button>");
+                                                out.println("<button class=\"btn btn-danger btn-round\" id=\"unfriend\"><i class=\"material-icons\">remove_circle</i>Unfriend</button>");
                                             }
                                         }
                                     %>
@@ -185,67 +185,71 @@
 
                                     <h3>Friend List:</h3>
 
-                                    <c:if test="${empty friendlist}">
-                                        Aww... ${profileInfo.name} has no friends, time to make some friends ${profileInfo.name}!
-                                    </c:if>
+                                    <c:choose>
 
-                                    <c:if test="${not empty firendlist}">
+                                        <c:when test="${not empty firendlist}">
 
+                                            <div class="card-group">
 
-                                        <div class="card-group">
+                                                <c:forEach var="friend" items="${firendlist}">
+                                                    <c:if test="${friend.friendusername != null}">
 
-                                            <c:forEach var="friend" items="${firendlist}">
-                                                <c:if test="${friend.friendusername != null}">
+                                                        <div class="card" style="max-width: 15rem">
+                                                                <%--<div class="imageContainer" style="width: 10rem">--%>
+                                                            <c:choose>
 
-                                                    <div class="card" style="max-width: 15rem">
-                                                            <%--<div class="imageContainer" style="width: 10rem">--%>
-                                                        <c:choose>
+                                                                <%--If this is a default profile image get the image from default photo directory--%>
+                                                                <c:when test='${friend.friendProfilePicture.startsWith("defaultslashn")}'>
+                                                                    <a href="ProfilePage?accessFriend=${friend.friendusername}"
+                                                                       class="friendButton"><img
+                                                                            src="../../assets/img/defaultImg/${friend.friendProfilePicture}"
+                                                                            alt="Card image cap"
+                                                                            class="img-slashResponsive card-img-top center-block"></a>
+                                                                </c:when>
 
-                                                            <%--If this is a default profile image get the image from default photo directory--%>
-                                                            <c:when test='${friend.friendProfilePicture.startsWith("defaultslashn")}'>
-                                                                <a href="ProfilePage?accessFriend=${friend.friendusername}"
-                                                                   class="friendButton"><img
-                                                                        src="../../assets/img/defaultImg/${friend.friendProfilePicture}"
-                                                                        alt="Card image cap"
-                                                                        class="img-slashResponsive card-img-top center-block"></a>
-                                                            </c:when>
+                                                                <%--Otherwise get the photo from the users photo page--%>
 
-                                                            <%--Otherwise get the photo from the users photo page--%>
+                                                                <c:when test="${empty friend.friendProfilePicture}">
+                                                                    <img src="../../assets/img/defaultImg/placeholder.gif" alt="Circle Image"
+                                                                         class="img-slashResponsive card-img-top center-block">
+                                                                </c:when>
 
-                                                            <c:when test="${empty friend.friendProfilePicture}">
-                                                                <img src="../../assets/img/defaultImg/placeholder.gif" alt="Circle Image"
-                                                                     class="img-slashResponsive card-img-top center-block">
-                                                            </c:when>
+                                                                <c:otherwise>
+                                                                    <img src="Upload-photos/${friend.friendusername}/photo/${friend.friendProfilePicture}"
+                                                                         alt="Card image cap"
+                                                                         class="img-slashResponsive card-img-top center-block">
+                                                                </c:otherwise>
 
-                                                            <c:otherwise>
-                                                                <img src="Upload-photos/${friend.friendusername}/photo/${friend.friendProfilePicture}"
-                                                                     alt="Card image cap"
-                                                                     class="img-slashResponsive card-img-top center-block">
-                                                            </c:otherwise>
+                                                            </c:choose>
+                                                                <%--</div>--%>
+                                                            <div class="card-block">
+                                                                <div style="height: 1em; line-height: 1em">
+                                                                    <h7
+                                                                            class="card-title"
+                                                                            style="text-overflow: ellipsis"><a
+                                                                            href="ProfilePage?accessFriend=${friend.friendusername}"
+                                                                            class="friendButton">${friend.friendusername}</a>
+                                                                    </h7>
 
-                                                        </c:choose>
-                                                            <%--</div>--%>
-                                                        <div class="card-block">
-                                                            <div style="height: 1em; line-height: 1em">
-                                                                <h7
-                                                                        class="card-title"
-                                                                        style="text-overflow: ellipsis"><a
-                                                                        href="ProfilePage?accessFriend=${friend.friendusername}"
-                                                                        class="friendButton">${friend.friendusername}</a>
-                                                                </h7>
-
-                                                                <p class="card-text"></p>
+                                                                    <p class="card-text"></p>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
 
-                                                </c:if>
-                                            </c:forEach>
-                                        </div>
-                                        <%--</table>--%>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </div>
+                                            <%--</table>--%>
 
 
-                                    </c:if>
+                                        </c:when>
+
+                                        <c:otherwise>
+                                            Aww... ${profileInfo.name} has no friends, time to make some friends ${profileInfo.name}!
+                                        </c:otherwise>
+
+                                    </c:choose>
+
 
                                     <% }
 
