@@ -21,7 +21,6 @@
 
 <!-- !!! MAIN CONTENT START !!! -->
 
-
 <div class="wrapper">
     <div class="header header-filter" id="custom-bg-container"><!-- background div -->
 
