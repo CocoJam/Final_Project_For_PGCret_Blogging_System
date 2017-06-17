@@ -118,6 +118,64 @@
         #search-collapsible.in {
             width: 160px;
         }
+
+        /* Table width settings for different screensizes */
+        @media (min-width: 577px) {
+            .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+                white-space: normal;
+                word-wrap: break-word;
+                max-width: 200px;
+            }
+
+            .table-responsive > .table > thead > tr > th, .table-responsive > .table > tbody > tr > th, .table-responsive > .table > tfoot > tr > th, .table-responsive > .table > thead > tr > td, .table-responsive > .table > tbody > tr > td, .table-responsive > .table > tfoot > tr > td {
+                white-space: normal;
+                word-wrap: break-word;
+                max-width: 200px;
+            }
+        }
+
+        /* Small devices (landscape phones, 576px and up) */
+        @media (max-width: 576px) {
+
+            /* Set max-witdh for table columns for small device screens for article index list */
+            .tablearticlename, .tablearticleusername, .tablearticlecategory {
+                word-wrap: break-word;
+            }
+
+            .tablearticlename {
+                max-width: 80px;
+            }
+
+            .tablearticleusername {
+                max-width: 50px;
+            }
+
+            .tablearticlecategory {
+                max-width: 80px;
+            }
+        }
+
+        /* Small devices (iPhone 5) */
+        @media only screen and (min-device-width: 320px) and (max-device-width: 568px)
+        and (-webkit-device-pixel-ratio: 2) and (device-aspect-ratio: 40/71) {
+            /* Set max-witdh for table columns for small device screens for article index list */
+            .tablearticlename, .tablearticleusername, .tablearticlecategory {
+                word-wrap: break-word;
+            }
+
+            .tablearticlename {
+                max-width: 60px;
+            }
+
+            .tablearticleusername {
+                max-width: 30px;
+            }
+
+            .tablearticlecategory {
+                max-width: 40px;
+            }
+        }
+
     </style>
 </head>
 <body class="profile-page">
@@ -362,8 +420,9 @@
                                 <!-- The card based article index end here-->
 
                                 <!-- The list based article index start here-->
-                                <div id="listarticle" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-                                    <table class="table table-striped table-hover table-responsive">
+                                <div id="listarticle" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
+                                    <%--<div class="table-responsive">--%>
+                                    <table class="table table-striped table-hover">
                                         <tr>
                                             <th>
                                                 Article Names
@@ -387,17 +446,17 @@
                                         <c:forEach items="${ArticleIndex}" var="index">
                                             <tr class="tablecontentR">
                                                 <td class="tablearticleid" hidden>${index.articleid}</td>
-                                                <td class="tablearticlename">
+                                                <td class="tablearticlename" <%-- style="word-wrap: break-word; max-width: 80px;" --%>>
                                                     <a href="/Articles?acticleId=${index.articleid}">${index.articlename}</a>
                                                 </td>
                                                 <td class="tablearticledate">${index.datecreated}</td>
 
                                                 <c:if test="${articleList.equals('all')}">
-                                                    <td class="tablearticleusername">
+                                                    <td class="tablearticleusername" <%-- style="word-wrap: break-word; max-width: 50px;"--%>>
                                                             ${index.username}
                                                     </td>
                                                 </c:if>
-                                                <td class="tablearticlecategory">
+                                                <td class="tablearticlecategory" <%--style="word-wrap: break-word; max-width: 80px;"--%>>
                                                         ${index.category}
                                                 </td>
 
@@ -405,6 +464,7 @@
                                         </c:forEach>
 
                                     </table>
+                                    <%--</div>--%>
                                 </div>
                                 <!-- The list based article index end here-->
                             </div>

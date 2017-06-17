@@ -1,5 +1,5 @@
 /* NAVBAR - POSITION ON TOP */
-#navbar-full .navbar{
+#navbar-full .navbar {
     border-radius: 0 !important;
     /*margin-bottom: 15px;*/
     z-index: 2;
@@ -33,9 +33,11 @@
 .form-group.is-focused .form-control {
     background-image: linear-gradient(#03A9F4, #03A9F4), linear-gradient(#D2D2D2, #D2D2D2);
 }
+
 .form-group.is-focused .form-control .material-input:after {
     background-color: #03A9F4;
 }
+
 .form-group.is-focused label,
 .form-group.is-focused label.control-label {
     color: #03A9F4;
@@ -85,19 +87,19 @@ a, a:hover, a:focus {
 /*Search bar dropdown functionality CSS*/
 
 /*#namebar {*/
-    /*position: relative;*/
-    /*margin-bottom: 0;*/
+/*position: relative;*/
+/*margin-bottom: 0;*/
 /*}*/
 
 /*#NameBarForm {*/
-    /*margin-bottom: %;*/
+/*margin-bottom: %;*/
 /*}*/
 
 #loaderID {
     position: fixed;
     left: 50%;
     top: 40%;
-    transform: translate(-50%, -50%) scale(0.5,0.5);
+    transform: translate(-50%, -50%) scale(0.5, 0.5);
     width: 498px;
     height: 632px;
     z-index: 9999;
@@ -114,35 +116,19 @@ a, a:hover, a:focus {
     width: 15px;
     border-radius: 100%;
     background-color: #03A9F4;
-    -webkit-transform: scale3d(0,0,0);
-    -moz-transform: scale3d(0,0,0);
-    -o-transform: scale3d(0,0,0);
-    -ms-transform: scale3d(0,0,0);
-    transform: scale3d(0,0,0);
+    -webkit-transform: scale3d(0, 0, 0);
+    -moz-transform: scale3d(0, 0, 0);
+    -o-transform: scale3d(0, 0, 0);
+    -ms-transform: scale3d(0, 0, 0);
+    transform: scale3d(0, 0, 0);
 }
+
 .radio input[type=radio]:checked ~ .check {
     background-color: #03A9F4;
 }
+
 .radio input[type=radio]:checked ~ .circle {
     border-color: #03A9F4;
-}
-
-/* media-query flags start */
-/* Code below for debugging purposes, to display the responsive design breakpoints upon resizing of window */
-
-body:before
-{
-    position: fixed;
-    z-index: 3000;
-    top: 0;
-    left: 0;
-    padding: 10px;
-    height: 40px;
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: bold;
-    font-size: 50px;
-    content: "XS";
-    background: rgba(215, 44, 44, 0.5);
 }
 
 /* BUTTON - custom */
@@ -195,11 +181,10 @@ audio {
 }
 
 /*video {*/
-    /*height: 240px;*/
-    /*width: 426px;*/
-    /*object-fit: contain;*/
+/*height: 240px;*/
+/*width: 426px;*/
+/*object-fit: contain;*/
 /*}*/
-
 
 .centering {
     display: block;
@@ -211,7 +196,6 @@ audio {
     background-color: #293A46;
     box-shadow: 0 16px 26px -10px rgba(41, 58, 70, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(41, 58, 70, 0.2);
 }
-
 
 #audioGallery .carouselSlashControl-left {
     position: absolute;
@@ -256,30 +240,67 @@ audio {
     object-fit: contain;
 }
 
-/*.nav-pills-slashn > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {*/
-    /*background-color: black;*/
-    /*color: #FFFFFF;*/
-    /*box-shadow: 0 16px 26px -10px rgba(156, 39, 176, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(156, 39, 176, 0.2);*/
+.table-striped > tbody > tr:nth-of-type(even) {
+    background-color: #ffffff;
+}
 
+/*.nav-pills-slashn > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {*/
+/*background-color: black;*/
+/*color: #FFFFFF;*/
+/*box-shadow: 0 16px 26px -10px rgba(156, 39, 176, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(156, 39, 176, 0.2);*/
 
 /*class="img-responsive"*/
 
 /*#carouselMediaPage img {*/
-    /*left: 50%;*/
-    /*!*transform: translate(-50%);*!*/
+/*left: 50%;*/
+/*!*transform: translate(-50%);*!*/
 /*}*/
 
 /*carousel-inner > .item > img,*/
 /*.carousel-inner > .item > a > img {*/
-    /*display: block;*/
-    /*max-width: 100%;*/
-    /*height: 400px !important;*/
+/*display: block;*/
+/*max-width: 100%;*/
+/*height: 400px !important;*/
 /*}*/
 
 /*style="left: 50%; right: 50%"*/
 
-@media (min-width: 768px) { body:before { content: "SM"; background: rgba(215, 44, 215, 0.5); } }
-@media (min-width: 992px) { body:before { content: "MD"; background: rgba(44, 215, 44, 0.5); } }
-@media (min-width: 1200px) { body:before { content: "LG"; background: rgba(44, 44, 215, 0.5); } }
+/* media-query flags start */
+/* Code below for debugging purposes, to display the responsive design breakpoints upon resizing of window */
+
+body:before {
+    position: fixed;
+    z-index: 3000;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    height: 40px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: bold;
+    font-size: 50px;
+    content: "XS";
+    background: rgba(215, 44, 44, 0.5);
+}
+
+@media (min-width: 768px) {
+    body:before {
+        content: "SM";
+        background: rgba(215, 44, 215, 0.5);
+    }
+}
+
+@media (min-width: 992px) {
+    body:before {
+        content: "MD";
+        background: rgba(44, 215, 44, 0.5);
+    }
+}
+
+@media (min-width: 1200px) {
+    body:before {
+        content: "LG";
+        background: rgba(44, 44, 215, 0.5);
+    }
+}
 
 /* media-query flags end */
