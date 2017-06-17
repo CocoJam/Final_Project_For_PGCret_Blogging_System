@@ -9,7 +9,14 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Article Index</title>
+    <title><c:choose>
+        <c:when test="${articleList.equals('self')}">
+            Slash N - ${profileInfo.name}'s Articles List
+        </c:when>
+        <c:otherwise>
+            Slash N - All Articles List
+        </c:otherwise>
+    </c:choose></title>
 
     <%@include file="/component/Header(styling Template).html" %>
     <style>
@@ -180,7 +187,8 @@
                         <div class="row">
 
                             <!-- Article Display options start -->
-                            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col xs-offset-1" style="z-index: 5000;">
+                            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col xs-offset-1"
+                                 style="z-index: 5000;">
                                 <button id="listorcard" class="btn btn-round btn-info"><i class="material-icons">view_list</i>
                                     List View
                                 </button>
@@ -213,8 +221,8 @@
                                 </button>
 
                                 <div id="search-collapsible" class="toggle">
-                                <input placeholder="Search Articles" class="form-group-sm form-control input-sm"
-                                       id="searchBar" style="width:150px; margin-top: -1.6em;">
+                                    <input placeholder="Search Articles" class="form-group-sm form-control input-sm"
+                                           id="searchBar" style="width:150px; margin-top: -1.6em;">
                                 </div>
 
                             </div>
@@ -273,7 +281,8 @@
                                                                  width="96" height="72" style="margin-bottom: 5">
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <img class="card-img-top" src="assets/img/defaultImg/pokemonloader4.gif"
+                                                            <img class="card-img-top"
+                                                                 src="assets/img/defaultImg/pokemonloader4.gif"
                                                                  alt="Circle Image"
                                                                  width="96" height="72" style="margin-bottom: 5">
                                                         </c:otherwise>
@@ -293,7 +302,8 @@
                                                        class="ui-icon ui-icon-zoomin articleid">View larger</a>
 
                                                     <a href="link/to/trash/script/when/we/have/js/off"
-                                                       title="Add to your Saved Articles" class="ui-icon ui-icon-plusthick">Delete
+                                                       title="Add to your Saved Articles"
+                                                       class="ui-icon ui-icon-plusthick">Delete
                                                         image</a>
 
                                                     <p hidden class="date">${index.datecreated}</p>
@@ -339,7 +349,8 @@
                                             </c:forEach>
                                         </ul>
                                         <div id="save" class="ui-widget-content ui-state-default">
-                                            <h4 class="ui-widget-header"><i class="material-icons">bookmark</i> Saved Articles</h4>
+                                            <h4 class="ui-widget-header"><i class="material-icons">bookmark</i> Saved
+                                                Articles</h4>
                                         </div>
 
                                         <!-- Empty div for adding some space at the bottom of the container -->
@@ -351,7 +362,8 @@
                                 <!-- The card based article index end here-->
 
                                 <!-- The list based article index start here-->
-                                <div id="listarticle" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+                                <div id="listarticle"
+                                     class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
                                     <table class="table table-striped table-hover table-responsive">
                                         <tr>
                                             <th>
@@ -599,7 +611,7 @@
                     "<h5><strong>Written on: </strong>" + date + "</h5>" +
                     "<h5><strong>Category: </strong>" + category + "</h5>" +
                     "<img src=\'" + image + "\' width=\"50%\">" +
-                    "<p>" + content.substring(0,300) + "</p>");
+                    "<p>" + content.substring(0, 300) + "</p>");
             }
             else {
 //                img.html("<a href=\"" + hyper + "\">" + title + "</a>" + "<p>" + content + "</p>");
@@ -630,7 +642,7 @@
 
             if ($target.is("a.ui-icon-plusthick")) {
                 deleteImage($item);
-                $.post("ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title+ "</a>"})
+                $.post("ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
             } else if ($target.is("a.ui-icon-zoomin")) {
                 viewLargerImage($target);
             } else if ($target.is("a.ui-icon-refresh")) {

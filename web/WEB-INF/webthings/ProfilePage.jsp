@@ -14,8 +14,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="en">
 <head>
-    <title>Profile Page</title>
-
+    <title>Slash N - Profile Page</title>
     <%@include file="/component/Header(styling Template).html" %>
 
 </head>
@@ -213,7 +212,8 @@
                                                             <%--Otherwise get the photo from the users photo page--%>
 
                                                             <c:when test="${empty friend.friendProfilePicture}">
-                                                                <img src="assets/img/defaultImg/placeholder.gif" alt="Circle Image"
+                                                                <img src="assets/img/defaultImg/placeholder.gif"
+                                                                     alt="Circle Image"
                                                                      class="img-slashResponsive card-img-top center-block">
                                                             </c:when>
 
