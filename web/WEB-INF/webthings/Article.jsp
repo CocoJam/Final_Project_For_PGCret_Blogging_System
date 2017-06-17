@@ -293,7 +293,7 @@
     //Adding comments by the ajax call with a post method, which allow the adding of the comment and then append
     $("#addComment").click(function () {
         $.ajax({
-            url: '/Comments',
+            url: 'Comments',
             type: 'Post',
             data: {
                 "commentcontent": $("#comments").val(),
@@ -390,7 +390,7 @@
 
     <!-- ajax post request for the deleting of the comment -->
     function deleteComment(e) {
-        $.post("/Deleting", {
+        $.post("Deleting", {
             "commentId": e.parent().parent().attr("id"),
             "log": "DeleteComment"
         })
@@ -403,7 +403,7 @@
     <!-- ajax post request for the editing of the comment and then changing the text within the associated position. -->
     function editComment(e) {
         $.ajax({
-            url: '/Comments',
+            url: 'Comments',
             type: 'Post',
             data: {
                 "commentId": e.parent().parent().attr("id"),
@@ -426,7 +426,7 @@
     <!-- This function is to like or unlike someone. -->
     function likeadd(e) {
         $.ajax({
-            url: '/Articles',
+            url: 'Articles',
             type: 'Post',
             data: {
                 "like": "like",

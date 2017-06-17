@@ -61,7 +61,6 @@
 <!-- !!! MAIN CONTENT START !!! -->
 
 
-<%! Set<String> listofphotos = new TreeSet<>(); %>
 
 <%--This is to check if person has logged in and if so it will not goto the registration page, so this is another bouncing mechanism. This is a duplicate of the servlet bouncing mechanism.--%>
 <%
@@ -73,14 +72,16 @@
 %>
 
 <%--1st part: Grabbing all the strings of all the photo names and adding into a set. (NOTE the actual upload of the image is in the servlet)--%>
-<% String userPath = request.getRealPath("/Upload-photos");
+<% String userPath = request.getRealPath("Upload-photos");
     System.out.println(userPath + " Paths");
     String username = (String) session.getAttribute("username");
     File listofThings = new File(userPath + "/" + username + "/photo");
     System.out.println(listofThings.getPath());
     File[] files = listofThings.listFiles();
+    Set<String> listofphotos = new TreeSet<>();
     if (files != null) {
         for (File file : files) {
+            System.out.println(file.getPath());
             listofphotos.add(file.getName());
         }
     }
@@ -496,10 +497,8 @@
                                         success: function (msg) {
                                             console.log(msg);
                                             if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
-                                                var ratioButton = "<div class=\"radio\"> <label>" + "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos\\${username}\\photo\\", "") + "\">" + "<span class=\"circle\"></span>" + "<span class=\"check\"></span>" + "</label>" + "<img src=\"/slashslash/" + msg + "\"height=\"20%\">" + "</div>" + "</br>";
+                                                var ratioButton = "<div class=\"radio\"> <label>" + "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos/${username}/photo/", "") + "\">" + "<span class=\"circle\"></span>" + "<span class=\"check\"></span>" + "</label>" + "<img src=\"" + msg + "\"height=\"20%\">" + "</div>" + "</br>";
                                                 $(".content").eq(0).append(ratioButton);
-//                                                $(".content").eq(0).append(image);
-//                                                $(".content").eq(0).append(breakline);
                                             }
                                             <!-- if the media is successfully uploaded but it is not a picture or photo in the right formate, that the alert will pop and show -->
                                             else {
@@ -527,7 +526,6 @@
         <!-- !!! MAIN CONTENT END !!! -->
 
         <!-- FOOTER START -->
-        <%@ include file="/component/Footer(Template).html" %>
         <%@ include file="/component/Footer(Template).html" %>
         <!-- FOOTER END -->
 

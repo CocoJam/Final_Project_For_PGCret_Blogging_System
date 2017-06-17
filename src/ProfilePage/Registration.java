@@ -101,7 +101,7 @@ public class Registration extends HttpServlet {
                         System.out.println(profilePage.getUsername());
                         session.setAttribute("username", profilePage.getUsername());
                         session.setAttribute("log", true);
-                        req.getRequestDispatcher("/slashslash/WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
+                        req.getRequestDispatcher("WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                     } catch (SQLException e1) {
                         //If SQL Exception thrown by profilePageDAO.CreateUsersProfile() (when username already exists), then this is caught here and the user is redirected to the registration page where they have to start again.
                         closingConnection();

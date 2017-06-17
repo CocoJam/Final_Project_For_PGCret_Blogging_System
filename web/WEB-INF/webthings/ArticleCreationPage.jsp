@@ -207,7 +207,7 @@
                                 <!-- Media upload -->
                                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
                                     <h3>Upload Media</h3>
-                                    <form action="/Upload" method="post" id="Upload"
+                                    <form action="Upload" method="post" id="Upload"
                                           enctype="multipart/form-data">
                                         <input type="file" name="file" size="50" class="btn btn-white"/>
                                         <%--<input type="submit" class="btn btn-flat btn-primary" name="Upload"--%>

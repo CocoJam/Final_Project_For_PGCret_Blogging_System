@@ -127,7 +127,6 @@ public class CommentsServlet extends HttpServlet {
                     innerclass.commentsDAO.editComments(innerclass.comment, commentId);
                     innerclass.setComments(innerclass.commentsDAO.selectionComment(commentId));
 //                comments = commentsDAO.selectionComment(commentId);
-                    return;
                 }
                 System.out.println(innerclass.comments);
                 if (innerclass.comments != null) {
@@ -147,7 +146,7 @@ public class CommentsServlet extends HttpServlet {
                 session.setAttribute("commentlist", innerclass.listOfComments);
             }
             System.out.println("dispatcher");
-            req.getRequestDispatcher("/slashslash/WEB-INF/webthings/Article.jsp").forward(req, resp);
+            req.getRequestDispatcher("WEB-INF/webthings/Article.jsp").forward(req, resp);
         }
         catch (Exception e){
             e.printStackTrace();

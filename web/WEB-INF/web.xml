@@ -52,7 +52,7 @@
 
     <servlet>
         <servlet-name>Articles</servlet-name>
-        <servlet-class>Article.ArticleServlet</servlet-class>
+        <servlet-class>Article.ArticleServlet2</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Articles</servlet-name>

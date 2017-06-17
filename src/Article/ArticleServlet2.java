@@ -22,7 +22,7 @@ import static Connection.ConnectionToTheDataBase.cookieTracker;
  */
 
 //This servlet is for displaying the actual individual article with its content.
-public class ArticleServlet extends HttpServlet {
+public class ArticleServlet2 extends HttpServlet {
 
     public class innerclass {
         public void setArticlesDAO(ArticlesDAO articlesDAO) {

@@ -60,7 +60,7 @@ public class Upload_files extends HttpServlet {
         System.out.println("What");
         ServletContext servletContext = Making_Upload_File();
 
-        filePath = servletContext.getRealPath("Upload-photos/");
+        filePath = servletContext.getRealPath("Upload-photos")+"/";
         dir_name = (String) session.getAttribute("username");
         File dir = new File(filePath + dir_name);
         if (!dir.exists()) {
@@ -82,22 +82,23 @@ public class Upload_files extends HttpServlet {
 
         // maximum file size to be uploaded.
         upload.setSizeMax(maxFileSize);
-
+        System.out.println("came here1");
         try {
             List fileItems = upload.parseRequest(req);
             Iterator i = fileItems.iterator();
             while (i.hasNext()) {
                 FileItem fi = (FileItem) i.next();
                 if (!fi.isFormField()) {
-
+                    System.out.println("came here2");
                     String fieldName = fi.getFieldName();
                     fileName = fi.getName();
                     String contentType = fi.getContentType();
                     boolean isInMemory = fi.isInMemory();
                     long sizeInBytes = fi.getSize();
-
+                    System.out.println("came here3");
                     //This is the differentiator where it checks where it is from. ArticleMedia class stuffed things up after this was added in. CREATE Article ID folder. TODO currently not working need fixes.
                     if (caption.equals("ArticlesUpload")) {
+                        System.out.println("came here4");
                         String filing = ((int) session.getAttribute("articleID")) + "/";
                         filePath += filing;
                         File Article = new File(filePath);
@@ -106,7 +107,7 @@ public class Upload_files extends HttpServlet {
                             System.out.println("ArticleFile: " + made);
                         }
                     }
-
+                    System.out.println("came here5");
                     //Filters writing into right folder
                     System.out.println(filePath);
                     if (fileName.endsWith(".flv") || fileName.endsWith(".m4v") || fileName.endsWith(".mp4") || fileName.endsWith(".mpg") || fileName.endsWith(".mpeg") || fileName.endsWith(".wmv")) {
@@ -131,6 +132,7 @@ public class Upload_files extends HttpServlet {
             System.out.println(ex);
             return;
         } catch (Exception ex) {
+            ex.printStackTrace();
             resp.getWriter().print("File Upload Error");
             return;
         }
@@ -283,7 +285,7 @@ public class Upload_files extends HttpServlet {
     }
 
     private String filePath(File file1) {
-        return file1.getPath().substring(file1.getPath().indexOf("Upload-photos\\"));
+        return file1.getPath().substring(file1.getPath().indexOf("Upload-photos/"));
     }
 
 }
