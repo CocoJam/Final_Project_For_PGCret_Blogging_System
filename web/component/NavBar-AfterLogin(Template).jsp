@@ -220,17 +220,35 @@
 
 <script>
     var imageValue = 1;
-
-    $(document).ready(function () {
-        $("#bgImgStatus").text("Background " + imageValue + "/5");
-    });
-
+//    console.log(document.cookie);
+//    var cookielist = document.cookie.split(";");
+//    console.log(cookielist);
+//    for (var i =0 ; i<cookielist.length; i++){
+//        if (cookielist[i].trim().startsWith("background")){
+//            console.log(parseInt(cookielist[i].trim().replace("background=","")));
+//            imageValue = parseInt(cookielist[i].trim().replace("background=",""));
+//            break;
+//        }
+//    }
+//    $(document).ready(function () {
+//        var cookielist = document.cookie.split(";");
+//        console.log(cookielist);
+//        for (var i =0 ; i<cookielist.length; i++){
+//            if (cookielist[i].trim().startsWith("background")){
+//                console.log(parseInt(cookielist[i].trim().replace("background=","")));
+//                imageValue = parseInt(cookielist[i].trim().replace("background=",""));
+//                break;
+//            }
+//        }
+//        $("#bgImgStatus").text("Background " + imageValue + "/5");
+//    });
     $("#leftButton").click(function () {
         if (imageValue > 1) {
             imageValue = imageValue - 1;
 //            $("#imageselect").val(imageValue);
             $('#custom-bg-user').css("background-image", "url('assets/img/background/bg-0" + imageValue + ".jpg')");
             $("#bgImgStatus").text("Background " + imageValue + "/5");
+            document.cookie = "background="+ imageValue;
         }
     });
 
@@ -241,6 +259,7 @@
 //            $("#imageselect").val(imageValue);
             $('#custom-bg-user').css("background-image", "url('assets/img/background/bg-0" + imageValue + ".jpg')");
             $("#bgImgStatus").text("Background " + imageValue + "/5");
+            document.cookie = "background="+ imageValue;
         }
     });
 
@@ -264,6 +283,18 @@
     });
 
     $(document).ready(function () {
+
+        var cookielist = document.cookie.split(";");
+        console.log(cookielist);
+        for (var i =0 ; i<cookielist.length; i++){
+            if (cookielist[i].trim().startsWith("background")){
+                console.log(parseInt(cookielist[i].trim().replace("background=","")));
+                imageValue = parseInt(cookielist[i].trim().replace("background=",""));
+                break;
+            }
+        }
+        $("#bgImgStatus").text("Background " + imageValue + "/5");
+        $('#custom-bg-user').css("background-image", "url('assets/img/background/bg-0" + imageValue + ".jpg')");
         $("#imageselect").change(function () {
             $('#custom-bg-user').css("background-image", "url('assets/img/background/bg-0" + imageValue + ".jpg')");
             console.log(document.getElementById('custom-bg-user'));

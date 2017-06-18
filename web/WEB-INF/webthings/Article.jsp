@@ -470,20 +470,34 @@
     }
     <!-- Due to the database and the create and the editing page is constructed, that replace all or most of the html tags into the <p> tags -->
 
-    $(".wrapper li").each(function () {
-        console.log("hello there");
-        $(this).replaceWith(function () {
-            return $('<p>', {
-                html: this.innerHTML
-            });
-        });
-    });
 
     <!-- Making all images img-responsive -->
     $(document).ready(function () {
         $("#articleContents img").each(function () {
             $(this).addClass('img-responsive');
-        })
+        });
+
+        $('#articleContents > *').replaceWith(function () {
+            return $('<div/>', {
+                html: $(this).html()
+            });
+        });
+        $(".ui-state").each(function () {
+            console.log("hello there");
+            $(this).replaceWith(function () {
+                return $('<p>', {
+                    html: this.innerHTML
+                });
+            });
+        });
+        $(".ui-state-default,ui-state").each(function () {
+            console.log("hello there");
+            $(this).replaceWith(function () {
+                return $('<p>', {
+                    html: this.innerHTML
+                });
+            });
+        });
         /* Alternative version below: this will grab all the img on page */
 //        var allImages = $('img');
 //        allImages.addClass('img-responsive');
