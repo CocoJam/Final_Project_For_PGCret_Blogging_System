@@ -148,7 +148,7 @@
                                 <!-- Profile bio text -->
                                 <div class="description text-center col-lg-offset-5 col-md-offset-5 col-sm-offset-5">
 
-                                    <table class="table table-borderless">
+                                    <table class="table">
                                         <tr>
                                             <th>Profile</th>
                                             <th>Your Details</th>
@@ -188,8 +188,6 @@
 
                                     <%--Friends list section begins--%>
                                     <% if (!friendsprofile) { %>
-
-                                    <hr>
 
                                     <h3>Friend List:</h3>
 
@@ -260,7 +258,7 @@
 //                                    if (!friendsprofile) {
                                     %>
 
-                                    <hr>
+                                    <br>
 
                                     <%--Articles begin--%>
                                     <div>
@@ -270,8 +268,10 @@
 
                                         <div id="ArticleTable"></div>
 
-                                        <table class="table table-striped table-hover table-responsive">
+                                        <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
                                         </table>
+                                        </div>
                                         <%--<% }%>--%>
                                         <%--end testing--%>
 
