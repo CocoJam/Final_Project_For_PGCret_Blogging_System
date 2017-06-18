@@ -78,15 +78,7 @@ public class ArticleServlet2 extends HttpServlet {
         private int ArticleID;
     }
 
-//    private ArticlesDAO articlesDAO;
-//    private String ArticleName;
-//    private String ArticleContent;
-//    private String articleCategory;
-//    private Articles article = null;
-//    private HttpSession session;
-//    private List<Articles> indexList;
-//    private List<Comments> listOfComments;
-//    private CommentsDAO commentsDAO;
+
 
     //Getting the list of the comments assoicated within the specific article using article ID.
     public List<Comments> gettingTheListOfComments(int articleID, innerclass innerclass) {
@@ -101,7 +93,7 @@ public class ArticleServlet2 extends HttpServlet {
         try {
             innerclass innerclass = new innerclass();
 //        This is when the create new article button is clicked on the navbar it forwards to the relevant Post method.
-            System.out.println("Creating new article from Navbar");
+            
             if (req.getParameter("add") != null) {
                 addNewArticle(req, resp);
                 return;
@@ -125,7 +117,6 @@ public class ArticleServlet2 extends HttpServlet {
                 innerclass.listOfComments = gettingTheListOfComments(ArticleID, innerclass);
                 innerclass.session.setAttribute("commentlist", innerclass.listOfComments);
                 //Dispatching the article and comments.
-                System.out.println("selected articles");
                 req.getRequestDispatcher("Comments").include(req, resp);
                 return;
             }
@@ -136,16 +127,15 @@ public class ArticleServlet2 extends HttpServlet {
         return;
     }
 
+    //Getting the article based on the Article Id.
     private int getArticleBasedOnId(HttpServletRequest req, HttpServletResponse resp, innerclass innerclass, int ArticleID) throws SQLException, NullPointerException {
-        System.out.println(ArticleID + "articleid");
-        Articles articles = innerclass.articlesDAO.selectionArticles(ArticleID);
-        System.out.println(articles);
         innerclass.setArticle(innerclass.articlesDAO.selectionArticles(ArticleID));
         innerclass.article.setLikeNumber(innerclass.articlesDAO.NumberLike(ArticleID));
         innerclass.article.setLiked(innerclass.articlesDAO.Liked((String) innerclass.session.getAttribute("username"), ArticleID));
         return ArticleID;
     }
 
+    //Called when the new Article is intended to be made, so bounce to the dopost for serving back to the Article Creation page.
     private void addNewArticle(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("add").equals("addNewArticle")) {
             doPost(req, resp);
@@ -167,66 +157,28 @@ public class ArticleServlet2 extends HttpServlet {
             String addingArticles = req.getParameter("add");
             HttpSession session = req.getSession();
             String username = (String) session.getAttribute("username");
-            System.out.println(req.getParameter("ArticleName"));
-            System.out.println(req.getParameter("articleidnumber"));
             if (addingArticles != null) {
                 //Scenario 1: When adding new article when pressed within the articleIndex.jsp.
                 if (addingArticles.equals("addNewArticle")) {
-                    doPostAddNewArticle(req, session);
-                    req.getRequestDispatcher("WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
+                    EnteringToAddNewArticle(req, resp, session);
                     return;
                     //Scenario 2: Edit inside of your own article, therefore setting ownership is important. Dispatches to the ArticleCreationPage.jsp (but in editing mode).
                 } else if (addingArticles.equals("EditArticle")) {
-                    gettingContentFromJsp(req, innerclass);
-                    doPostEnteringEditArticle(session, innerclass);
-                    req.getRequestDispatcher("WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
+                    EnteringToEditArticle(req, resp, innerclass, session);
                     return;
                     //Scenario 3: Redirect from Article Creation page once editing complete.
                     // This is when you have finished editing the article and redirecting back to the article page from the article creation page, and then update that SQL the article details.
                 } else if (addingArticles.equals("Editted")) {
-                    gettingContentFromJsp(req, innerclass);
-                    Articles article = null;
-                    try {
-                        article = innerclass.articlesDAO.updateArticles(innerclass.ArticleName, innerclass.articleCategory, innerclass.ArticleContent, innerclass.ArticleID);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    session.setAttribute("articleList", "self");
-                    session.setAttribute("articleContents", article);
-                    session.setAttribute("Upload", null);
-                    checkingForOwnershipArticle(username, article);
-                    req.getRequestDispatcher("WEB-INF/webthings/Article.jsp").forward(req, resp);
+                    FinishedEdittingArticle(req, resp, innerclass, session, username);
                     return;
                     //Scenario 4: Redirect from Article Creation page once creation of a new page is completed.
                 } else if (addingArticles.equals("addingToDataBase")) {
-                    gettingContentFromJsp(req, innerclass);
-                    innerclass.articlesDAO.madeArticles(innerclass.ArticleName, innerclass.articleCategory, username, innerclass.ArticleContent);
-                    String Listformation = (String) session.getAttribute("articleList");
-                    RequiredListAllOrSelf(username, Listformation, innerclass);
-                    // dispatching back into the articleIndex after finished creating new article and have uploaded the info to SQL via DAO
-                    session.setAttribute("ArticleIndex", innerclass.indexList);
-                    session.setAttribute("Upload", null);
-                    req.getRequestDispatcher("WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
+                    FinishingAddingNewArticle(req, resp, innerclass, session, username);
                     return;
                 }
             }
             if (req.getParameter("like") != null) {
-                System.out.println("here is like");
-                if (req.getParameter("like").equals("like")) {
-                    if (req.getParameter("articleIdnumber") != null && req.getParameter("likepeople") != null) {
-                        System.out.println(req.getParameter("likepeople"));
-                        System.out.println(req.getParameter("articleIdnumber"));
-                        System.out.println(Integer.parseInt(req.getParameter("articleIdnumber")));
-                        boolean like = innerclass.articlesDAO.updateLike((String) session.getAttribute("username"), Integer.parseInt(req.getParameter("articleIdnumber")));
-                        if (!like) {
-                            System.out.println("delete like");
-                            innerclass.articlesDAO.deleteLike((String) session.getAttribute("username"), Integer.parseInt(req.getParameter("articleIdnumber")));
-                        }
-                        System.out.println(innerclass.articlesDAO.NumberLike(Integer.parseInt(req.getParameter("articleIdnumber"))));
-                        resp.getWriter().print(innerclass.articlesDAO.NumberLike(Integer.parseInt(req.getParameter("articleIdnumber"))));
-                        return;
-                    }
-                }
+                if (LikeSystem(req, resp, innerclass, session)) return;
             }
             doGet(req, resp);
         } catch (Exception e) {
@@ -235,6 +187,65 @@ public class ArticleServlet2 extends HttpServlet {
         return;
     }
 
+    //The like System check is the article liked or not then give proper responds
+    private boolean LikeSystem(HttpServletRequest req, HttpServletResponse resp, innerclass innerclass, HttpSession session) throws IOException {
+        if (req.getParameter("like").equals("like")) {
+            if (req.getParameter("articleIdnumber") != null && req.getParameter("likepeople") != null) {
+                boolean like = innerclass.articlesDAO.updateLike((String) session.getAttribute("username"), Integer.parseInt(req.getParameter("articleIdnumber")));
+                if (!like) {
+                    innerclass.articlesDAO.deleteLike((String) session.getAttribute("username"), Integer.parseInt(req.getParameter("articleIdnumber")));
+                }
+                resp.getWriter().print(innerclass.articlesDAO.NumberLike(Integer.parseInt(req.getParameter("articleIdnumber"))));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Step 1. for adding new Article and directing the user to Article Creation page
+    private void EnteringToAddNewArticle(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException, IOException {
+        doPostAddNewArticle(req, session);
+        req.getRequestDispatcher("WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
+    }
+
+    //Step 2. for adding New article, which add Article to the database then dispatches user to ArticleIndex.
+    private void FinishingAddingNewArticle(HttpServletRequest req, HttpServletResponse resp, innerclass innerclass, HttpSession session, String username) throws ServletException, IOException {
+        gettingContentFromJsp(req, innerclass);
+        innerclass.articlesDAO.madeArticles(innerclass.ArticleName, innerclass.articleCategory, username, innerclass.ArticleContent);
+        String Listformation = (String) session.getAttribute("articleList");
+        RequiredListAllOrSelf(username, Listformation, innerclass);
+        // dispatching back into the articleIndex after finished creating new article and have uploaded the info to SQL via DAO
+        session.setAttribute("ArticleIndex", innerclass.indexList);
+        session.setAttribute("Upload", null);
+        req.getRequestDispatcher("WEB-INF/webthings/ArticleIndex.jsp").forward(req, resp);
+    }
+
+    //Entering the Article Editing page, which is the Article creation page.
+    private void EnteringToEditArticle(HttpServletRequest req, HttpServletResponse resp, innerclass innerclass, HttpSession session) throws ServletException, IOException {
+        gettingContentFromJsp(req, innerclass);
+        doPostEnteringEditArticle(session, innerclass);
+        req.getRequestDispatcher("WEB-INF/webthings/ArticleCreationPage.jsp").forward(req, resp);
+    }
+
+    //Step 2. for Editing article, which update this Article to the database then dispatches user to Article.
+    private void FinishedEdittingArticle(HttpServletRequest req, HttpServletResponse resp, innerclass innerclass, HttpSession session, String username) throws ServletException, IOException {
+        gettingContentFromJsp(req, innerclass);
+        Articles article = null;
+        try {
+            article = innerclass.articlesDAO.updateArticles(innerclass.ArticleName, innerclass.articleCategory, innerclass.ArticleContent, innerclass.ArticleID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        session.setAttribute("articleList", "self");
+        session.setAttribute("articleContents", article);
+        session.setAttribute("Upload", null);
+        checkingForOwnershipArticle(username, article);
+        req.getRequestDispatcher("WEB-INF/webthings/Article.jsp").forward(req, resp);
+    }
+
+
+
+//Using to check is the current state of article index veiwing to be self or all articles.
     private void RequiredListAllOrSelf(String username, String listformation, innerclass innerclass) {
         if (listformation.equals("all")) {
             innerclass.setIndexList(new ArticleListObjectDAO().selectionAllArticlesList());
@@ -245,12 +256,10 @@ public class ArticleServlet2 extends HttpServlet {
         }
     }
 
+    //Getting all content from the JSP of the article page.
     private void gettingContentFromJsp(HttpServletRequest req, innerclass innerclass) {
         innerclass.setArticleName(req.getParameter("ArticleName"));
-//        ArticleName = req.getParameter("ArticleName");
-//        ArticleContent = req.getParameter("ArticleContent");
         innerclass.setArticleContent(req.getParameter("ArticleContent"));
-//        articleCategory = req.getParameter("ArticleCategory");
         innerclass.setArticleCategory(req.getParameter("ArticleCategory"));
         if (req.getParameter("articleidnumber") != null) {
             try {
@@ -261,7 +270,7 @@ public class ArticleServlet2 extends HttpServlet {
             }
         }
     }
-
+    // Setting the session Attribute of the Article situation. For editing article
     private void doPostEnteringEditArticle(HttpSession session, innerclass innerclass) {
         session.setAttribute("articleList", "self");
         session.setAttribute("articleID", innerclass.ArticleID);
@@ -272,14 +281,14 @@ public class ArticleServlet2 extends HttpServlet {
             e.printStackTrace();
         }
     }
-
+// Setting the session Attribute of the Article situation. For adding article
     private void doPostAddNewArticle(HttpServletRequest req, HttpSession session) {
         session.setAttribute("articleList", "self");
         session.setAttribute("articleContents", null);
         req.setAttribute("add", null);
         session.setAttribute("Upload", "addNewArticle");
     }
-
+//Checking for this specific article's ownership.
     public void checkingForOwnershipArticle(String username, Articles article) {
         articleSetOwnership(username, article);
     }

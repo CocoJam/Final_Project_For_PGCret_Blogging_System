@@ -46,7 +46,6 @@
                         <div class="row">
                             <div class="profile">
                                 <div class="avatar">
-                                    <%--<img src="" alt="Circle Image" class="img-rounded img-responsive img-raised">--%>
 
                                     <c:choose>
                                         <c:when test="${AllOrSelf.equals('self')}">
@@ -80,7 +79,7 @@
                                         </c:when>
 
                                         <c:otherwise>
-                                            <h3>EVERYONE'S GALLERY</h3>
+                                            <h1>All Media</h1>
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
@@ -88,9 +87,6 @@
                         </div>
                         <%--Row ends--%>
 
-                        <%--<div class="description text-center">--%>
-                        <%--<p>Welcome to the Media Gallery page.</p>--%>
-                        <%--</div>--%>
 
                         <%--Content Row--%>
 
@@ -146,10 +142,6 @@
                                                                         <li data-target="#carouselMediaPage"
                                                                             data-slide-to="0"
                                                                             class="active"></li>
-                                                                        <li data-target="#carouselMediaPage"
-                                                                            data-slide-to="1"></li>
-                                                                        <li data-target="#carouselMediaPage"
-                                                                            data-slide-to="2"></li>
                                                                     </ol>
 
                                                                     <!-- Wrapper for slides -->
@@ -206,16 +198,6 @@
 
                                                                 <div class="carousel slide" data-ride="carousel">
 
-                                                                        <%--<!-- Indicators -->--%>
-                                                                        <%--<ol class="carousel-indicators">--%>
-                                                                        <%--<li data-target="#audioGallery"--%>
-                                                                        <%--data-slide-to="0"--%>
-                                                                        <%--class="active"></li>--%>
-                                                                        <%--<li data-target="#audioGallery"--%>
-                                                                        <%--data-slide-to="1"></li>--%>
-                                                                        <%--<li data-target="#audioGallery"--%>
-                                                                        <%--data-slide-to="2"></li>--%>
-                                                                        <%--</ol>--%>
 
                                                                     <!-- Wrapper for slides -->
                                                                     <div class="carousel-inner">
@@ -280,17 +262,6 @@
                                                                  data-ride="carousel">
 
                                                                 <div class="carousel slide" data-ride="carousel">
-
-                                                                        <%--<!-- Indicators -->--%>
-                                                                        <%--<ol class="carousel-indicators">--%>
-                                                                        <%--<li data-target="#videoGallery"--%>
-                                                                        <%--data-slide-to="0"--%>
-                                                                        <%--class="active"></li>--%>
-                                                                        <%--<li data-target="#videoGallery"--%>
-                                                                        <%--data-slide-to="1"></li>--%>
-                                                                        <%--<li data-target="#videoGallery"--%>
-                                                                        <%--data-slide-to="2"></li>--%>
-                                                                        <%--</ol>--%>
 
                                                                     <!-- Wrapper for slides -->
                                                                     <div class="carousel-inner">

@@ -28,6 +28,7 @@ public class ConnectionToTheDataBase {
 
     public static Connection conn;
 
+    //Possible to change and alter the user of the database such as dropping tables or not having such abilities.
     public Void ConnectionToBase(String type) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -54,30 +55,6 @@ public class ConnectionToTheDataBase {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public static void closingConnection() {
-        try {
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            System.out.println("Connection is closed :" + conn.isClosed());
-        } catch (SQLException e) {
-            try {
-                conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            e.printStackTrace();
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 
@@ -126,11 +103,5 @@ public class ConnectionToTheDataBase {
         }
     }
 
-    public static String checkForXSS (String word){
-        String ptr= "img alt=\"\" src\\s*=\\s*([\"'])?([^\"']*)";
-        Pattern p = Pattern.compile(ptr);
-        Matcher m = p.matcher(word);
-        return "";
-    }
 
 }

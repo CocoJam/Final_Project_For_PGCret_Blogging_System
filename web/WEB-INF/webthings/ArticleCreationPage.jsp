@@ -167,7 +167,8 @@
                                 </div>
 
                                 <input type="hidden" name="ArticleContent"/>
-                                    <input style="visibility: hidden" type="text" name="articleidnumber" value="${articleContents.articleid}"/>
+                                <input style="visibility: hidden" type="text" name="articleidnumber"
+                                       value="${articleContents.articleid}"/>
                                 <% if (session.getAttribute("articleContents") != null) {
                                     System.out.println("EDIT");
                                     out.println("<input type=\"submit\" name=\"add\" value=\"Editted\" style='visibility: hidden' id='submitButton'>");
@@ -219,8 +220,7 @@
                                     <form action="Upload" method="post" id="Upload"
                                           enctype="multipart/form-data">
                                         <input type="file" name="file" size="50" class="btn btn-white"/>
-                                        <%--<input type="submit" class="btn btn-flat btn-primary" name="Upload"--%>
-                                        <%--value="Upload"/>--%>
+
                                         <button type="submit" class="btn btn-flat btn-primary" name="Upload"
                                                 value="Upload"><i class="material-icons">file_upload</i> Upload
                                         </button>
@@ -234,8 +234,7 @@
                                         <input id="youtubeurl" type="text" name="youtube" class="form-control"
                                                placeholder="Paste your Youtube link and click button below to add"
                                                style="margin-top:-1em;">
-                                        <%--<input type="submit" name="youtubeVideoSubmition" value="youtube"--%>
-                                        <%--class="btn btn-flat btn-danger">--%>
+
                                         <button type="submit" name="youtubeVideoSubmition" value="youtube"
                                                 class="btn btn-flat btn-danger"><i
                                                 class="material-icons">video_library</i> Embed
@@ -296,7 +295,6 @@
 <script src="Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
 <script src="Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
 <script src="Trumbowyg/dist/plugins/noembed/trumbowyg.noembed.js"></script>
-<%--<script src="../../Trumbowyg/dist/plugins/table/trumbowyg.table.min.js"></script>--%>
 
 <!-- WYSIWYG -->
 <!-- WYSIWYG Editor Implementation START -->
@@ -367,13 +365,6 @@
         foreColor: "Text Color",
         backColor: "Background Color",
 
-//        table: 'Insert table',
-//        tableAddRow: 'Add rows',
-//        tableAddColumn: 'Add columns',
-//        rows: 'Rows',
-//        columns: 'Columns',
-//        styler: 'Table class',
-//        error: 'Error'
     };
 
     $('.wysiwys').trumbowyg({
@@ -397,7 +388,6 @@
             'btnGrp-design',
             ['link'],
             ['Multimedia'],
-//            ['table'],
             'btnGrp-justify',
             'btnGrp-lists',
             ['foreColor', 'backColor'],
@@ -424,7 +414,7 @@
     function addNewSection() {
         var content = $('.wysiwys').trumbowyg('html');
         if (mouse == -1) {
-            console.log("making");
+
             var paragraph1 = document.createElement("li");
             paragraph1.className = "ui-state-default ";
             paragraph1.addEventListener("click", selection);
@@ -434,7 +424,7 @@
         }
         <!-- Make the selection number -1, so it won't put the content of what's currently in the WYSIWYG directly into the selected section if made -->
         else {
-            console.log("change");
+
             mouse.innerHTML = content;
             mouse.class.removeClass("section-selected");
             clicked = false;
@@ -450,7 +440,7 @@
             mouse = -1;
         }
         else {
-            console.log($(".ui-state-default").length);
+
             $(".ui-state-default").eq($(".ui-state-default").length - 1).remove();
         }
     }
@@ -459,7 +449,7 @@
         mouse = -1;
         clicked = false;
         $(".section-selected").each(function () {
-            console.log("hello");
+
             $(this).removeClass("section-selected");
         })
     }
@@ -472,14 +462,13 @@
     var clicked = false;
     // Get the section we clicked on, grab the content, put back inside WYSIWYG, depending on the section is it selected or not.
     function selection() {
-        console.log("clicked");
+
         if (!clicked) {
             mouse = this;
-            console.log(this);
-            console.log(mouse.innerHTML);
-            console.log("section id: " + mouse);
+
+
             $('.wysiwys').trumbowyg('html', mouse.innerHTML);
-            console.log($('.wysiwys').trumbowyg('html'));
+
             $(this).addClass("section-selected");
             clicked = true;
         }
@@ -524,7 +513,7 @@
                         alert("This upload is invaild.");
                         return;
                     }
-                    console.log(msg);
+
                     var li = document.createElement("li");
                     li.className = "ui-state-default";
                     if (msg.endsWith(".flv") || msg.endsWith(".m4v") || msg.endsWith(".mp4") || msg.endsWith(".mpg") || msg.endsWith(".mpeg") || msg.endsWith(".wmv")) {
@@ -534,7 +523,7 @@
                         li.innerHTML = " <audio controls><source src=\"" + msg + "\" type=\"audio/ogg\"> </audio>";
                     }
                     else if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
-                        li.innerHTML = "<img src=\"" + msg + "\">";
+                        li.innerHTML = "<img src=\"" + msg + "class='img-responsive' \">";
                     }
                     else {
                         alert("Upload file is not supported.");
@@ -543,7 +532,7 @@
                     $("#sortable").append(li);
                 },
                 error: function (request, status, error) {
-                    console.log("upload fail");
+
                     alert("Upload File Fail.");
                 }
             });
@@ -562,9 +551,9 @@
                         alert("This upload is invaild.");
                         return;
                     }
-                    console.log(msg);
+
                     var image = document.createElement("ul");
-                    console.log(image);
+
                     var li = document.createElement("li");
                     li.className = "ui-state draggable";
                     li.innerHTML = msg;
@@ -584,12 +573,19 @@
     <!-- Making all images img-responsive -->
     $(document).ready(function () {
         $("#contents img").each(function () {
-            $(this).addClass('img-responsive');
-        })
-        /* Alternative version below: this will grab all the img on page */
-//        var allImages = $('img');
-//        allImages.addClass('img-responsive');
+            if ($(this).hasClass('img-responsive')){
+                return;
+            }
+            else {
+                $(this).addClass('img-responsive');
+                return
+            }
+        });
     });
+    /* Alternative version below: this will grab all the img on page */
+    //        var allImages = $('img');
+    //        allImages.addClass('img-responsive');
+
 </script>
 
 </html>

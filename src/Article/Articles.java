@@ -115,7 +115,7 @@ public class Articles {
         return thing.replace("\\n", "").replace("\"", "").replace("+", "").replaceAll("<[^>]*>", "").trim();
     }
 
-    //This method is using regex to find the first image within the article, which ignores the other.
+    //This method is using jsoup to find the first image within the article, which ignores the other.
     public String FirstImg(String thing) {
         Document doc = Jsoup.parse(thing);
         Element img = doc.select("img").first();
@@ -124,15 +124,6 @@ public class Articles {
             src = img.attr("src");
         }
         return src;
-    }
-
-    public static void main(String[] args) {
-        Pattern pattern = Pattern.compile("^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/.+");
-        Matcher matcher = pattern.matcher("https://www.youtube.com/watch?v=pHs4riipoS8&list=PLXqOIuKcLjKf5arUaE530VYdt8aKiH6Ig");
-        matcher.matches();
-        String whatYouNeed = matcher.group(0);
-        System.out.println(whatYouNeed.substring(matcher.end(matcher.groupCount())).replace("/watch?v=",  "/embed/"));
-        System.out.println("https://www.youtube.com"+ whatYouNeed.substring(matcher.end(matcher.groupCount())).replace("/watch?v=",  "/embed/"));
     }
 
 }

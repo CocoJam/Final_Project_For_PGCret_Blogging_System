@@ -76,24 +76,15 @@ public class CommentsServlet extends HttpServlet {
         private int articleID;
         private List<Comments> listOfComments;
         private CommentsDAO commentsDAO;
-
         public Comments getComments() {
             return comments;
         }
-
         public void setComments(Comments comments) {
             this.comments = comments;
         }
-
         private Comments comments;
     }
-
-//    private String username;
-//    private String comment;
-//    private int commentId;
-//    private int articleID;
-//    private List<Comments> listOfComments;
-//    private CommentsDAO commentsDAO;
+    
 
     //Article servlet will reroute here.
     @Override
@@ -101,7 +92,6 @@ public class CommentsServlet extends HttpServlet {
         cookieLogOut(req, resp);
         try {
             CommentsDAO commentsDAO = new CommentsDAO();
-//        Comments comments = null;
             HttpSession session = req.getSession();
             innerclass innerclass = new innerclass();
             innerclass.setCommentsDAO(commentsDAO);
@@ -110,10 +100,8 @@ public class CommentsServlet extends HttpServlet {
             if (commentStatus != null) {
                 //Scenario 1: This is to add a new comment
                 if (commentStatus.equals("Add a Comment")) {
-//                commentsDAO.AddingCommentsToDataBase(articleID, username, comment);
                     innerclass.commentsDAO.AddingCommentsToDataBase(innerclass.articleID, innerclass.username, innerclass.comment);
                     innerclass.setComments(innerclass.commentsDAO.selectionLastComment(innerclass.articleID, innerclass.username, innerclass.comment));
-//                   comments = commentsDAO.selectionLastComment();
                 }
                 //Scenario 2: Editing comments
                 else if (commentStatus.equals("EditComment")) {
@@ -121,14 +109,14 @@ public class CommentsServlet extends HttpServlet {
                     try {
                         commentId = Integer.parseInt(req.getParameter("commentId"));
                     } catch (NumberFormatException e) {
-                        System.out.println(e);
+                        e.printStackTrace();
                     }
                     //updating comments (using DAO)
                     innerclass.commentsDAO.editComments(innerclass.comment, commentId);
                     innerclass.setComments(innerclass.commentsDAO.selectionComment(commentId));
-//                comments = commentsDAO.selectionComment(commentId);
                 }
                 System.out.println(innerclass.comments);
+                //Making a json object to repsond to Ajax calls for the comments
                 if (innerclass.comments != null) {
                     JSONObject jsonObject = getJsonObject(innerclass.comments);
                     System.out.println(jsonObject);
@@ -140,12 +128,11 @@ public class CommentsServlet extends HttpServlet {
             //Grabbing list again since it is fully updated.
             System.out.println("selected article comments   ");
             innerclass.setListOfComments(innerclass.commentsDAO.selectionComments(innerclass.articleID));
-//        listOfComments = commentsDAO.selectionComments(articleID);
             if (innerclass.listOfComments != null) {
                 checkingForOwner(innerclass.listOfComments, innerclass);
                 session.setAttribute("commentlist", innerclass.listOfComments);
             }
-            System.out.println("dispatcher");
+            //Then serving back to the Article page jsp
             req.getRequestDispatcher("WEB-INF/webthings/Article.jsp").forward(req, resp);
         }
         catch (Exception e){
@@ -182,13 +169,9 @@ public class CommentsServlet extends HttpServlet {
     //Setup for the comments based on the attribute of the session and the given content.
     private void commentSetUp(HttpServletRequest req, HttpSession session, innerclass innerclass) {
         innerclass.setUsername((String) session.getAttribute("username"));
-//        username = (String) session.getAttribute("username");
         innerclass.setComment(req.getParameter("commentcontent"));
-//        comment = req.getParameter("commentcontent");
         System.out.println(session.getAttribute("articleID"));
         innerclass.setArticleID((int) session.getAttribute("articleID"));
-//        articleID = (int) session.getAttribute("articleID");
-
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class CommentsDAO {
 
-
+//Select comments based on the comment Id for display
     public synchronized Comments selectionComment(int CommentID) throws NullPointerException {
         Comments comment = null;
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
@@ -24,9 +24,9 @@ public class CommentsDAO {
                 statement.setInt(1, CommentID);
                 comment = makeComment( statement);
             }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+            
         } catch (SQLException e) {
-            System.out.println("Error. Comment not found");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){
@@ -36,7 +36,7 @@ public class CommentsDAO {
         return comment;
     }
 
-
+//Select a list of comments for a specific Article based on the ID
     public synchronized List<Comments> selectionComments(int articlesID) throws NullPointerException{
         List<Comments> listOfComments = new ArrayList<>();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
@@ -44,9 +44,9 @@ public class CommentsDAO {
                 statement.setInt(1, articlesID);
                 makeComment(listOfComments, statement);
             }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+            
         } catch (SQLException e) {
-            System.out.println("Error. Comment not found.");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){
@@ -56,25 +56,7 @@ public class CommentsDAO {
         return listOfComments;
     }
 
-    public synchronized List<Comments> selectionComments(String CommenterName) throws NullPointerException {
-        List<Comments> listOfComments = new ArrayList<>();
-        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT CommentID, ArticlesID , CommenterName, Comments, CommentTime FROM Comments WHERE CommenterName = ?;")) {
-                statement.setString(1, CommenterName);
-                makeComment(listOfComments, statement);
-            }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
-        } catch (SQLException e) {
-            System.out.println("Error. Comment not found");
-            e.printStackTrace();
-        }
-        catch (NullPointerException e){
-            e.printStackTrace();
-            throw new NullPointerException();
-        }
-        return listOfComments;
-    }
-
+//Usering to refact the Comment DAO to form Comments object and form a list
     private synchronized void makeComment(List<Comments> listOfComments, PreparedStatement statement) throws SQLException, NullPointerException {
         try (ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
@@ -88,7 +70,7 @@ public class CommentsDAO {
                 listOfComments.add(comments);
             }
         } catch (SQLException e) {
-            System.out.println("Error creating database connection.");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){
@@ -97,6 +79,7 @@ public class CommentsDAO {
         }
     }
 
+    //Used by other DAO to form Comments as an object
     private synchronized Comments makeComment( PreparedStatement statement) throws SQLException,NullPointerException {
         try (ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
@@ -110,7 +93,7 @@ public class CommentsDAO {
                 return comments;
             }
         } catch (SQLException e) {
-            System.out.println("Error creating database connection.");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){
@@ -120,6 +103,7 @@ public class CommentsDAO {
         return null;
     }
 
+    //Comments setters from the sql to set into the Comment object
     private void commentsSetStatments(Comments comments, int commentID, int articleID, String commentName, String comment, Date commentTime) {
         comments.setActicleId(articleID);
         comments.setContent(comment);
@@ -128,7 +112,7 @@ public class CommentsDAO {
         comments.setCommentedTime(commentTime);
     }
 
-
+//Inserting newly added Comments into the database
     public synchronized void AddingCommentsToDataBase(int ArticlesID, String CommenterName, String Comments) throws NullPointerException {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Comments (ArticlesID, CommenterName, Comments) VALUES(?,?,?);")) {
@@ -136,11 +120,11 @@ public class CommentsDAO {
                 statement.setString(2, CommenterName);
                 statement.setString(3, Comments);
                 statement.executeUpdate();
-                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+                
             }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+            
         } catch (SQLException e) {
-            System.out.println("Error creating database connection.");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){
@@ -149,6 +133,8 @@ public class CommentsDAO {
         }
     }
 
+
+    //Updating the Comments within the database from the given content and comment ID.
     public synchronized void editComments(String Comment, int CommentId) throws  NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE Comments SET Comments = ? WHERE CommentID = ?;")) {
@@ -156,9 +142,9 @@ public class CommentsDAO {
                 statement.setInt(2, CommentId);
                 statement.executeUpdate();
             }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+            
         } catch (SQLException e) {
-            System.out.println("Error. Username already exist. Cannot create profile page.");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){
@@ -167,19 +153,7 @@ public class CommentsDAO {
         }
     }
 
-//    public Comments selectionLastComment() {
-//        Comments comments = null;
-//        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-//            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Comments ORDER BY CommentID DESC Limit 1;")) {
-//                comments = makeComment(statement);
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Error. Comment not found");
-//            e.printStackTrace();
-//        }
-//        return comments;
-//    }
-
+    //Used to respond the comment that is just added to the database from this user. And make sure the comment is select the last one.
     public synchronized Comments selectionLastComment(int articleId, String username, String comment)throws NullPointerException {
         Comments comments = null;
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
@@ -190,7 +164,7 @@ public class CommentsDAO {
                 comments = makeComment(statement);
             }
         } catch (SQLException e) {
-            System.out.println("Error. Comment not found");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){

@@ -20,7 +20,7 @@ public class FriendDAO {
         List<Friend> ListOfFriends = new ArrayList<>();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT friendusername FROM Friendlist WHERE username=?;")) {
-                System.out.println(statement);
+                
                 statement.setString(1, username);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
@@ -28,16 +28,16 @@ public class FriendDAO {
                         String friendName = resultSet.getString(1);
                         friend.setFriendusername(friendName);
                         ListOfFriends.add(friend);
-                        System.out.println(ListOfFriends.size());
+                        
                     }
                 } catch (SQLException e) {
-                    System.out.println("Error creating database connection.");
+                    
                     e.printStackTrace();
                 }
             }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+            
         } catch (SQLException e) {
-            System.out.println("Error. Comment not found");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){
@@ -51,12 +51,12 @@ public class FriendDAO {
     public synchronized boolean AddFriends(String username, String friendusername) throws NullPointerException{
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("INSERT INTO Friendlist (username, friendusername) VALUES(?,?);")) {
-                System.out.println(statement);
+                
                 friendUpdateOrDelete(username, friendusername, statement);
                 return true;
             }
         } catch (SQLException e) {
-            System.out.println("Error. Comment not found");
+            
             e.printStackTrace();
             return false;
         } catch (NullPointerException e){
@@ -69,12 +69,12 @@ public class FriendDAO {
     public synchronized boolean DeleteFriends(String username, String friendusername) throws NullPointerException {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Friendlist WHERE username = ? AND friendusername = ?;")) {
-                System.out.println(statement);
+                
                 friendUpdateOrDelete(username, friendusername, statement);
                 return true;
             }
         } catch (SQLException e) {
-            System.out.println("Error. Comment not found");
+            
             e.printStackTrace();
             return false;
         } catch (NullPointerException e){
@@ -93,18 +93,18 @@ public class FriendDAO {
                         usernamelist.add(resultSet.getString(1));
                     }
                 } catch (SQLException e) {
-                    System.out.println("Error creating database connection.");
+                    
                     e.printStackTrace();
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Error. Comment not found");
+            
             e.printStackTrace();
         } catch (NullPointerException e){
             e.printStackTrace();
             throw new NullPointerException();
         }
-        System.out.println(usernamelist.size());
+        
         return usernamelist;
     }
 
@@ -114,15 +114,9 @@ public class FriendDAO {
         statement.setString(2, friendusername);
         statement.executeUpdate();
     }
-
     public void pullAllFriendProfile(List<Friend> list) {
         // get list, populate into SQL
-//        List<Friend> list = friendList;
-        System.out.println("123123123");
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-
-            System.out.println("76456546456");
-
             try (PreparedStatement statement = connection.prepareStatement("SELECT Username, profilePicture FROM uoaslashn.UsersNames;")) {
 
                 try (ResultSet resultSet = statement.executeQuery()) {
@@ -130,27 +124,20 @@ public class FriendDAO {
                         for (Friend friend : list) {
                             if (friend.getFriendusername().equals(resultSet.getString(1))) {
                                 friend.setFriendProfilePicture(resultSet.getString(2));
-                                System.out.println("Added profile picture to friend");
-                                System.out.println(resultSet.getString(1));
-                                System.out.println(resultSet.getString(2));
                             }
                         }
 
                     }
                 } catch (SQLException e) {
-                    System.out.println("Error creating database connection.");
+                    
                     e.printStackTrace();
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Error. Comment not found");
+            
             e.printStackTrace();
             return;
         }
-
-//        for (Friend listOfFriend : ListOfFriends) {
-//            listOfFriend.getFriendusername()
-//        }
     }
 
 }

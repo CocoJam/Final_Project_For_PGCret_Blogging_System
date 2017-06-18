@@ -34,13 +34,13 @@
     var ctx = "<%= request.getRequestURI() %>";
     var date = new Date();
     var currentTime = date.getTime();
-    console.log(currentTime);
+    
     ExpirationTime = currentTime + 1000 * 1800;
-    console.log(ExpirationTime);
+    
     date.setTime(ExpirationTime);
     document.cookie = "pagemark=" + ctx + ";expires=" + date.toGMTString() + ";path=/";
-    console.log(date.toGMTString());
-    console.log(document.cookie);
+    
+    
 
 //    Loader gif displays while Ajax request started but not completed.
     $(document).ready(function () {
@@ -220,59 +220,32 @@
 
 <script>
     var imageValue = 1;
-//    console.log(document.cookie);
-//    var cookielist = document.cookie.split(";");
-//    console.log(cookielist);
-//    for (var i =0 ; i<cookielist.length; i++){
-//        if (cookielist[i].trim().startsWith("background")){
-//            console.log(parseInt(cookielist[i].trim().replace("background=","")));
-//            imageValue = parseInt(cookielist[i].trim().replace("background=",""));
-//            break;
-//        }
-//    }
-//    $(document).ready(function () {
-//        var cookielist = document.cookie.split(";");
-//        console.log(cookielist);
-//        for (var i =0 ; i<cookielist.length; i++){
-//            if (cookielist[i].trim().startsWith("background")){
-//                console.log(parseInt(cookielist[i].trim().replace("background=","")));
-//                imageValue = parseInt(cookielist[i].trim().replace("background=",""));
-//                break;
-//            }
-//        }
-//        $("#bgImgStatus").text("Background " + imageValue + "/5");
-//    });
+//The left and right button for switching the background photos plus up date the the cookie values
     $("#leftButton").click(function () {
         if (imageValue > 1) {
             imageValue = imageValue - 1;
-//            $("#imageselect").val(imageValue);
+
             $('#custom-bg-user').css("background-image", "url('assets/img/background/bg-0" + imageValue + ".jpg')");
             $("#bgImgStatus").text("Background " + imageValue + "/5");
             document.cookie = "background="+ imageValue;
         }
     });
-
     $("#rightButton").click(function () {
-
         if (imageValue < 5) {
             imageValue = imageValue + 1;
-//            $("#imageselect").val(imageValue);
             $('#custom-bg-user').css("background-image", "url('assets/img/background/bg-0" + imageValue + ".jpg')");
             $("#bgImgStatus").text("Background " + imageValue + "/5");
             document.cookie = "background="+ imageValue;
         }
     });
-
+// Using key bind to allow enter press to search friend
     $("[name='accessFriend']").on('keyup', function (e) {
         if (e.keyCode == 13) {
             return $("#NameBar").submit;
         }
     });
-</script>
 
-<%--This script limits clicking of the button to one click--%>
-<script>
-
+    <%--This script limits clicking of the button to one click--%>
     var clicked = false;
     $(".clickOnce").on("click", function (e) {
         if (clicked === false) {
@@ -283,12 +256,12 @@
     });
 
     $(document).ready(function () {
-
+//  Making a cookie and detecting a cookie called the background with value and using it to adjust the background photo
         var cookielist = document.cookie.split(";");
-        console.log(cookielist);
+        
         for (var i =0 ; i<cookielist.length; i++){
             if (cookielist[i].trim().startsWith("background")){
-                console.log(parseInt(cookielist[i].trim().replace("background=","")));
+                
                 imageValue = parseInt(cookielist[i].trim().replace("background=",""));
                 break;
             }
@@ -297,7 +270,7 @@
         $('#custom-bg-user').css("background-image", "url('assets/img/background/bg-0" + imageValue + ".jpg')");
         $("#imageselect").change(function () {
             $('#custom-bg-user').css("background-image", "url('assets/img/background/bg-0" + imageValue + ".jpg')");
-            console.log(document.getElementById('custom-bg-user'));
+            
         });
     });
 

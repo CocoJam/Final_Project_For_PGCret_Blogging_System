@@ -274,15 +274,7 @@
                                         // An ajax call of post to get the article list which is then append and display within the given table
                                         var clickStatus = true;
 
-                                        <%--var articleUsername = "";--%>
-                                        <%----%>
-                                        <%--if (<%= friendsprofile%>){--%>
-                                        <%--articleUsername = <%=fri%>--%>
-                                        <%--}--%>
-
-
                                         $("#showArticleList").click(function () {
-
                                             if (clickStatus) {
                                                 $.ajax({
                                                     url: 'ProfilePage',
@@ -292,7 +284,7 @@
                                                         "username": "${profileInfo.username}"
                                                     },
                                                     success: function (msg) {
-                                                        console.log(msg);
+                                                        
 
                                                         $("#ArticleTable").html(msg);
 
@@ -306,8 +298,6 @@
                                                 $("#showArticleList").html("Show article list <i class='material-icons'>arrow_drop_down</i>");
                                                 clickStatus = !clickStatus;
                                             }
-
-
                                         });
                                     </script>
                                 </div>
@@ -334,17 +324,6 @@
     <script>
         //The switching of the button of adding friend and unfriending the person depending the orginal state of is this person friended.
 
-        <%--$(document).ready(function (){--%>
-        <%--<% if (friended){--%>
-        <%--%>--%>
-        <%----%>
-        <%----%>
-        <%----%>
-        <%--<% --%>
-        <%--}--%>
-        <%--%>--%>
-        <%--})--%>
-
         <% if (!friended){ %>
         $("#addfriend").fadeIn("1", function () {
             $(this).css("z-index", 0)
@@ -368,14 +347,14 @@
             $("#addfriend").fadeOut("1", function () {
                 $(this).css("z-index", -1)
             });
-            console.log("clicked")
+            
             $.post("Friend", {
                 username: "<%= currentuser.getUsername()%>",
                 friendname: "${profileInfo.username}",
                 friendprocess: "add"
             })
                 .done(function () {
-                    console.log("done adding");
+                    
 
                 })
         });
@@ -393,7 +372,7 @@
                 friendprocess: "unadd"
             })
                 .done(function () {
-                    console.log("done unadding");
+                    
                 })
         });
     </script>

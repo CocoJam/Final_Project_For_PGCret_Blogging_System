@@ -202,17 +202,6 @@
                                     <button id="sortdate" class="btn btn-danger btn-sm">By date</button>
                                 </div>
 
-
-                                <%--<label>Search: </label>--%>
-                                <%--<input type="text" id="searchBar">--%>
-
-                                <%--<div class="col-sm-3">--%>
-                                <%--<div class="form-group label-floating is-empty">--%>
-                                <%--<label class="control-label">Search</label>--%>
-                                <%--<input id="searchBar" type="text" class="form-control" style="width:100px;">--%>
-                                <%--<span class="material-input"></span></div>--%>
-                                <%--</div>--%>
-
                                 <button id="search-toggle" class="btn btn-round btn-primary" data-toggle="collapse"
                                         data-target="#search-collapsible">
                                     <i class="material-icons">search</i> Search
@@ -235,42 +224,8 @@
                                             style="margin-top: 0px;">
                                             <c:forEach items="${ArticleIndex}" var="index">
 
-                                                <%--<li class="ui-widget-content ui-corner-tr">--%>
-                                                <%--<div>--%>
-                                                <%--<c:choose>--%>
-                                                <%--<c:when test="${not empty index.firstimage}">--%>
-                                                <%--<img class="card-img-top" src="${index.firstimage}"--%>
-                                                <%--alt="${index.articlename}"--%>
-                                                <%--style="width: 80%; height: 50%">--%>
-                                                <%--</c:when>--%>
-                                                <%--<c:otherwise>--%>
-                                                <%--<img class="card-img-top" src="assets/img/img6.jpg" alt="Circle Image"--%>
-                                                <%--style="width: 80%; height: 50%">--%>
-                                                <%--</c:otherwise>--%>
-                                                <%--</c:choose>--%>
-                                                <%--<p class="card-block">--%>
-                                                <%--<h4 class="ui-widget-header cart-title" style="margin-bottom: 0">${index.articlename}</h4>--%>
-                                                <%--<p class="card-text">${index.content}</p>--%>
-
-                                                <%--<a href="/Articles?acticleId=${index.articleid}"--%>
-                                                <%--title="View larger image"--%>
-                                                <%--class="ui-icon ui-icon-zoomin articleid">View larger</a>--%>
-                                                <%--<a href="link/to/trash/script/when/we/have/js/off"--%>
-                                                <%--title="Delete this image" class="ui-icon ui-icon-plusthick">Delete--%>
-                                                <%--image</a>--%>
-                                                <%--<p class="category">${index.category}</p>--%>
-                                                <%--<p hidden class="date">${index.datecreated}</p>--%>
-                                                <%--<p hidden class="id">${index.articleid}</p>--%>
-                                                <%--</div>--%>
-                                                <%--</div>--%>
-                                                <%--</li>--%>
-
-
                                                 <li class="ui-widget-content ui-corner-tr">
 
-                                                        <%--<c:if test="${articleList.equals('all')}">--%>
-
-                                                        <%--</c:if>--%>
                                                     <c:choose>
                                                         <c:when test="${not empty index.firstimage}">
                                                             <img class="card-img-top" src="${index.firstimage}"
@@ -292,7 +247,6 @@
                                                         <div class="Articlecategory"
                                                              style="overflow: hidden; width: 80%; height: 30%; align-content: center; visibility: hidden;">${index.category}</div>
                                                     </div>
-                                                        <%--<p class="category" style="overflow: hidden; width: 80%; height: 10%">${index.category}</p>--%>
 
                                                     <a href="Articles?acticleId=${index.articleid}"
                                                        title="Preview"
@@ -308,40 +262,6 @@
                                                     <a href=ProfilePage?accessFriend=${index.username} class="username"
                                                        hidden>${index.username}</a>
                                                 </li>
-
-
-                                                <%--<div>--%>
-                                                <%--&lt;%&ndash;<img class="card-img-top" src="../pokemonloader4.gif" alt="Card image cap" style="width: 80%">&ndash;%&gt;--%>
-                                                <%--<c:choose>--%>
-                                                <%--<c:when test="${not empty index.firstimage}">--%>
-                                                <%--<img src="${index.firstimage}"--%>
-                                                <%--alt="${index.articlename}"--%>
-                                                <%--style="width: 80%">--%>
-                                                <%--</c:when>--%>
-                                                <%--<c:otherwise>--%>
-                                                <%--<img src="assets/img/img6.jpg" alt="Circle Image"--%>
-                                                <%--style="width: 80%">--%>
-                                                <%--</c:otherwise>--%>
-                                                <%--</c:choose>--%>
-                                                <%--<div class="card-block">--%>
-                                                <%--<h5 class="ui-widget-header card-title" style="margin-bottom: 0">${index.articlename}</h5>--%>
-
-                                                <%--<p class="card-text" style="overflow: hidden">${index.content}</p>--%>
-                                                <%--<a href="images/high_tatras3.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View--%>
-                                                <%--larger</a>--%>
-                                                <%--<!--<a href="#" class="btn btn-primary">Go somewhere</a>-->--%>
-                                                <%--<a href="/Articles?acticleId=${index.articleid}"--%>
-                                                <%--title="View larger image"--%>
-                                                <%--class="ui-icon ui-icon-zoomin articleid">View larger</a>--%>
-                                                <%--<a href="link/to/trash/script/when/we/have/js/off"--%>
-                                                <%--title="Delete this image" class="ui-icon ui-icon-plusthick">Delete--%>
-                                                <%--image</a>--%>
-                                                <%--<p class=" articlename" hidden>${index.articlename}</p>--%>
-                                                <%--<p hidden class="date">${index.datecreated}</p>--%>
-                                                <%--<p hidden class="id">${index.articleid}</p>--%>
-                                                <%--</div>--%>
-                                                <%--</div>--%>
-
 
                                             </c:forEach>
                                         </ul>
@@ -556,17 +476,7 @@
 
         function recycleImage($item) {
             $item.fadeOut(function () {
-//                $item
-//                    .find("a.ui-icon-refresh")
-//                    .remove()
-//                    .end()
-//                    .css("width", "96px")
-//                    .append(trash_icon)
-//                    .find("img")
-//                    .css("height", "72px")
-//                    .end()
-//                    .appendTo($gallery)
-//                    .fadeIn();
+
                 $item.find($(".card-text")).css("height", "30%");
                 $item.find($("img")).css("height", "72");
                 $item.find($("img")).css("weight", "96");
@@ -634,8 +544,8 @@
                 $target = $(event.target);
             var hyper = $target.siblings("a").attr('href');
             var title = $target.siblings(".articlename").text();
-            console.log(hyper);
-            console.log(title);
+            
+            
 
             if ($target.is("a.ui-icon-plusthick")) {
                 deleteImage($item);
@@ -772,7 +682,7 @@
             else {
                 things.sort(-tableSort);
             }
-            console.log(things);
+            
             var a = 0;
             for (var i = 0; i < things.length; i++) {
                 $(things[i]).parent().fadeOut("slow", function () {
@@ -795,7 +705,7 @@
             }
         }
 
-
+        <!-- sorting table contents -->
         function tableSort(elementX, elementY) {
             if (elementX.html().trim().toLowerCase() < elementY.html().trim().toLowerCase())
                 return -1;

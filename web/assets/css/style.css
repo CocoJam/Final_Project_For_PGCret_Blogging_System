@@ -95,8 +95,8 @@ a, a:hover, a:focus {
 
 #loaderID {
     position: fixed;
-    left: 50%;
-    top: 40%;
+    left: 5%;
+    top: 90%;
     transform: translate(-50%, -50%) scale(0.5,0.5);
     width: 498px;
     height: 632px;

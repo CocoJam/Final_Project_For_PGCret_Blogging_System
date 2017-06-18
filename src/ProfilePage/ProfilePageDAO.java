@@ -40,16 +40,16 @@ public class ProfilePageDAO extends LoginPassing {
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT Username, Name, Email, Address, Education, Ethnicity, DateOfBirth, Introduction, profilePicture FROM UsersNames WHERE Username = ?;")) {
                 statement.setString(1, username);
-                System.out.println(statement);
+                
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         profilePAge = makeProfilePAge(resultSet);
                     }
                 }
-                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+                
             }
         } catch (SQLException e) {
-            System.out.println("Error. No profile page under this username.");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){
@@ -65,17 +65,17 @@ public class ProfilePageDAO extends LoginPassing {
         saltAndIteration();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("INSERT INTO UsersNames (Username, Name, Email, Address, Education, Ethnicity , DateOfBirth, Introduction, profilePicture, Password, salt, iteration) VALUES( ?, ? ,?,?,?,?,?,?,?,?,?,?);")) {
-                System.out.println(statement);
+                
                 statement.setString(1, usernames);
                 sqlSetStatment(pass.hashing(password, salt, iterations), statement);
                 statement.setInt(11, salt);
                 statement.setInt(12, iterations);
                 statement.executeUpdate();
-                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+                
             }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+            
         } catch (SQLException e) {
-            System.out.println("Error. Username already exist. Cannot create profile page.");
+            
             e.printStackTrace();
         }
         catch (IllegalArgumentException e){
@@ -97,22 +97,15 @@ public class ProfilePageDAO extends LoginPassing {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE UsersNames SET Username=?, Name=?, Email=?, Address=?, Education=?, Ethnicity=?, DateOfBirth =?, Introduction=?, Password=?, profilePicture=?, salt=?, iteration=?  WHERE  Username = ?;")) {
                 statement.setString(1, username);
                 sqlSetStatment(password, statement);
-                System.out.println(pass.hashing(newPassword, salt, iterations));
-//                System.out.println(pass.hashing(password, oldSalt, oldIterations));
                 statement.setString(9, pass.hashing(newPassword, salt, iterations));
                 statement.setString(10, profilePicture);
                 statement.setInt(11, salt);
                 statement.setInt(12, iterations);
-//                statement.setString(12, pass.hashing(password, oldSalt, oldIterations));
                 statement.setString(13, usernames);
-
-                System.out.println(statement);
                 statement.executeUpdate();
-                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+
             }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            System.out.println("Error. Cannot update user information based on the username and password.");
             e.printStackTrace();
         }
         catch (IllegalArgumentException e){
@@ -125,30 +118,6 @@ public class ProfilePageDAO extends LoginPassing {
         return getUsersProfile(username);
     }
 
-    public synchronized void getSaltAndIteration(String username) throws NullPointerException{
-        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-            //user pass.hashing() with the password needed to be hash to match and salt number with iteration numbers
-            try (PreparedStatement statement = connection.prepareStatement(
-                    "SELECT salt,iteration FROM UsersNames WHERE Username = ?;"
-            )) {
-                statement.setString(1, username);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
-                        oldSalt = resultSet.getInt(1);
-                        System.out.println(oldSalt);
-                        oldIterations = resultSet.getInt(2);
-                        System.out.println(oldIterations);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        catch (NullPointerException e){
-            e.printStackTrace();
-            throw new NullPointerException();
-        }
-    }
 
     //This is the shortcut for setting strings for all normal user details apart from password and username.
     private synchronized void sqlSetStatment(String password, PreparedStatement statement) throws SQLException {
@@ -176,7 +145,7 @@ public class ProfilePageDAO extends LoginPassing {
         profilePAge.setDate(date);
         profilePAge.setIntroduction(introduction);
         profilePAge.setProfilepic(profilePicture);
-        System.out.println("setting " + profilePicture);
+        
         return profilePAge;
     }
 
@@ -204,13 +173,13 @@ public class ProfilePageDAO extends LoginPassing {
         date = profilePAge.getDate();
         introduction = profilePAge.getIntroduction();
         profilePicture = profilePAge.getProfilepic();
-        System.out.println("getting :" + profilePicture);
+        
     }
     private synchronized void saltAndIteration() {
         Random rand = new Random();
         salt = rand.nextInt(255-1) + 1;
         iterations = rand.nextInt(1000-1) + 1;
-        System.out.println(salt);
-        System.out.println(iterations);
+        
+        
     }
 }

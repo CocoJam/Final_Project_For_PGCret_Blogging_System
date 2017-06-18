@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-import static Connection.ConnectionToTheDataBase.closingConnection;
 import static Connection.ConnectionToTheDataBase.cookieTracker;
 
 /**
@@ -44,7 +43,6 @@ public class ProfilePageServlet extends HttpServlet {
         private String username;
     }
 //    ProfilePageDAO profilePageDAO;
-//    private String username;
 
     //    Grabs the profile page from the Database based on the username (stored in session)
     @Override
@@ -78,7 +76,6 @@ public class ProfilePageServlet extends HttpServlet {
             }
             ProfilePAge profilePAge = innerclass.profilePageDAO.getUsersProfile(innerclass.username);
             session.setAttribute("profileInfo", profilePAge);
-            closingConnection();
             req.getRequestDispatcher("WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
             return;
         } catch (Exception e) {
@@ -88,14 +85,13 @@ public class ProfilePageServlet extends HttpServlet {
         }
     }
 
-    //    The point of this: TODO need to cleanup connections from Login/Registration servlet (Maybe POST directly(?))
+    //    To get the list of friends for this user
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             innerclass innerclass = new innerclass();
             innerclass.setProfilePageDAO(new ProfilePageDAO());
             if (req.getParameter("accessFriend") == null) {
-                System.out.println("No accessFriend");
                 doPost(req, resp);
             } else {
                 HttpSession session = req.getSession();
@@ -108,8 +104,6 @@ public class ProfilePageServlet extends HttpServlet {
                         List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(req.getParameter("accessFriend"));
                         List<Friend> friendList = new FriendDAO().selectionListOfFriends(req.getParameter("accessFriend"));
                         session.setAttribute("accessFriendfirendlist", friendList);
-                        System.out.println("Firend list" + friendList);
-                        System.out.println(req.getParameter("accessFriend"));
                         session.setAttribute("IndexOfInterest", indexList);
                         session.setAttribute("showFriend", profilePAge);
                     }

@@ -100,9 +100,8 @@
 </body>
 
 <script>
-
+//I mean quite self explained that is shakes when reject to login.
     $(document).ready(function () {
-
         if (${loginFail == true}){
                 $("#loginCard").effect("shake");
 

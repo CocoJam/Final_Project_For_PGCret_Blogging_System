@@ -147,14 +147,14 @@
                                     //    Sending AJAX call to /Registration servlet by GET method which goes to Database and matches the typed username and comes back with boolean which confirms availability.
                                     //TODO the boolean appears to be returning true all the time, check if right message being sent back by doGET method in Registration.java
 
-                                    console.log($("#username").val());
+                                    
                                     $("#username").change(function () {
                                         $.ajax({
                                             url: 'Registration',
                                             type: 'GET',
                                             data: {"log": "RegistrationCheck", "usernameCheck": $("#username").val()},
                                             success: function (msg) { //specifically msg is coming back with the boolean.
-                                                console.log(msg);
+                                                
 //                                                $(reponseToUsername).text(msg);
                                                 //msg is returning a boolean for check if false meaning no such username so ok
 
@@ -330,7 +330,6 @@
                         <% if (username != null) { %>
 
                         <%--UPLOAD new profile photos--%>
-
                         <%--UPLOAD new profile photos--%>
                         <%--Upload trigger modal button--%>
 
@@ -341,9 +340,6 @@
                             </button>
                         </div>
 
-                        <%--<div class="container">--%>
-                        <!-- Trigger the modal with a button -->
-                        <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Profile Delete</button>--%>
 
                         <!-- Modal -->
                         <div class="modal fade" id="uploadModal" role="dialog">
@@ -401,10 +397,8 @@
                         </div>
                         <%--</div>--%>
 
-                        <!-- Delete profile end -->
 
 
-                        <%--Upload modal ends--%>
 
 
                         <!-- Delete profile start -->
@@ -415,10 +409,6 @@
                             </button>
                         </div>
 
-                        <%--<div class="container">--%>
-                        <!-- Trigger the modal with a button -->
-                        <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Profile Delete</button>--%>
-                        <%--Above button deleted in Nicole's latest version--%>
 
                         <!-- Modal -->
                         <div class="modal fade" id="myModal" role="dialog">
@@ -517,29 +507,29 @@
                             $("#password").bind('input', function () {
                                 if ($("#password").val().match(passwordStrengthStrong)) {
                                     $("#reponseToPassword").text("Strong");
-                                    return console.log("strong")
+                                    return 
                                 }
                                 if ($("#password").val().match(passwordStrengthMiddle)) {
                                     $("#reponseToPassword").text("Middle");
-                                    return console.log("middle")
+                                    return 
                                 }
                                 if ($("#password").val().match(passwordStrengthWeakMiddle)) {
                                     $("#reponseToPassword").text("WeakMiddle");
-                                    return console.log("weakMiddle")
+                                    return 
                                 }
                                 <!-- Simplely using the length to test strength -->
                                 if ($("#password").val().length < 8 && $("#password").val().length > 0) {
                                     $("#reponseToPassword").text("Weak");
-                                    return console.log("weak")
+                                    return 
                                 }
                                 if ($("#password").val().length > 8) {
                                     $("#reponseToPassword").text("Ok");
-                                    return console.log("ok")
+                                    return 
                                 }
                                 <!-- When nothing is there tell user there isnt anything -->
                                 if ($("#password").val().length == 0) {
                                     $("#reponseToPassword").text("Please enter a password");
-                                    return console.log("ok")
+                                    return 
                                 }
                             });
 
@@ -553,20 +543,20 @@
                                         processData: false,
                                         contentType: false,
                                         success: function (msg) {
-                                            console.log(msg);
+                                            console.log(msg)
                                             if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
                                                 var ratioButton = "<div class=\"radio\"> <label>" + "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos/${username}/photo/", "") + "\">" + "<span class=\"circle\"></span>" + "<span class=\"check\"></span>" + "</label>" + "<img src=\"" + msg + "\"height=\"20%\">" + "</div>" + "</br>";
                                                 $(".content").eq(0).append(ratioButton);
                                             }
                                             <!-- if the media is successfully uploaded but it is not a picture or photo in the right formate, that the alert will pop and show -->
                                             else {
-                                                console.log("upload fail");
+                                                
                                                 alert(msg.replace("Upload-photos\\${username}\\photo\\", "") + " failed to upload due to format not supplied");
                                             }
                                         },
                                         <!-- Error when the error such as the file is not in any right formate or such that the size of the file is too big, then the this will alert the user. -->
                                         error: function (request, status, error) {
-                                            console.log("upload fail");
+                                            
                                             alert("Upload File Is Too Big.");
                                         }
                                     });
@@ -591,13 +581,6 @@
 
 </div><!-- Wrapper end -->
 
-
-<%--<%    String username = (String) session.getAttribute("username");--%>
-<%--if ( username != null){--%>
-<%--out.println("<p>"+ username + " has been Logged Out</p>");--%>
-<%--session.setAttribute("username",null);--%>
-<%--}--%>
-<%--%>--%>
 
 
 </body>
