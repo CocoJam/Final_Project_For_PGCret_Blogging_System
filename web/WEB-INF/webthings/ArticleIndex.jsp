@@ -115,23 +115,26 @@
             width: 160px;
         }
 
-        /* Table width settings for different screensizes */
+        /* Table width settings for different screen sizes */
+        /* This styling only applies to the article index because we have 4 cols instead of 3 cols on all article index list view, hence this code is only included in this jsp, as we don't want this style to apply globally */
+
+        /* These white-space & word-wrap codes ensure that the word will break and wrap around to the next line when it reaches the max-width specified for each of the screen sizes below */
         .tablearticlename, .tablearticleusername, .tablearticlecategory {
             white-space: normal;
             word-wrap: break-word;
         }
-
             .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
                 white-space: normal;
                 word-wrap: break-word;
             }
-
             .table-responsive > .table > thead > tr > th, .table-responsive > .table > tbody > tr > th, .table-responsive > .table > tfoot > tr > th, .table-responsive > .table > thead > tr > td, .table-responsive > .table > tbody > tr > td, .table-responsive > .table > tfoot > tr > td {
                 white-space: normal;
                 word-wrap: break-word;
             }
 
-        /* LG */
+        /* Set max-width for table columns */
+
+        /* LG large screen size */
         @media (min-width: 1200px) {
             .tablearticlename {
                 max-width: 350px;
@@ -144,7 +147,7 @@
             }
         }
 
-        /* MD */
+        /* MD medium screen size */
         @media (min-width: 992px) {
             .tablearticlename {
                 max-width: 300px;
@@ -157,7 +160,7 @@
             }
         }
 
-        /* SM */
+        /* SM small screen size */
         @media (min-width: 768px) {
             .tablearticlename {
                 max-width: 250px;
@@ -170,9 +173,9 @@
             }
         }
 
-        /* Set max-width for table columns for small device screens for article index list */
+        /* Set max-width for table columns for super small device screens for article index list */
 
-        /* XS Small devices (landscape phones, 576px and up) */
+        /* XS Super small devices (landscape phones, 576px and up) */
         @media (min-device-width: 578px) and (max-width: 767px) {
             .tablearticlename {
                 max-width: 100px;
@@ -185,7 +188,7 @@
             }
         }
 
-        /* XS Small devices (landscape phones, 576px and up) */
+        /* XS Super small devices (landscape phones, 576px and up) */
         @media (min-device-width: 569px) and (max-width: 577px) {
             .tablearticlename {
                 max-width: 80px;
@@ -198,7 +201,7 @@
             }
         }
 
-        /* Small devices (iPhone 5) */
+        /* XS Super mall devices (iPhone 5) */
         @media only screen and (min-device-width: 320px) and (max-device-width: 568px)
         and (-webkit-device-pixel-ratio: 2) and (device-aspect-ratio: 40/71) {
             .tablearticlename {
