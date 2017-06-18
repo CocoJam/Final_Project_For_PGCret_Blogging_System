@@ -197,7 +197,7 @@ with the assistance of JSTL logic gates to allow different case scenarios:
                                     <hr>
                                     <h3>Friend List:</h3>
 
-                                    <c:if test="${empty friendlist}">
+                                    <c:if test="${empty firendlist}">
                                         Aww... ${profileInfo.name} has no friends, time to make some friends ${profileInfo.name} feel free to find new friends on the searchbar!
                                     </c:if>
 
