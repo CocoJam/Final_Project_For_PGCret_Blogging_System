@@ -15,7 +15,18 @@
 <html lang="en">
 <head>
     <title>Slash N - Profile Page</title>
-    <%@include file="/component/Header(styling Template).html" %>
+
+    <%@include file="../../component/Header(styling Template).html" %>
+
+    <style>
+        /* borderless table */
+        .table.table-borderless td, .table.table-borderless th {
+            border: 0 !important;
+        }
+        .table.table-borderless {
+            margin-bottom: 0;
+        }
+    </style>
 
 </head>
 <body class="profile-page">
@@ -23,7 +34,7 @@
 <%--NAVBAR STARTS--%>
 <!-- !!! NAVIGATION BAR START !!! -->
 
-<%@ include file="/component/NavBar-AfterLogin(Template).jsp" %>
+<%@ include file="../../component/NavBar-AfterLogin(Template).jsp" %>
 
 <!-- !!! NAVIGATION BAR END !!! -->
 
@@ -61,7 +72,7 @@
                                             <c:choose>
                                                 <%--If this is a default profile image get the image from default photo directory--%>
                                                 <c:when test='${profileInfo.profilepic.startsWith("defaultslashn")}'>
-                                                    <img src="assets/img/defaultImg/${profileInfo.profilepic}"
+                                                    <img src="../../assets/img/defaultImg/${profileInfo.profilepic}"
                                                          alt="Circle Image"
                                                          class="img-rounded img-responsive img-raised">
                                                 </c:when>
@@ -77,7 +88,7 @@
                                         </c:when>
 
                                         <c:otherwise>
-                                            <img src="assets/img/defaultImg/placeholder.gif" alt="Circle Image"
+                                            <img src="../../assets/img/defaultImg/placeholder.gif" alt="Circle Image"
                                                  class="img-rounded img-responsive img-raised">
                                         </c:otherwise>
                                     </c:choose>
@@ -85,18 +96,16 @@
                                     <% boolean friended = false;
                                         List<Friend> friendList = null;
                                         if (session.getAttribute("firendlist") != null) {
-                                            System.out.println("yes this is friend");
                                             friendList = (ArrayList<Friend>) session.getAttribute("firendlist");
 
                                             for (Friend friend : friendList) {
                                                 if (friend.getFriendusername().equals(((ProfilePAge) session.getAttribute("profileInfo")).getUsername())) {
-                                                    System.out.println("yes it is one of your friend");
                                                     friended = true;
                                                 }
                                             }
                                         }
                                         if (session.getAttribute("showFriend") != null) {
-                                            //Check are u the user or the other people's profile.
+                                            //Check whether you are the user or you are visiting other people's profile.
                                             if (friendsprofile) {
                                                 out.println("<button class=\"btn btn-success btn-round\" id=\"addfriend\"><i class=\"material-icons\">add_circle</i>Add</button>");
                                                 out.println("<button class=\"btn btn-danger btn-round\" id=\"unfriend\"><i class=\"material-icons\">remove_circle</i>Unfriend</button>");
@@ -123,7 +132,7 @@
 
                             <c:choose>
                                 <c:when test="${not empty profileInfo.introduction}">
-                                    <p>${profileInfo.introduction}</p>
+                                    <h5>${profileInfo.introduction}</h5>
                                 </c:when>
                                 <c:otherwise>
                                     <p>Welcome to ${profileInfo.name}'s page! Feel free to look around and view the
@@ -139,10 +148,10 @@
                                 <!-- Profile bio text -->
                                 <div class="description text-center col-lg-offset-5 col-md-offset-5 col-sm-offset-5">
 
-                                    <table class="table borderless" align="center">
+                                    <table class="table table-borderless">
                                         <tr>
                                             <th>Profile</th>
-                                            <th>Your details</th>
+                                            <th>Your Details</th>
                                         </tr>
                                         <tr>
                                             <td>Username:</td>
@@ -204,7 +213,7 @@
                                                             <c:when test='${friend.friendProfilePicture.startsWith("defaultslashn")}'>
                                                                 <a href="ProfilePage?accessFriend=${friend.friendusername}"
                                                                    class="friendButton"><img
-                                                                        src="assets/img/defaultImg/${friend.friendProfilePicture}"
+                                                                        src="../../assets/img/defaultImg/${friend.friendProfilePicture}"
                                                                         alt="Card image cap"
                                                                         class="img-slashResponsive card-img-top center-block"></a>
                                                             </c:when>
@@ -212,8 +221,7 @@
                                                             <%--Otherwise get the photo from the users photo page--%>
 
                                                             <c:when test="${empty friend.friendProfilePicture}">
-                                                                <img src="assets/img/defaultImg/placeholder.gif"
-                                                                     alt="Circle Image"
+                                                                <img src="../../assets/img/defaultImg/placeholder.gif" alt="Circle Image"
                                                                      class="img-slashResponsive card-img-top center-block">
                                                             </c:when>
 
@@ -274,17 +282,25 @@
                                         // An ajax call of post to get the article list which is then append and display within the given table
                                         var clickStatus = true;
 
+                                        <%--var articleUsername = "";--%>
+                                        <%----%>
+                                        <%--if (<%= friendsprofile%>){--%>
+                                        <%--articleUsername = <%=fri%>--%>
+                                        <%--}--%>
+
+
                                         $("#showArticleList").click(function () {
+
                                             if (clickStatus) {
                                                 $.ajax({
-                                                    url: 'ProfilePage',
+                                                    url: '/ProfilePage',
                                                     type: 'Post',
                                                     data: {
                                                         "clickedShowList": "clickedShowList",
                                                         "username": "${profileInfo.username}"
                                                     },
                                                     success: function (msg) {
-                                                        
+                                                        console.log(msg);
 
                                                         $("#ArticleTable").html(msg);
 
@@ -298,6 +314,8 @@
                                                 $("#showArticleList").html("Show article list <i class='material-icons'>arrow_drop_down</i>");
                                                 clickStatus = !clickStatus;
                                             }
+
+
                                         });
                                     </script>
                                 </div>
@@ -315,7 +333,7 @@
     </div><!-- wrapper div -->
 
     <!-- FOOTER START -->
-    <%@ include file="/component/Footer(Template).html" %>
+    <%@ include file="../../component/Footer(Template).html" %>
     <!-- FOOTER END -->
 
 
@@ -323,6 +341,17 @@
     if (session.getAttribute("showFriend") != null) { %>
     <script>
         //The switching of the button of adding friend and unfriending the person depending the orginal state of is this person friended.
+
+        <%--$(document).ready(function (){--%>
+        <%--<% if (friended){--%>
+        <%--%>--%>
+        <%----%>
+        <%----%>
+        <%----%>
+        <%--<% --%>
+        <%--}--%>
+        <%--%>--%>
+        <%--})--%>
 
         <% if (!friended){ %>
         $("#addfriend").fadeIn("1", function () {
@@ -347,14 +376,14 @@
             $("#addfriend").fadeOut("1", function () {
                 $(this).css("z-index", -1)
             });
-            
+            console.log("clicked")
             $.post("Friend", {
                 username: "<%= currentuser.getUsername()%>",
                 friendname: "${profileInfo.username}",
                 friendprocess: "add"
             })
                 .done(function () {
-                    
+                    console.log("done adding");
 
                 })
         });
@@ -372,7 +401,7 @@
                 friendprocess: "unadd"
             })
                 .done(function () {
-                    
+                    console.log("done unadding");
                 })
         });
     </script>

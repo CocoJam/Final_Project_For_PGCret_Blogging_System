@@ -44,8 +44,6 @@
         <!-- Container for elements to hide on mobile -->
         <div class="collapse navbar-collapse" id="expand-navbar-icons">
 
-            <!-- TODO need to use JSTL to dynamically change the icons on the right side on the nav bar depending on login status -->
-
             <!-- Register/Login page right side display. Use this one only on login/register pages. Use the other right menu icons display for when logged in -->
 
             <!-- Nav bar right side icons -->
@@ -68,8 +66,6 @@
         </div>
     </div>
 </nav>
-<!-- !!! NAVIGATION BAR END !!! -->
-
 
 </body>
 </html>

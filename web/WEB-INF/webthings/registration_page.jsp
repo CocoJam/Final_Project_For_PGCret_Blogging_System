@@ -143,7 +143,7 @@
 										</span>
                                     <input type="text" id="username" name="username" placeholder="Username"
                                            class="form-control"
-                                           value="${profileInfo.username}" required maxlength="16">
+                                           value="${profileInfo.username}" pattern=".{3,16}" title="3 characters minimum, 16 characters maximum." required>
                                 </div>
                                 <!-- Text input box end -->
 
@@ -195,7 +195,7 @@
 										</span>
                                     <input type="password" id="password" name="password" placeholder="Password"
                                            class="form-control"
-                                           value="${password}" required/>
+                                           value="${password}" pattern=".{6,}" title="6 characters minimum." required/>
                                 </div>
                                 <p style="text-align: center">
                                     Password Strength: <span id="reponseToPassword"></span>
@@ -229,7 +229,7 @@
 										<span class="input-group-addon">
 											<i class="material-icons">date_range</i>
 										</span>
-                                    <input type="text" id="date" name="date" placeholder="Date"
+                                    <input type="text" id="date" name="date" placeholder="Date of Birth"
                                            class="form-control datepicker"
                                            value="${profileInfo.date}"/>
                                 </div>
@@ -262,7 +262,7 @@
 										<span class="input-group-addon">
 											<i class="material-icons">language</i>
 										</span>
-                                    <input type="text" id="ethnicity" name="ethnicity" placeholder="Ethnicity"
+                                    <input type="text" id="ethnicity" name="ethnicity" placeholder="Country"
                                            class="form-control"
                                            value="${profileInfo.ethnicity}"/>
                                 </div>

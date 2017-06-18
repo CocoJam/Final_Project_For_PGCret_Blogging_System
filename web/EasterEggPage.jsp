@@ -30,7 +30,7 @@
                 <div class="col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0">
                     <div class="card card-signup">
 
-                        <iframe src="/easteregg/index.html" style="border: 0; width: 100%; height: 50%"> doesnt work
+                        <iframe src="/easteregg/index.html" style="border: 0; width: 100%; height: 50%"> Your browser does not support iframe.
                         </iframe>
 
                         <%--; -webkit-transform:scale(0.8);-moz-transform-scale(0.8);--%>

@@ -27,22 +27,22 @@
 <body>
 <% System.out.println(response.getHeaderNames());%>
 <%--<% response.addHeader("Cache-Control", "max-age=0,no-cache,no-store,must-revalidate");--%>
-    <%--response.addHeader("Pragma", "no-cache");--%>
-    <%--response.addHeader("Expires", "Tue, 01 Jan 1970 00:00:00 GMT");--%>
-    <%--System.out.println(response.getHeaderNames());%>--%>
+<%--response.addHeader("Pragma", "no-cache");--%>
+<%--response.addHeader("Expires", "Tue, 01 Jan 1970 00:00:00 GMT");--%>
+<%--System.out.println(response.getHeaderNames());%>--%>
 <script>
     var ctx = "<%= request.getRequestURI() %>";
     var date = new Date();
     var currentTime = date.getTime();
-    
+
     ExpirationTime = currentTime + 1000 * 1800;
-    
+
     date.setTime(ExpirationTime);
     document.cookie = "pagemark=" + ctx + ";expires=" + date.toGMTString() + ";path=/";
-    
-    
 
-//    Loader gif displays while Ajax request started but not completed.
+
+
+    //    Loader gif displays while Ajax request started but not completed.
     $(document).ready(function () {
 
         $(document).ajaxStart(function () {
@@ -220,7 +220,7 @@
 
 <script>
     var imageValue = 1;
-//The left and right button for switching the background photos plus up date the the cookie values
+    //The left and right button for switching the background photos plus up date the the cookie values
     $("#leftButton").click(function () {
         if (imageValue > 1) {
             imageValue = imageValue - 1;
@@ -238,7 +238,7 @@
             document.cookie = "background="+ imageValue;
         }
     });
-// Using key bind to allow enter press to search friend
+    // Using key bind to allow enter press to search friend
     $("[name='accessFriend']").on('keyup', function (e) {
         if (e.keyCode == 13) {
             return $("#NameBar").submit;
@@ -258,10 +258,10 @@
     $(document).ready(function () {
 //  Making a cookie and detecting a cookie called the background with value and using it to adjust the background photo
         var cookielist = document.cookie.split(";");
-        
+
         for (var i =0 ; i<cookielist.length; i++){
             if (cookielist[i].trim().startsWith("background")){
-                
+
                 imageValue = parseInt(cookielist[i].trim().replace("background=",""));
                 break;
             }
@@ -270,7 +270,7 @@
         $('#custom-bg-user').css("background-image", "url('assets/img/background/bg-0" + imageValue + ".jpg')");
         $("#imageselect").change(function () {
             $('#custom-bg-user').css("background-image", "url('assets/img/background/bg-0" + imageValue + ".jpg')");
-            
+
         });
     });
 

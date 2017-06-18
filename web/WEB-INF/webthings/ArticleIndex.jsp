@@ -116,57 +116,97 @@
         }
 
         /* Table width settings for different screensizes */
-        @media (min-width: 577px) {
+        .tablearticlename, .tablearticleusername, .tablearticlecategory {
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
             .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
                 white-space: normal;
                 word-wrap: break-word;
-                max-width: 200px;
             }
 
             .table-responsive > .table > thead > tr > th, .table-responsive > .table > tbody > tr > th, .table-responsive > .table > tfoot > tr > th, .table-responsive > .table > thead > tr > td, .table-responsive > .table > tbody > tr > td, .table-responsive > .table > tfoot > tr > td {
                 white-space: normal;
                 word-wrap: break-word;
-                max-width: 200px;
+            }
+
+        /* LG */
+        @media (min-width: 1200px) {
+            .tablearticlename {
+                max-width: 350px;
+            }
+            .tablearticleusername {
+                max-width: 100px;
+            }
+            .tablearticlecategory {
+                max-width: 100px;
             }
         }
 
-        /* Small devices (landscape phones, 576px and up) */
-        @media (max-width: 576px) {
-
-            /* Set max-witdh for table columns for small device screens for article index list */
-            .tablearticlename, .tablearticleusername, .tablearticlecategory {
-                word-wrap: break-word;
+        /* MD */
+        @media (min-width: 992px) {
+            .tablearticlename {
+                max-width: 300px;
             }
+            .tablearticleusername {
+                max-width: 100px;
+            }
+            .tablearticlecategory {
+                max-width: 100px;
+            }
+        }
 
+        /* SM */
+        @media (min-width: 768px) {
+            .tablearticlename {
+                max-width: 250px;
+            }
+            .tablearticleusername {
+                max-width: 100px;
+            }
+            .tablearticlecategory {
+                max-width: 100px;
+            }
+        }
+
+        /* Set max-width for table columns for small device screens for article index list */
+
+        /* XS Small devices (landscape phones, 576px and up) */
+        @media (min-device-width: 578px) and (max-width: 767px) {
+            .tablearticlename {
+                max-width: 100px;
+            }
+            .tablearticleusername {
+                max-width: 60px;
+            }
+            .tablearticlecategory {
+                max-width: 80px;
+            }
+        }
+
+        /* XS Small devices (landscape phones, 576px and up) */
+        @media (min-device-width: 569px) and (max-width: 577px) {
             .tablearticlename {
                 max-width: 80px;
             }
-
             .tablearticleusername {
                 max-width: 50px;
             }
-
             .tablearticlecategory {
-                max-width: 80px;
+                max-width: 60px;
             }
         }
 
         /* Small devices (iPhone 5) */
         @media only screen and (min-device-width: 320px) and (max-device-width: 568px)
         and (-webkit-device-pixel-ratio: 2) and (device-aspect-ratio: 40/71) {
-            /* Set max-witdh for table columns for small device screens for article index list */
-            .tablearticlename, .tablearticleusername, .tablearticlecategory {
-                word-wrap: break-word;
-            }
-
             .tablearticlename {
                 max-width: 60px;
             }
-
             .tablearticleusername {
                 max-width: 30px;
             }
-
             .tablearticlecategory {
                 max-width: 40px;
             }
@@ -175,7 +215,6 @@
     </style>
 </head>
 <body class="profile-page">
-
 
 <!-- !!! NAVIGATION BAR START !!! -->
 
