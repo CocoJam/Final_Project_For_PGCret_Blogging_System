@@ -447,18 +447,19 @@
                     e.addClass("btn-success");
                     e.removeClass("btn-danger");
 
-                    orginalcontent = $("#articleContents").html();
-                    $("#articleContents").each(function () {
-                        var aplha = $(this).html().split("");
-                        for (var i = 0; i < aplha.length; i++) {
-                            random = Math.floor(Math.random() * i);
-                            var x = aplha[i - 1];
-                            aplha[i - 1] = aplha[random];
-                            aplha[random] = x;
-                        }
-
-                        $(this).html(aplha.join(""));
-                    });
+//                    EASTEREGG when unlike the content within the article scrambles to force users to like it again ;)
+//                    orginalcontent = $("#articleContents").html();
+//                    $("#articleContents").each(function () {
+//                        var aplha = $(this).html().split("");
+//                        for (var i = 0; i < aplha.length; i++) {
+//                            random = Math.floor(Math.random() * i);
+//                            var x = aplha[i - 1];
+//                            aplha[i - 1] = aplha[random];
+//                            aplha[random] = x;
+//                        }
+//
+//                        $(this).html(aplha.join(""));
+//                    });
                 }
                 $("#likenumber").html(msg);
             },
