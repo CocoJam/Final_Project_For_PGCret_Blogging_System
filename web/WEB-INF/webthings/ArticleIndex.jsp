@@ -114,6 +114,64 @@
         #search-collapsible.in {
             width: 160px;
         }
+
+        /* Table width settings for different screensizes */
+        @media (min-width: 577px) {
+            .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+                white-space: normal;
+                word-wrap: break-word;
+                max-width: 200px;
+            }
+
+            .table-responsive > .table > thead > tr > th, .table-responsive > .table > tbody > tr > th, .table-responsive > .table > tfoot > tr > th, .table-responsive > .table > thead > tr > td, .table-responsive > .table > tbody > tr > td, .table-responsive > .table > tfoot > tr > td {
+                white-space: normal;
+                word-wrap: break-word;
+                max-width: 200px;
+            }
+        }
+
+        /* Small devices (landscape phones, 576px and up) */
+        @media (max-width: 576px) {
+
+            /* Set max-witdh for table columns for small device screens for article index list */
+            .tablearticlename, .tablearticleusername, .tablearticlecategory {
+                word-wrap: break-word;
+            }
+
+            .tablearticlename {
+                max-width: 80px;
+            }
+
+            .tablearticleusername {
+                max-width: 50px;
+            }
+
+            .tablearticlecategory {
+                max-width: 80px;
+            }
+        }
+
+        /* Small devices (iPhone 5) */
+        @media only screen and (min-device-width: 320px) and (max-device-width: 568px)
+        and (-webkit-device-pixel-ratio: 2) and (device-aspect-ratio: 40/71) {
+            /* Set max-witdh for table columns for small device screens for article index list */
+            .tablearticlename, .tablearticleusername, .tablearticlecategory {
+                word-wrap: break-word;
+            }
+
+            .tablearticlename {
+                max-width: 60px;
+            }
+
+            .tablearticleusername {
+                max-width: 30px;
+            }
+
+            .tablearticlecategory {
+                max-width: 40px;
+            }
+        }
+
     </style>
 </head>
 <body class="profile-page">
@@ -544,8 +602,8 @@
                 $target = $(event.target);
             var hyper = $target.siblings("a").attr('href');
             var title = $target.siblings(".articlename").text();
-            
-            
+
+
 
             if ($target.is("a.ui-icon-plusthick")) {
                 deleteImage($item);
@@ -682,7 +740,7 @@
             else {
                 things.sort(-tableSort);
             }
-            
+
             var a = 0;
             for (var i = 0; i < things.length; i++) {
                 $(things[i]).parent().fadeOut("slow", function () {

@@ -300,7 +300,7 @@
                 "comments": "Add a Comment"
             },
             success: function (msg) {
-                
+
                 var Data = JSON.parse(msg);
                 var contain = $("#containComments");
                 var div = document.createElement("div");
@@ -396,7 +396,7 @@
         })
             .done(function (data) {
                 $(e.parent().parent()).remove();
-                
+
             });
 
     }
@@ -411,7 +411,7 @@
                 "comments": "EditComment"
             },
             success: function (msg) {
-                
+
                 var Data = JSON.parse(msg);
                 var p1 = e.parent().parent().find(".username");
                 p1.html(Data.Username);
@@ -456,14 +456,14 @@
                             aplha[i - 1] = aplha[random];
                             aplha[random] = x;
                         }
-                        
+
                         $(this).html(aplha.join(""));
                     });
                 }
                 $("#likenumber").html(msg);
             },
             error: function (request, status, error) {
-                
+
                 alert("Upload File Fail.");
             }
         });
@@ -483,7 +483,7 @@
             });
         });
         $(".ui-state").each(function () {
-            
+
             $(this).replaceWith(function () {
                 return $('<p>', {
                     html: this.innerHTML
@@ -491,7 +491,7 @@
             });
         });
         $(".ui-state-default,ui-state").each(function () {
-            
+
             $(this).replaceWith(function () {
                 return $('<p>', {
                     html: this.innerHTML

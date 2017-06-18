@@ -2994,7 +2994,7 @@ h2.title {
 }
 
 .modal-backdrop {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.5); /* CUSTOM - changed from 0.3 */
 }
 
 .modal .modal-dialog {
@@ -3572,17 +3572,18 @@ h2.title {
 }
 .header-filter:after {
   position: absolute;
-  z-index: 1;
+  z-index: 1; /* ORIGINAL: 1 */ /* CUSTOM */
   width: 100%;
   height: 100%;
   display: block;
   left: 0;
   top: 0;
   content: "";
-  background: rgba(0, 0, 0, 0.4) linear-gradient(45deg, rgba(0, 0, 0, 0.6) 0%, rgba(31, 31, 31, 0.4) 100%); /* CUSTOM */
+  background-color: rgba(0, 0, 0, 0.4);
+  /*background: rgba(0, 0, 0, 0.4) linear-gradient(45deg, rgba(0, 0, 0, 0.6) 0%, rgba(31, 31, 31, 0.4) 100%); !* CUSTOM *!*/
 }
 .header-filter .container {
-  z-index: 2;
+  z-index: 2; /* ORIGINAL: 2 */ /* CUSTOM */
   position: relative;
 }
 

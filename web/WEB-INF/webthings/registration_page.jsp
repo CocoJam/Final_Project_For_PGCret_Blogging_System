@@ -30,15 +30,32 @@
     <%@include file="/component/Header(styling Template).html" %>
 
     <style>
-        /* Delete Profile - MODAL BACKDROP */
-        .modal-backdrop {
-            z-index: -1;
+        /* MODAL Positioning z-index fixes */
+        .header-filter .container > .modal, .modal-content .modal-header, .modal-content .modal-body, .modal-content .modal-footer, .modal-content .modal-footer button, .modal-content .modal-footer button.pull-left, .modal-content .modal-footer button + button, .modal-content .modal-body + .modal-footer, .modal .modal-dialog, .modal .modal-header .close, .modal .modal-header .close:hover, .modal .modal-header .close:focus {
+            z-index: 9999;
         }
 
-        /* Delete Profile - SHRINK CARD */
-        #loginCard {
-            margin: 0;
+        /* MODAL BACKDROP */
+        .modal-backdrop {
+            z-index: 1;
         }
+
+        /* Toggle footer z-index based on whether modal is open or not */
+        /*#footer {*/
+            /*-webkit-transition: width 2s ease;*/
+            /*-moz-transition: width 2s ease;*/
+            /*-o-transition: width 2s ease;*/
+            /*transition: width 2s ease;*/
+        /*}*/
+
+        #footer.inactive {
+            z-index: 0;
+        }
+
+        .material-scrolltop.inactive {
+            z-index: -5;
+        }
+
     </style>
 
 </head>
@@ -83,7 +100,6 @@
         }
     }
 %>
-
 
 <div class="wrapper">
     <div class="header header-filter" id="custom-bg-container"><!-- background div -->
@@ -147,14 +163,14 @@
                                     //    Sending AJAX call to /Registration servlet by GET method which goes to Database and matches the typed username and comes back with boolean which confirms availability.
                                     //TODO the boolean appears to be returning true all the time, check if right message being sent back by doGET method in Registration.java
 
-                                    
+
                                     $("#username").change(function () {
                                         $.ajax({
                                             url: 'Registration',
                                             type: 'GET',
                                             data: {"log": "RegistrationCheck", "usernameCheck": $("#username").val()},
                                             success: function (msg) { //specifically msg is coming back with the boolean.
-                                                
+
 //                                                $(reponseToUsername).text(msg);
                                                 //msg is returning a boolean for check if false meaning no such username so ok
 
@@ -221,7 +237,7 @@
 										</span>
                                     <input type="text" id="date" name="date" placeholder="Date"
                                            class="form-control datepicker"
-                                           value="${profileInfo.date}">
+                                           value="${profileInfo.date}"/>
                                 </div>
                                 <!-- Text input box end -->
 
@@ -232,7 +248,7 @@
 										</span>
                                     <input type="text" id="address" name="address" placeholder="Address"
                                            class="form-control"
-                                           value="${profileInfo.address}">
+                                           value="${profileInfo.address}"/>
                                 </div>
                                 <!-- Text input box end -->
 
@@ -254,7 +270,7 @@
 										</span>
                                     <input type="text" id="ethnicity" name="ethnicity" placeholder="Ethnicity"
                                            class="form-control"
-                                           value="${profileInfo.ethnicity}">
+                                           value="${profileInfo.ethnicity}"/>
                                 </div>
 
                                 <!-- Introduction about the user -->
@@ -315,45 +331,63 @@
                                         <%--Scenario 1: when already logged in see ChangeUserInformation--%>
                                         <c:when test="${log}">
                                             <input type="submit" name="log" value="Update Profile"
-                                                   class="btn btn-block btn-success btn-lg">
+                                                   class="btn btn-block btn-lg btn-success">
                                         </c:when>
                                         <%--Scenario 2: when NOT logged in then just see Registration--%>
                                         <c:otherwise>
                                             <input type="submit" name="log" value="Register"
-                                                   class="btn btn-block btn-success btn-lg">
+                                                   class="btn btn-block btn-lg btn-success btn-lg">
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
                             </div>
                         </form>
 
+                        <!-- BEGIN MODAL CODE -->
+
                         <% if (username != null) { %>
 
-                        <%--UPLOAD new profile photos--%>
-                        <%--UPLOAD new profile photos--%>
-                        <%--Upload trigger modal button--%>
-
+                        <!-- MODAL BUTTONS -->
 
                         <div class="col-xs-12 col-sm-12 col-md-12">
-                            <button type="button" class="btn btn-block btn-info btn-lg" data-toggle="modal"
-                                    data-target="#uploadModal">Upload Avatar image
+                            <button type="button" class="btn btn-block btn-lg btn-info" data-toggle="modal"
+                                    data-target="#uploadModal">
+                                Upload Avatar Image
                             </button>
                         </div>
 
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <button class="btn btn-block btn-lg btn-danger" data-toggle="modal"
+                                    data-target="#deleteModal">
+                                Delete Profile
+                            </button>
+                        </div>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="uploadModal" role="dialog">
+                        <!-- MODALS -->
+
+                        <!-- UPLOAD MODAL start -->
+                        <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog"
+                             aria-labelledby="uploadModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-sm">
                                 <div class="modal-content">
-                                    <div class="modal-header">
 
-                                        <%--<h4 class="modal-title">Modal Header</h4>--%>
+                                    <div class="modal-header">
+                                        <button type="button" class="btn btn-danger btn-simple close"
+                                                data-dismiss="modal" aria-hidden="true"><i
+                                                class="material-icons">clear</i> Close
+                                        </button>
+                                        <%--<h4 class="modal-title"></h4>--%>
                                     </div>
+
                                     <div class="modal-body">
-                                        <div class="card card-signup" id="uploadCard" style="margin: 0px">
+
+                                        <!-- CONTENT -->
+
+                                        <div class="card card-signup" id="uploadCard"
+                                             style="margin-top: 1em; margin-left:0em; margin-right: 0em; margin-bottom: 0em;">
 
                                             <!-- FORM ELEMENT START -->
-                                            <form id="Upload" action="/Upload" method="post"
+                                            <form id="Upload" action="Upload" method="post"
                                                   enctype="multipart/form-data">
 
                                                 <!-- Form heading -->
@@ -387,39 +421,37 @@
                                             </form>
 
                                         </div>
+
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
-                                        </button>
+                                        <%--<button type="button" class="btn btn-default btn-simple">Nice Button</button>--%>
+                                        <%--<button type="button" class="btn btn-danger btn-simple" data-dismiss="modal" >Close</button>--%>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <%--</div>--%>
+                        <!-- UPLOAD MODAL end -->
 
-
-
-
-
-                        <!-- Delete profile start -->
-
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <button type="button" class="btn btn-block btn-danger btn-lg" data-toggle="modal"
-                                    data-target="#myModal">Delete Profile
-                            </button>
-                        </div>
-
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModal" role="dialog">
+                        <!-- DELETE MODAL start -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                             aria-labelledby="deleteModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-sm">
                                 <div class="modal-content">
+
                                     <div class="modal-header">
-                                        <%--<button type="button" class="close" data-dismiss="modal">&times;</button>--%>
-                                        <%--<h4 class="modal-title">Modal Header</h4>--%>
+                                        <button type="button" class="btn btn-danger btn-simple close"
+                                                data-dismiss="modal" aria-hidden="true"><i
+                                                class="material-icons">clear</i> Close
+                                        </button>
+                                        <%--<h4 class="modal-title"></h4>--%>
                                     </div>
+
                                     <div class="modal-body">
-                                        <div class="card card-signup" id="loginCard" style="margin: 0px">
+
+                                        <!-- CONTENT -->
+
+                                        <div class="card card-signup" id="deleteCard"
+                                             style="margin-top: 1em; margin-left:0em; margin-right: 0em; margin-bottom: 0em;">
 
                                             <!-- FORM ELEMENT START -->
                                             <form class="form" method="post" action="Deleting" id="loginForm">
@@ -432,8 +464,7 @@
                                                 <!-- Form subtext -->
                                                 <span class="text-divider">
                                                         <p>We're sorry to see you go!</p>
-                                                        <p>If you are sure about deleting your account, please reconfirm your username and password to continue.</p>
-                                                        <p>You will not be able to recover your account once it's deleted.</p>
+                                                        <p>If you are sure about deleting your account, please reconfirm your username and password to continue. You will not be able to recover your account once it's deleted.</p>
                                                     </span>
 
                                                 <div class="content">
@@ -471,24 +502,23 @@
                                             </form>
 
                                         </div>
+
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
-                                        </button>
+                                        <%--<button type="button" class="btn btn-default btn-simple">Nice Button</button>--%>
+                                        <%--<button type="button" class="btn btn-danger btn-simple" data-dismiss="modal" >Close</button>--%>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <%--</div>--%>
-
-                        <!-- Delete profile end -->
-
+                        <!-- DELETE MODAL end -->
 
                         <% } %>
 
+                        <!-- BEGIN MODAL CODE -->
+
                         <%--Short script which ensures that no empty space is entered--%>
                         <script type="text/javascript">
-
                             <%--SCRIPT onclick on FORM above. Checks if form contains any space or empty, if so then submission will be --%>
                             $("#form").submit(function (event) {
                                 if ($("#username").val().trim().length == 0 || $("#password").val().trim().length == 0 || $("#Name").val().trim().length == 0 || $("#education").val().trim().length == 0 || $("#email").val().trim().length == 0) {
@@ -507,29 +537,29 @@
                             $("#password").bind('input', function () {
                                 if ($("#password").val().match(passwordStrengthStrong)) {
                                     $("#reponseToPassword").text("Strong");
-                                    return 
+                                    return
                                 }
                                 if ($("#password").val().match(passwordStrengthMiddle)) {
                                     $("#reponseToPassword").text("Middle");
-                                    return 
+                                    return
                                 }
                                 if ($("#password").val().match(passwordStrengthWeakMiddle)) {
                                     $("#reponseToPassword").text("WeakMiddle");
-                                    return 
+                                    return
                                 }
                                 <!-- Simplely using the length to test strength -->
                                 if ($("#password").val().length < 8 && $("#password").val().length > 0) {
                                     $("#reponseToPassword").text("Weak");
-                                    return 
+                                    return
                                 }
                                 if ($("#password").val().length > 8) {
                                     $("#reponseToPassword").text("Ok");
-                                    return 
+                                    return
                                 }
                                 <!-- When nothing is there tell user there isnt anything -->
                                 if ($("#password").val().length == 0) {
                                     $("#reponseToPassword").text("Please enter a password");
-                                    return 
+                                    return
                                 }
                             });
 
@@ -550,13 +580,13 @@
                                             }
                                             <!-- if the media is successfully uploaded but it is not a picture or photo in the right formate, that the alert will pop and show -->
                                             else {
-                                                
+
                                                 alert(msg.replace("Upload-photos\\${username}\\photo\\", "") + " failed to upload due to format not supplied");
                                             }
                                         },
                                         <!-- Error when the error such as the file is not in any right formate or such that the size of the file is too big, then the this will alert the user. -->
                                         error: function (request, status, error) {
-                                            
+
                                             alert("Upload File Is Too Big.");
                                         }
                                     });
@@ -584,5 +614,17 @@
 
 
 </body>
+
+<script>
+    /* Toggle footer z-index when modal is launched */
+    $("[id$=Modal]").on('show.bs.modal', function (e) {
+        $("#footer").toggleClass('inactive');
+        $(".material-scrolltop").toggleClass('inactive');
+    });
+    $("[id$=Modal]").on('hidden.bs.modal', function (e) {
+        $("#footer").toggleClass('inactive');
+        $(".material-scrolltop").toggleClass('inactive');
+    });
+</script>
 
 </html>
