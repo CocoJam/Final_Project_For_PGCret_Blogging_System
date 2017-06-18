@@ -3,8 +3,9 @@
   User: ljam763
   Date: 25/05/2017
   Time: 3:04 PM
-  To change this template use File | Settings | File Templates.
 --%>
+<%--Introduction: Article index page for both the user directly or all users.--%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -118,22 +119,19 @@
 </head>
 <body class="profile-page">
 
-
-<!-- !!! NAVIGATION BAR START !!! -->
-
+<%--Navigation bar starts--%>
 <%@ include file="/component/NavBar-AfterLogin(Template).jsp" %>
+<%--Navigation bar ends--%>
 
-<!-- !!! NAVIGATION BAR END !!! -->
-
-<!-- !!! MAIN CONTENT START !!! -->
+<%--Article Index content starts--%>
 <div class="wrapper">
-    <div class="header header-filter" id="custom-bg-user"></div><!-- background div -->
-
+    <div class="header header-filter" id="custom-bg-user"></div>
+    
     <div class="container">
         <div class="row">
 
-            <div class="main custom-container-main"><!-- main container start -->
-
+            <div class="main custom-container-main">
+                
                 <div class="profile-content">
                     <div class="container">
 
@@ -183,8 +181,8 @@
 
 
                         <div class="row">
-
-                            <!-- Article Display options start -->
+<%----%>
+                            <%-- Article Display options start --%>
                             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col xs-offset-1"
                                  style="z-index: 5000;">
                                 <button id="listorcard" class="btn btn-round btn-info"><i class="material-icons">view_list</i>
@@ -202,17 +200,6 @@
                                     <button id="sortdate" class="btn btn-danger btn-sm">By date</button>
                                 </div>
 
-
-                                <%--<label>Search: </label>--%>
-                                <%--<input type="text" id="searchBar">--%>
-
-                                <%--<div class="col-sm-3">--%>
-                                <%--<div class="form-group label-floating is-empty">--%>
-                                <%--<label class="control-label">Search</label>--%>
-                                <%--<input id="searchBar" type="text" class="form-control" style="width:100px;">--%>
-                                <%--<span class="material-input"></span></div>--%>
-                                <%--</div>--%>
-
                                 <button id="search-toggle" class="btn btn-round btn-primary" data-toggle="collapse"
                                         data-target="#search-collapsible">
                                     <i class="material-icons">search</i> Search
@@ -224,8 +211,8 @@
                                 </div>
 
                             </div>
-                            <!-- Article Display options end -->
-                            <!-- This is the card based article index-->
+                            <%--Article Display options end--%>
+                            <%--This is the card based article index--%>
                             <div class="row">
                                 <div id="cardarticle"
                                      class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
@@ -235,53 +222,19 @@
                                             style="margin-top: 0px;">
                                             <c:forEach items="${ArticleIndex}" var="index">
 
-                                                <%--<li class="ui-widget-content ui-corner-tr">--%>
-                                                <%--<div>--%>
-                                                <%--<c:choose>--%>
-                                                <%--<c:when test="${not empty index.firstimage}">--%>
-                                                <%--<img class="card-img-top" src="${index.firstimage}"--%>
-                                                <%--alt="${index.articlename}"--%>
-                                                <%--style="width: 80%; height: 50%">--%>
-                                                <%--</c:when>--%>
-                                                <%--<c:otherwise>--%>
-                                                <%--<img class="card-img-top" src="assets/img/img6.jpg" alt="Circle Image"--%>
-                                                <%--style="width: 80%; height: 50%">--%>
-                                                <%--</c:otherwise>--%>
-                                                <%--</c:choose>--%>
-                                                <%--<p class="card-block">--%>
-                                                <%--<h4 class="ui-widget-header cart-title" style="margin-bottom: 0">${index.articlename}</h4>--%>
-                                                <%--<p class="card-text">${index.content}</p>--%>
-
-                                                <%--<a href="/Articles?acticleId=${index.articleid}"--%>
-                                                <%--title="View larger image"--%>
-                                                <%--class="ui-icon ui-icon-zoomin articleid">View larger</a>--%>
-                                                <%--<a href="link/to/trash/script/when/we/have/js/off"--%>
-                                                <%--title="Delete this image" class="ui-icon ui-icon-plusthick">Delete--%>
-                                                <%--image</a>--%>
-                                                <%--<p class="category">${index.category}</p>--%>
-                                                <%--<p hidden class="date">${index.datecreated}</p>--%>
-                                                <%--<p hidden class="id">${index.articleid}</p>--%>
-                                                <%--</div>--%>
-                                                <%--</div>--%>
-                                                <%--</li>--%>
-
-
                                                 <li class="ui-widget-content ui-corner-tr">
 
-                                                        <%--<c:if test="${articleList.equals('all')}">--%>
-
-                                                        <%--</c:if>--%>
                                                     <c:choose>
                                                         <c:when test="${not empty index.firstimage}">
                                                             <img class="card-img-top" src="${index.firstimage}"
                                                                  alt="${index.articlename}"
-                                                                 width="96" height="72" style="margin-bottom: 5">
+                                                                 width="96" height="72" style="margin-bottom: 5px">
                                                         </c:when>
                                                         <c:otherwise>
                                                             <img class="card-img-top"
                                                                  src="assets/img/defaultImg/pokemonloader4.gif"
                                                                  alt="Circle Image"
-                                                                 width="96" height="72" style="margin-bottom: 5">
+                                                                 width="96" height="72" style="margin-bottom: 5px">
                                                         </c:otherwise>
                                                     </c:choose>
                                                     <h4 class="card-title articlename"
@@ -292,7 +245,6 @@
                                                         <div class="Articlecategory"
                                                              style="overflow: hidden; width: 80%; height: 30%; align-content: center; visibility: hidden;">${index.category}</div>
                                                     </div>
-                                                        <%--<p class="category" style="overflow: hidden; width: 80%; height: 10%">${index.category}</p>--%>
 
                                                     <a href="Articles?acticleId=${index.articleid}"
                                                        title="Preview"
@@ -309,40 +261,6 @@
                                                        hidden>${index.username}</a>
                                                 </li>
 
-
-                                                <%--<div>--%>
-                                                <%--&lt;%&ndash;<img class="card-img-top" src="../pokemonloader4.gif" alt="Card image cap" style="width: 80%">&ndash;%&gt;--%>
-                                                <%--<c:choose>--%>
-                                                <%--<c:when test="${not empty index.firstimage}">--%>
-                                                <%--<img src="${index.firstimage}"--%>
-                                                <%--alt="${index.articlename}"--%>
-                                                <%--style="width: 80%">--%>
-                                                <%--</c:when>--%>
-                                                <%--<c:otherwise>--%>
-                                                <%--<img src="assets/img/img6.jpg" alt="Circle Image"--%>
-                                                <%--style="width: 80%">--%>
-                                                <%--</c:otherwise>--%>
-                                                <%--</c:choose>--%>
-                                                <%--<div class="card-block">--%>
-                                                <%--<h5 class="ui-widget-header card-title" style="margin-bottom: 0">${index.articlename}</h5>--%>
-
-                                                <%--<p class="card-text" style="overflow: hidden">${index.content}</p>--%>
-                                                <%--<a href="images/high_tatras3.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View--%>
-                                                <%--larger</a>--%>
-                                                <%--<!--<a href="#" class="btn btn-primary">Go somewhere</a>-->--%>
-                                                <%--<a href="/Articles?acticleId=${index.articleid}"--%>
-                                                <%--title="View larger image"--%>
-                                                <%--class="ui-icon ui-icon-zoomin articleid">View larger</a>--%>
-                                                <%--<a href="link/to/trash/script/when/we/have/js/off"--%>
-                                                <%--title="Delete this image" class="ui-icon ui-icon-plusthick">Delete--%>
-                                                <%--image</a>--%>
-                                                <%--<p class=" articlename" hidden>${index.articlename}</p>--%>
-                                                <%--<p hidden class="date">${index.datecreated}</p>--%>
-                                                <%--<p hidden class="id">${index.articleid}</p>--%>
-                                                <%--</div>--%>
-                                                <%--</div>--%>
-
-
                                             </c:forEach>
                                         </ul>
                                         <div id="save" class="ui-widget-content ui-state-default">
@@ -350,15 +268,15 @@
                                                 Articles</h4>
                                         </div>
 
-                                        <!-- Empty div for adding some space at the bottom of the container -->
+                                        <%-- Empty div for adding some space at the bottom of the container --%>
                                         <div class="row" style="margin-bottom:1em;"></div>
 
                                     </div>
                                 </div>
 
-                                <!-- The card based article index end here-->
+                                <%-- The card based article index end here--%>
 
-                                <!-- The list based article index start here-->
+                                <%-- The list based article index start here--%>
                                 <div id="listarticle"
                                      class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
                                     <table class="table table-striped table-hover table-responsive">
@@ -404,34 +322,35 @@
 
                                     </table>
                                 </div>
-                                <!-- The list based article index end here-->
+                                <%-- The list based article index end here--%>
                             </div>
 
                         </div>
                     </div>
                 </div>
 
-            </div><!-- main container end -->
+            </div><%-- main container end --%>
 
-        </div><!-- outer div 2 -->
-    </div><!-- outer div 1 -->
-</div><!-- wrapper div -->
+        </div><%-- outer div 2 --%>
+    </div><%-- outer div 1 --%>
+</div><%-- wrapper div --%>
 
-<!-- FOOTER START -->
+<%-- FOOTER START --%>
 <%@ include file="/component/Footer(Template).html" %>
-<!-- FOOTER END -->
+<%-- FOOTER END --%>
 <script>
 
-    $(function () {
 
-        <!-- Switch between the card mode or the list mode -->
+    <%--This is the JQuery UI function to create, rearrange and save cards--%>
+    $(function () {
+        <%-- Switch between the card mode or the list mode --%>
         var cardOrList = false;
 
         $("#listarticle").fadeOut("fast", function () {
             $(this).css("z-index", -1);
         });
 
-        <!-- This is the toggle button for the change in between the list and card mode to switch the table out/in and the card out/in based on the state of the cardOrList var -->
+        <%-- This is the toggle button for the change in between the list and card mode to switch the table out/in and the card out/in based on the state of the cardOrList var --%>
         $("#listorcard").on("click", function () {
             if (cardOrList == false) {
                 $("#cardarticle").fadeOut("fast", function () {
@@ -455,7 +374,7 @@
             }
         });
 
-        <!-- Search bar function for searching article based on the title, creater's name and the category for both list and card form -->
+        <%-- Search bar function for searching article based on the title, creater's name and the category for both list and card form --%>
         function searching(element, firstitem, seconditem, thriditem) {
             var value = $("#searchBar").val();
             $(element).each(function () {
@@ -476,14 +395,13 @@
             })
         }
 
-        <!-- Searching function from the list mode and card mode applying to one search bar, plus the searching will not affect the cards that is saved within the cart.-->
+        <%-- Searching function from the list mode and card mode applying to one search bar, plus the searching will not affect the cards that is saved within the cart.--%>
         $("#searchBar").bind('keyup', function () {
             searching(".tablecontentR", ".tablearticlename", ".tablearticleusername", ".tablearticlecategory");
             searching(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)", "h4", ".username", ".category");
         });
 
-
-        <!-- draggible jquery ui with majar alteration such as img to words and strings, the saving into the cart and other things. -->
+        <%-- draggible jquery ui with majar alteration such as img to words and strings, the saving into the cart and other things. --%>
         // There's the gallery and the trash
         var $gallery = $("#gallery"),
             $save = $("#save");
@@ -498,7 +416,7 @@
         });
 
         // Let the trash be droppable, accepting the gallery items
-        <!-- This applied a post request to ArticleCart servlet which is used to save the current article that has been click to cart into the servlet. When the cad is dragged to the cart -->
+        <%-- This applied a post request to ArticleCart servlet which is used to save the current article that has been click to cart into the servlet. When the cad is dragged to the cart --%>
         $save.droppable({
             accept: "#gallery > li",
             classes: {
@@ -511,7 +429,7 @@
                 $.post("ArticleCart", {cartadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
             }
         });
-        <!-- Same theory applies but to unadd or to disattatch the card from the cart session if dragged out of the cart -->
+        <%-- Same theory applies but to unadd or to disattatch the card from the cart session if dragged out of the cart --%>
         // Let the gallery be droppable as well, accepting items from the trash
         $gallery.droppable({
             accept: "#save li",
@@ -525,7 +443,6 @@
                 $.post("ArticleCart", {cartunadd: "<a href=\"" + hyper + "\">" + title + "</a>"})
             }
         });
-
 
         // Image deletion function
         var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Remove from Saved Articles' class='ui-icon ui-icon-refresh'>Remove from Saved Articles</a>";
@@ -556,17 +473,7 @@
 
         function recycleImage($item) {
             $item.fadeOut(function () {
-//                $item
-//                    .find("a.ui-icon-refresh")
-//                    .remove()
-//                    .end()
-//                    .css("width", "96px")
-//                    .append(trash_icon)
-//                    .find("img")
-//                    .css("height", "72px")
-//                    .end()
-//                    .appendTo($gallery)
-//                    .fadeIn();
+
                 $item.find($(".card-text")).css("height", "30%");
                 $item.find($("img")).css("height", "72");
                 $item.find($("img")).css("weight", "96");
@@ -587,7 +494,7 @@
         }
 
         // Image preview function, demonstrating the ui.dialog used as a modal window
-        <!-- This is the mini summary that pop up if the glass is clicked, as you would see some specific alteration is done to allow other things such as more than one html tag to be included. Due to how the ui is structured that a hack around is needed and done, or not several pop up will appear based on how many html tags is within. -->
+        <%-- This is the mini summary that pop up if the glass is clicked, as you would see some specific alteration is done to allow other things such as more than one html tag to be included. Due to how the ui is structured that a hack around is needed and done, or not several pop up will appear based on how many html tags is within. --%>
         function viewLargerImage($link) {
 
             var hyper = $link.attr('href');
@@ -627,15 +534,13 @@
             }, 1);
         }
 
-        <!-- Ths detection of each card of which icon or <a> has been clicked, which lead to different effects, plus the followed post calls to the ARticleCart servlet. -->
+        <%-- Ths detection of each card of which icon or <a> has been clicked, which lead to different effects, plus the followed post calls to the ARticleCart servlet. --%>
         $("ul.gallery > li").on("click", function (event) {
 
             var $item = $(this),
                 $target = $(event.target);
             var hyper = $target.siblings("a").attr('href');
             var title = $target.siblings(".articlename").text();
-            console.log(hyper);
-            console.log(title);
 
             if ($target.is("a.ui-icon-plusthick")) {
                 deleteImage($item);
@@ -653,11 +558,11 @@
 
 //needed time delay to sort needed to wait for all animation to finish.
 
-        <!-- Card model sorting function  -->
+        <%-- Card model sorting function  --%>
         var things = [];
         var assemibled = false;
         var type = null;
-        <!-- The defaultsorting algorithm comparator, which allow the cards' children to be selected based on what type is given -->
+        <%-- The defaultsorting algorithm comparator, which allow the cards' children to be selected based on what type is given --%>
         function defaultSort(elementX, elementY) {
 
             if (elementX.children().siblings(type).text().toLowerCase() < elementY.children().siblings(type).text().toLowerCase())
@@ -667,8 +572,8 @@
             return 0;
         }
 
-        <!-- Function that is called when assemible the cards into the cart without actually adding into the session, this is due to the ui constructed as normal z-index alteration can't be used to shift the position due to not enough time delay. Hence allowing the cards to be put within the cart and reapply to the external space in sorted order instead. (The function of the ui only applies when element exsist during the load of the doc.) -->
-        <!-- Adding all cards array which is used for defaultsorting.-->
+        <%-- Function that is called when assemible the cards into the cart without actually adding into the session, this is due to the ui constructed as normal z-index alteration can't be used to shift the position due to not enough time delay. Hence allowing the cards to be put within the cart and reapply to the external space in sorted order instead. (The function of the ui only applies when element exsist during the load of the doc.) --%>
+        <%-- Adding all cards array which is used for defaultsorting.--%>
         function attachment() {
             $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
                 things.push($(this));
@@ -678,7 +583,7 @@
             }
         }
 
-        <!-- This is use to put back the cards for sorting within the external space, which also shift the first card out from the array making sure the array is empty. -->
+        <%-- This is use to put back the cards for sorting within the external space, which also shift the first card out from the array making sure the array is empty. --%>
         function display() {
             while (things.length > 0) {
                 recycleImage($(things[0]));
@@ -686,14 +591,14 @@
             }
         }
 
-        <!-- The assemble function -->
+        <%-- The assemble function --%>
         $("#sort").on('click', function () {
             if (assemibled === false) {
                 attachment();
                 assemibled = true;
             }
         });
-        <!-- After assembled that allow the user to sort by title using the defaultsort and setting the type into the h5, which is the title -->
+        <%-- After assembled that allow the user to sort by title using the defaultsort and setting the type into the h5, which is the title --%>
         var title = true;
         $("#sorttitle").on('click', function () {
             if (!cardOrList) {
@@ -715,7 +620,7 @@
                 title = !title;
             }
         });
-        <!-- After assembled that allow the user to sort by title using the defaultsort and setting the type into the catrgory class. -->
+        <%-- After assembled that allow the user to sort by title using the defaultsort and setting the type into the catrgory class. --%>
         var category = true;
         $("#sortcategory").on('click', function () {
             if (!cardOrList) {
@@ -737,7 +642,7 @@
                 category = !category;
             }
         });
-        <!-- After assembled that allow the user to sort by title using the defaultsort and setting the type into the date class. -->
+        <%-- After assembled that allow the user to sort by title using the defaultsort and setting the type into the date class. --%>
         var date = true;
         $("#sortdate").on('click', function () {
             if (!cardOrList) {
@@ -760,7 +665,7 @@
             }
         });
 
-        <!-- The toggle that is used to sort the tables -->
+        <%-- The toggle that is used to sort the tables --%>
         function sortingTables(type, boolean) {
             var things = [];
             $(type).each(function () {
@@ -772,7 +677,7 @@
             else {
                 things.sort(-tableSort);
             }
-            console.log(things);
+            
             var a = 0;
             for (var i = 0; i < things.length; i++) {
                 $(things[i]).parent().fadeOut("slow", function () {
@@ -795,7 +700,7 @@
             }
         }
 
-
+        <%-- sorting table contents --%>
         function tableSort(elementX, elementY) {
             if (elementX.html().trim().toLowerCase() < elementY.html().trim().toLowerCase())
                 return -1;
@@ -804,31 +709,29 @@
             return 0;
         }
 
-        <!-- The card displaying function, as the cartlist is return from the session, which is the servlet that is from the ArticleCart. This will return array list from the attribute that is called cartlist. Due to the nature of this that is passed in as a string in the fashion of array, hence substring and regex spliting is needed. -->
+        <%-- The card displaying function, as the cartlist is return from the session, which is the servlet that is from the ArticleCart. This will return array list from the attribute that is called cartlist. Due to the nature of this that is passed in as a string in the fashion of array, hence substring and regex spliting is needed. --%>
         var cartlist = '<%= session.getAttribute("cartlist") %>';
         var cartArray = cartlist.substring(1, cartlist.length - 1).split(",");
 
         $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").each(function () {
-            <!-- The reverse mathcing using the card's <a href> to match is there an exsisting string within the array that matches if so then run that card with the deleteImage function to move it to the cart at the doc ready for storage. The regex of "\\?" is used to escape the escape which in turns to escape the ? for accurate matching. -->
-            var blah = ($(this).children().siblings(".articleid").attr('href').replace("?", "\\?"));
-            var match = new RegExp(blah);
+
+            <%-- The reverse mathcing using the card's <a href> to match is there an exsisting string within the array that matches if so then run that card with the deleteImage function to move it to the cart at the doc ready for storage. The regex of "\\?" is used to escape the escape which in turns to escape the ? for accurate matching. --%>
+            var articleTitle = ($(this).children().siblings(".articleid").attr('href').replace("?", "\\?"));
+            var match = new RegExp(articleTitle);
             for (var i = 0; i < cartArray.length; i++) {
 
                 if (cartArray[i].match(match)) {
-
                     deleteImage($(this));
                     break;
                 }
-
             }
         });
         $(".ui-widget-content.ui-corner-tr.ui-draggable.ui-draggable-handle:not(#save *)").click(function () {
             $(this).effect("highlight");
         })
     });
-</script>
 
-<script>
+//    Script 2: Collapsing of the sorting assemble.
     /* Horizontal collapse */
 
     $("[data-toggle='toggle']").click(function () {

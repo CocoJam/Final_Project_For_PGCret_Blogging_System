@@ -7,8 +7,12 @@
   User: ljam763
   Date: 25/05/2017
   Time: 2:07 PM
-  To change this template use File | Settings | File Templates.
 --%>
+<%--Introduction: This is the JSP page which displays profile pages of users. This page has been purposefully reused
+with the assistance of JSTL logic gates to allow different case scenarios:
+1. User's own profile page
+2. Another user's profile page--%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -20,15 +24,12 @@
 </head>
 <body class="profile-page">
 
-<%--NAVBAR STARTS--%>
-<!-- !!! NAVIGATION BAR START !!! -->
-
+<%--Navbar starts--%>
 <%@ include file="/component/NavBar-AfterLogin(Template).jsp" %>
+<%--Navbar ends--%>
 
-<!-- !!! NAVIGATION BAR END !!! -->
-
-
-<%-- Switching the profilepage between the user and the friends one that they are veiwing using the session and swtich the session attribute withe the showFriend--%>
+<%-- Retrieving Attribute from Servlet: Receiving attribute as to whether the current page is the user's own or friend's profile page by using session and switching where required.
+ Switching the profilepage between the user and the friends one that they are veiwing using the session and swtich the session attribute withe the showFriend--%>
 <% ProfilePAge currentuser = null;
     boolean friendsprofile = false;
     if (session.getAttribute("showFriend") != null) {
@@ -38,6 +39,8 @@
     }%>
 
 <!-- !!! MAIN CONTENT START !!! -->
+
+<%--The main content of the profilepage--%>
 <div class="wrapper">
     <div class="header header-filter" id="custom-bg-user"></div><!-- background div -->
 
@@ -81,7 +84,8 @@
                                                  class="img-rounded img-responsive img-raised">
                                         </c:otherwise>
                                     </c:choose>
-                                    <!-- loading the friendlist from the session, which allow the user to veiw is that person a friend of the user and display the button of friend and unfriend depending-->
+
+                                    <%--Loading the friendlist from the session, which allows the user to view whether the person is a friend of the user. If so displays the button of friend and unfriend depending--%>
                                     <% boolean friended = false;
                                         List<Friend> friendList = null;
                                         if (session.getAttribute("firendlist") != null) {
@@ -96,7 +100,7 @@
                                             }
                                         }
                                         if (session.getAttribute("showFriend") != null) {
-                                            //Check are u the user or the other people's profile.
+                                            //Button responsive depending on whether the profile viewed is a friend or not.
                                             if (friendsprofile) {
                                                 out.println("<button class=\"btn btn-success btn-round\" id=\"addfriend\"><i class=\"material-icons\">add_circle</i>Add</button>");
                                                 out.println("<button class=\"btn btn-danger btn-round\" id=\"unfriend\"><i class=\"material-icons\">remove_circle</i>Unfriend</button>");
@@ -104,6 +108,8 @@
                                         }
                                     %>
                                 </div>
+
+                                <%--Displays a welcome message to the user if this is the users profile page--%>
                                 <div class="name" id="custom-profile-name">
                                     <h3 class="title">
                                         <% if (!friendsprofile) { %>
@@ -112,15 +118,16 @@
                                         ${profileInfo.name}</h3>
                                     </h3>
                                 </div>
+
                                 <div class="name" id="custom-profile-subtitle">
                                     <h6>${profileInfo.education}</h6>
                                 </div>
+
                             </div>
                         </div>
 
-                        <%--Introduction "blurb'--%>
+                        <%--Introduction content where the user has written a little about themselves--%>
                         <div class="description text-center">
-
                             <c:choose>
                                 <c:when test="${not empty profileInfo.introduction}">
                                     <p>${profileInfo.introduction}</p>
@@ -139,6 +146,7 @@
                                 <!-- Profile bio text -->
                                 <div class="description text-center col-lg-offset-5 col-md-offset-5 col-sm-offset-5">
 
+                                    <%--Table specifying out the profile details--%>
                                     <table class="table borderless" align="center">
                                         <tr>
                                             <th>Profile</th>
@@ -177,30 +185,30 @@
                                     </table>
                                     <%--Profile details end--%>
 
-                                    <%--Friends list section begins--%>
+                                    <%--If this is the user's own profile Friends list section begins:
+                                    Simple logic gates have been implemented to make this section more interactive
+                                    1. If the user has no friends, displays a simple message encouraging them to make
+                                    more friends.
+                                    2. If the friendlist contains at least one friend to display the list of friends
+                                    in cards with the profile photo of the friend.
+
+                                    --%>
                                     <% if (!friendsprofile) { %>
-
                                     <hr>
-
                                     <h3>Friend List:</h3>
 
                                     <c:if test="${empty friendlist}">
-                                        Aww... ${profileInfo.name} has no friends, time to make some friends ${profileInfo.name}!
+                                        Aww... ${profileInfo.name} has no friends, time to make some friends ${profileInfo.name} feel free to find new friends on the searchbar!
                                     </c:if>
 
                                     <c:if test="${not empty firendlist}">
-
-
                                         <div class="card-group">
-
                                             <c:forEach var="friend" items="${firendlist}">
                                                 <c:if test="${friend.friendusername != null}">
 
                                                     <div class="card" style="max-width: 15rem">
-                                                            <%--<div class="imageContainer" style="width: 10rem">--%>
                                                         <c:choose>
-
-                                                            <%--If this is a default profile image get the image from default photo directory--%>
+                                                            <%--A. If this is a default profile image get the image from default photo directory--%>
                                                             <c:when test='${friend.friendProfilePicture.startsWith("defaultslashn")}'>
                                                                 <a href="ProfilePage?accessFriend=${friend.friendusername}"
                                                                    class="friendButton"><img
@@ -208,23 +216,18 @@
                                                                         alt="Card image cap"
                                                                         class="img-slashResponsive card-img-top center-block"></a>
                                                             </c:when>
-
-                                                            <%--Otherwise get the photo from the users photo page--%>
-
+                                                            <%--B. Otherwise get the photo from the users photo page--%>
                                                             <c:when test="${empty friend.friendProfilePicture}">
                                                                 <img src="assets/img/defaultImg/placeholder.gif"
                                                                      alt="Circle Image"
                                                                      class="img-slashResponsive card-img-top center-block">
                                                             </c:when>
-
                                                             <c:otherwise>
                                                                 <img src="Upload-photos/${friend.friendusername}/photo/${friend.friendProfilePicture}"
                                                                      alt="Card image cap"
                                                                      class="img-slashResponsive card-img-top center-block">
                                                             </c:otherwise>
-
                                                         </c:choose>
-                                                            <%--</div>--%>
                                                         <div class="card-block">
                                                             <div style="height: 1em; line-height: 1em">
                                                                 <h7
@@ -233,30 +236,20 @@
                                                                         href="ProfilePage?accessFriend=${friend.friendusername}"
                                                                         class="friendButton">${friend.friendusername}</a>
                                                                 </h7>
-
                                                                 <p class="card-text"></p>
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </c:if>
                                             </c:forEach>
                                         </div>
-                                        <%--</table>--%>
-
-
                                     </c:if>
 
-                                    <% }
-
-//                                    if (!friendsprofile) {
-                                    %>
+                                    <% } %>
 
                                     <hr>
-
-                                    <%--Articles begin--%>
+                                    <%--Article list dropdown option below--%>
                                     <div>
-
                                         <button id="showArticleList" class="btn btn-info btn-round">Show Articles List
                                             <i class='material-icons'>arrow_drop_down</i></button>
 
@@ -264,25 +257,14 @@
 
                                         <table class="table table-striped table-hover table-responsive">
                                         </table>
-                                        <%--<% }%>--%>
-                                        <%--end testing--%>
-
                                     </div>
 
-
                                     <script>
-                                        // An ajax call of post to get the article list which is then append and display within the given table
+                                        // Script: An ajax call of post to get the article list which is then append
+                                        // and display within the given table.
                                         var clickStatus = true;
 
-                                        <%--var articleUsername = "";--%>
-                                        <%----%>
-                                        <%--if (<%= friendsprofile%>){--%>
-                                        <%--articleUsername = <%=fri%>--%>
-                                        <%--}--%>
-
-
                                         $("#showArticleList").click(function () {
-
                                             if (clickStatus) {
                                                 $.ajax({
                                                     url: 'ProfilePage',
@@ -292,12 +274,13 @@
                                                         "username": "${profileInfo.username}"
                                                     },
                                                     success: function (msg) {
-                                                        console.log(msg);
+
 
                                                         $("#ArticleTable").html(msg);
 
                                                     }
                                                 });
+
                                                 //Toggle between the hide of the list and the showing of the list based on the button
                                                 $("#showArticleList").html("Hide article list <i class='material-icons'>arrow_drop_up</i>");
                                                 clickStatus = !clickStatus;
@@ -306,8 +289,6 @@
                                                 $("#showArticleList").html("Show article list <i class='material-icons'>arrow_drop_down</i>");
                                                 clickStatus = !clickStatus;
                                             }
-
-
                                         });
                                     </script>
                                 </div>
@@ -317,33 +298,21 @@
                         </div>
 
                     </div>
-                    <%--table of friends for this person--%>
+
                 </div><!-- main container end -->
 
-            </div><!-- outer div 2 -->
-        </div><!-- outer div 1 -->
-    </div><!-- wrapper div -->
+            </div>
+        </div>
+    </div>
 
-    <!-- FOOTER START -->
+    <%--Footer starts--%>
     <%@ include file="/component/Footer(Template).html" %>
-    <!-- FOOTER END -->
-
+    <%--Footer ends--%>
 
         <% //if The user is within their own profile this script will not appear, so the following function will  not be apply to the jsp.
     if (session.getAttribute("showFriend") != null) { %>
     <script>
         //The switching of the button of adding friend and unfriending the person depending the orginal state of is this person friended.
-
-        <%--$(document).ready(function (){--%>
-        <%--<% if (friended){--%>
-        <%--%>--%>
-        <%----%>
-        <%----%>
-        <%----%>
-        <%--<% --%>
-        <%--}--%>
-        <%--%>--%>
-        <%--})--%>
 
         <% if (!friended){ %>
         $("#addfriend").fadeIn("1", function () {
@@ -368,15 +337,13 @@
             $("#addfriend").fadeOut("1", function () {
                 $(this).css("z-index", -1)
             });
-            console.log("clicked")
+
             $.post("Friend", {
                 username: "<%= currentuser.getUsername()%>",
                 friendname: "${profileInfo.username}",
                 friendprocess: "add"
             })
                 .done(function () {
-                    console.log("done adding");
-
                 })
         });
 
@@ -393,7 +360,6 @@
                 friendprocess: "unadd"
             })
                 .done(function () {
-                    console.log("done unadding");
                 })
         });
     </script>

@@ -46,7 +46,7 @@ public class Upload_files extends HttpServlet {
 
 
     public void init() {
-        System.out.println();
+        
     }
 
     //doPost SHOULD come from 2 places (1) Upload while changing profile; (2)upload inside article itself (but currently it is stuffing up)
@@ -56,8 +56,7 @@ public class Upload_files extends HttpServlet {
         HttpSession session = req.getSession();
 
         caption = (String) session.getAttribute("Upload");
-        System.out.println(caption);
-        System.out.println("What");
+
         ServletContext servletContext = Making_Upload_File();
 
         filePath = servletContext.getRealPath("Upload-photos")+"/";
@@ -65,8 +64,7 @@ public class Upload_files extends HttpServlet {
         File dir = new File(filePath + dir_name);
         if (!dir.exists()) {
             boolean yes = dir.mkdir();
-            System.out.println(dir.getPath());
-            System.out.println("username File is made: " + yes);
+
         }
 
         //needed to make a music, photos and audio files for each user.
@@ -82,34 +80,34 @@ public class Upload_files extends HttpServlet {
 
         // maximum file size to be uploaded.
         upload.setSizeMax(maxFileSize);
-        System.out.println("came here1");
+
         try {
             List fileItems = upload.parseRequest(req);
             Iterator i = fileItems.iterator();
             while (i.hasNext()) {
                 FileItem fi = (FileItem) i.next();
                 if (!fi.isFormField()) {
-                    System.out.println("came here2");
+
                     String fieldName = fi.getFieldName();
                     fileName = fi.getName();
                     String contentType = fi.getContentType();
                     boolean isInMemory = fi.isInMemory();
                     long sizeInBytes = fi.getSize();
-                    System.out.println("came here3");
+
                     //This is the differentiator where it checks where it is from. ArticleMedia class stuffed things up after this was added in. CREATE Article ID folder. TODO currently not working need fixes.
                     if (caption.equals("ArticlesUpload")) {
-                        System.out.println("came here4");
+
                         String filing = ((int) session.getAttribute("articleID")) + "/";
                         filePath += filing;
                         File Article = new File(filePath);
                         if (!Article.exists()) {
                             boolean made = Article.mkdir();
-                            System.out.println("ArticleFile: " + made);
+
                         }
                     }
-                    System.out.println("came here5");
+
                     //Filters writing into right folder
-                    System.out.println(filePath);
+
                     if (fileName.endsWith(".flv") || fileName.endsWith(".m4v") || fileName.endsWith(".mp4") || fileName.endsWith(".mpg") || fileName.endsWith(".mpeg") || fileName.endsWith(".wmv")) {
                         FormingVideoFileAndVideo();
                     } else if (fileName.endsWith(".mp3")) {
@@ -119,17 +117,16 @@ public class Upload_files extends HttpServlet {
                     }
                     fileNameEditting(); //this slims down the filenname before it is written
                     fi.write(file);
-                    System.out.println("Something is written");
                     resp.getWriter().print(filePath(file));
                     return;
                 } else {
-                    System.out.println("something else is throwing here");
+                    
                 }
             }
         } catch (FileUploadException ex) {
-            System.out.println("Upload not successful due to the file size exceeding limit");
+            
             resp.getWriter().print("File Upload Exceeded File Size");
-            System.out.println(ex);
+            
             return;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -144,9 +141,9 @@ public class Upload_files extends HttpServlet {
 
         File uploads = new File(filePath);
         if (!uploads.exists()) {
-            System.out.println("upload-photos/");
+
             boolean made = uploads.mkdir();
-            System.out.println(made);
+
         }
         return servletContext;
     }
@@ -157,7 +154,7 @@ public class Upload_files extends HttpServlet {
         File videoFile = new File(filePath);
         if (!videoFile.exists()) {
             boolean made = videoFile.mkdir();
-            System.out.println("photoFile: " + made);
+
         }
         filePath += "/";
     }
@@ -168,7 +165,7 @@ public class Upload_files extends HttpServlet {
         File videoFile = new File(filePath);
         if (!videoFile.exists()) {
             boolean made = videoFile.mkdir();
-            System.out.println("audioFile: " + made);
+
         }
         filePath += "/";
     }
@@ -179,7 +176,7 @@ public class Upload_files extends HttpServlet {
         File videoFile = new File(filePath);
         if (!videoFile.exists()) {
             boolean made = videoFile.mkdir();
-            System.out.println("videoFile: " + made);
+
         }
         filePath += "/";
     }
@@ -214,7 +211,6 @@ public class Upload_files extends HttpServlet {
 
         Set<String> filepaths = new TreeSet<>();
 
-        System.out.println(filepaths.size() + " paths");
         //This is the recursions, finding all the directories. (START OF TRILOGY 1) TODO unify the 3 trilogies together.
 
         Set<String> list = findingDirectory(file, filepaths);
@@ -261,17 +257,16 @@ public class Upload_files extends HttpServlet {
         map.put("photo", photo);
         return map;
     }
-
-    //This is danger needed to check is there a article number as such before running this since it is recussion.
+    
     //This function uses recussion to find the leaf files from the file input onwards.
     protected Set<String> findingDirectory(File file, Set<String> filepaths) {
 
-        System.out.println(file + " finding the directory");
+
         if (!file.isDirectory()) {
 
             File[] parent = file.getParentFile().listFiles();
             for (File file1 : parent) {
-                System.out.println(file1 + " added");
+
                 filepaths.add(filePath(file1));
             }
             return filepaths;

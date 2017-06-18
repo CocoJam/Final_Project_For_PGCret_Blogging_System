@@ -1,5 +1,5 @@
 /* NAVBAR - POSITION ON TOP */
-#navbar-full .navbar{
+#navbar-full .navbar {
     border-radius: 0 !important;
     /*margin-bottom: 15px;*/
     z-index: 2;
@@ -33,9 +33,11 @@
 .form-group.is-focused .form-control {
     background-image: linear-gradient(#03A9F4, #03A9F4), linear-gradient(#D2D2D2, #D2D2D2);
 }
+
 .form-group.is-focused .form-control .material-input:after {
     background-color: #03A9F4;
 }
+
 .form-group.is-focused label,
 .form-group.is-focused label.control-label {
     color: #03A9F4;
@@ -85,19 +87,19 @@ a, a:hover, a:focus {
 /*Search bar dropdown functionality CSS*/
 
 /*#namebar {*/
-    /*position: relative;*/
-    /*margin-bottom: 0;*/
+/*position: relative;*/
+/*margin-bottom: 0;*/
 /*}*/
 
 /*#NameBarForm {*/
-    /*margin-bottom: %;*/
+/*margin-bottom: %;*/
 /*}*/
 
 #loaderID {
     position: fixed;
     left: 50%;
     top: 40%;
-    transform: translate(-50%, -50%) scale(0.5,0.5);
+    transform: translate(-50%, -50%) scale(0.5, 0.5);
     width: 498px;
     height: 632px;
     z-index: 9999;
@@ -114,15 +116,17 @@ a, a:hover, a:focus {
     width: 15px;
     border-radius: 100%;
     background-color: #03A9F4;
-    -webkit-transform: scale3d(0,0,0);
-    -moz-transform: scale3d(0,0,0);
-    -o-transform: scale3d(0,0,0);
-    -ms-transform: scale3d(0,0,0);
-    transform: scale3d(0,0,0);
+    -webkit-transform: scale3d(0, 0, 0);
+    -moz-transform: scale3d(0, 0, 0);
+    -o-transform: scale3d(0, 0, 0);
+    -ms-transform: scale3d(0, 0, 0);
+    transform: scale3d(0, 0, 0);
 }
+
 .radio input[type=radio]:checked ~ .check {
     background-color: #03A9F4;
 }
+
 .radio input[type=radio]:checked ~ .circle {
     border-color: #03A9F4;
 }
@@ -187,7 +191,6 @@ audio {
     box-shadow: 0 16px 26px -10px rgba(41, 58, 70, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(41, 58, 70, 0.2);
 }
 
-
 #audioGallery .carouselSlashControl-left {
     position: absolute;
     left: 0%;
@@ -231,13 +234,13 @@ audio {
     object-fit: contain;
 }
 
+#easterEgg {
+    border: 0;
+    width: 100%;
+    height: 50%;
+}
 
 
-/*.nav-pills-slashn > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {*/
-    /*background-color: black;*/
-    /*color: #FFFFFF;*/
-    /*box-shadow: 0 16px 26px -10px rgba(156, 39, 176, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(156, 39, 176, 0.2);*/
-/*style="left: 50%; right: 50%"*/
 
 
 /* --------------- media-query flags start ---------------------------*/

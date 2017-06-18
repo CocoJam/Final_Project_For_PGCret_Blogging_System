@@ -21,7 +21,6 @@ public class FriendServlet extends HttpServlet {
         try{
         HttpSession session = req.getSession();
         FriendDAO friendDAO = new FriendDAO();
-        System.out.println("posted");
         String username = req.getParameter("username");
         String friendname = req.getParameter("friendname");
         String friendprocess = req.getParameter("friendprocess");
@@ -39,13 +38,10 @@ public class FriendServlet extends HttpServlet {
             cookieTracker(req,resp);
             return;
         }
-        System.out.println("ajax came here");
         List<Friend> friendList = friendDAO.selectionListOfFriends(username);
         new FriendDAO().pullAllFriendProfile(friendList);
-        System.out.println("Friends profile pic added");
 
         session.setAttribute("firendlist", friendList);
-        System.out.println(friendList);
         req.getRequestDispatcher("ProfilePage").forward(req, resp);}
         catch (Exception e){
             cookieTracker(req,resp);

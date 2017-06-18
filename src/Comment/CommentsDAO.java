@@ -24,9 +24,9 @@ public class CommentsDAO {
                 statement.setInt(1, CommentID);
                 comment = makeComment( statement);
             }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+            
         } catch (SQLException e) {
-            System.out.println("Error. Comment not found");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){
@@ -44,9 +44,9 @@ public class CommentsDAO {
                 statement.setInt(1, articlesID);
                 makeComment(listOfComments, statement);
             }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+            
         } catch (SQLException e) {
-            System.out.println("Error. Comment not found.");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){
@@ -63,9 +63,9 @@ public class CommentsDAO {
                 statement.setString(1, CommenterName);
                 makeComment(listOfComments, statement);
             }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+            
         } catch (SQLException e) {
-            System.out.println("Error. Comment not found");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){
@@ -88,7 +88,7 @@ public class CommentsDAO {
                 listOfComments.add(comments);
             }
         } catch (SQLException e) {
-            System.out.println("Error creating database connection.");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){
@@ -110,7 +110,7 @@ public class CommentsDAO {
                 return comments;
             }
         } catch (SQLException e) {
-            System.out.println("Error creating database connection.");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){
@@ -136,11 +136,11 @@ public class CommentsDAO {
                 statement.setString(2, CommenterName);
                 statement.setString(3, Comments);
                 statement.executeUpdate();
-                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+                
             }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+            
         } catch (SQLException e) {
-            System.out.println("Error creating database connection.");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){
@@ -156,9 +156,9 @@ public class CommentsDAO {
                 statement.setInt(2, CommentId);
                 statement.executeUpdate();
             }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
+            
         } catch (SQLException e) {
-            System.out.println("Error. Username already exist. Cannot create profile page.");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){
@@ -166,19 +166,6 @@ public class CommentsDAO {
             throw new NullPointerException();
         }
     }
-
-//    public Comments selectionLastComment() {
-//        Comments comments = null;
-//        try (Connection connection = new ConnectionToTheDataBase().getConn()) {
-//            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Comments ORDER BY CommentID DESC Limit 1;")) {
-//                comments = makeComment(statement);
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Error. Comment not found");
-//            e.printStackTrace();
-//        }
-//        return comments;
-//    }
 
     public synchronized Comments selectionLastComment(int articleId, String username, String comment)throws NullPointerException {
         Comments comments = null;
@@ -190,7 +177,7 @@ public class CommentsDAO {
                 comments = makeComment(statement);
             }
         } catch (SQLException e) {
-            System.out.println("Error. Comment not found");
+            
             e.printStackTrace();
         }
         catch (NullPointerException e){

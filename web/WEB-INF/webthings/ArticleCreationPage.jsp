@@ -60,20 +60,15 @@
 
 <body class="profile-page">
 
-<!-- !!! NAVIGATION BAR START !!! -->
-
+<%--Navbar starts--%>
 <%@ include file="/component/NavBar-AfterLogin(Template).jsp" %>
+<%--Navbar ends--%>
 
-<!-- !!! NAVIGATION BAR END !!! -->
-
-<!-- !!! MAIN CONTENT START !!! -->
-
+<%--Article creation page content starts--%>
 <div class="wrapper">
     <div class="header header-filter" id="custom-bg-user"></div><!-- background div -->
-
     <div class="container">
         <div class="row">
-
             <div class="main custom-container-main"><!-- main container start -->
 
                 <div class="profile-content">
@@ -82,14 +77,11 @@
                         <div class="row">
                             <div class="profile">
                                 <div class="avatar">
-                                    <%--<img src="" alt="Circle Image" class="img-rounded img-responsive img-raised">--%>
-
                                     <c:choose>
                                         <c:when test="${articleList.equals('self')}">
                                             <c:choose>
                                                 <c:when test="${profileInfo.profilepic != null}">
                                                     <c:choose>
-                                                        <%--If this is a default profile image get the image from default photo directory--%>
                                                         <c:when test='${profileInfo.profilepic.startsWith("defaultslashn")}'>
                                                             <img src="assets/img/defaultImg/${profileInfo.profilepic}"
                                                                  alt="Avatar"
@@ -97,7 +89,6 @@
                                                         </c:when>
 
                                                         <%--Otherwise get the photo from the users photo page--%>
-
                                                         <c:otherwise>
                                                             <img src="Upload-photos/${profileInfo.username}/photo/${profileInfo.profilepic}"
                                                                  alt="Avatar"
@@ -121,18 +112,15 @@
                                             <h1></h1>
                                         </c:otherwise>
                                     </c:choose>
-
                                 </div>
-
                             </div>
                         </div>
 
                         <div class="row">
-
-
                         </div>
+
                         <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-                            <!-- Articles Form for submitting new/changes to database -->
+                            <%--Articles Form for submitting new/changes to database--%>
                             <form id="form" action="Articles" method="post">
                                 <%--Input for Article Name --%>
                                 <div class="form-group label-floating">
@@ -167,7 +155,8 @@
                                 </div>
 
                                 <input type="hidden" name="ArticleContent"/>
-                                    <input style="visibility: hidden" type="text" name="articleidnumber" value="${articleContents.articleid}"/>
+                                <input style="visibility: hidden" type="text" name="articleidnumber"
+                                       value="${articleContents.articleid}"/>
                                 <% if (session.getAttribute("articleContents") != null) {
                                     System.out.println("EDIT");
                                     out.println("<input type=\"submit\" name=\"add\" value=\"Editted\" style='visibility: hidden' id='submitButton'>");
@@ -177,15 +166,15 @@
                                 %>
                             </form>
 
-                            <!-- WYSIWYG -->
-                            <!-- Editor Box -->
+                            <%-- WYSIWYG--%>
+                            <%-- Editor Box --%>
                             <div class="wysiwys" placeholder="Enter your content here"></div>
 
-                            <!-- Buttons -->
+                            <%-- Buttons --%>
                             <div class="row text-center">
                                 <div class="btn-group-justified">
 
-                                    <!-- Make a new section, put current WYSIWYG content in -->
+                                    <%-- Make a new section, put current WYSIWYG content in--%>
                                     <div class="col-xs-4 col-sm-4 col-md-4">
                                         <button class="btn btn-block btn-flat" onclick="addNewSection()"><i
                                                 class="material-icons">done</i>
@@ -193,7 +182,7 @@
                                         </button>
                                     </div>
 
-                                    <!-- Delete currently selected section -->
+                                    <%-- Delete currently selected section --%>
                                     <div class="col-xs-4 col-sm-4 col-md-4">
                                         <button class="btn btn-block btn-flat" onclick="deleteSection()"><i
                                                 class="material-icons">delete</i>
@@ -201,7 +190,7 @@
                                         </button>
                                     </div>
 
-                                    <!-- Clear all content inside WYSIWYG editor -->
+                                    <%-- Clear all content inside WYSIWYG editor --%>
                                     <div class="col-xs-4 col-sm-4 col-md-4">
                                         <button class="btn btn-block btn-flat" onclick="resetText()"><i
                                                 class="material-icons">sync</i>
@@ -213,29 +202,27 @@
                             </div>
 
                             <div class="row">
-                                <!-- Media upload -->
+                                <%-- Media upload --%>
                                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
                                     <h3>Upload Media</h3>
                                     <form action="Upload" method="post" id="Upload"
                                           enctype="multipart/form-data">
                                         <input type="file" name="file" size="50" class="btn btn-white"/>
-                                        <%--<input type="submit" class="btn btn-flat btn-primary" name="Upload"--%>
-                                        <%--value="Upload"/>--%>
+
                                         <button type="submit" class="btn btn-flat btn-primary" name="Upload"
                                                 value="Upload"><i class="material-icons">file_upload</i> Upload
                                         </button>
                                     </form>
                                 </div>
 
-                                <!-- Youtube upload -->
+                                <%-- Youtube upload --%>
                                 <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8">
                                     <h3>Embed Youtube</h3>
                                     <form id="Youtube" action="ArticleUpload" method="post">
                                         <input id="youtubeurl" type="text" name="youtube" class="form-control"
                                                placeholder="Paste your Youtube link and click button below to add"
                                                style="margin-top:-1em;">
-                                        <%--<input type="submit" name="youtubeVideoSubmition" value="youtube"--%>
-                                        <%--class="btn btn-flat btn-danger">--%>
+
                                         <button type="submit" name="youtubeVideoSubmition" value="youtube"
                                                 class="btn btn-flat btn-danger"><i
                                                 class="material-icons">video_library</i> Embed
@@ -244,8 +231,8 @@
                                 </div>
                             </div>
 
-                            <!-- Space for holding content to be uploaded to DB -->
-                            <!-- DRAGGABLE SECTIONS -->
+                            <%-- Space for holding content to be uploaded to DB --%>
+                            <%-- DRAGGABLE SECTIONS --%>
                             <div class="row text-center"><h2>Preview Your Content</h2></div>
                             <div id="contents">
                                 <c:choose>
@@ -253,12 +240,12 @@
                                         ${articleContents.content}
                                     </c:when>
                                     <c:otherwise>
-                                        <!-- creates new section boxes -->
+                                        <%-- creates new section boxes --%>
                                         <ul>
                                             <li class="ui-state draggable"></li>
                                         </ul>
 
-                                        <!-- place where you drag stuff into for sorting their order -->
+                                        <%-- place where you drag stuff into for sorting their order --%>
                                         <ul id="sortable">
                                         </ul>
                                     </c:otherwise>
@@ -273,7 +260,7 @@
                                 </div>
                             </div>
 
-                            <!-- Empty div for adding some space at the bottom of the container -->
+                            <%-- Empty div for adding some space at the bottom of the container --%>
                             <div class="row" style="margin-bottom:2em;"></div>
 
                         </div>
@@ -284,24 +271,24 @@
     </div>
 </div>
 
-<!-- FOOTER START -->
+<%-- FOOTER START --%>
 <%@ include file="/component/Footer(Template).html" %>
-<!-- FOOTER END -->
+<%-- FOOTER END --%>
 
 </body>
 
-<!-- Load WYSIWYG JS -->
+<%-- Load WYSIWYG JS --%>
 <script src="Trumbowyg/dist/trumbowyg.min.js"></script>
 <script src="Trumbowyg/dist/plugins/preformatted/trumbowyg.preformatted.min.js"></script>
 <script src="Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
 <script src="Trumbowyg/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
 <script src="Trumbowyg/dist/plugins/noembed/trumbowyg.noembed.js"></script>
-<%--<script src="../../Trumbowyg/dist/plugins/table/trumbowyg.table.min.js"></script>--%>
 
-<!-- WYSIWYG -->
-<!-- WYSIWYG Editor Implementation START -->
+<%-- WYSIWYG --%>
+<%-- WYSIWYG Editor Implementation START --%>
 <script>
 
+    <%--Calling script for the WYSIWYG--%>
     jQuery.trumbowyg.langs.en = {
         _dir: "ltr", // This line is optional, but useful to override the `dir` option
 
@@ -365,15 +352,8 @@
         preformatted: "Code (Preformatted Text)",
 
         foreColor: "Text Color",
-        backColor: "Background Color",
+        backColor: "Background Color"
 
-//        table: 'Insert table',
-//        tableAddRow: 'Add rows',
-//        tableAddColumn: 'Add columns',
-//        rows: 'Rows',
-//        columns: 'Columns',
-//        styler: 'Table class',
-//        error: 'Error'
     };
 
     $('.wysiwys').trumbowyg({
@@ -397,7 +377,6 @@
             'btnGrp-design',
             ['link'],
             ['Multimedia'],
-//            ['table'],
             'btnGrp-justify',
             'btnGrp-lists',
             ['foreColor', 'backColor'],
@@ -407,24 +386,24 @@
         ]
     });
 </script>
-<!-- WYSIWYG Editor Implementation END -->
+<%-- WYSIWYG Editor Implementation END --%>
 
-<!-- More WYSIWYG JS -->
+<%-- More WYSIWYG JS --%>
 <script>
-    // Submit button on click to submit the form of the draggible content set
+    // Submit button onclick to submit the form of the draggable content set.
     function whenClickAdd() {
         $("#submitButton").click();
     }
 
-    // The reset the Textarea to empty the wysiwys.
+    // This resets the Textarea to empty the wysiwys.
     function resetText() {
         $('.wysiwys').trumbowyg('empty');
     }
-    // Adding the new section or submitting the edit line of the wysiwys into the selected section of the draggible.
+    // Adding the new section or submitting the edit line of the wysiwys into the selected section of the draggable.
     function addNewSection() {
         var content = $('.wysiwys').trumbowyg('html');
         if (mouse == -1) {
-            console.log("making");
+
             var paragraph1 = document.createElement("li");
             paragraph1.className = "ui-state-default ";
             paragraph1.addEventListener("click", selection);
@@ -432,9 +411,9 @@
             paragraph1.innerHTML = content;
             resetText();
         }
+
         <!-- Make the selection number -1, so it won't put the content of what's currently in the WYSIWYG directly into the selected section if made -->
         else {
-            console.log("change");
             mouse.innerHTML = content;
             mouse.class.removeClass("section-selected");
             clicked = false;
@@ -450,36 +429,31 @@
             mouse = -1;
         }
         else {
-            console.log($(".ui-state-default").length);
+
             $(".ui-state-default").eq($(".ui-state-default").length - 1).remove();
         }
     }
-    // Used to disattach a class from the li or the draggible to display to the user,
+    // Used to detach a class from the li or the draggable to display to the user,
     function clearSection() {
         mouse = -1;
         clicked = false;
         $(".section-selected").each(function () {
-            console.log("hello");
             $(this).removeClass("section-selected");
         })
     }
 
 </script>
 
-<!-- Scripts for dealing with draggable sections -->
+<%-- Scripts for dealing with draggable sections --%>
 <script>
     var mouse = -1;
     var clicked = false;
     // Get the section we clicked on, grab the content, put back inside WYSIWYG, depending on the section is it selected or not.
     function selection() {
-        console.log("clicked");
+
         if (!clicked) {
             mouse = this;
-            console.log(this);
-            console.log(mouse.innerHTML);
-            console.log("section id: " + mouse);
             $('.wysiwys').trumbowyg('html', mouse.innerHTML);
-            console.log($('.wysiwys').trumbowyg('html'));
             $(this).addClass("section-selected");
             clicked = true;
         }
@@ -487,7 +461,6 @@
             clearSection();
         }
     }
-    ;
 
     //classic jquery ui js for the draggible.
     $(function () {
@@ -510,7 +483,7 @@
 
 <!-- AJAX Upload -->
 <script>
-    // AJAX UPLOAD for the user which allow the media to be uploaded into the local files and also append the files inside the content display as a section which allow the draggible and deleting.
+    // script: AJAX UPLOAD for the user which allow the media to be uploaded into the local files and also append the files inside the content display as a section which allow the draggible and deleting.
     $('#Upload')
         .submit(function (e) {
             $.ajax({
@@ -524,7 +497,7 @@
                         alert("This upload is invaild.");
                         return;
                     }
-                    console.log(msg);
+
                     var li = document.createElement("li");
                     li.className = "ui-state-default";
                     if (msg.endsWith(".flv") || msg.endsWith(".m4v") || msg.endsWith(".mp4") || msg.endsWith(".mpg") || msg.endsWith(".mpeg") || msg.endsWith(".wmv")) {
@@ -543,7 +516,7 @@
                     $("#sortable").append(li);
                 },
                 error: function (request, status, error) {
-                    console.log("upload fail");
+
                     alert("Upload File Fail.");
                 }
             });
@@ -562,9 +535,9 @@
                         alert("This upload is invaild.");
                         return;
                     }
-                    console.log(msg);
+
                     var image = document.createElement("ul");
-                    console.log(image);
+
                     var li = document.createElement("li");
                     li.className = "ui-state draggable";
                     li.innerHTML = msg;
@@ -576,7 +549,7 @@
             e.preventDefault();
         });
 
-    // SUBMITTING. This submition allow all the html within the content page to be submited into the database,which could be display as text within the html in to the Article page. Which also allow editting.
+    // Submitting: This submission allow all the html within the content page to be submited into the database,which could be display as text within the html in to the Article page. Which also allow editing.
     $("#form").submit(function () {
         $("input:hidden").val($("#contents").html());
     });

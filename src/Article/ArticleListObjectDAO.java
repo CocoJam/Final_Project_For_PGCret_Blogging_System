@@ -35,18 +35,14 @@ public class ArticleListObjectDAO extends ArticlesDAO {
                 try (ResultSet resultSet = statement.executeQuery()) {
                     addingArticlesIntoTheList(ListIndex, resultSet);
                 }
-                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            System.out.println("Error creating database connection.");
             e.printStackTrace();
         }
         catch (NullPointerException e){
             e.printStackTrace();
             throw new NullPointerException();
         }
-        System.out.println("Article size" + ListIndex.size());
         return ListIndex;
     }
 
@@ -56,23 +52,19 @@ public class ArticleListObjectDAO extends ArticlesDAO {
         List<Articles> ListIndex = new ArrayList<>();
         try (Connection connection = new ConnectionToTheDataBase().getConn()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT ArticlesID, ArticlesName,Category ,SpecificDateCreated, UserIDName, Content FROM Articles WHERE UserIDName = ?;")) {
-                System.out.println(statement);
                 statement.setString(1, UserIDName);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     addingArticlesIntoTheList(ListIndex, resultSet);
                 }
-                System.out.println("CONNECTION CLOSED: " + connection.isClosed());
             }
-            System.out.println("CONNECTION CLOSED: " + connection.isClosed());
         } catch (SQLException e) {
-            System.out.println("Error article not found");
             e.printStackTrace();
         }
         catch (NullPointerException e){
             e.printStackTrace();
             throw new NullPointerException();
         }
-        System.out.println("Article size" + ListIndex.size());
+
         return ListIndex;
     }
 
@@ -92,7 +84,6 @@ public class ArticleListObjectDAO extends ArticlesDAO {
         DateCreated = resultSet.getDate(4);
         UsernameID = resultSet.getString(5);
         ArticleContent = resultSet.getString(6);
-        System.out.println(ArticleContent+" HERE!!!!");
     }
 
     private synchronized void articleListObjectSetStatments(Articles articleListObject) {
@@ -103,7 +94,6 @@ public class ArticleListObjectDAO extends ArticlesDAO {
         articleListObject.setContent(articleListObject.cuttingLines(ArticleContent));
         articleListObject.setFirstimage(articleListObject.FirstImg(ArticleContent));
         if (UsernameID != null) {
-            System.out.println("userId set");
             articleListObject.setUsername(UsernameID);
         }
     }

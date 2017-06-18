@@ -51,15 +51,15 @@ public class Registration extends HttpServlet {
                 // This is related to the AJAX call in Registration.jsp
                 else if (req.getParameter("log").equals("RegistrationCheck")) {
                     String usernameCheck = req.getParameter("usernameCheck");
-                    System.out.println(usernameCheck);
+                    
                     LoginPassing loginPassing = new LoginPassing();
                     boolean asdna = loginPassing.selectionUsersCheck(usernameCheck);
-                    System.out.println(asdna);
+                    
                     resp.getWriter().print(asdna);
                     return;
                 }
             }
-        System.out.println("Change user");
+        
         cookieTracker(req, resp);
         return;
 
@@ -77,13 +77,13 @@ public class Registration extends HttpServlet {
 
             profilePageDAO = new ProfilePageDAO();
             if (req.getParameter("log") != null) {
-                System.out.println("Regs");
+                
                 //TODO refactor to switch statement if possible.
                 // Scenario 1: The below is an editing scenario.
                 if (req.getParameter("log").equals("Update Profile")) {
-                    System.out.println("Trying for info update");
+                    
                     profilePage = profilePageDAO.updateUsersProfile((String) session.getAttribute("username"), password, profilePage, req.getParameter("password"));
-                    System.out.println("info updated");
+                    
                     session.setAttribute("profileInfo", profilePage);
 //                session.setAttribute("password",password);
                     closingConnection();
@@ -93,12 +93,12 @@ public class Registration extends HttpServlet {
 //            Scenario 2: create new profile scenario
                 else {
                     try {
-                        System.out.println("Create");
+                        
                         session.setAttribute("password", req.getParameter("password"));
                         profilePageDAO.createUsersProfile(profilePage, req.getParameter("password"));
                         profilePage = profilePageDAO.getUsersProfile(profilePage.getUsername());
                         session.setAttribute("profileInfo", profilePage);
-                        System.out.println(profilePage.getUsername());
+                        
                         session.setAttribute("username", profilePage.getUsername());
                         session.setAttribute("log", true);
                         req.getRequestDispatcher("WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
@@ -131,7 +131,7 @@ public class Registration extends HttpServlet {
         password = req.getParameter("password");
         profilePage.setIntroduction(req.getParameter("Introduction").replaceAll("<(/?script[^>]*)>", ""));
         profilePage.setProfilepic(req.getParameter("profilePicture"));
-        System.out.println("profile pic :" + req.getParameter("profilePicture"));
+        
         sqlDateparsing();
         profilePage.setDate(sqlFormateDate);
     }
@@ -139,10 +139,10 @@ public class Registration extends HttpServlet {
     //Fixed the date parsing problem
     private void sqlDateparsing() {
 
-        System.out.println(dateofbirth);
+        
 
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println(sdf1);
+        
         Date date = null;
         if (dateofbirth.equals("")) {
             sqlFormateDate = null;
@@ -151,7 +151,7 @@ public class Registration extends HttpServlet {
         try {
             date = sdf1.parse(dateofbirth);
         } catch (ParseException e) {
-            System.out.println("not a date formate");
+            
             e.printStackTrace();
         }
         sqlFormateDate = new java.sql.Date(date.getTime());

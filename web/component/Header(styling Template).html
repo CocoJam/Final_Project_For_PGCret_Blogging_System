@@ -65,6 +65,7 @@
             }
         });
     });
+    // To disable href to be clicked multiple times apart from the dropdown nav bar ones.
     $("a:not(.dropdown *)").click(function (event) {
         if ($(this).hasClass("disabled")) {
             event.preventDefault();

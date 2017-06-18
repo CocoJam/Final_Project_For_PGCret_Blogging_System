@@ -36,7 +36,7 @@ public class ArticleMedia extends Upload_files {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         cookieLogOut(req, resp);
         String youtubeurl = req.getParameter("youtubeurl");
-        System.out.println(youtubeurl);
+        
         HttpSession session = req.getSession();
         Pattern pattern = Pattern.compile("^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/.+");
         Matcher matcher = pattern.matcher(youtubeurl);
@@ -44,8 +44,8 @@ public class ArticleMedia extends Upload_files {
         if (youtubeurl != null && matcher.groupCount() > 0) {
             String sample = matcher.group(0);
             youtubeurl = "https://www.youtube.com" + sample.substring(matcher.end(matcher.groupCount())).replace("/watch?v=", "/embed/").replace("&","?");
-            System.out.println("Adding youtube");
-            System.out.println(youtubeurl);
+            
+            
             String youtubevideo = "<div class=\"embed-responsive embed-responsive-4by3\"><iframe class=\"embed-responsive-item\" src=\"" + youtubeurl + "\"></iframe></div>";
             resp.getWriter().print(youtubevideo);
         }

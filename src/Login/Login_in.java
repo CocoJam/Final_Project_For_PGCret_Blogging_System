@@ -49,32 +49,24 @@ public class Login_in extends HttpServlet {
         private String password;
         private Passwords_Checker passwords_checker = new Passwords_Checker();
     }
-
-//    private String username;
-//    private String password;
-//    private Passwords_Checker passwords_checker = new Passwords_Checker();
-//    private List<Articles> indexList = new ArrayList<>();
-
+    
     //doPost checks in login is possible and if so redirects to Profile page
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         try {
             innerclass innerclass = new innerclass();
-            System.out.println("Processing login");
+            
             innerclass.setUsername(req.getParameter("username"));
-//        username = req.getParameter("username");
             innerclass.setPassword(req.getParameter("password"));
-//        password = req.getParameter("password");
             LoginPassing loginPassing = new LoginPassing(); //See loginPassing class: stores all the methods for login including DAO query the database.
 
             if (session.getAttribute("log") != null) {
-                System.out.println("loggin check");
+                
                 if ((boolean) session.getAttribute("log")) {
-                    System.out.println("loggin check");
+                    
                     //checking for when a user is logined in and other user tries to login within the same session.
                     //This will logout the first person's account then login the second person. Hence when the second person logout everyone should be logged out.
-
                     //this is to bounce people out if people are already logged in. IF username and password is not in session bounces to profile and logs out the previous user.
                     if (!innerclass.username.equals(session.getAttribute("username")) && !innerclass.password.equals(session.getAttribute("password"))) {
                         if (loginLogic(req, resp, session, loginPassing, innerclass)) {
@@ -85,28 +77,25 @@ public class Login_in extends HttpServlet {
 
                         //There is a major bug, even though there is someone logged in ppl can still bypass it because it does not check the login here.
                     } else {
-                        System.out.println("Login");
+                        
                         closingConnection();
                         req.getRequestDispatcher("WEB-INF/webthings/ProfilePage.jsp").forward(req, resp);
                         return;
                     }
                 }
             }
-            //TODO check hashing algorithm, need to check if it works.
             //If the password is not null or empty then the password is check by the loginlogic. Or not bounce back to login page.
             if (!innerclass.password.trim().equals("") && !innerclass.password.trim().isEmpty() && innerclass.password.trim() != null) {
                 loginLogic(req, resp, session, loginPassing, innerclass);
             } else {
-                session.setAttribute("log", false); //TODO refactoring for login status.
-                System.out.println("logged-in rejected");
+                session.setAttribute("log", false); 
+                
                 req.getRequestDispatcher("login_page.jsp").forward(req, resp);
             }
         } catch (Exception e) {
             cookieTracker(req, resp);
         }
         return;
-
-        //TODO dispatch back to the login page.
     }
 
 
@@ -127,14 +116,13 @@ public class Login_in extends HttpServlet {
                 new FriendDAO().pullAllFriendProfile(friendList);
                 session.setAttribute("firendlist", friendList);
                 session.setAttribute("userlist", userList);
-                System.out.println("logged-in");
-                System.out.println(session.getAttribute("username"));
+
                 req.getRequestDispatcher("ProfilePage").forward(req, resp); //TODO to take out.
                 return true;
             } else {
                 //Login in logic fail.
                 session.setAttribute("log", false); //TODO refactoring for login status.
-                System.out.println("logged-in rejected");
+
                 req.setAttribute("loginFail", true); //attribute to indicate to login_page jsp to shake if rejected onload
                 req.getRequestDispatcher("login_page.jsp").forward(req, resp);
                 return false;

@@ -44,7 +44,6 @@ public class ProfilePageServlet extends HttpServlet {
         private String username;
     }
 //    ProfilePageDAO profilePageDAO;
-//    private String username;
 
     //    Grabs the profile page from the Database based on the username (stored in session)
     @Override
@@ -95,7 +94,7 @@ public class ProfilePageServlet extends HttpServlet {
             innerclass innerclass = new innerclass();
             innerclass.setProfilePageDAO(new ProfilePageDAO());
             if (req.getParameter("accessFriend") == null) {
-                System.out.println("No accessFriend");
+                
                 doPost(req, resp);
             } else {
                 HttpSession session = req.getSession();
@@ -108,8 +107,8 @@ public class ProfilePageServlet extends HttpServlet {
                         List<Articles> indexList = new ArticleListObjectDAO().selectionArticlesList(req.getParameter("accessFriend"));
                         List<Friend> friendList = new FriendDAO().selectionListOfFriends(req.getParameter("accessFriend"));
                         session.setAttribute("accessFriendfirendlist", friendList);
-                        System.out.println("Firend list" + friendList);
-                        System.out.println(req.getParameter("accessFriend"));
+                        
+                        
                         session.setAttribute("IndexOfInterest", indexList);
                         session.setAttribute("showFriend", profilePAge);
                     }
