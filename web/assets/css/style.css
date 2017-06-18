@@ -1,8 +1,7 @@
 /* NAVBAR - POSITION ON TOP */
-#navbar-full .navbar {
+.navbar {
     border-radius: 0 !important;
-    /*margin-bottom: 15px;*/
-    z-index: 2;
+    z-index: 8888;
 }
 
 /* DESCRIPTION - text color */
@@ -96,15 +95,20 @@ a, a:hover, a:focus {
 /*}*/
 
 #loaderID {
-    position: fixed;
-    left: 50%;
-    top: 40%;
-    transform: translate(-50%, -50%) scale(0.5, 0.5);
-    width: 498px;
-    height: 632px;
-    z-index: 9999;
     visibility: hidden;
-    background: url(../img/defaultImg/gploader.gif) center no-repeat;
+    background: url(../img/defaultImg/loading-56x56.svg) center no-repeat;
+
+    z-index: 999;
+    display: block;
+    position: fixed;
+    width: 56px;
+    height: 56px;
+    bottom: 23px;
+    left: 23px;
+    padding: 0;
+    overflow: hidden;
+    outline: none;
+    border: none;
 }
 
 /* NAVBAR - custom */
@@ -265,8 +269,10 @@ audio {
 
 /*style="left: 50%; right: 50%"*/
 
+/* OVERLAY FOR TESTING DIFFERENT SCREEN SIZES AND VIEW BREAKPOINTS */
 /* media-query flags start */
 /* Code below for debugging purposes, to display the responsive design breakpoints upon resizing of window */
+/* disable after finish debugging */
 
 body:before {
     position: fixed;

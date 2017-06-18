@@ -32,15 +32,32 @@
     <%@include file="../../component/Header(styling Template).html" %>
 
     <style>
-        /* Delete Profile - MODAL BACKDROP */
-        .modal-backdrop {
-            z-index: -1;
+        /* MODAL Positioning z-index fixes */
+        .header-filter .container > .modal, .modal-content .modal-header, .modal-content .modal-body, .modal-content .modal-footer, .modal-content .modal-footer button, .modal-content .modal-footer button.pull-left, .modal-content .modal-footer button + button, .modal-content .modal-body + .modal-footer, .modal .modal-dialog, .modal .modal-header .close, .modal .modal-header .close:hover, .modal .modal-header .close:focus {
+            z-index: 9999;
         }
 
-        /* Delete Profile - SHRINK CARD */
-        #loginCard {
-            margin: 0;
+        /* MODAL BACKDROP */
+        .modal-backdrop {
+            z-index: 1;
         }
+
+        /* Toggle footer z-index based on whether modal is open or not */
+        /*#footer {*/
+            /*-webkit-transition: width 2s ease;*/
+            /*-moz-transition: width 2s ease;*/
+            /*-o-transition: width 2s ease;*/
+            /*transition: width 2s ease;*/
+        /*}*/
+
+        #footer.inactive {
+            z-index: 0;
+        }
+
+        .material-scrolltop.inactive {
+            z-index: -5;
+        }
+
     </style>
 
 </head>
@@ -313,45 +330,60 @@
                                         <%--Scenario 1: when already logged in see ChangeUserInformation--%>
                                         <c:when test="${log}">
                                             <input type="submit" name="log" value="Update Profile"
-                                                   class="btn btn-block btn-success btn-lg">
+                                                   class="btn btn-block btn-lg btn-success">
                                         </c:when>
                                         <%--Scenario 2: when NOT logged in then just see Registration--%>
                                         <c:otherwise>
                                             <input type="submit" name="log" value="Register"
-                                                   class="btn btn-block btn-success btn-lg">
+                                                   class="btn btn-block btn-lg btn-success btn-lg">
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
                             </div>
                         </form>
 
+                        <!-- BEGIN MODAL CODE -->
+
                         <% if (username != null) { %>
 
-                        <%--UPLOAD new profile photos--%>
-                        <%--Upload trigger modal button--%>
-
-                        <!-- Delete profile start -->
+                        <!-- MODAL BUTTONS -->
 
                         <div class="col-xs-12 col-sm-12 col-md-12">
-                            <button type="button" class="btn btn-block btn-info btn-lg" data-toggle="modal"
-                                    data-target="#uploadModal">Upload Avatar image
+                            <button type="button" class="btn btn-block btn-lg btn-info" data-toggle="modal"
+                                    data-target="#uploadModal">
+                                Upload Avatar Image
                             </button>
                         </div>
 
-                        <%--<div class="container">--%>
-                        <!-- Trigger the modal with a button -->
-                        <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Profile Delete</button>--%>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <button class="btn btn-block btn-lg btn-danger" data-toggle="modal"
+                                    data-target="#deleteModal">
+                                Delete Profile
+                            </button>
+                        </div>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="uploadModal" role="dialog">
+                        <!-- MODALS -->
+
+                        <!-- UPLOAD MODAL start -->
+                        <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog"
+                             aria-labelledby="uploadModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-sm">
                                 <div class="modal-content">
-                                    <div class="modal-header">
 
-                                        <%--<h4 class="modal-title">Modal Header</h4>--%>
+                                    <div class="modal-header">
+                                        <button type="button" class="btn btn-danger btn-simple close"
+                                                data-dismiss="modal" aria-hidden="true"><i
+                                                class="material-icons">clear</i> Close
+                                        </button>
+                                        <%--<h4 class="modal-title"></h4>--%>
                                     </div>
+
                                     <div class="modal-body">
-                                        <div class="card card-signup" id="uploadCard" style="margin: 0px">
+
+                                        <!-- CONTENT -->
+
+                                        <div class="card card-signup" id="uploadCard"
+                                             style="margin-top: 1em; margin-left:0em; margin-right: 0em; margin-bottom: 0em;">
 
                                             <!-- FORM ELEMENT START -->
                                             <form id="Upload" action="/Upload" method="post"
@@ -388,47 +420,40 @@
                                             </form>
 
                                         </div>
+
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
-                                        </button>
+                                        <%--<button type="button" class="btn btn-default btn-simple">Nice Button</button>--%>
+                                        <%--<button type="button" class="btn btn-danger btn-simple" data-dismiss="modal" >Close</button>--%>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <%--</div>--%>
+                        <!-- UPLOAD MODAL end -->
 
-                        <!-- Delete profile end -->
-
-
-                        <%--Upload modal ends--%>
-
-
-                        <!-- Delete profile start -->
-
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <button type="button" class="btn btn-block btn-danger btn-lg" data-toggle="modal"
-                                    data-target="#myModal">Delete Profile
-                            </button>
-                        </div>
-
-                        <%--<div class="container">--%>
-                        <!-- Trigger the modal with a button -->
-                        <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Profile Delete</button>--%>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModal" role="dialog">
+                        <!-- DELETE MODAL start -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                             aria-labelledby="deleteModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-sm">
                                 <div class="modal-content">
-                                    <div class="modal-header">
 
-                                        <%--<h4 class="modal-title">Modal Header</h4>--%>
+                                    <div class="modal-header">
+                                        <button type="button" class="btn btn-danger btn-simple close"
+                                                data-dismiss="modal" aria-hidden="true"><i
+                                                class="material-icons">clear</i> Close
+                                        </button>
+                                        <%--<h4 class="modal-title"></h4>--%>
                                     </div>
+
                                     <div class="modal-body">
-                                        <div class="card card-signup" id="loginCard" style="margin: 0px">
+
+                                        <!-- CONTENT -->
+
+                                        <div class="card card-signup" id="deleteCard"
+                                             style="margin-top: 1em; margin-left:0em; margin-right: 0em; margin-bottom: 0em;">
 
                                             <!-- FORM ELEMENT START -->
-                                            <form class="form" method="post" action="/Deleting" id="loginForm">
+                                            <form class="form" method="post" action="/Deleting" id="deleteForm">
 
                                                 <!-- Form heading -->
                                                 <div class="header header-danger text-center">
@@ -438,8 +463,7 @@
                                                 <!-- Form subtext -->
                                                 <span class="text-divider">
                                                         <p>We're sorry to see you go!</p>
-                                                        <p>If you are sure about deleting your account, please reconfirm your username and password to continue.</p>
-                                                        <p>You will not be able to recover your account once it's deleted.</p>
+                                                        <p>If you are sure about deleting your account, please reconfirm your username and password to continue. You will not be able to recover your account once it's deleted.</p>
                                                     </span>
 
                                                 <div class="content">
@@ -477,19 +501,20 @@
                                             </form>
 
                                         </div>
+
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
-                                        </button>
+                                        <%--<button type="button" class="btn btn-default btn-simple">Nice Button</button>--%>
+                                        <%--<button type="button" class="btn btn-danger btn-simple" data-dismiss="modal" >Close</button>--%>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <%--</div>--%>
-
-                        <!-- Delete profile end -->
+                        <!-- DELETE MODAL end -->
 
                         <% } %>
+
+                        <!-- BEGIN MODAL CODE -->
 
                         <%--Short script which ensures that no empty space is entered--%>
                         <script type="text/javascript">
@@ -595,5 +620,17 @@
 
 
 </body>
+
+<script>
+    /* Toggle footer z-index when modal is launched */
+    $("#deleteModal").on('show.bs.modal', function (e) {
+        $("#footer").toggleClass('inactive');
+        $(".material-scrolltop").toggleClass('inactive');
+    });
+    $("#deleteModal").on('hidden.bs.modal', function (e) {
+        $("#footer").toggleClass('inactive');
+        $(".material-scrolltop").toggleClass('inactive');
+    });
+</script>
 
 </html>
