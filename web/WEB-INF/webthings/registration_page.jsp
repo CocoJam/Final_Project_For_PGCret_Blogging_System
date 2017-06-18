@@ -41,17 +41,11 @@
         }
 
         /* Toggle footer z-index based on whether modal is open or not */
-        /*#footer {*/
-            /*-webkit-transition: width 2s ease;*/
-            /*-moz-transition: width 2s ease;*/
-            /*-o-transition: width 2s ease;*/
-            /*transition: width 2s ease;*/
-        /*}*/
-
         #footer.inactive {
             z-index: 0;
         }
 
+        /* Toggle scroll to top button z-index based on whether modal is open or not */
         .material-scrolltop.inactive {
             z-index: -5;
         }
@@ -149,11 +143,11 @@
 										</span>
                                     <input type="text" id="username" name="username" placeholder="Username"
                                            class="form-control"
-                                           value="${profileInfo.username}" required>
+                                           value="${profileInfo.username}" required maxlength="16">
                                 </div>
                                 <!-- Text input box end -->
 
-                                <%--The following paragraph is to click to check when the username is available TODO STYLING is required!! (consider taking this outside of <p> and into styled <div>--%>
+                                <%--The following paragraph is to click to check when the username is available--%>
                                 <p style="text-align: center">
                                     Username Availability: <span id="reponseToUsername"></span>
                                 </p>
@@ -522,11 +516,11 @@
                             <%--SCRIPT onclick on FORM above. Checks if form contains any space or empty, if so then submission will be --%>
                             $("#form").submit(function (event) {
                                 if ($("#username").val().trim().length == 0 || $("#password").val().trim().length == 0 || $("#Name").val().trim().length == 0 || $("#education").val().trim().length == 0 || $("#email").val().trim().length == 0) {
-                                    alert("validation failed false");
+                                    alert("Submission failed. Please check your input and try again.");
                                     event.preventDefault();
                                     return;
                                 }
-                                alert("validations passed");
+                                alert("Submission successful!");
                                 return;
                             });
                             <!-- Password Strength test based on the regex of the combination of the password val, as shown the Strong consist of at least 8 char and in combination of one of each kind. While the middle is 2 of each and the weakMiddle is 4 of each kind to match the given password strength. -->

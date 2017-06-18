@@ -5,7 +5,7 @@
       <paths name="slashslash">
         <serverdata>
           <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/slashslash" />
+            <mapping deploy="/" local="$PROJECT_DIR$/out/artifacts/slashslash" web="/slashslash" />
           </mappings>
         </serverdata>
       </paths>

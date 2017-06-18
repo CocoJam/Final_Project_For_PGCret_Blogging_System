@@ -184,7 +184,7 @@
 
                                     <h3>Friend List:</h3>
 
-                                    <c:if test="${empty friendlist}">
+                                    <c:if test="${empty firendlist}">
                                         Aww... ${profileInfo.name} has no friends, time to make some friends ${profileInfo.name}!
                                     </c:if>
 
