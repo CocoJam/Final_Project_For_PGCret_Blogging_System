@@ -631,6 +631,25 @@
         $("#footer").toggleClass('inactive');
         $(".material-scrolltop").toggleClass('inactive');
     });
+
+    $("#uploadModal").on('show.bs.modal', function (e) {
+        $("#footer").toggleClass('inactive');
+        $(".material-scrolltop").toggleClass('inactive');
+    });
+    $("#uploadModal").on('hidden.bs.modal', function (e) {
+        $("#footer").toggleClass('inactive');
+        $(".material-scrolltop").toggleClass('inactive');
+    });
+
+//    $("[id=Modal]").on('show.bs.modal', function (e) {
+//        $("#footer").toggleClass('inactive');
+//        $(".material-scrolltop").toggleClass('inactive');
+//    });
+//    $("[id=Modal]").on('hidden.bs.modal', function (e) {
+//        $("#footer").toggleClass('inactive');
+//        $(".material-scrolltop").toggleClass('inactive');
+//    });
+
 </script>
 
 </html>
