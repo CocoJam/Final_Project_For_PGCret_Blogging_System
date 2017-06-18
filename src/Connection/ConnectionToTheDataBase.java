@@ -98,6 +98,13 @@ public class ConnectionToTheDataBase {
                 }
             }
         }
+        try {
+            req.getRequestDispatcher("login_page.jsp").forward(req,resp);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return;
     }
 
