@@ -43,6 +43,7 @@
         .material-scrolltop.inactive {
             z-index: -5;
         }
+
     </style>
 
 </head>
@@ -561,7 +562,7 @@
                                                 var ratioButton = "<div class=\"radio\"> <label>" + "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos/${username}/photo/", "") + "\">" + "<span class=\"circle\"></span>" + "<span class=\"check\"></span>" + "</label>" + "<img src=\"" + msg + "\"height=\"20%\">" + "</div>" + "</br>";
                                                 $(".content").eq(0).append(ratioButton);
                                             }
-                                            <!-- if the media is successfully uploaded but it is not a picture or photo in the right format, that the alert will pop and show -->
+                                            <!-- if the media is successfully uploaded but it is not a picture or photo in the right formate, that the alert will pop and show -->
                                             else {
                                                 alert(msg.replace("Upload-photos\\${username}\\photo\\", "") + " failed to upload due to format not matching accept formats (jpg, jpeg, png, gif, svg).");
                                             }

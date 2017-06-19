@@ -150,7 +150,7 @@
                                             <td>${profileInfo.username}</td>
                                         </tr>
                                         <tr>
-                                            <td>Fullname:</td>
+                                            <td>Full Name:</td>
                                             <td>${profileInfo.name}</td>
                                         </tr>
                                         <tr>
@@ -166,7 +166,7 @@
                                             <td>${profileInfo.education}</td>
                                         </tr>
                                         <tr>
-                                            <td>Ethnicity:</td>
+                                            <td>Country:</td>
                                             <td>${profileInfo.ethnicity}</td>
                                         </tr>
                                         <tr>

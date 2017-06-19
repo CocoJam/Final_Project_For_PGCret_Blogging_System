@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Easter Egg!</title>
+    <title>Slash N - Easter Egg!</title>
 
     <%@ include file="/component/Header(styling Template).html" %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,7 +17,14 @@
 <body class="signup-page">
 
 <!-- !!! NAVIGATION BAR START !!! -->
-<%@ include file="/component/Template (HTML components)/NavBar-Login&Registration(Template).html" %>
+<c:choose>
+    <c:when test="${log}">
+        <%@ include file="/component/NavBar-AfterLogin(Template).jsp" %>
+    </c:when>
+    <c:otherwise>
+        <%@ include file="/component/NavBar-Login&Registration(Template).jsp" %>
+    </c:otherwise>
+</c:choose>
 <!-- !!! NAVIGATION BAR END !!! -->
 
 <%--THE GAME!!!--%>
