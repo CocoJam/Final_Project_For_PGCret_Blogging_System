@@ -43,7 +43,6 @@
         .material-scrolltop.inactive {
             z-index: -5;
         }
-
     </style>
 
 </head>
@@ -401,7 +400,7 @@
                                                 <div class="footer text-center">
                                                     <div class="col-xs-12 col-sm-12 col-md-12">
                                                         <input type="submit" name="Upload" value="Upload Image"
-                                                               class="btn btn-block btn-info btn-lg" data-dismiss="modal" /> <%-- When user click button, it will upload the image and close upload modal at the same time--%>
+                                                               class="btn btn-block btn-info btn-lg" /> <%-- When user click button, it will upload the image and close upload modal at the same time--%>
                                                     </div>
                                                 </div>
                                             </form>
@@ -562,16 +561,14 @@
                                                 var ratioButton = "<div class=\"radio\"> <label>" + "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos/${username}/photo/", "") + "\">" + "<span class=\"circle\"></span>" + "<span class=\"check\"></span>" + "</label>" + "<img src=\"" + msg + "\"height=\"20%\">" + "</div>" + "</br>";
                                                 $(".content").eq(0).append(ratioButton);
                                             }
-                                            <!-- if the media is successfully uploaded but it is not a picture or photo in the right formate, that the alert will pop and show -->
+                                            <!-- if the media is successfully uploaded but it is not a picture or photo in the right format, that the alert will pop and show -->
                                             else {
-
-                                                alert(msg.replace("Upload-photos\\${username}\\photo\\", "") + " failed to upload due to format not supplied");
+                                                alert(msg.replace("Upload-photos\\${username}\\photo\\", "") + " failed to upload due to format not matching accept formats (jpg, jpeg, png, gif, svg).");
                                             }
                                         },
                                         <!-- Error when the error such as the file is not in any right formate or such that the size of the file is too big, then the this will alert the user. -->
                                         error: function (request, status, error) {
-
-                                            alert("Upload File Is Too Big.");
+                                            alert("Upload failed. File size is too big.");
                                         }
                                     });
                                     e.preventDefault();
