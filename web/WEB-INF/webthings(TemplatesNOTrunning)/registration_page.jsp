@@ -4,13 +4,7 @@
 <%@ page import="java.io.File" %>
 <%@ page import="javax.jms.Session" %>
 <%@ page import="java.util.Set" %>
-<%@ page import="java.util.TreeSet" %><%--
-  Created by IntelliJ IDEA.
-  User: ljam763
-  Date: 23/05/2017
-  Time: 1:04 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.TreeSet" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 

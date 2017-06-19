@@ -1,13 +1,7 @@
 <%@ page import="java.io.File" %>
 <%@ page import="java.util.Set" %>
 <%@ page import="java.util.TreeSet" %>
-<%@ page import="java.io.IOException" %><%--
-  Created by IntelliJ IDEA.
-  User: ljam763
-  Date: 25/05/2017
-  Time: 3:04 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.io.IOException" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -372,7 +366,7 @@
                 deletebutton.innerHTML = "<i class='material-icons'>delete_forever</i><span class='hidden-xs'> Delete</span>";
                 deletebutton.setAttribute("onclick", "deleteComment($(this))");
 
-                /* Append elements to div */
+                /* Append elements to parent div */
                 div.append(commentinfocontainer);
                 commentcontent.append(p2);
                 div.append(commentcontent);
@@ -469,39 +463,49 @@
             }
         });
     }
-    <!-- Due to the database and the create and the editing page is constructed, that replace all or most of the html tags into the <p> tags -->
 
-
-    <!-- Making all images img-responsive -->
+    <!-- Making all images img-responsive - only inside #articleContents -->
     $(document).ready(function () {
         $("#articleContents img").each(function () {
             $(this).addClass('img-responsive');
         });
 
-        $('#articleContents > *').replaceWith(function () {
-            return $('<div/>', {
-                html: $(this).html()
-            });
-        });
-        $(".ui-state").each(function () {
-
-            $(this).replaceWith(function () {
-                return $('<p>', {
-                    html: this.innerHTML
-                });
-            });
-        });
-        $(".ui-state-default,ui-state").each(function () {
-
-            $(this).replaceWith(function () {
-                return $('<p>', {
-                    html: this.innerHTML
-                });
-            });
-        });
-        /* Alternative version below: this will grab all the img on page */
+        /* Alternative version below: this will grab all the img on page and append img-responsive */
 //        var allImages = $('img');
 //        allImages.addClass('img-responsive');
+
+        // Styling article display
+        <!-- Due to the way the database and the create/edit article page is constructed, this replace all or most of the draggable html tags into the <p> tags -->
+        $(".wrapper li").each(function () {
+            $(this).replaceWith(function () {
+                return $('<p>', {
+                    html: this.innerHTML
+                });
+            });
+        });
+
+//        $('#articleContents > *').replaceWith(function () {
+//            return $('<div/>', {
+//                html: $(this).html()
+//            });
+//        });
+//        $(".ui-state").each(function () {
+//
+//            $(this).replaceWith(function () {
+//                return $('<p>', {
+//                    html: this.innerHTML
+//                });
+//            });
+//        });
+//        $(".ui-state-default,ui-state").each(function () {
+//
+//            $(this).replaceWith(function () {
+//                return $('<p>', {
+//                    html: this.innerHTML
+//                });
+//            });
+//        });
+
     });
 
 </script>

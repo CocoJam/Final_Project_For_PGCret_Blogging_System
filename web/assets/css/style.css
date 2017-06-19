@@ -23,31 +23,28 @@
     background-position: center center;
 }
 
-/* OVERRIDE DEFAULT FORM FOCUS COLORS */
+/* OVERRIDE DEFAULT FORM FOCUS COLORS - Blue */
 .form-control,
 .form-group .form-control {
     background-image: linear-gradient(#03A9F4, #03A9F4), linear-gradient(#D2D2D2, #D2D2D2);
 }
-
 .form-group.is-focused .form-control {
     background-image: linear-gradient(#03A9F4, #03A9F4), linear-gradient(#D2D2D2, #D2D2D2);
 }
-
 .form-group.is-focused .form-control .material-input:after {
     background-color: #03A9F4;
 }
-
 .form-group.is-focused label,
 .form-group.is-focused label.control-label {
     color: #03A9F4;
 }
 
-/* CUSTOM - CHECK BOX COLOR */
+/* CUSTOM - CHECK BOX COLOR - Blue */
 .checkbox input[type=checkbox]:checked + .checkbox-material .check {
     background: #03A9F4;
 }
 
-/* CUSTOM - LINK COLORS */
+/* CUSTOM - LINK COLOR - Blue */
 a, a:hover, a:focus {
     color: #03A9F4;
 }
@@ -72,7 +69,7 @@ a, a:hover, a:focus {
     background-color: #03A9F4;
 }
 
-/* CUSTOM - MAIN DIV */
+/* CUSTOM - MAIN DIV BOX SHADOW */
 .custom-container-main {
     background: #FFFFFF;
     position: relative;
@@ -112,9 +109,9 @@ a, a:hover, a:focus {
 }
 
 /* NAVBAR - custom */
-/* changes applied in material-kit.css to navbar-inverse */
+/* see changes applied in material-kit.css to navbar-inverse marked with CUSTOM */
 
-/* RADIO BUTTON - blue */
+/* CUSTOM RADIO BUTTON COLOR - Blue */
 .radio label .check {
     height: 15px;
     width: 15px;
@@ -141,6 +138,7 @@ a, a:hover, a:focus {
     background-color: #293A46;
 }
 
+/* Media Gallery Carousel styles */
 #carouselMediaPage, #audioGallery, #videoGallery {
     display: block;
     width: 80%;
@@ -231,6 +229,7 @@ audio {
     object-fit: contain;
 }
 
+/* Make avatar selection on edit profile page responsive & contained to a max-width */
 .img-registrationResponsive {
     display: inline-block;
     max-height: 200px;
@@ -238,6 +237,7 @@ audio {
     object-fit: contain;
 }
 
+/* Add non-transparent bg color to striped table even row */
 .table-striped > tbody > tr:nth-of-type(even) {
     background-color: #ffffff;
 }
@@ -249,43 +249,38 @@ audio {
 /*style="left: 50%; right: 50%"*/
 
 /* OVERLAY FOR TESTING DIFFERENT SCREEN SIZES AND VIEW BREAKPOINTS */
-/* media-query flags start */
 /* Code below for debugging purposes, to display the responsive design breakpoints upon resizing of window */
-/* disable after finish debugging */
-
-body:before {
-    position: fixed;
-    z-index: 10000;
-    top: 0;
-    left: 0;
-    padding: 10px;
-    height: 40px;
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: bold;
-    font-size: 50px;
-    content: "XS";
-    background: rgba(215, 44, 44, 0.5);
-}
-
-@media (min-width: 768px) {
-    body:before {
-        content: "SM";
-        background: rgba(215, 44, 215, 0.5);
-    }
-}
-
-@media (min-width: 992px) {
-    body:before {
-        content: "MD";
-        background: rgba(44, 215, 44, 0.5);
-    }
-}
-
-@media (min-width: 1200px) {
-    body:before {
-        content: "LG";
-        background: rgba(44, 44, 215, 0.5);
-    }
-}
-
+/* !! enable for debugging purpose, disable when deploying !! */
+/* media-query flags start */
+/*body:before {*/
+    /*position: fixed;*/
+    /*z-index: 10000;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*padding: 10px;*/
+    /*height: 40px;*/
+    /*color: rgba(255, 255, 255, 0.5);*/
+    /*font-weight: bold;*/
+    /*font-size: 50px;*/
+    /*content: "XS";*/
+    /*background: rgba(215, 44, 44, 0.5);*/
+/*}*/
+/*@media (min-width: 768px) {*/
+    /*body:before {*/
+        /*content: "SM";*/
+        /*background: rgba(215, 44, 215, 0.5);*/
+    /*}*/
+/*}*/
+/*@media (min-width: 992px) {*/
+    /*body:before {*/
+        /*content: "MD";*/
+        /*background: rgba(44, 215, 44, 0.5);*/
+    /*}*/
+/*}*/
+/*@media (min-width: 1200px) {*/
+    /*body:before {*/
+        /*content: "LG";*/
+        /*background: rgba(44, 44, 215, 0.5);*/
+    /*}*/
+/*}*/
 /* media-query flags end */

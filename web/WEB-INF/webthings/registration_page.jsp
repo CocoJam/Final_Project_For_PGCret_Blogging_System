@@ -4,13 +4,7 @@
 <%@ page import="java.io.File" %>
 <%@ page import="javax.jms.Session" %>
 <%@ page import="java.util.Set" %>
-<%@ page import="java.util.TreeSet" %><%--
-  Created by IntelliJ IDEA.
-  User: ljam763
-  Date: 23/05/2017
-  Time: 1:04 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.TreeSet" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -108,7 +102,6 @@
                         <form class="form" action="Registration" id="form" method="post">
 
                             <!-- Form subtext -->
-                            <!-- TODO need to use JSTL to dynamically change the header depending on login status -->
                             <div class="header header-info text-center">
 
                                 <c:choose>
@@ -120,7 +113,6 @@
                                     </c:otherwise>
                                 </c:choose>
 
-                                <!-- TODO change this text when user is logged in to: "Edit profile" -->
                             </div>
 
                             <c:choose>
@@ -391,7 +383,7 @@
 
                                                 <!-- Form subtext -->
                                                 <span class="text-divider">
-                                                        <p>Upload your own custom image to use as your avatar around the site.
+                                                    <p>Upload your own custom image to use as your avatar around the site.</p>
                                                     </span>
 
                                                 <div class="content">
@@ -409,7 +401,7 @@
                                                 <div class="footer text-center">
                                                     <div class="col-xs-12 col-sm-12 col-md-12">
                                                         <input type="submit" name="Upload" value="Upload Image"
-                                                               class="btn btn-block btn-info btn-lg"/>
+                                                               class="btn btn-block btn-info btn-lg" data-dismiss="modal" /> <%-- When user click button, it will upload the image and close upload modal at the same time--%>
                                                     </div>
                                                 </div>
                                             </form>
@@ -418,7 +410,6 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <%--<button type="button" class="btn btn-default btn-simple">Nice Button</button>--%>
                                         <%--<button type="button" class="btn btn-danger btn-simple" data-dismiss="modal" >Close</button>--%>
                                     </div>
                                 </div>
@@ -499,7 +490,6 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <%--<button type="button" class="btn btn-default btn-simple">Nice Button</button>--%>
                                         <%--<button type="button" class="btn btn-danger btn-simple" data-dismiss="modal" >Close</button>--%>
                                     </div>
                                 </div>
@@ -567,7 +557,7 @@
                                         processData: false,
                                         contentType: false,
                                         success: function (msg) {
-                                            console.log(msg)
+                                            console.log(msg);
                                             if (msg.endsWith(".jpg") || msg.endsWith(".png") || msg.endsWith(".gif") || msg.endsWith(".jpeg") || msg.endsWith(".svg")) {
                                                 var ratioButton = "<div class=\"radio\"> <label>" + "<input type=\"radio\" name= \"profilePicture\" value=\"" + msg.replace("Upload-photos/${username}/photo/", "") + "\">" + "<span class=\"circle\"></span>" + "<span class=\"check\"></span>" + "</label>" + "<img src=\"" + msg + "\"height=\"20%\">" + "</div>" + "</br>";
                                                 $(".content").eq(0).append(ratioButton);
@@ -604,8 +594,6 @@
     </div><!-- background div end -->
 
 </div><!-- Wrapper end -->
-
-
 
 </body>
 

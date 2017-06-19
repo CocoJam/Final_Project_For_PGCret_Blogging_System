@@ -2,13 +2,7 @@
 <%@ page import="ProfilePage.ProfilePAge" %>
 <%@ page import="Friend.Friend" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %><%--
-  Created by IntelliJ IDEA.
-  User: ljam763
-  Date: 25/05/2017
-  Time: 2:07 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -16,7 +10,7 @@
 <head>
     <title>Slash N - Profile Page</title>
 
-    <%@include file="../../component/Header(styling Template).html" %>
+    <%@include file="/component/Header(styling Template).html" %>
 
     <style>
         /* borderless table */
@@ -31,13 +25,11 @@
 </head>
 <body class="profile-page">
 
-<%--NAVBAR STARTS--%>
 <!-- !!! NAVIGATION BAR START !!! -->
 
-<%@ include file="../../component/NavBar-AfterLogin(Template).jsp" %>
+<%@ include file="/component/NavBar-AfterLogin(Template).jsp" %>
 
 <!-- !!! NAVIGATION BAR END !!! -->
-
 
 <%-- Switching the profilepage between the user and the friends one that they are veiwing using the session and swtich the session attribute withe the showFriend--%>
 <% ProfilePAge currentuser = null;
@@ -72,7 +64,7 @@
                                             <c:choose>
                                                 <%--If this is a default profile image get the image from default photo directory--%>
                                                 <c:when test='${profileInfo.profilepic.startsWith("defaultslashn")}'>
-                                                    <img src="../../assets/img/defaultImg/${profileInfo.profilepic}"
+                                                    <img src="assets/img/defaultImg/${profileInfo.profilepic}"
                                                          alt="Circle Image"
                                                          class="img-rounded img-responsive img-raised">
                                                 </c:when>
@@ -88,7 +80,7 @@
                                         </c:when>
 
                                         <c:otherwise>
-                                            <img src="../../assets/img/defaultImg/placeholder.gif" alt="Circle Image"
+                                            <img src="assets/img/defaultImg/placeholder.gif" alt="Circle Image"
                                                  class="img-rounded img-responsive img-raised">
                                         </c:otherwise>
                                     </c:choose>
@@ -211,7 +203,7 @@
                                                             <c:when test='${friend.friendProfilePicture.startsWith("defaultslashn")}'>
                                                                 <a href="ProfilePage?accessFriend=${friend.friendusername}"
                                                                    class="friendButton"><img
-                                                                        src="../../assets/img/defaultImg/${friend.friendProfilePicture}"
+                                                                        src="assets/img/defaultImg/${friend.friendProfilePicture}"
                                                                         alt="Card image cap"
                                                                         class="img-slashResponsive card-img-top center-block"></a>
                                                             </c:when>
@@ -219,7 +211,7 @@
                                                             <%--Otherwise get the photo from the users photo page--%>
 
                                                             <c:when test="${empty friend.friendProfilePicture}">
-                                                                <img src="../../assets/img/defaultImg/placeholder.gif" alt="Circle Image"
+                                                                <img src="assets/img/defaultImg/placeholder.gif" alt="Circle Image"
                                                                      class="img-slashResponsive card-img-top center-block">
                                                             </c:when>
 
@@ -293,7 +285,7 @@
 
                                             if (clickStatus) {
                                                 $.ajax({
-                                                    url: '/ProfilePage',
+                                                    url: 'ProfilePage',
                                                     type: 'Post',
                                                     data: {
                                                         "clickedShowList": "clickedShowList",
@@ -333,7 +325,7 @@
     </div><!-- wrapper div -->
 
     <!-- FOOTER START -->
-    <%@ include file="../../component/Footer(Template).html" %>
+    <%@ include file="/component/Footer(Template).html" %>
     <!-- FOOTER END -->
 
 
@@ -368,7 +360,7 @@
             $(this).css("z-index", -1)
         });
         <% } %>
-        //Depending the button of the clicked, which speific ajax call of post will be sent, which allow the friend servlet to be adding the friend bi-directional to the database.
+        //Depending the button of the clicked, which specific ajax call of post will be sent, which allow the friend servlet to be adding the friend bi-directional to the database.
         $("#addfriend").click(function () {
             $("#unfriend").fadeIn("1", function () {
                 $(this).css("z-index", 0)
